@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/AndroidStudioProjects/Halalkan/app/src/main/res/layout/fragment_home.xml" value="0.1" />
+        <entry key="..\:/AndroidStudioProjects/Qumparan/app/src/main/res/drawable/ic_transparent.xml" value="0.18333333333333332" />
+        <entry key="..\:/AndroidStudioProjects/Qumparan/app/src/main/res/layout/activity_container.xml" value="0.209375" />
+        <entry key="..\:/AndroidStudioProjects/Qumparan/app/src/main/res/layout/custom_status.xml" value="0.25" />
+        <entry key="..\:/AndroidStudioProjects/Qumparan/app/src/main/res/layout/fragment_detail_news.xml" value="0.2" />
+        <entry key="..\:/AndroidStudioProjects/Qumparan/app/src/main/res/layout/fragment_home.xml" value="0.14" />
+        <entry key="..\:/AndroidStudioProjects/Qumparan/app/src/main/res/layout/fragment_list_photo.xml" value="0.16" />
+        <entry key="..\:/AndroidStudioProjects/Qumparan/app/src/main/res/layout/fragment_preview_photo.xml" value="0.22" />
+        <entry key="..\:/AndroidStudioProjects/Qumparan/app/src/main/res/layout/item_album.xml" value="0.22" />
+        <entry key="..\:/AndroidStudioProjects/Qumparan/app/src/main/res/layout/item_comment.xml" value="0.25" />
+        <entry key="..\:/AndroidStudioProjects/Qumparan/app/src/main/res/layout/item_grid_rs.xml" value="0.2" />
+        <entry key="..\:/AndroidStudioProjects/Qumparan/app/src/main/res/layout/item_photo.xml" value="0.2" />
+        <entry key="..\:/AndroidStudioProjects/Qumparan/app/src/main/res/layout/layout_anim_rv.xml" value="0.14895833333333333" />
+        <entry key="..\:/AndroidStudioProjects/Qumparan/app/src/main/res/layout/layout_loading_screen_full.xml" value="0.19739583333333333" />
+        <entry key="..\:/AndroidStudioProjects/Qumparan/app/src/main/res/layout/post_detail_fragment.xml" value="0.22" />
+        <entry key="..\:/AndroidStudioProjects/Qumparan/app/src/main/res/layout/post_detail_view_model_fragment.xml" value="0.13333333333333333" />
+        <entry key="..\:/AndroidStudioProjects/Qumparan/app/src/main/res/layout/raz_custom_info_horizontal.xml" value="0.5" />
+        <entry key="..\:/AndroidStudioProjects/Qumparan/app/src/main/res/layout/raz_custom_info_vert.xml" value="0.25" />
+        <entry key="..\:/AndroidStudioProjects/Qumparan/app/src/main/res/layout/user_profile_fragment.xml" value="0.12" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>
