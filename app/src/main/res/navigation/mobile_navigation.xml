@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_home">
+
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="com.feylabs.halalkan.view.home.HomeFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_navigation_home_to_postDetailFragment"
+            app:destination="@id/postDetailFragment" />
+        <action
+            android:id="@+id/action_navigation_home_to_userProfileFragment"
+            app:destination="@id/userProfileFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/postDetailFragment"
+        android:name="com.feylabs.halalkan.view.postdetail.PostDetailFragment"
+        android:label="PostDetailFragment">
+        <action
+            android:id="@+id/action_postDetailFragment_to_userProfileFragment"
+            app:destination="@id/userProfileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/userProfileFragment"
+        android:name="com.feylabs.halalkan.view.profile.UserProfileFragment"
+        android:label="user_profile_fragment"
+        tools:layout="@layout/user_profile_fragment">
+        <action
+            android:id="@+id/action_userProfileFragment_to_listPhotoFragment"
+            app:destination="@id/listPhotoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/listPhotoFragment"
+        android:name="com.feylabs.halalkan.view.photolist.ListPhotoFragment"
+        android:label="ListPhotoFragment">
+        <action
+            android:id="@+id/action_listPhotoFragment_to_previewPhotoFragment"
+            app:destination="@id/previewPhotoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/previewPhotoFragment"
+        android:name="com.feylabs.halalkan.view.preview.PreviewPhotoFragment"
+        android:label="fragment_preview_photo"
+        tools:layout="@layout/fragment_preview_photo" />
+</navigation>
