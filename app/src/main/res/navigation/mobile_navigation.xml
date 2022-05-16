@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
+    app:startDestination="@+id/navigation_newHomeFragment">
 
     <fragment
         android:id="@+id/navigation_home"
@@ -43,9 +43,28 @@
             android:id="@+id/action_listPhotoFragment_to_previewPhotoFragment"
             app:destination="@id/previewPhotoFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/previewPhotoFragment"
         android:name="com.feylabs.halalkan.view.preview.PreviewPhotoFragment"
         android:label="fragment_preview_photo"
         tools:layout="@layout/fragment_preview_photo" />
+
+    <fragment
+        android:id="@+id/navigation_newHomeFragment"
+        android:name="com.feylabs.halalkan.view.new_home.NewHomeFragment"
+        android:label="NewHomeFragment" />
+
+    <fragment
+        android:id="@+id/navigation_qiblaFragment"
+        android:name="com.feylabs.halalkan.view.prayer.qibla.QiblaFragment"
+        android:label="QiblaFragment" />
+    <fragment
+        android:id="@+id/navigation_prayerMainFragment"
+        android:name="com.feylabs.halalkan.view.prayer.PrayerMainFragment"
+        android:label="PrayerMainFragment" />
+    <fragment
+        android:id="@+id/navigation_listAndSearchPrayerRoomFragment"
+        android:name="com.feylabs.halalkan.view.prayer.list_and_search.ListAndSearchPrayerRoomFragment"
+        android:label="ListAndSearchPrayerRoomFragment" />
 </navigation>

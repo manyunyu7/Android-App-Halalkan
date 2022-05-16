@@ -39,4 +39,7 @@
     <color name="green50">#3BA064</color>
     <color name="green40">#56C281</color>
     <color name="green60">#2A844E</color>
+    <color name="lightBlue">#45B6FE</color>//Action bar
+
+
 </resources>

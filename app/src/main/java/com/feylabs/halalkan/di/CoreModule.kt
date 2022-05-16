@@ -1,11 +1,15 @@
 package com.feylabs.halalkan.di
 
+import com.chuckerteam.chucker.api.ChuckerCollector
+import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.feylabs.halalkan.data.QumparanRepository
 import com.feylabs.halalkan.data.remote.service.ApiService
 import com.feylabs.halalkan.utils.Network
 import com.feylabs.halalkan.data.remote.RemoteDataSource
+import com.feylabs.halalkan.data.remote.service.MasjidService
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -16,8 +20,6 @@ val networkModule = module {
     single {
         OkHttpClient.Builder()
             .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
-            /*
-             * disabled for release
              .addInterceptor(
                  ChuckerInterceptor.Builder(androidContext())
                      .collector(ChuckerCollector(androidContext()))
@@ -26,8 +28,7 @@ val networkModule = module {
                      .alwaysReadResponseBody(true)
                      .build()
              )
-             *
-             */
+
             .connectTimeout(120, TimeUnit.SECONDS)
             .readTimeout(120, TimeUnit.SECONDS)
             .build()

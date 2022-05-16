@@ -1,6 +1,7 @@
 package com.feylabs.halalkan.data.remote
 
 import com.feylabs.halalkan.data.remote.service.ApiService
+import com.feylabs.halalkan.data.remote.service.MasjidService
 
 class RemoteDataSource(
     private val commonService: ApiService,
@@ -21,5 +22,7 @@ class RemoteDataSource(
     suspend fun getUserDetail(userId: String) = commonService.getUserDetail(userId)
     suspend fun getUserAlbum(userId: String) = commonService.getUserAlbum(userId)
     suspend fun getAlbumPhoto(albumId: String) = commonService.getPhotoByAlbum(albumId)
+
+    suspend fun getMasjids() = commonService.getMasjids()
 
 }

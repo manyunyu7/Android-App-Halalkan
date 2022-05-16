@@ -50,6 +50,14 @@ abstract class BaseFragment : Fragment() {
         view.visibility = View.GONE
     }
 
+    fun View.makeVisible() {
+        viewVisible(this)
+    }
+
+    fun View.makeGone() {
+        viewGone(this)
+    }
+
     fun viewVisible(view: View) {
         view.visibility = View.VISIBLE
     }

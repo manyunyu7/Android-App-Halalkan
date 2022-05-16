@@ -13,4 +13,6 @@ class QumparanRepository(
     suspend fun getUserDetail(userId: String) = remoteDs.getUserDetail(userId)
     suspend fun getUserAlbum(userId: String) = remoteDs.getUserAlbum(userId)
     suspend fun getAlbumPhoto(albumId: String) = remoteDs.getAlbumPhoto(albumId)
+
+    suspend fun getMasjids() = remoteDs.getMasjids()
 }
