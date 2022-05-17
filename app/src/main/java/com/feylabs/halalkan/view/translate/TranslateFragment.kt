@@ -1,0 +1,45 @@
+package com.feylabs.halalkan.view.translate
+
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import com.feylabs.halalkan.databinding.FragmentListAndSearchPrayerRoomBinding
+import com.feylabs.halalkan.databinding.FragmentTranslateBinding
+import com.feylabs.halalkan.utils.base.BaseFragment
+
+
+class TranslateFragment : BaseFragment() {
+
+
+    // This property is only valid between onCreateView and
+    // onDestroyView.
+    private var _binding: FragmentTranslateBinding? = null
+    private val binding get() = _binding!!
+
+    override fun initUI() {
+    }
+
+    override fun initObserver() {
+    }
+
+    override fun initAction() {
+    }
+
+    override fun initData() {
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        _binding = FragmentTranslateBinding.inflate(inflater)
+        return binding.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+}
