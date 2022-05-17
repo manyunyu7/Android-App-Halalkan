@@ -24,9 +24,6 @@ class NewHomeFragment : BaseFragment() {
     val viewModel: HomeViewModel by viewModel()
     private var _binding: FragmentNewHomeBinding? = null
 
-    // save temporary user list
-    private var listUsers = mutableListOf<UserResponse.UserResponseItem>()
-
     private val mAdapter by lazy { ListRestaurantAdapter() }
 
     // This property is only valid between onCreateView and
@@ -43,7 +40,7 @@ class NewHomeFragment : BaseFragment() {
         }
 
         binding.menuTranslate.setOnClickListener {
-
+            findNavController().navigate(R.id.navigation_translateFragment)
         }
 
         binding.menuScan.setOnClickListener {
@@ -78,7 +75,7 @@ class NewHomeFragment : BaseFragment() {
     }
 
     override fun initObserver() {
-        viewModel.postLiveData.observe(viewLifecycleOwner, {
+        viewModel.postLiveData.observe(viewLifecycleOwner) {
             when (it) {
                 is QumparanResource.Default -> {
                 }
@@ -90,7 +87,7 @@ class NewHomeFragment : BaseFragment() {
                 is QumparanResource.Success -> {
                 }
             }
-        })
+        }
     }
 
     private fun showLoading(b: Boolean) {

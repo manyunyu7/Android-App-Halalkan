@@ -67,4 +67,8 @@
         android:id="@+id/navigation_listAndSearchPrayerRoomFragment"
         android:name="com.feylabs.halalkan.view.prayer.list_and_search.ListAndSearchPrayerRoomFragment"
         android:label="ListAndSearchPrayerRoomFragment" />
+    <fragment
+        android:id="@+id/navigation_translateFragment"
+        android:name="com.feylabs.halalkan.view.translate.TranslateFragment"
+        android:label="TranslateFragment" />
 </navigation>

@@ -54,6 +54,7 @@
             android:orientation="vertical">
 
             <include
+                android:id="@+id/layout_dropdown_translator"
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
                 android:layout_marginHorizontal="@dimen/dimen_10dp"
@@ -61,6 +62,7 @@
                 layout="@layout/layout_dropdown_translator" />
 
             <include
+                android:id="@+id/container_source_language"
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
                 android:layout_marginHorizontal="@dimen/dimen_10dp"
@@ -68,6 +70,7 @@
                 layout="@layout/layout_translator_source" />
 
             <include
+                android:id="@+id/container_target_language"
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
                 android:layout_marginHorizontal="@dimen/dimen_10dp"

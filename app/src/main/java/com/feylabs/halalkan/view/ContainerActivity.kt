@@ -22,7 +22,7 @@ class ContainerActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         // val navView: BottomNavigationView = binding.navView
-        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE or WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+        // window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE or WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
 
         val navController = findNavController(R.id.nav_host_fragment_activity_container)
         // Passing each menu ID as a set of Ids because each

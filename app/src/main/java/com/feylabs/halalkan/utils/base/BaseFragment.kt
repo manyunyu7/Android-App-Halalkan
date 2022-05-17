@@ -29,6 +29,8 @@ abstract class BaseFragment : Fragment() {
         initData()
     }
 
+    fun getMFragmentManager() = getParentFragmentManager()
+
     fun showToast(text: String, isLong: Boolean = false) {
         var duration = Toast.LENGTH_LONG
         if (!isLong)

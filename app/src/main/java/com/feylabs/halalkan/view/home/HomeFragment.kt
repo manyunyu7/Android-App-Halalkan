@@ -96,7 +96,7 @@ class HomeFragment : BaseFragment() {
             }
         })
 
-        viewModel.postLiveData.observe(viewLifecycleOwner, {
+        viewModel.postLiveData.observe(viewLifecycleOwner) {
             when (it) {
                 is QumparanResource.Default -> {
                 }
@@ -110,7 +110,7 @@ class HomeFragment : BaseFragment() {
                     combinePostAndUsers(it.data)
                 }
             }
-        })
+        }
     }
 
     private fun showLoading(b: Boolean) {
