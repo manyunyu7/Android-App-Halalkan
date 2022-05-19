@@ -20,6 +20,7 @@
     <string name="gps_settings_title">GPS settings</string>
     <string name="gps_settings_text">GPS is not enabled, you must activate it first from the settings to get the Qibla direction.</string>
     <string name="pilih_bahasa">Pilih Bahasa</string>
+    <string name="MuatLebihBanyak">load_more</string>
 
 
 </resources>
