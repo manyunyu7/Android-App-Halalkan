@@ -24,6 +24,15 @@
 
     <string name="home_restaurant_around_you">Restoran di Sekitar Anda</string>
     <string name="home_masjid_near_you">Masjid di Sekitar Anda</string>
+    <string name="general_memuat_data">Memuat Data</string>
+    <string name="detail_masjid_tentang_tempat_ibadah">Tentang Tempat Ibadah</string>
+    <string name="photos">Photos</string>
+    <string name="detail_masjid_detail">Detail</string>
+    <string name="detail_masjid_fasilitas">Fasilitas</string>
+    <string name="detail_masjid_narahubung">Narahubung</string>
+    <string name="detail_masjid_jam_operasional">Jam Operasional</string>
+    <string name="detail_masjid_alamat">Alamat</string>
+    <string name="detail_masjid_kategori">Kategori</string>
 
 
 </resources>

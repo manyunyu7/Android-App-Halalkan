@@ -39,7 +39,15 @@
     <color name="green50">#3BA064</color>
     <color name="green40">#56C281</color>
     <color name="green60">#2A844E</color>
-    <color name="lightBlue">#45B6FE</color>//Action bar
+    <color name="lightBlue">#45B6FE</color>
+    <color name="color_separator">#F5F5F5</color>
+    <color name="text_secondary_detail">#757575</color>
+    <color name="color_link_call">#156DBE</color>
+    <color name="color_subtitle_detail_masjid">#424242</color>
+    <color name="color_sub_secondary_detail">#616161</color>
+    <color name="black50">#9E9E9E</color>
+    <color name="color_accent_success">#008D36</color>
+    <color name="color_bg_card_open">#E5F5E9</color>//Action bar
 
 
 </resources>
