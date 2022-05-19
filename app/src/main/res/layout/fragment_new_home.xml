@@ -229,7 +229,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/dimen_20dp"
                     android:fontFamily="@font/montserrat_regular"
-                    android:text="Restaurant Around You"
+                    android:text="@string/home_restaurant_around_you"
                     android:textColor="@color/black" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -260,6 +260,45 @@
                         tools:listitem="@layout/item_home_restaurant" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/dimen_20dp"
+                    android:fontFamily="@font/montserrat_regular"
+                    android:text="@string/home_masjid_near_you"
+                    android:textColor="@color/black" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <include
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:layout_marginStart="@dimen/dimen_10dp"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        layout="@layout/layout_shimmer_home_resto"/>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_masjid"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintTop_toBottomOf="parent"
+                        android:layout_marginHorizontal="@dimen/dimen_10dp"
+                        android:layout_marginTop="@dimen/dimen_5dp"
+                        android:visibility="visible"
+                        android:orientation="horizontal"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        tools:listitem="@layout/item_home_restaurant" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
             </LinearLayout>
 
 

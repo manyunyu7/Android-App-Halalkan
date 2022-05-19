@@ -72,6 +72,8 @@ class NewHomeFragment : BaseFragment() {
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
             it.adapter = mAdapter
         }
+
+        binding.rvResto
     }
 
     override fun initObserver() {

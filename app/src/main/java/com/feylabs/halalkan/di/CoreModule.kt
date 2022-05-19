@@ -2,6 +2,7 @@ package com.feylabs.halalkan.di
 
 import com.chuckerteam.chucker.api.ChuckerCollector
 import com.chuckerteam.chucker.api.ChuckerInterceptor
+import com.feylabs.halalkan.data.MasjidRepository
 import com.feylabs.halalkan.data.QumparanRepository
 import com.feylabs.halalkan.data.TranslatorRepository
 import com.feylabs.halalkan.data.remote.service.ApiService
@@ -39,11 +40,20 @@ val networkModule = module {
 
     single<ApiService>(named("mainService")) {
         val retrofit = Retrofit.Builder()
-            .baseUrl(Network.BASE_URL)
+            .baseUrl(Network.BASE_URL_V1)
             .addConverterFactory(GsonConverterFactory.create())
             .client(get())
             .build()
         retrofit.create(ApiService::class.java)
+    }
+
+    single<MasjidService>(named("masjidService")) {
+        val retrofit = Retrofit.Builder()
+            .baseUrl(Network.BASE_URL_V1)
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(get())
+            .build()
+        retrofit.create(MasjidService::class.java)
     }
 
     single<TranslatorService>(named("translatorService")) {
@@ -59,7 +69,14 @@ val networkModule = module {
 }
 
 val repositoryModule = module {
-    single { RemoteDataSource(get(named("mainService")), get(named("translatorService"))) }
+    single {
+        RemoteDataSource(
+            get(named("mainService")),
+            get(named("masjidService")),
+            get(named("translatorService"))
+            )
+    }
+    single { MasjidRepository(get()) }
     single { QumparanRepository(get()) }
     single { TranslatorRepository(get()) }
 }

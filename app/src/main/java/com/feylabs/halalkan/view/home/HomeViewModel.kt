@@ -4,14 +4,16 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.feylabs.halalkan.data.MasjidRepository
 import com.feylabs.halalkan.data.QumparanRepository
 import com.feylabs.halalkan.data.remote.QumparanResource
 import com.feylabs.halalkan.data.remote.reqres.PostResponse
 import com.feylabs.halalkan.data.remote.reqres.UserResponse
+import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidResponseWithoutPagination
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
-class HomeViewModel(val repo: QumparanRepository) : ViewModel() {
+class HomeViewModel(val repo: QumparanRepository, val masjidRepo: MasjidRepository) : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
         value = "This is home Fragment"
@@ -23,6 +25,24 @@ class HomeViewModel(val repo: QumparanRepository) : ViewModel() {
 
     private var _postLiveData = MutableLiveData<QumparanResource<PostResponse?>>()
     val postLiveData get() = _postLiveData
+
+    private var _allMasjidLiveData =
+        MutableLiveData<QumparanResource<MasjidResponseWithoutPagination?>>()
+    val allMasjidLiveData get() = _allMasjidLiveData
+
+    fun fetchAllMasjid() = viewModelScope.launch {
+        _allMasjidLiveData.postValue(QumparanResource.Loading())
+        try {
+            val res = masjidRepo.getAllMasjid()
+            if (res.isSuccessful) {
+                _allMasjidLiveData.postValue(QumparanResource.Success(res.body()))
+            } else {
+                _allMasjidLiveData.postValue(QumparanResource.Error("Terjadi Kesalahan"))
+            }
+        } catch (e: Exception) {
+            _allMasjidLiveData.postValue(QumparanResource.Error(e.message.toString()))
+        }
+    }
 
     fun fetchUsers() = viewModelScope.launch {
         _userLiveData.postValue(QumparanResource.Loading())

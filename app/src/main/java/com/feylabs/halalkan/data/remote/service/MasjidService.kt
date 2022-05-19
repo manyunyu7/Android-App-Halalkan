@@ -9,11 +9,8 @@ import retrofit2.http.*
 
 interface MasjidService {
 
-    @GET("/php-translator-api")
-    suspend fun translate(
-        @Query("source") langSource: String,
-        @Query("target") target: Target,
-        @Query("text") text: String,
+    @GET("/masjids/showAll")
+    suspend fun showAllMasjid(
     ): Response<MasjidResponseWithoutPagination>
 
 }

@@ -6,6 +6,7 @@ import com.feylabs.halalkan.data.remote.service.TranslatorService
 
 class RemoteDataSource(
     private val commonService: ApiService,
+    private val masjidService: MasjidService,
     private val translationService: TranslatorService,
 ) {
 
@@ -34,5 +35,7 @@ class RemoteDataSource(
     suspend fun getTextToSpeech(
         langSource: String, text: String
     ) = translationService.getTTS(lang = langSource, text = text)
+
+    suspend fun getAllMasjid() = masjidService.showAllMasjid()
 
 }

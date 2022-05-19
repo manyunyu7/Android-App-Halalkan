@@ -80,7 +80,6 @@ class ContainerActivity : BaseActivity(), TextToSpeech.OnInitListener {
         tts?.speak(text, TextToSpeech.QUEUE_FLUSH, null, "")
     }
 
-
     fun isPackageInstalled(pm: PackageManager, packageName: String?): Boolean {
         try {
             pm.getPackageInfo(packageName!!, 0)
