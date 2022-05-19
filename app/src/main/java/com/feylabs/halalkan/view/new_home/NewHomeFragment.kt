@@ -12,6 +12,7 @@ import com.feylabs.halalkan.R
 import com.feylabs.halalkan.data.remote.QumparanResource
 import com.feylabs.halalkan.data.remote.reqres.PostResponse
 import com.feylabs.halalkan.data.remote.reqres.UserResponse
+import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidResponseWithoutPagination
 import com.feylabs.halalkan.databinding.FragmentHomeBinding
 import com.feylabs.halalkan.databinding.FragmentNewHomeBinding
 import com.feylabs.halalkan.utils.base.BaseFragment
@@ -25,6 +26,7 @@ class NewHomeFragment : BaseFragment() {
     private var _binding: FragmentNewHomeBinding? = null
 
     private val mAdapter by lazy { ListRestaurantAdapter() }
+    private val mMosqueAdapter by lazy { ListMasjidAdapter() }
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -49,7 +51,7 @@ class NewHomeFragment : BaseFragment() {
     }
 
     override fun initData() {
-        viewModel.fetchUsers()
+        viewModel.fetchAllMasjid()
     }
 
     override fun initUI() {
@@ -64,6 +66,13 @@ class NewHomeFragment : BaseFragment() {
 
             }
         })
+
+        mMosqueAdapter.setupAdapterInterface(object : ListMasjidAdapter.ItemInterface {
+            override fun onclick(model: MasjidResponseWithoutPagination.Data) {
+
+            }
+
+        })
     }
 
     private fun initRecyclerView() {
@@ -73,26 +82,53 @@ class NewHomeFragment : BaseFragment() {
             it.adapter = mAdapter
         }
 
-        binding.rvResto
+        binding.rvMasjid.let {
+            it.layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            it.adapter = mMosqueAdapter
+        }
+
     }
 
     override fun initObserver() {
-        viewModel.postLiveData.observe(viewLifecycleOwner) {
+        viewModel.allMasjidLiveData.observe(viewLifecycleOwner) {
             when (it) {
                 is QumparanResource.Default -> {
+                    showLoadingMosque(false)
                 }
                 is QumparanResource.Error -> {
-                    showToast(it.message.toString())
+                    showLoadingMosque(false)
                 }
                 is QumparanResource.Loading -> {
+                    showLoadingMosque(true)
                 }
                 is QumparanResource.Success -> {
+                    it.data?.let { response ->
+                        setupMosqueData(response)
+                    }
                 }
             }
         }
     }
 
-    private fun showLoading(b: Boolean) {
+    private fun setupMosqueData(response: MasjidResponseWithoutPagination) {
+        mMosqueAdapter.setWithNewData(response.data.toMutableList())
+        mMosqueAdapter.notifyDataSetChanged()
+        showLoadingMosque(false)
+    }
+
+    private fun showLoadingMosque(b: Boolean) {
+        if (b) {
+            viewGone(binding.rvMasjid)
+            viewVisible(binding.loadingMosque.root)
+        } else {
+            viewVisible(binding.rvMasjid)
+            viewGone(binding.loadingMosque.root)
+        }
+    }
+
+
+    private fun showLoadingResto(b: Boolean) {
         if (b) {
             viewGone(binding.rvResto)
 //            viewVisible(binding.loading)

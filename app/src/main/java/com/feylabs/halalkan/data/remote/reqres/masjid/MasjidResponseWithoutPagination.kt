@@ -39,6 +39,8 @@ data class MasjidResponseWithoutPagination(
         @SerializedName("type_id")
         val typeId: Int,
         @SerializedName("updated_at")
-        val updatedAt: String
+        val updatedAt: String,
+        @SerializedName("category_name")
+        val categoryName: String
     )
 }

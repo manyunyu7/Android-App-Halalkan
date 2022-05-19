@@ -17,20 +17,15 @@ import com.feylabs.halalkan.utils.base.BaseActivity
 import java.util.*
 
 
-class ContainerActivity : BaseActivity(), TextToSpeech.OnInitListener {
+class ContainerActivity : BaseActivity() {
 
     private lateinit var binding: ActivityContainerBinding
-    private var tts: TextToSpeech? = null
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityContainerBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        tts = TextToSpeech(this,this)
-        checkTTSAvailability()
 
         // val navView: BottomNavigationView = binding.navView
         // window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE or WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
@@ -48,45 +43,6 @@ class ContainerActivity : BaseActivity(), TextToSpeech.OnInitListener {
         )
         //setupActionBarWithNavController(navController, appBarConfiguration)
         //navView.setupWithNavController(navController)
-    }
-
-    private fun checkTTSAvailability() {
-        val installIntent = Intent()
-        installIntent.action = TextToSpeech.Engine.ACTION_INSTALL_TTS_DATA
-        startActivity(installIntent)
-    }
-
-    override fun onInit(status: Int) {
-        if (status == TextToSpeech.SUCCESS) {
-            tts?.language = Locale.KOREA
-        } else {
-            showToast("Device Not Supported")
-        }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        if (tts != null) {
-            tts!!.stop()
-            tts!!.shutdown()
-        }
-        super.onDestroy()
-    }
-
-    fun speakOut(text: String,code:String) {
-        showToast("speak out $code ok")
-        var lang = Locale("id","ID")
-        tts?.language = Locale.KOREA
-        tts?.speak(text, TextToSpeech.QUEUE_FLUSH, null, "")
-    }
-
-    fun isPackageInstalled(pm: PackageManager, packageName: String?): Boolean {
-        try {
-            pm.getPackageInfo(packageName!!, 0)
-        } catch (e: PackageManager.NameNotFoundException) {
-            return false
-        }
-        return true
     }
 
     /* Check is there a NetworkConnection */

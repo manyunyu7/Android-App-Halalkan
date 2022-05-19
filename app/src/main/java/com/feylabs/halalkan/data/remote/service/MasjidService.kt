@@ -9,7 +9,7 @@ import retrofit2.http.*
 
 interface MasjidService {
 
-    @GET("/masjids/showAll")
+    @GET("masjids/showAll")
     suspend fun showAllMasjid(
     ): Response<MasjidResponseWithoutPagination>
 

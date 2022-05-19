@@ -19,6 +19,7 @@ class SplashScreenActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        proceedNext()
 
         GlobalScope.launch {
             withContext(Dispatchers.Main) {
