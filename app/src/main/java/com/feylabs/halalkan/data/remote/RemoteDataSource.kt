@@ -2,9 +2,11 @@ package com.feylabs.halalkan.data.remote
 
 import com.feylabs.halalkan.data.remote.service.ApiService
 import com.feylabs.halalkan.data.remote.service.MasjidService
+import com.feylabs.halalkan.data.remote.service.TranslatorService
 
 class RemoteDataSource(
     private val commonService: ApiService,
+    private val translationService: TranslatorService,
 ) {
 
     /**
@@ -24,5 +26,13 @@ class RemoteDataSource(
     suspend fun getAlbumPhoto(albumId: String) = commonService.getPhotoByAlbum(albumId)
 
     suspend fun getMasjids() = commonService.getMasjids()
+
+    suspend fun getTranslation(
+        langSource: String, target: String, text: String
+    ) = translationService.translate(langSource = langSource, target = target, text = text)
+
+    suspend fun getTextToSpeech(
+        langSource: String, text: String
+    ) = translationService.getTTS(lang = langSource, text = text)
 
 }

@@ -24,7 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/logo_translate"
+            app:layout_constraintEnd_toStartOf="@id/logo_switch"
             android:gravity="center">
 
             <ImageView
@@ -48,9 +48,10 @@
         </LinearLayout>
 
         <ImageView
-            android:id="@+id/logo_translate"
+            android:id="@+id/logo_switch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
             android:src="@drawable/ic_translate_arrow"
             app:layout_constraintEnd_toEndOf="@id/guidelineCenter"
             app:layout_constraintStart_toStartOf="@id/guidelineCenter"
@@ -62,7 +63,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@id/logo_translate"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@id/logo_switch"
             android:gravity="center">
 
             <ImageView

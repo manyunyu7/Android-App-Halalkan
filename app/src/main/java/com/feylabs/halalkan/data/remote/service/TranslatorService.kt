@@ -1,50 +1,24 @@
 package com.feylabs.halalkan.data.remote.service
 
-import com.feylabs.halalkan.data.remote.reqres.*
-import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidResponseWithoutPagination
-import retrofit2.Call
+import com.feylabs.halalkan.data.remote.reqres.translator.TiktokTextToSpeechResponse
+import com.feylabs.halalkan.data.remote.reqres.translator.TranslateResponse
 import retrofit2.Response
 import retrofit2.http.*
 
 
 interface TranslatorService {
 
+    @GET("php-translator")
+    suspend fun translate(
+        @Query("source") langSource: String,
+        @Query("target") target: String,
+        @Query("text") text: String,
+    ): Response<TranslateResponse>
 
-    @GET("/users")
-    suspend fun getUsers(): Response<UserResponse>
-
-    @GET("/posts")
-    suspend fun getPosts(): Response<PostResponse>
-
-    @GET("posts/{postId}/")
-    fun getPostDetail(
-        @Path("postId") postId: String,
-    ): Response<PostDetailResponse>
-
-    @GET("users/{userId}/")
-    suspend fun getUserDetail(
-        @Path("userId") userId: String,
-    ): Response<UserDetailResponse>
-
-    @GET("users/{userId}/albums")
-    suspend fun getUserAlbum(
-        @Path("userId") userId: String,
-    ): Response<UserAlbumResponse>
-
-    @GET("albums/{albumId}/photos")
-    suspend fun getPhotoByAlbum(
-        @Path("albumId") albumId: String,
-    ): Response<AlbumPhotoResponse>
-
-    @GET("posts/{postId}/comments")
-    suspend fun getPostComments(
-        @Path("postId") postId: String,
-    ): Response<PostCommentResponse>
-
-    @GET("masjids/showAll")
-    suspend fun getMasjids(
-        @Query("isPaginate") isPaginate: Boolean = false
-    ): Response<MasjidResponseWithoutPagination>
-
+    @GET("tiktok-tts")
+    suspend fun getTTS(
+        @Query("lang") lang: String,
+        @Query("text") text: String,
+    ): Response<TiktokTextToSpeechResponse>
 
 }

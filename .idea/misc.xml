@@ -36,8 +36,10 @@
         <entry key="..\:/Project/Android/Android-App-Halalkan/app/src/main/res/layout/item_photo.xml" value="0.20153985507246377" />
         <entry key="..\:/Project/Android/Android-App-Halalkan/app/src/main/res/layout/item_prayer_room_list_search.xml" value="0.20153985507246377" />
         <entry key="..\:/Project/Android/Android-App-Halalkan/app/src/main/res/layout/layout_date_pray.xml" value="0.1" />
-        <entry key="..\:/Project/Android/Android-App-Halalkan/app/src/main/res/layout/layout_dropdown_translator.xml" value="0.134375" />
+        <entry key="..\:/Project/Android/Android-App-Halalkan/app/src/main/res/layout/layout_dropdown_translator.xml" value="0.18" />
         <entry key="..\:/Project/Android/Android-App-Halalkan/app/src/main/res/layout/layout_forum_profile.xml" value="0.20153985507246377" />
+        <entry key="..\:/Project/Android/Android-App-Halalkan/app/src/main/res/layout/layout_translator_result.xml" value="0.33" />
+        <entry key="..\:/Project/Android/Android-App-Halalkan/app/src/main/res/layout/layout_translator_source.xml" value="0.25" />
         <entry key="..\:/Project/Android/Android-App-Halalkan/app/src/main/res/layout/post_detail_fragment.xml" value="0.20153985507246377" />
       </map>
     </option>

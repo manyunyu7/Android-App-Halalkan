@@ -25,14 +25,25 @@
         <EditText
             android:id="@+id/et_translate"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="wrap_content"
             android:gravity="top"
             android:fontFamily="@font/roboto_regular"
-            android:hint="Enter text here"
-            android:text="안녕하세요 \nannyeonghaseyo"
+            android:hint="Terjemahan"
+            android:textColorHint="@color/colorTextSecondary"
             android:textColor="@color/white"
             android:background="@android:color/transparent"
             app:layout_constraintTop_toBottomOf="@id/label_language"
+            app:layout_constraintStart_toStartOf="parent"
+            />
+        <EditText
+            android:id="@+id/et_spelling"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="top"
+            android:fontFamily="@font/roboto_regular"
+            android:textColor="@color/white"
+            android:background="@android:color/transparent"
+            app:layout_constraintTop_toBottomOf="@id/et_translate"
             app:layout_constraintStart_toStartOf="parent"
             />
 
@@ -41,7 +52,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dimen_10dp"
-            app:layout_constraintTop_toBottomOf="@id/et_translate"
+            app:layout_constraintTop_toBottomOf="@id/et_spelling"
             app:layout_constraintStart_toStartOf="parent"
             android:src="@drawable/ic_baseline_volume_up_24"
             app:tint="@color/colorWhite" />
@@ -52,7 +63,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dimen_10dp"
             android:layout_marginEnd="@dimen/dimen_10dp"
-            app:layout_constraintTop_toBottomOf="@id/et_translate"
+            app:layout_constraintTop_toBottomOf="@id/et_spelling"
             app:layout_constraintEnd_toEndOf="parent"
             android:src="@drawable/ic_baseline_content_copy_24"
             app:tint="@color/colorWhite" />
