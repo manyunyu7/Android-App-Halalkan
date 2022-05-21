@@ -4,20 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.feylabs.halalkan.R
+import com.feylabs.halalkan.customview.UiKitContentProfile
 import com.feylabs.halalkan.data.remote.QumparanResource
-import com.feylabs.halalkan.data.remote.reqres.PostResponse
-import com.feylabs.halalkan.data.remote.reqres.UserResponse
 import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidResponseWithoutPagination
-import com.feylabs.halalkan.databinding.FragmentHomeBinding
 import com.feylabs.halalkan.databinding.FragmentNewHomeBinding
 import com.feylabs.halalkan.utils.base.BaseFragment
 import com.feylabs.halalkan.view.home.HomeViewModel
-import com.feylabs.halalkan.view.home.ListPostsAdapter
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class NewHomeFragment : BaseFragment() {

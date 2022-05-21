@@ -22,12 +22,17 @@
         <entry key="..\:/AndroidStudioProjects/Qumparan/app/src/main/res/layout/raz_custom_info_horizontal.xml" value="0.5" />
         <entry key="..\:/AndroidStudioProjects/Qumparan/app/src/main/res/layout/raz_custom_info_vert.xml" value="0.25" />
         <entry key="..\:/AndroidStudioProjects/Qumparan/app/src/main/res/layout/user_profile_fragment.xml" value="0.12" />
+        <entry key="..\:/Project/Android/Android-App-Halalkan/app/src/main/res/drawable/bg_circle.xml" value="0.1225" />
         <entry key="..\:/Project/Android/Android-App-Halalkan/app/src/main/res/drawable/bg_shimmer_soft.xml" value="0.135" />
         <entry key="..\:/Project/Android/Android-App-Halalkan/app/src/main/res/drawable/bg_shimmer_text.xml" value="0.134" />
         <entry key="..\:/Project/Android/Android-App-Halalkan/app/src/main/res/drawable/bg_shimmer_white.xml" value="0.134" />
+        <entry key="..\:/Project/Android/Android-App-Halalkan/app/src/main/res/drawable/profile_shadow.xml" value="0.1" />
         <entry key="..\:/Project/Android/Android-App-Halalkan/app/src/main/res/layout/activity_container.xml" value="0.10052083333333334" />
         <entry key="..\:/Project/Android/Android-App-Halalkan/app/src/main/res/layout/activity_splash_screen.xml" value="0.1" />
         <entry key="..\:/Project/Android/Android-App-Halalkan/app/src/main/res/layout/custom_view_item_search_language_dialog.xml" value="0.18" />
+        <entry key="..\:/Project/Android/Android-App-Halalkan/app/src/main/res/layout/custom_view_layout_popup_profile_content.xml" value="0.1125" />
+        <entry key="..\:/Project/Android/Android-App-Halalkan/app/src/main/res/layout/custom_view_layout_popup_profile_content_pg.xml" value="0.2" />
+        <entry key="..\:/Project/Android/Android-App-Halalkan/app/src/main/res/layout/custom_view_layout_popup_profile_main.xml" value="0.25" />
         <entry key="..\:/Project/Android/Android-App-Halalkan/app/src/main/res/layout/custom_view_search_language_dialog.xml" value="0.18" />
         <entry key="..\:/Project/Android/Android-App-Halalkan/app/src/main/res/layout/example_pagination_fragment.xml" value="0.12" />
         <entry key="..\:/Project/Android/Android-App-Halalkan/app/src/main/res/layout/fragment_detail_prayer.xml" value="0.25" />
