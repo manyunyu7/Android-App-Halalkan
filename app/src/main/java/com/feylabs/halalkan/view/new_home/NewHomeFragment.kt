@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.feylabs.halalkan.R
+import com.feylabs.halalkan.customview.SearchLanguageDialog
 import com.feylabs.halalkan.customview.UiKitContentProfile
 import com.feylabs.halalkan.data.remote.QumparanResource
 import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidResponseWithoutPagination
@@ -62,7 +63,10 @@ class NewHomeFragment : BaseFragment() {
         )
 
         binding.menuScan.setOnClickListener {
-            dialog.show(requireActivity().supportFragmentManager, UiKitContentProfile.TAG)
+            val a = SearchLanguageDialog(requireContext())
+            a.show(binding.root)
+            a.renameTitle("Halo")
+            //dialog.show(requireActivity().supportFragmentManager, UiKitContentProfile.TAG)
         }
 
         initRecyclerView()
