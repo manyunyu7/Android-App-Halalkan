@@ -50,6 +50,21 @@ class NewHomeFragment : BaseFragment() {
     }
 
     override fun initUI() {
+        val dialog = UiKitContentProfile.instance(
+            userName = "Henry Augusta",
+            position = "Android Developer",
+            phone = "088223738709",
+            gender = "Laki-Laki",
+            email = "henryaugusta4@gmail.com",
+            groupMemberName = "Technology and Engineering",
+            emailListener = { showToast("Yes") },
+            phoneNumberListener = { showToast("No") }
+        )
+
+        binding.menuScan.setOnClickListener {
+            dialog.show(requireActivity().supportFragmentManager, UiKitContentProfile.TAG)
+        }
+
         initRecyclerView()
         initAdapter()
         loadData()

@@ -6,9 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.TextView
-import androidx.fragment.app.FragmentManager
 import com.feylabs.halalkan.R
+import com.feylabs.halalkan.databinding.CustomViewLayoutPopupProfileContentBinding
 import com.feylabs.halalkan.databinding.CustomViewLayoutPopupProfileMainBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
@@ -24,8 +23,9 @@ class UiKitContentProfile : BottomSheetDialogFragment() {
     private var gender: String = ""
     private var image: String = ""
 
-    private lateinit var phoneNumberClickListener : () -> Unit
-    private lateinit var emailClickListener : () -> Unit
+    private lateinit var phoneNumberClickListener: () -> Unit
+    private lateinit var emailClickListener: () -> Unit
+    private lateinit var imageClickListener: () -> Unit
 
     companion object {
         val TAG = "PROFILE_POPUP_DIALOG"
@@ -36,8 +36,8 @@ class UiKitContentProfile : BottomSheetDialogFragment() {
             email: String,
             phone: String,
             gender: String,
-            phoneNumberListener : () -> Unit,
-            emailListener : () -> Unit,
+            phoneNumberListener: () -> Unit,
+            emailListener: () -> Unit,
         ): UiKitContentProfile {
             UiKitContentProfile().apply {
                 this.gender = gender
@@ -53,16 +53,18 @@ class UiKitContentProfile : BottomSheetDialogFragment() {
         }
     }
 
-    private lateinit var binding: CustomViewLayoutPopupProfileMainBinding
+    private lateinit var bindingMain: CustomViewLayoutPopupProfileMainBinding
+    private lateinit var bindingContent: CustomViewLayoutPopupProfileContentBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = CustomViewLayoutPopupProfileMainBinding.inflate(inflater, container, false)
+        bindingMain = CustomViewLayoutPopupProfileMainBinding.inflate(inflater, container, false)
+        bindingContent = CustomViewLayoutPopupProfileContentBinding.bind(bindingMain.root)
         initUI()
-        return binding.root
+        return bindingMain.root
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -70,11 +72,16 @@ class UiKitContentProfile : BottomSheetDialogFragment() {
         setStyle(STYLE_NORMAL, R.style.BottomSheetDialogTheme)
     }
 
-    private fun initUI() = with(binding) {
+    private fun initUI() = with(bindingMain) {
         this@UiKitContentProfile.apply {
+
+            ivProfilePicture.setOnClickListener {
+                imageClickListener.invoke()
+            }
+
             tvName.text = userName
             tvPosition.text = position
-            includeContent.apply {
+            bindingContent.apply {
                 labelDisplayEmail.text = email
                 labelDisplayGender.text = gender
                 labelDisplayPhone.text = phone

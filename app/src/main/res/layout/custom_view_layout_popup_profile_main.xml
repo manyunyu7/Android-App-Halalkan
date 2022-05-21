@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/white"
     xmlns:tools="http://schemas.android.com/tools">
 
     <FrameLayout
@@ -28,8 +29,8 @@
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:layout_gravity="center"
-                android:scaleType="fitXY"
                 android:contentDescription="Profile Picture"
+                android:scaleType="fitXY"
                 android:src="@drawable/ic_example_profile" />
         </androidx.cardview.widget.CardView>
 
@@ -64,7 +65,6 @@
         tools:text="Chief Technology Officer"/>
 
     <include
-        android:id="@+id/include_content"
         layout="@layout/custom_view_layout_popup_profile_content"/>
 
 
