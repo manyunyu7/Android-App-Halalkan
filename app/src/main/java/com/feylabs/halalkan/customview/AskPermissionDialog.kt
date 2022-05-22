@@ -1,5 +1,6 @@
 package com.feylabs.halalkan.customview
 
+import android.app.Activity
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
@@ -7,19 +8,44 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.FrameLayout
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.feylabs.halalkan.R
-import com.feylabs.halalkan.databinding.CustomViewSearchLanguageDialogBinding
 import com.feylabs.halalkan.customview.searchwithimage.ListSearchWithImageAdapter
 import com.feylabs.halalkan.databinding.CustomViewItemAskBlockedPermissionBinding
-import com.feylabs.halalkan.utils.Network
 
-class AskBlockedPermissionUI : FrameLayout {
+class AskPermissionDialog : FrameLayout {
 
+    class Builder(
+        val context: Context,
+        var text: String? = null,
+        var positiveAction: (() -> Unit)? = null,
+        var negativeAction: (() -> Unit)? = null,
+        var imageDrawable: Int = R.drawable.ic_microphone_permi,
+    ) {
+        fun text(mtext: String) = apply {
+            this.text = mtext
+        }
+
+        fun positiveAction(positiveAction: () -> Unit) = apply {
+            this.positiveAction = positiveAction
+        }
+
+        fun negativeAction(negativeAction: () -> Unit) = apply {
+            this.negativeAction = negativeAction
+        }
+
+        fun image(imageDrawable: Int) {
+            this.imageDrawable = imageDrawable
+        }
+
+        fun build() = AskPermissionDialog(this, context)
+
+    }
+
+    private lateinit var mActivity : Activity
     private var text = ""
-    private var positiveAction = {}
-    private var negativeAction = {}
+    private var positiveAction: (() -> Unit)? = null
+    private var negativeAction: (() -> Unit)? = null
     private var imageDrawable = R.drawable.ic_microphone_permi
 
     val adapter by lazy { ListSearchWithImageAdapter() }
@@ -36,6 +62,18 @@ class AskBlockedPermissionUI : FrameLayout {
         initView()
     }
 
+    constructor(builder: Builder, context: Context) : super(context) {
+        this.positiveAction = builder.positiveAction
+        this.negativeAction = builder.negativeAction
+        this.text = builder.text.orEmpty()
+        this.imageDrawable = builder.imageDrawable
+
+        setDescriptionText(builder.text.orEmpty())
+        setPositiveAction(builder.positiveAction)
+        setNegativeAction(builder.positiveAction)
+        initView()
+    }
+
     constructor(context: Context, attributeSet: AttributeSet, defStyle: Int) :
             super(context, attributeSet, defStyle) {
         initView()
@@ -43,33 +81,6 @@ class AskBlockedPermissionUI : FrameLayout {
 
     constructor(context: Context, attributeSet: AttributeSet) : super(context, attributeSet) {
         initView()
-    }
-
-    class Builder(
-        val context: Context,
-        var text: String? = null,
-        var positiveAction: () -> Unit? = {},
-        var negativeAction: () -> Unit? = {},
-        var imageDrawable: Int = R.drawable.ic_microphone_permi,
-    ) {
-        fun text(mtext: String) = apply {
-            this.text = mtext
-        }
-
-        fun positiveAction(positiveAction: () -> Unit?) = apply {
-            this.positiveAction = positiveAction
-        }
-
-        fun negativeAction(negativeAction: () -> Unit?) = apply {
-            this.negativeAction = negativeAction
-        }
-
-        fun image(imageDrawable: Int) {
-            this.imageDrawable = imageDrawable
-        }
-
-        fun build() = AskBlockedPermissionUI(context)
-
     }
 
     fun initView() {
@@ -80,14 +91,24 @@ class AskBlockedPermissionUI : FrameLayout {
         }
 
         binding.btnPositive.setOnClickListener {
-            positiveAction.invoke()
+            positiveAction?.let {
+                it.invoke()
+                this.dismiss()
+            }
         }
 
         binding.btnNegative.setOnClickListener {
-            negativeAction.invoke()
+            negativeAction?.let {
+                it.invoke()
+                this.dismiss()
+            }
         }
 
-        binding.text.text = text
+        if (text.isNotEmpty()) {
+            binding.text.text = text
+        } else {
+            binding.text.text = "Aplikasi Membutuhkan Izin Anda Untuk Menggunakan GPS Perangkat"
+        }
 
         Glide.with(context)
             .load(imageDrawable)
@@ -100,14 +121,18 @@ class AskBlockedPermissionUI : FrameLayout {
         initView()
     }
 
-    fun setPositiveAction(action: () -> Unit) {
+    fun setPositiveAction(action: (() -> Unit)?) {
         this.positiveAction = action
         initView()
     }
 
-    fun setNegativeAction(action: () -> Unit) {
+    fun setNegativeAction(action: (() -> Unit)?) {
         this.negativeAction = action
         initView()
+    }
+
+    private fun requireActivity(): Activity {
+        return mActivity
     }
 
     fun show(parentView: ViewGroup) {
@@ -124,6 +149,14 @@ class AskBlockedPermissionUI : FrameLayout {
         )
         initView()
         parentView.addView(binding.root)
+    }
+
+    fun dismiss(parentView: ViewGroup? = null) {
+        if (parentView != null) {
+            parentView.removeView(binding.rootView)
+        } else {
+            binding.rootView.visibility = View.GONE
+        }
     }
 
 }

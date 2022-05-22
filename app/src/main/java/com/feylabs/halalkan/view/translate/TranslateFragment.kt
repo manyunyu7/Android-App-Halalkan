@@ -1,19 +1,21 @@
 package com.feylabs.halalkan.view.translate
 
+import android.app.Activity.RESULT_OK
+import android.content.Intent
 import android.media.MediaPlayer
 import android.os.Bundle
+import android.speech.RecognizerIntent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.doAfterTextChanged
 import androidx.navigation.fragment.findNavController
-import com.feylabs.halalkan.customview.AskBlockedPermissionUI
+import com.feylabs.halalkan.customview.AskPermissionDialog
 import com.feylabs.halalkan.customview.SearchLangDialogFragment
 import com.feylabs.halalkan.data.remote.QumparanResource
 import com.feylabs.halalkan.data.remote.reqres.translator.TiktokTextToSpeechResponse
 import com.feylabs.halalkan.databinding.CustomViewSearchLanguageDialogBinding
 import com.feylabs.halalkan.databinding.FragmentTranslateBinding
-import com.feylabs.halalkan.utils.PermissionActivityFlow
 import com.feylabs.halalkan.utils.PermissionUtil
 import com.feylabs.halalkan.utils.PermissionUtil.Companion.getPermissionStatus
 import com.feylabs.halalkan.utils.PermissionUtil.Companion.isBlocked
@@ -22,6 +24,8 @@ import com.feylabs.halalkan.utils.TranslatorUtil
 import com.feylabs.halalkan.utils.base.BaseFragment
 import com.feylabs.halalkan.customview.searchwithimage.ListSearchWithImageAdapter
 import com.feylabs.halalkan.customview.searchwithimage.SearchWithImageModel
+import com.feylabs.halalkan.utils.PermissionCommandUtil
+import com.feylabs.halalkan.utils.PermissionUtil.Companion.openSetting
 import org.koin.android.viewmodel.ext.android.viewModel
 import java.io.IOException
 import java.util.*
@@ -46,26 +50,25 @@ class TranslateFragment : BaseFragment() {
         initLanguageContainerUI()
     }
 
-    private fun checkMicUsingPermission() {
+    private fun checkMicUsingPermission(): Boolean {
+        val dialogBuilder = AskPermissionDialog.Builder(requireContext())
         val checkAudio = getPermissionStatus(requireActivity(), PermissionUtil.PER_RECORD_AUDIO)
         if (checkAudio.isNotGranted()) {
             if (checkAudio.isBlocked()) {
-                AskBlockedPermissionUI.Builder(requireContext())
-                    .text("")
+                dialogBuilder.text("Penggunaan microphone diperlukan untuk menerjemahkan suara anda, sebelumnya anda telah memblokir penggunaan microphone, silakan izinkan secara otomatis di halaman pengaturan")
                     .positiveAction {
-
-                    }
-                    .negativeAction {
-
-                    }
-                    .build()
-                    .show(binding.root)
+                        openSetting(requireContext())
+                    }.build().show(binding.root)
             } else {
-                PermissionUtil.mRequestPermission(
-                    PermissionActivityFlow.TRANSLATE_MIC,
-                    requireActivity()
-                )
+                dialogBuilder.text("Aplikasi membutuhkan microphone untuk menerjemahkan suara anda")
+                    .positiveAction {
+                        PermissionCommandUtil.micTranslate(requireActivity())
+                    }.build().show(binding.root)
             }
+            return false
+        } else {
+            // do nothing
+            return true
         }
     }
 
@@ -192,10 +195,25 @@ class TranslateFragment : BaseFragment() {
             findNavController().popBackStack()
         }
 
+        handleMicrophoneClicked()
         handleLanguageSwitch()
         handleTranslate()
         setupLanguageTTS()
+        handleLanguageDropdownPickerClick()
+    }
 
+    private fun handleMicrophoneClicked() {
+        binding.containerSourceLanguage.imgMic.setOnClickListener {
+            val checkAudio = getPermissionStatus(requireActivity(), PermissionUtil.PER_RECORD_AUDIO)
+            if (checkAudio.isNotGranted().not()) {
+                getSpeechInput()
+            } else {
+                checkMicUsingPermission()
+            }
+        }
+    }
+
+    private fun handleLanguageDropdownPickerClick() {
         binding.layoutDropdownTranslator.containerLang1.setOnClickListener {
             viewmodel.clickedContainer.value = 1
             searchLangDialog.show(getMFragmentManager(), "langPicker")
@@ -205,7 +223,20 @@ class TranslateFragment : BaseFragment() {
             viewmodel.clickedContainer.value = 2
             searchLangDialog.show(getMFragmentManager(), "langPicker2")
         }
+    }
 
+    private fun getSpeechInput() {
+        val chooseLocale = TranslatorUtil.mapLocaleToSpeechToText(viewmodel.sourceLanguage.value)
+        val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
+        intent.putExtra(
+            RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+            RecognizerIntent.LANGUAGE_MODEL_FREE_FORM
+        )
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, chooseLocale)
+        showToast(chooseLocale)
+        if (intent.resolveActivity(requireActivity().packageManager) != null) {
+            startActivityForResult(intent, 10)
+        }
     }
 
     private fun handleTranslate() {
@@ -322,6 +353,24 @@ class TranslateFragment : BaseFragment() {
             }
         } catch (e: Exception) {
             e.printStackTrace()
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when (requestCode) {
+            10 -> if (resultCode == RESULT_OK &&
+                data != null
+            ) {
+                val textView = binding.containerSourceLanguage.etTranslate
+                val result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
+                result?.let {
+                    if (it.isNotEmpty()) {
+                        textView.setText(it[0])
+                        viewmodel.getTranslation(textView.text.toString())
+                    }
+                }
+            }
         }
     }
 

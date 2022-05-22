@@ -4,6 +4,7 @@ import android.content.Context
 import com.feylabs.halalkan.customview.searchwithimage.SearchWithImageModel
 import com.murgupluoglu.flagkit.FlagKit
 import de.hdodenhof.circleimageview.CircleImageView
+import java.util.*
 
 object TranslatorUtil {
     val flagMap = mutableMapOf<String, String>()
@@ -99,6 +100,18 @@ object TranslatorUtil {
             getCountryFlagCodeFromGoogle(flag)
         )
         imgFlag2.setImageDrawable(image)
+    }
+
+    fun mapLocaleToSpeechToText(value: String?): String {
+        value?.let {
+            return when (value) {
+                "ko" -> "ko-rKR"
+                "en" -> "en-rUS"
+                "hi" -> "hi-rIN"
+                "id" -> "in-rID"
+                else -> "en-rUS"
+            }
+        } ?: return "en-rUS"
     }
 
 }

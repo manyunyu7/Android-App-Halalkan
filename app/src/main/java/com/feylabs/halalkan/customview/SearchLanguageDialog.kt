@@ -48,11 +48,6 @@ class SearchLanguageDialog : FrameLayout {
         binding.rv.layoutManager = LinearLayoutManager(context)
         binding.rv.setHasFixedSize(true)
 
-        binding.rootView.setOnClickListener {
-            parentView?.removeView(binding.root) ?: run {
-                binding.root.visibility = View.GONE
-            }
-        }
     }
 
     fun renameTitle(text: String) {
