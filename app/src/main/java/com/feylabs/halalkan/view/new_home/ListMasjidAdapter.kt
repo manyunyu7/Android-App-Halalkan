@@ -1,6 +1,5 @@
 package com.feylabs.halalkan.view.new_home
 
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,18 +9,16 @@ import com.bumptech.glide.Glide
 import com.feylabs.halalkan.R
 import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidResponseWithoutPagination
 import com.feylabs.halalkan.databinding.ItemHomeMosqueBinding
-import com.feylabs.halalkan.databinding.ItemHomeRestaurantBinding
 import com.feylabs.halalkan.utils.Network
 import com.feylabs.halalkan.utils.StringUtil.encodeUrl
-import timber.log.Timber
 
 class ListMasjidAdapter :
     RecyclerView.Adapter<ListMasjidAdapter.MasjidViewHolder>() {
 
-    val data = mutableListOf<MasjidResponseWithoutPagination.Data>()
+    val data = mutableListOf<MasjidResponseWithoutPagination.DataMasjid>()
     lateinit var adapterInterface: ItemInterface
 
-    fun setWithNewData(data: MutableList<MasjidResponseWithoutPagination.Data>) {
+    fun setWithNewData(data: MutableList<MasjidResponseWithoutPagination.DataMasjid>) {
         this.data.clear()
         this.data.addAll(data)
     }
@@ -34,7 +31,7 @@ class ListMasjidAdapter :
 
         var binding: ItemHomeMosqueBinding = ItemHomeMosqueBinding.bind(itemView)
 
-        fun onBind(model: MasjidResponseWithoutPagination.Data) {
+        fun onBind(model: MasjidResponseWithoutPagination.DataMasjid) {
             val mContext = binding.root.context
 
             binding.base.animation = AnimationUtils.loadAnimation(
@@ -74,6 +71,6 @@ class ListMasjidAdapter :
     }
 
     interface ItemInterface {
-        fun onclick(model: MasjidResponseWithoutPagination.Data)
+        fun onclick(model: MasjidResponseWithoutPagination.DataMasjid)
     }
 }

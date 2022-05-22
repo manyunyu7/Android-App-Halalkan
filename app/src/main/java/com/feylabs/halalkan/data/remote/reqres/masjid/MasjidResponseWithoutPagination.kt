@@ -1,19 +1,23 @@
 package com.feylabs.halalkan.data.remote.reqres.masjid
 
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class MasjidResponseWithoutPagination(
     @SerializedName("code")
     val code: Int,
     @SerializedName("data")
-    val `data`: List<Data>,
+    val `data`: List<DataMasjid>,
     @SerializedName("message")
     val message: String,
     @SerializedName("success")
     val success: Boolean
-) {
-    data class Data(
+) : Parcelable {
+    @Parcelize
+    data class DataMasjid(
         @SerializedName("address")
         val address: String,
         @SerializedName("created_at")
@@ -42,5 +46,5 @@ data class MasjidResponseWithoutPagination(
         val updatedAt: String,
         @SerializedName("category_name")
         val categoryName: String
-    )
+    ) : Parcelable
 }

@@ -71,4 +71,8 @@
         android:id="@+id/navigation_translateFragment"
         android:name="com.feylabs.halalkan.view.translate.TranslateFragment"
         android:label="TranslateFragment" />
+    <fragment
+        android:id="@+id/navigation_detailMasjidFragment"
+        android:name="com.feylabs.halalkan.view.prayer.detail.DetailMasjidFragment"
+        android:label="DetailMasjidFragment" />
 </navigation>

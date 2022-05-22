@@ -25,8 +25,8 @@ abstract class BaseFragment : Fragment() {
         showActionBar()
         initObserver()
         initAction()
-        initUI()
         initData()
+        initUI()
     }
 
     fun getMFragmentManager() = getParentFragmentManager()

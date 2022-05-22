@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.feylabs.halalkan.R
@@ -85,8 +86,9 @@ class NewHomeFragment : BaseFragment() {
         })
 
         mMosqueAdapter.setupAdapterInterface(object : ListMasjidAdapter.ItemInterface {
-            override fun onclick(model: MasjidResponseWithoutPagination.Data) {
-
+            override fun onclick(model: MasjidResponseWithoutPagination.DataMasjid) {
+                findNavController().navigate(R.id.navigation_detailMasjidFragment,
+                    bundleOf("data" to model))
             }
 
         })
