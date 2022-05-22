@@ -13,6 +13,8 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import com.feylabs.halalkan.R
 import com.feylabs.halalkan.databinding.ActivityContainerBinding
+import com.feylabs.halalkan.utils.PermissionActivityFlow
+import com.feylabs.halalkan.utils.PermissionUtil
 import com.feylabs.halalkan.utils.base.BaseActivity
 import java.util.*
 
@@ -50,5 +52,19 @@ class ContainerActivity : BaseActivity() {
         val cm = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val netInfo = cm?.activeNetworkInfo
         return netInfo != null && netInfo.isConnected
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (grantResults.isNotEmpty())
+            when (requestCode) {
+                PermissionActivityFlow.TRANSLATE_MIC.code -> {
+
+                }
+            }
     }
 }

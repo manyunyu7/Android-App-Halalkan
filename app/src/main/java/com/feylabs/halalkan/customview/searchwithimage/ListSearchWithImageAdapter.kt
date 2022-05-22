@@ -1,10 +1,9 @@
-package com.feylabs.halalkan.view.utilview.searchwithimage
+package com.feylabs.halalkan.customview.searchwithimage
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.feylabs.halalkan.R
 import com.feylabs.halalkan.databinding.CustomViewItemSearchLanguageDialogBinding
 import com.feylabs.halalkan.utils.TranslatorUtil

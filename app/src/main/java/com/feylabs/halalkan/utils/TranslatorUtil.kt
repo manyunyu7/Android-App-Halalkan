@@ -1,8 +1,7 @@
 package com.feylabs.halalkan.utils
 
 import android.content.Context
-import androidx.core.content.ContentProviderCompat.requireContext
-import com.feylabs.halalkan.view.utilview.searchwithimage.SearchWithImageModel
+import com.feylabs.halalkan.customview.searchwithimage.SearchWithImageModel
 import com.murgupluoglu.flagkit.FlagKit
 import de.hdodenhof.circleimageview.CircleImageView
 

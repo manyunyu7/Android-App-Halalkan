@@ -1,4 +1,4 @@
-package com.feylabs.halalkan.view.utilview.searchwithimage
+package com.feylabs.halalkan.customview.searchwithimage
 
 data class SearchWithImageModel(
     val id: Int = 0,

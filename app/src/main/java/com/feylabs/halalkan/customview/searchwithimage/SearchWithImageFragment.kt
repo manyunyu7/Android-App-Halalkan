@@ -1,10 +1,9 @@
-package com.feylabs.halalkan.view.utilview.searchwithimage
+package com.feylabs.halalkan.customview.searchwithimage
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.feylabs.halalkan.databinding.FragmentListAndSearchPrayerRoomBinding
 import com.feylabs.halalkan.databinding.FragmentSearchWithImageBinding
 import com.feylabs.halalkan.utils.base.BaseFragment
 

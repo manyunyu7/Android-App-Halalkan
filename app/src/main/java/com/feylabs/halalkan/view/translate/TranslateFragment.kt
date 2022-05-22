@@ -1,6 +1,5 @@
 package com.feylabs.halalkan.view.translate
 
-import android.Manifest
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,23 +7,21 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.doAfterTextChanged
 import androidx.navigation.fragment.findNavController
+import com.feylabs.halalkan.customview.AskBlockedPermissionUI
 import com.feylabs.halalkan.customview.SearchLangDialogFragment
 import com.feylabs.halalkan.data.remote.QumparanResource
 import com.feylabs.halalkan.data.remote.reqres.translator.TiktokTextToSpeechResponse
 import com.feylabs.halalkan.databinding.CustomViewSearchLanguageDialogBinding
 import com.feylabs.halalkan.databinding.FragmentTranslateBinding
+import com.feylabs.halalkan.utils.PermissionActivityFlow
+import com.feylabs.halalkan.utils.PermissionUtil
+import com.feylabs.halalkan.utils.PermissionUtil.Companion.getPermissionStatus
+import com.feylabs.halalkan.utils.PermissionUtil.Companion.isBlocked
+import com.feylabs.halalkan.utils.PermissionUtil.Companion.isNotGranted
 import com.feylabs.halalkan.utils.TranslatorUtil
 import com.feylabs.halalkan.utils.base.BaseFragment
-import com.feylabs.halalkan.view.ContainerActivity
-import com.feylabs.halalkan.view.utilview.searchwithimage.ListSearchWithImageAdapter
-import com.feylabs.halalkan.view.utilview.searchwithimage.SearchWithImageModel
-import com.fondesa.kpermissions.PermissionStatus
-import com.fondesa.kpermissions.anyDenied
-import com.fondesa.kpermissions.extension.liveData
-import com.fondesa.kpermissions.extension.permissionsBuilder
-import com.fondesa.kpermissions.extension.send
-import com.fondesa.kpermissions.request.PermissionRequest
-import com.murgupluoglu.flagkit.FlagKit
+import com.feylabs.halalkan.customview.searchwithimage.ListSearchWithImageAdapter
+import com.feylabs.halalkan.customview.searchwithimage.SearchWithImageModel
 import org.koin.android.viewmodel.ext.android.viewModel
 import java.io.IOException
 import java.util.*
@@ -46,12 +43,30 @@ class TranslateFragment : BaseFragment() {
 
     override fun initUI() {
         searchLangDialog = SearchLangDialogFragment()
-        initPermission()
         initLanguageContainerUI()
     }
 
-    private fun initPermission() {
-        permissionsBuilder(Manifest.permission.RECORD_AUDIO).build().send()
+    private fun checkMicUsingPermission() {
+        val checkAudio = getPermissionStatus(requireActivity(), PermissionUtil.PER_RECORD_AUDIO)
+        if (checkAudio.isNotGranted()) {
+            if (checkAudio.isBlocked()) {
+                AskBlockedPermissionUI.Builder(requireContext())
+                    .text("")
+                    .positiveAction {
+
+                    }
+                    .negativeAction {
+
+                    }
+                    .build()
+                    .show(binding.root)
+            } else {
+                PermissionUtil.mRequestPermission(
+                    PermissionActivityFlow.TRANSLATE_MIC,
+                    requireActivity()
+                )
+            }
+        }
     }
 
     private fun initLanguageContainerUI() {

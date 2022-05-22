@@ -10,7 +10,7 @@ import android.widget.FrameLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.feylabs.halalkan.R
 import com.feylabs.halalkan.databinding.CustomViewSearchLanguageDialogBinding
-import com.feylabs.halalkan.view.utilview.searchwithimage.ListSearchWithImageAdapter
+import com.feylabs.halalkan.customview.searchwithimage.ListSearchWithImageAdapter
 
 class SearchLanguageDialog : FrameLayout {
 
