@@ -85,6 +85,8 @@ dependencies {
     implementation 'com.facebook.shimmer:shimmer:0.5.0'
     implementation 'com.pixplicity.sharp:library:1.1.0'
 
+    implementation 'com.github.fondesa:kpermissions:3.3.0'
+
 
 
 }

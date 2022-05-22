@@ -1,5 +1,6 @@
 package com.feylabs.halalkan.view.translate
 
+import android.Manifest
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -17,6 +18,12 @@ import com.feylabs.halalkan.utils.base.BaseFragment
 import com.feylabs.halalkan.view.ContainerActivity
 import com.feylabs.halalkan.view.utilview.searchwithimage.ListSearchWithImageAdapter
 import com.feylabs.halalkan.view.utilview.searchwithimage.SearchWithImageModel
+import com.fondesa.kpermissions.PermissionStatus
+import com.fondesa.kpermissions.anyDenied
+import com.fondesa.kpermissions.extension.liveData
+import com.fondesa.kpermissions.extension.permissionsBuilder
+import com.fondesa.kpermissions.extension.send
+import com.fondesa.kpermissions.request.PermissionRequest
 import com.murgupluoglu.flagkit.FlagKit
 import org.koin.android.viewmodel.ext.android.viewModel
 import java.io.IOException
@@ -39,8 +46,12 @@ class TranslateFragment : BaseFragment() {
 
     override fun initUI() {
         searchLangDialog = SearchLangDialogFragment()
-
+        initPermission()
         initLanguageContainerUI()
+    }
+
+    private fun initPermission() {
+        permissionsBuilder(Manifest.permission.RECORD_AUDIO).build().send()
     }
 
     private fun initLanguageContainerUI() {
