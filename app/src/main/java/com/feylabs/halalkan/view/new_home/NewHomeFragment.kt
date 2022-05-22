@@ -12,6 +12,7 @@ import com.feylabs.halalkan.customview.UiKitContentProfile
 import com.feylabs.halalkan.data.remote.QumparanResource
 import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidResponseWithoutPagination
 import com.feylabs.halalkan.databinding.FragmentNewHomeBinding
+import com.feylabs.halalkan.utils.ImageViewUtils.loadSvg
 import com.feylabs.halalkan.utils.base.BaseFragment
 import com.feylabs.halalkan.view.home.HomeViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -68,6 +69,8 @@ class NewHomeFragment : BaseFragment() {
             a.renameTitle("Halo")
             //dialog.show(requireActivity().supportFragmentManager, UiKitContentProfile.TAG)
         }
+
+        binding.icMenuScan.loadSvg(requireContext(),"https://flagicons.lipis.dev/flags/4x3/kr.svg")
 
         initRecyclerView()
         initAdapter()

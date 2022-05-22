@@ -17,6 +17,7 @@ import com.feylabs.halalkan.utils.base.BaseFragment
 import com.feylabs.halalkan.view.ContainerActivity
 import com.feylabs.halalkan.view.utilview.searchwithimage.ListSearchWithImageAdapter
 import com.feylabs.halalkan.view.utilview.searchwithimage.SearchWithImageModel
+import com.murgupluoglu.flagkit.FlagKit
 import org.koin.android.viewmodel.ext.android.viewModel
 import java.io.IOException
 import java.util.*
@@ -38,6 +39,16 @@ class TranslateFragment : BaseFragment() {
 
     override fun initUI() {
         searchLangDialog = SearchLangDialogFragment()
+
+        initLanguageContainerUI()
+    }
+
+    private fun initLanguageContainerUI() {
+        viewmodel.sourceLanguage.value = "id"
+        viewmodel.targetLanguage.value = "ko"
+        viewmodel.sourceLanguageDesc.value = "Indonesia"
+        viewmodel.targetLanguageDesc.value = "Korea"
+
         searchLangDialog.setDialogInterface(object :
             SearchLangDialogFragment.SearchLangDialogFragmentInterface {
             override fun getBinding(binding: CustomViewSearchLanguageDialogBinding) {
@@ -48,13 +59,12 @@ class TranslateFragment : BaseFragment() {
         // setup translator dialog
         searchLangDialog.adapter.apply {
             setWithNewData(TranslatorUtil.getLanguageArray())
+
             setupAdapterInterface(object : ListSearchWithImageAdapter.ItemInterface {
                 override fun onclick(model: SearchWithImageModel) {
                     setupLanguageTTS()
                     val sourceContainer = binding.containerSourceLanguage
                     val targetCountainer = binding.containerTargetLanguage
-
-                    viewmodel.getTranslation(sourceContainer.etTranslate.text.toString())
 
                     binding.layoutDropdownTranslator.apply {
                         if (viewmodel.clickedContainer.value == 1) {
@@ -72,6 +82,9 @@ class TranslateFragment : BaseFragment() {
                             targetCountainer.labelLanguage.text = model.name
                             //showToast("target is ${model.name}")
                         }
+
+                        // fetch new translation
+                        viewmodel.getTranslation(sourceContainer.etTranslate.text.toString())
 
                         searchLangDialog.dismiss()
                     }
@@ -101,6 +114,32 @@ class TranslateFragment : BaseFragment() {
             }
         }
 
+        viewmodel.targetLanguage.observe(viewLifecycleOwner) {
+            val image = FlagKit.getDrawable(
+                requireContext(),
+                TranslatorUtil.getCountryFlagCodeFromGoogle(it.toString())
+            )
+            binding.layoutDropdownTranslator.imgFlag2.setImageDrawable(image)
+        }
+
+        viewmodel.sourceLanguage.observe(viewLifecycleOwner) {
+            val image = FlagKit.getDrawable(
+                requireContext(),
+                TranslatorUtil.getCountryFlagCodeFromGoogle(it.toString())
+            )
+            binding.layoutDropdownTranslator.imgFlag1.setImageDrawable(image)
+        }
+
+        // observe lang desc
+        viewmodel.targetLanguageDesc.observe(viewLifecycleOwner) {
+            binding.containerTargetLanguage.labelLanguage.text = it.toString()
+            binding.layoutDropdownTranslator.labelLanguage2.text = it.toString()
+        }
+        viewmodel.sourceLanguageDesc.observe(viewLifecycleOwner) {
+            binding.containerSourceLanguage.labelLanguage.text = it.toString()
+            binding.layoutDropdownTranslator.labelLanguage1.text = it.toString()
+        }
+
         viewmodel.ttlLiveData.observe(viewLifecycleOwner) {
             when (it) {
                 is QumparanResource.Default -> {}
@@ -116,7 +155,7 @@ class TranslateFragment : BaseFragment() {
     }
 
     private fun playMediaSource(response: TiktokTextToSpeechResponse) {
-        if(response.message=="success"){
+        if (response.message == "success") {
             val audioBase64 = response.data.vStr
             val duration = response.data.duration
             playBase64Media(audioBase64)
@@ -131,7 +170,6 @@ class TranslateFragment : BaseFragment() {
         handleLanguageSwitch()
         handleTranslate()
         setupLanguageTTS()
-
 
         binding.layoutDropdownTranslator.containerLang1.setOnClickListener {
             viewmodel.clickedContainer.value = 1
@@ -172,7 +210,6 @@ class TranslateFragment : BaseFragment() {
 
     private fun handleLanguageSwitch() {
         binding.layoutDropdownTranslator.logoSwitch.setOnClickListener {
-
             val currentTextOnTarget = binding.containerTargetLanguage.etTranslate.text
             binding.containerSourceLanguage.etTranslate.text = currentTextOnTarget
             val currentTextOnSource = binding.containerSourceLanguage.etTranslate.text
@@ -204,7 +241,7 @@ class TranslateFragment : BaseFragment() {
             imgSpeaker.setOnClickListener {
                 val text = this.etTranslate.text.toString()
                 if (text.isNotEmpty()) {
-                    viewmodel.getTextToSpeech(text,isSource = true)
+                    viewmodel.getTextToSpeech(text, isSource = true)
                 }
             }
         }
@@ -212,8 +249,8 @@ class TranslateFragment : BaseFragment() {
         binding.containerTargetLanguage.apply {
             imgSpeaker.setOnClickListener {
                 val text = this.etTranslate.text.toString()
-                if (text.isNotEmpty()){
-                    viewmodel.getTextToSpeech(text,isSource = false)
+                if (text.isNotEmpty()) {
+                    viewmodel.getTextToSpeech(text, isSource = false)
                 }
             }
         }
@@ -235,7 +272,7 @@ class TranslateFragment : BaseFragment() {
         _binding = null
     }
 
-    fun playBase64Media(base64:String) {
+    fun playBase64Media(base64: String) {
         try {
             val url = "data:audio/mp3;base64,$base64"
             val mediaPlayer = MediaPlayer()

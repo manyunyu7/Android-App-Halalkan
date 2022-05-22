@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     app:cardCornerRadius="@dimen/dimen_10dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -24,15 +25,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/logo_switch"
             android:gravity="center">
 
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/img_flag_1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/dimen_24dp"
+                android:layout_height="@dimen/dimen_24dp"
                 android:layout_marginEnd="@dimen/dimen_10dp"
                 android:src="@drawable/ic_flag_en"
+                app:civ_border_width="0dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -41,22 +44,33 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_regular"
-                android:text="English"
+                tools:text="Indonesia"
                 app:layout_constraintStart_toEndOf="@id/img_flag_1"
                 app:layout_constraintTop_toTopOf="parent" />
 
         </LinearLayout>
 
-        <ImageView
+        <FrameLayout
             android:id="@+id/logo_switch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:src="@drawable/ic_translate_arrow"
             app:layout_constraintEnd_toEndOf="@id/guidelineCenter"
             app:layout_constraintStart_toStartOf="@id/guidelineCenter"
             app:layout_constraintTop_toTopOf="parent"
-            app:tint="@color/color_blue_purplish" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            >
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/dimen_10dp"
+                android:layout_marginHorizontal="@dimen/dimen_20dp"
+                android:layout_gravity="center"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:src="@drawable/ic_translate_arrow"
+                app:tint="@color/color_blue_purplish"
+                android:contentDescription="TODO" />
+        </FrameLayout>
+
 
         <LinearLayout
             android:id="@+id/container_lang_2"
@@ -65,14 +79,15 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@id/logo_switch"
+            app:layout_constraintStart_toEndOf="@id/logo_switch"
             android:gravity="center">
 
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/img_flag_2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/dimen_24dp"
+                android:layout_height="@dimen/dimen_24dp"
                 android:layout_marginEnd="@dimen/dimen_10dp"
+                app:civ_border_width="0dp"
                 android:src="@drawable/ic_flag_south_korea"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -82,7 +97,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_regular"
-                android:text="Korea"
+                tools:text="Korea"
                 app:layout_constraintStart_toEndOf="@id/img_flag_1"
                 app:layout_constraintTop_toTopOf="parent" />
 

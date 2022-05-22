@@ -48,7 +48,7 @@ class SearchLanguageDialog : FrameLayout {
         binding.rv.layoutManager = LinearLayoutManager(context)
         binding.rv.setHasFixedSize(true)
 
-        binding.rootview.setOnClickListener {
+        binding.rootView.setOnClickListener {
             parentView?.removeView(binding.root) ?: run {
                 binding.root.visibility = View.GONE
             }
@@ -67,7 +67,7 @@ class SearchLanguageDialog : FrameLayout {
         )
         binding.root.visibility = View.VISIBLE
 
-        binding.rootview.animation = AnimationUtils.loadAnimation(
+        binding.rootView.animation = AnimationUtils.loadAnimation(
             context,
             R.anim.item_animation_falldown
         )
