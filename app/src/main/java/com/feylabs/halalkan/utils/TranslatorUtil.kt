@@ -14,6 +14,11 @@ object TranslatorUtil {
         flagMap["sq"] = "al"
     }
 
+    fun getCountryFlagCodeFromGoogle(code:String) :String{
+        setup()
+        return flagMap[code] ?: code
+    }
+
     fun getLanguageArray() =
         mutableListOf<SearchWithImageModel>(
             SearchWithImageModel(
