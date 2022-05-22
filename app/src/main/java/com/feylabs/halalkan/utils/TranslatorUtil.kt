@@ -1,6 +1,10 @@
 package com.feylabs.halalkan.utils
 
+import android.content.Context
+import androidx.core.content.ContentProviderCompat.requireContext
 import com.feylabs.halalkan.view.utilview.searchwithimage.SearchWithImageModel
+import com.murgupluoglu.flagkit.FlagKit
+import de.hdodenhof.circleimageview.CircleImageView
 
 object TranslatorUtil {
     val flagMap = mutableMapOf<String, String>()
@@ -89,5 +93,13 @@ object TranslatorUtil {
                 0, "Hindi", "", "hi"
             ),
         )
+
+    fun loadFlagImage(context: Context, imgFlag2: CircleImageView, flag: String) {
+        val image = FlagKit.getDrawable(
+            context,
+            getCountryFlagCodeFromGoogle(flag)
+        )
+        imgFlag2.setImageDrawable(image)
+    }
 
 }

@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.feylabs.halalkan.R
 import com.feylabs.halalkan.databinding.CustomViewItemSearchLanguageDialogBinding
+import com.feylabs.halalkan.utils.TranslatorUtil
 
 class ListSearchWithImageAdapter :
     RecyclerView.Adapter<ListSearchWithImageAdapter.AdapterViewHolder>() {
@@ -36,16 +37,19 @@ class ListSearchWithImageAdapter :
             }
 
             binding.text.text = model.name
-            if (model.imageUrl != "") {
-                Glide.with(mContext)
-                    .load(model.imageUrl.toString())
-                    .thumbnail(Glide.with(mContext).load(R.raw.ic_loading_google).fitCenter())
-                    .skipMemoryCache(true)
-                    .into(binding.image)
 
-            }else{
-                binding.image.visibility=View.GONE
-            }
+            TranslatorUtil.loadFlagImage(mContext, binding.image, model.code)
+
+//            if (model.imageUrl != "") {
+//                Glide.with(mContext)
+//                    .load(model.imageUrl.toString())
+//                    .thumbnail(Glide.with(mContext).load(R.raw.ic_loading_google).fitCenter())
+//                    .skipMemoryCache(true)
+//                    .into(binding.image)
+//
+//            } else {
+//                binding.image.visibility = View.GONE
+//            }
         }
     }
 

@@ -9,8 +9,8 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/image"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
         android:src="@drawable/bg_header_daylight"
         android:layout_gravity="center_vertical"
         android:scaleType="centerCrop"/>

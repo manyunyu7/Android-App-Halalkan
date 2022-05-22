@@ -59,7 +59,6 @@ class TranslateFragment : BaseFragment() {
         // setup translator dialog
         searchLangDialog.adapter.apply {
             setWithNewData(TranslatorUtil.getLanguageArray())
-
             setupAdapterInterface(object : ListSearchWithImageAdapter.ItemInterface {
                 override fun onclick(model: SearchWithImageModel) {
                     setupLanguageTTS()
@@ -115,19 +114,19 @@ class TranslateFragment : BaseFragment() {
         }
 
         viewmodel.targetLanguage.observe(viewLifecycleOwner) {
-            val image = FlagKit.getDrawable(
+            TranslatorUtil.loadFlagImage(
                 requireContext(),
-                TranslatorUtil.getCountryFlagCodeFromGoogle(it.toString())
+                binding.layoutDropdownTranslator.imgFlag2,
+                it.toString()
             )
-            binding.layoutDropdownTranslator.imgFlag2.setImageDrawable(image)
         }
 
         viewmodel.sourceLanguage.observe(viewLifecycleOwner) {
-            val image = FlagKit.getDrawable(
+            TranslatorUtil.loadFlagImage(
                 requireContext(),
-                TranslatorUtil.getCountryFlagCodeFromGoogle(it.toString())
+                binding.layoutDropdownTranslator.imgFlag1,
+                it.toString()
             )
-            binding.layoutDropdownTranslator.imgFlag1.setImageDrawable(image)
         }
 
         // observe lang desc
