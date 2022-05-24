@@ -7,7 +7,9 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.feylabs.halalkan.MainViewModel
 import com.feylabs.halalkan.R
+import com.feylabs.halalkan.customview.AskPermissionDialog
 import com.feylabs.halalkan.customview.SearchLanguageDialog
 import com.feylabs.halalkan.customview.UiKitContentProfile
 import com.feylabs.halalkan.data.remote.QumparanResource
@@ -15,13 +17,21 @@ import com.feylabs.halalkan.data.remote.reqres.masjid.DataMasjid
 import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidResponseWithoutPagination
 import com.feylabs.halalkan.databinding.FragmentNewHomeBinding
 import com.feylabs.halalkan.utils.ImageViewUtils.loadSvg
+import com.feylabs.halalkan.utils.PermissionCommandUtil
+import com.feylabs.halalkan.utils.PermissionUtil
+import com.feylabs.halalkan.utils.PermissionUtil.Companion.isBlocked
+import com.feylabs.halalkan.utils.PermissionUtil.Companion.isNotGranted
 import com.feylabs.halalkan.utils.base.BaseFragment
+import com.feylabs.halalkan.utils.location.MyLocationListener
 import com.feylabs.halalkan.view.home.HomeViewModel
+import org.koin.android.viewmodel.ext.android.sharedViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class NewHomeFragment : BaseFragment() {
 
     val viewModel: HomeViewModel by viewModel()
+    val mainViewModel: MainViewModel by sharedViewModel()
+
     private var _binding: FragmentNewHomeBinding? = null
 
     private val mAdapter by lazy { ListRestaurantAdapter() }
@@ -32,21 +42,20 @@ class NewHomeFragment : BaseFragment() {
     private val binding get() = _binding!!
 
     override fun initAction() {
+        setupMenuClickListener()
+    }
+
+    private fun setupMenuClickListener() {
         binding.menuPrayer.setOnClickListener {
             findNavController().navigate(R.id.navigation_prayerMainFragment)
         }
-
         binding.menuResto.setOnClickListener {
 
         }
-
         binding.menuTranslate.setOnClickListener {
             findNavController().navigate(R.id.navigation_translateFragment)
         }
-
-        binding.menuScan.setOnClickListener {
-
-        }
+        binding.menuScan.setOnClickListener {}
     }
 
     override fun initData() {
@@ -54,25 +63,9 @@ class NewHomeFragment : BaseFragment() {
     }
 
     override fun initUI() {
-        val dialog = UiKitContentProfile.instance(
-            userName = "Henry Augusta",
-            position = "Android Developer",
-            phone = "088223738709",
-            gender = "Laki-Laki",
-            email = "henryaugusta4@gmail.com",
-            groupMemberName = "Technology and Engineering",
-            emailListener = { showToast("Yes") },
-            phoneNumberListener = { showToast("No") }
-        )
 
-        binding.menuScan.setOnClickListener {
-            val a = SearchLanguageDialog(requireContext())
-            a.show(binding.root)
-            a.renameTitle("Halo")
-            //dialog.show(requireActivity().supportFragmentManager, UiKitContentProfile.TAG)
-        }
+        setupPermission()
 
-        binding.icMenuScan.loadSvg(requireContext(),"https://flagicons.lipis.dev/flags/4x3/kr.svg")
 
         initRecyclerView()
         initAdapter()
@@ -88,8 +81,10 @@ class NewHomeFragment : BaseFragment() {
 
         mMosqueAdapter.setupAdapterInterface(object : ListMasjidAdapter.ItemInterface {
             override fun onclick(model: DataMasjid) {
-                findNavController().navigate(R.id.navigation_detailMasjidFragment,
-                    bundleOf("data" to model))
+                findNavController().navigate(
+                    R.id.navigation_detailMasjidFragment,
+                    bundleOf("data" to model)
+                )
             }
 
         })
@@ -128,6 +123,14 @@ class NewHomeFragment : BaseFragment() {
                     }
                 }
             }
+        }
+
+        mainViewModel.liveLatitude.observe(viewLifecycleOwner){
+
+        }
+
+        mainViewModel.liveLongitude.observe(viewLifecycleOwner){
+
         }
     }
 
@@ -236,4 +239,42 @@ class NewHomeFragment : BaseFragment() {
         super.onDestroyView()
         _binding = null
     }
+
+
+    private fun setupPermission() {
+        setupPermissionLocation()
+    }
+
+    private fun setupPermissionLocation(): Boolean {
+        val dialogBuilder = AskPermissionDialog.Builder(requireContext())
+        val permLocCoarse = PermissionUtil.getPermissionStatus(
+            requireActivity(),
+            PermissionUtil.PER_LOCATION_COARSE
+        )
+        val permLocFine =
+            PermissionUtil.getPermissionStatus(requireActivity(), PermissionUtil.PER_LOCATION_FINE)
+
+        if (permLocCoarse.isNotGranted() || permLocFine.isNotGranted()) {
+            showToast("NEVER GRANTED")
+            if (permLocCoarse.isBlocked() || permLocFine.isBlocked()) {
+                dialogBuilder.text("Aplikasi membutuhkan akses lokasi anda untuk menghitung jarak dan jadwal sholat")
+                    .setImageBuilder(R.drawable.menu_home_prayer)
+                    .positiveAction {
+                        PermissionUtil.openSetting(requireContext())
+                    }
+                    .build().show(binding.root)
+            } else {
+                dialogBuilder.text("Aplikasi membutuhkan akses lokasi anda untuk menghitung jarak dan jadwal sholat")
+                    .setImageBuilder(R.drawable.menu_home_prayer)
+                    .positiveAction {
+                        PermissionCommandUtil.homeLocation(requireActivity())
+                    }.build().show(binding.root)
+            }
+            return false
+        } else {
+            // do nothing
+            return true
+        }
+    }
+
 }

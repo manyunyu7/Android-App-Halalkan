@@ -13,7 +13,8 @@ import com.feylabs.halalkan.data.local.MyPreference
 import com.feylabs.halalkan.utils.MyPermissionStatus.*
 
 enum class PermissionActivityFlow(val category: String, val code: Int) {
-    TRANSLATE_MIC("TranslateMic", 123)
+    TRANSLATE_MIC("TranslateMic", 123),
+    LOCATION_INIT("LocationInit", 41)
 }
 
 enum class MyPermissionStatus {
@@ -33,6 +34,8 @@ class PermissionUtil {
 
         const val PERM_CODE_TRANSLATE_MIC = 1221
 
+        const val PER_LOCATION_FINE = Manifest.permission.ACCESS_FINE_LOCATION
+        const val PER_LOCATION_COARSE = Manifest.permission.ACCESS_COARSE_LOCATION
         const val PER_RECORD_AUDIO = Manifest.permission.RECORD_AUDIO
         const val PER_WRITE_EX_STORAGE = Manifest.permission.WRITE_EXTERNAL_STORAGE
         const val PER_READ_EX_STORAGE = Manifest.permission.READ_EXTERNAL_STORAGE
@@ -43,6 +46,10 @@ class PermissionUtil {
 
         fun MyPermissionStatus.isNotGranted() : Boolean{
             return this == (DENIED) || this == BLOCKED || this == NEVER_ASKED
+        }
+
+        fun MyPermissionStatus.isGranted() : Boolean{
+            return this == (GRANTED)
         }
 
         fun MyPermissionStatus.isBlocked() : Boolean{
@@ -94,12 +101,18 @@ class PermissionUtil {
                         PermissionActivityFlow.TRANSLATE_MIC.code
                     )
                 }
+                PermissionActivityFlow.LOCATION_INIT -> {
+                    requestPermissionAction(
+                        activity, arrayOf(PER_LOCATION_COARSE, PER_LOCATION_FINE),
+                        PermissionActivityFlow.LOCATION_INIT.code
+                    )
+                }
             }
         }
 
         private fun requestPermissionAction(activity: Activity, arrayOf: Array<String>, code: Int) {
             ActivityCompat.requestPermissions(
-                activity, arrayOf(PER_RECORD_AUDIO),
+                activity, arrayOf,
                 code
             )
 

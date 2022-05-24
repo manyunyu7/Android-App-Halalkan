@@ -34,7 +34,7 @@ class AskPermissionDialog : FrameLayout {
             this.negativeAction = negativeAction
         }
 
-        fun image(imageDrawable: Int) {
+        fun setImageBuilder(imageDrawable: Int) = apply {
             this.imageDrawable = imageDrawable
         }
 
@@ -42,7 +42,7 @@ class AskPermissionDialog : FrameLayout {
 
     }
 
-    private lateinit var mActivity : Activity
+    private lateinit var mActivity: Activity
     private var text = ""
     private var positiveAction: (() -> Unit)? = null
     private var negativeAction: (() -> Unit)? = null

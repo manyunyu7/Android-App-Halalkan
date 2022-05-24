@@ -22,6 +22,13 @@ class PermissionCommandUtil {
                 activity
             )
         }
+
+        fun homeLocation(activity: Activity) {
+            PermissionUtil.mRequestPermission(
+                PermissionActivityFlow.LOCATION_INIT,
+                activity
+            )
+        }
     }
 
 }

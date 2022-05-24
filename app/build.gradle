@@ -86,7 +86,7 @@ dependencies {
     implementation 'com.pixplicity.sharp:library:1.1.0'
 
     implementation 'com.github.fondesa:kpermissions:3.3.0'
-
+    implementation "com.google.android.gms:play-services-location:15.0.1"
 
 
 }

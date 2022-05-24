@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
+import com.feylabs.halalkan.customview.AskPermissionDialog
 import com.feylabs.halalkan.customview.imagepreviewcontainer.CustomViewPhotoModel
 import com.feylabs.halalkan.data.remote.QumparanResource
 import com.feylabs.halalkan.data.remote.reqres.masjid.DataMasjid
@@ -12,6 +13,10 @@ import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidDetailResponse
 import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidPhotosResponse
 import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidResponseWithoutPagination
 import com.feylabs.halalkan.databinding.FragmentDetailPrayerBinding
+import com.feylabs.halalkan.utils.PermissionCommandUtil
+import com.feylabs.halalkan.utils.PermissionUtil
+import com.feylabs.halalkan.utils.PermissionUtil.Companion.isBlocked
+import com.feylabs.halalkan.utils.PermissionUtil.Companion.isNotGranted
 import com.feylabs.halalkan.utils.StringUtil.extractElementArrayFromStringArrayBE
 import com.feylabs.halalkan.utils.StringUtil.extractStringFromStringArrayBE
 import com.feylabs.halalkan.utils.base.BaseFragment
@@ -44,7 +49,7 @@ class DetailMasjidFragment : BaseFragment() {
                 binding.etAddressTop.text = address
                 binding.etDistance.text = calculateMasjidDistance(lat, long)
                 binding.etAddress.text = address
-                binding.etPhone.text = phone
+                binding.labelPhone.text = phone
                 binding.etKategori.text = categoryName
                 binding.etActionCall.text = phone
                 binding.etOperatingHours.text = getOperatingHours()
@@ -127,7 +132,7 @@ class DetailMasjidFragment : BaseFragment() {
                 binding.etAddressTop.text = address
                 binding.etDistance.text = calculateMasjidDistance(lat, long)
                 binding.etAddress.text = address
-                binding.etPhone.text = phone
+                binding.labelPhone.text = phone
                 binding.etKategori.text = categoryName
                 binding.etActionCall.text = phone
                 binding.etFacilities.text = facilities.extractStringFromStringArrayBE()
