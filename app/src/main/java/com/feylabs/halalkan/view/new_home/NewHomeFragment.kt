@@ -11,6 +11,7 @@ import com.feylabs.halalkan.R
 import com.feylabs.halalkan.customview.SearchLanguageDialog
 import com.feylabs.halalkan.customview.UiKitContentProfile
 import com.feylabs.halalkan.data.remote.QumparanResource
+import com.feylabs.halalkan.data.remote.reqres.masjid.DataMasjid
 import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidResponseWithoutPagination
 import com.feylabs.halalkan.databinding.FragmentNewHomeBinding
 import com.feylabs.halalkan.utils.ImageViewUtils.loadSvg
@@ -86,7 +87,7 @@ class NewHomeFragment : BaseFragment() {
         })
 
         mMosqueAdapter.setupAdapterInterface(object : ListMasjidAdapter.ItemInterface {
-            override fun onclick(model: MasjidResponseWithoutPagination.DataMasjid) {
+            override fun onclick(model: DataMasjid) {
                 findNavController().navigate(R.id.navigation_detailMasjidFragment,
                     bundleOf("data" to model))
             }

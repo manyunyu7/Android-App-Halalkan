@@ -6,11 +6,20 @@ import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.feylabs.halalkan.R
+import com.feylabs.halalkan.utils.Network.REAL_URL
+import com.feylabs.halalkan.utils.StringUtil.encodeUrl
 import com.pixplicity.sharp.Sharp
 import okhttp3.*
 import java.io.IOException
 
 object ImageViewUtils {
+
+    fun String.urlHalal(){
+        var url = this.encodeUrl()
+        if(url.contains("/"))
+        url = REAL_URL+url
+    }
+
     fun ImageView.loadSvg(context: Context, url: String) {
         val imageView = this
         val httpClient = OkHttpClient.Builder()
