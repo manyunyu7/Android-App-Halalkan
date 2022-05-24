@@ -16,4 +16,14 @@
         tools:listitem="@layout/customview_item_photo_container_preview"
         />
 
+    <include
+        android:id="@+id/loading"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_marginStart="@dimen/dimen_10dp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        layout="@layout/customview_layout_shimmer_image_container_preview"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

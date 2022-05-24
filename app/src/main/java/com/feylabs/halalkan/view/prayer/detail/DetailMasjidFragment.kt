@@ -66,12 +66,21 @@ class DetailMasjidFragment : BaseFragment() {
     override fun initObserver() {
         viewModel.masjidPhotoLiveData.observe(viewLifecycleOwner){
             when(it){
-                is QumparanResource.Default -> {}
-                is QumparanResource.Error -> {}
-                is QumparanResource.Loading ->{}
+                is QumparanResource.Default -> {
+                    binding.ipImagePreviewSlider.setLoading(true)
+                }
+                is QumparanResource.Error -> {
+                    binding.ipImagePreviewSlider.setLoading(false)
+                }
+                is QumparanResource.Loading ->{
+                    binding.ipImagePreviewSlider.setLoading(true)
+                }
                 is QumparanResource.Success -> {
+                    binding.ipImagePreviewSlider.setLoading(false)
                     it.data?.let {
                         setupMasjidPhotoData(it)
+                    } ?: run{
+                        binding.ipImagePreviewSlider.setLoading(false, isEmpty = true)
                     }
                 }
             }
@@ -86,6 +95,7 @@ class DetailMasjidFragment : BaseFragment() {
                 url = photo
             ))
         }
+        binding.ipImagePreviewSlider.replaceAllImage(tempList)
     }
 
 
