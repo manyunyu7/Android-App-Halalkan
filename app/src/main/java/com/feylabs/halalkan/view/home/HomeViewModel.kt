@@ -43,7 +43,7 @@ class HomeViewModel(
     val prayerTimeSingleLiveData get() = _prayerTimeSingleLiveData
 
 
-    fun getPrayerTimeSingle(
+    fun fetchPrayerTimeSingle(
         latitude: Double,
         longitude: Double,
         method: String,

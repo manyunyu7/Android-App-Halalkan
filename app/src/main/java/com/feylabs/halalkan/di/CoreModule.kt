@@ -9,6 +9,7 @@ import com.feylabs.halalkan.data.remote.service.ApiService
 import com.feylabs.halalkan.utils.Network
 import com.feylabs.halalkan.data.remote.RemoteDataSource
 import com.feylabs.halalkan.data.remote.service.MasjidService
+import com.feylabs.halalkan.data.remote.service.PrayerTimeAladhanService
 import com.feylabs.halalkan.data.remote.service.TranslatorService
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -65,6 +66,15 @@ val networkModule = module {
         retrofit.create(TranslatorService::class.java)
     }
 
+    single<PrayerTimeAladhanService>(named("prayerTimeAladhanService")) {
+        val retrofit = Retrofit.Builder()
+            .baseUrl(Network.BASE_URL_ALADHAN_V1)
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(get())
+            .build()
+        retrofit.create(PrayerTimeAladhanService::class.java)
+    }
+
 
 }
 
@@ -73,8 +83,9 @@ val repositoryModule = module {
         RemoteDataSource(
             get(named("mainService")),
             get(named("masjidService")),
-            get(named("translatorService"))
-            )
+            get(named("translatorService")),
+            get(named("prayerTimeAladhanService"))
+        )
     }
     single { MasjidRepository(get()) }
     single { QumparanRepository(get()) }

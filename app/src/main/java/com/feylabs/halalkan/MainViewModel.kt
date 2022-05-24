@@ -14,5 +14,6 @@ class MainViewModel : ViewModel() {
     val liveLatitude = MutableLiveData(-99.0)
     val liveLongitude = MutableLiveData(-99.0)
     val liveAddress = MutableLiveData("-")
+    val liveKecamatan = MutableLiveData("-")
 
 }

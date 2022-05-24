@@ -45,7 +45,7 @@
         <entry key="..\:/Project/Android/Android-App-Halalkan/app/src/main/res/layout/fragment_forum.xml" value="0.1766304347826087" />
         <entry key="..\:/Project/Android/Android-App-Halalkan/app/src/main/res/layout/fragment_home.xml" value="0.1" />
         <entry key="..\:/Project/Android/Android-App-Halalkan/app/src/main/res/layout/fragment_list_photo.xml" value="0.20153985507246377" />
-        <entry key="..\:/Project/Android/Android-App-Halalkan/app/src/main/res/layout/fragment_new_home.xml" value="0.15" />
+        <entry key="..\:/Project/Android/Android-App-Halalkan/app/src/main/res/layout/fragment_new_home.xml" value="0.12" />
         <entry key="..\:/Project/Android/Android-App-Halalkan/app/src/main/res/layout/fragment_notifications.xml" value="0.209375" />
         <entry key="..\:/Project/Android/Android-App-Halalkan/app/src/main/res/layout/fragment_prayer_main.xml" value="0.10182370820668693" />
         <entry key="..\:/Project/Android/Android-App-Halalkan/app/src/main/res/layout/fragment_preview_photo.xml" value="0.209375" />
@@ -64,6 +64,7 @@
         <entry key="..\:/Project/Android/Android-App-Halalkan/app/src/main/res/layout/layout_date_pray.xml" value="0.1" />
         <entry key="..\:/Project/Android/Android-App-Halalkan/app/src/main/res/layout/layout_dropdown_translator.xml" value="0.2" />
         <entry key="..\:/Project/Android/Android-App-Halalkan/app/src/main/res/layout/layout_forum_profile.xml" value="0.20153985507246377" />
+        <entry key="..\:/Project/Android/Android-App-Halalkan/app/src/main/res/layout/layout_landing_message.xml" value="0.14" />
         <entry key="..\:/Project/Android/Android-App-Halalkan/app/src/main/res/layout/layout_shimmer_home_masjid.xml" value="0.1" />
         <entry key="..\:/Project/Android/Android-App-Halalkan/app/src/main/res/layout/layout_shimmer_home_resto.xml" value="0.12447916666666667" />
         <entry key="..\:/Project/Android/Android-App-Halalkan/app/src/main/res/layout/layout_translator_result.xml" value="0.33" />

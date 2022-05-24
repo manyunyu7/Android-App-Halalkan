@@ -9,11 +9,11 @@ import retrofit2.http.*
 
 interface PrayerTimeAladhanService {
 
-    @GET("calendar/{time}")
+    @GET()
     suspend fun getSinglePrayerTime(
-        @Path("time") timeunix:String,
-        @Query("source") latitude: String,
-        @Query("target") longitude: String,
+        @Url() fullUrl:String,
+        @Query("latitude") latitude: String,
+        @Query("longitude") longitude: String,
         @Query("method") method: String="11",
     ): Response<PrayerTimeAladhanSingleDateResponse>
 

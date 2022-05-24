@@ -1,9 +1,12 @@
 package com.feylabs.halalkan.data.remote
 
+import com.feylabs.halalkan.data.remote.reqres.prayertime.PrayerTimeAladhanSingleDateResponse
 import com.feylabs.halalkan.data.remote.service.ApiService
 import com.feylabs.halalkan.data.remote.service.MasjidService
 import com.feylabs.halalkan.data.remote.service.PrayerTimeAladhanService
 import com.feylabs.halalkan.data.remote.service.TranslatorService
+import com.feylabs.halalkan.utils.Network
+import retrofit2.Response
 
 class RemoteDataSource(
     private val commonService: ApiService,
@@ -48,11 +51,14 @@ class RemoteDataSource(
         lat: String,
         long: String,
         method: String
-    ) = prayerTimeService.getSinglePrayerTime(
-        timeunix = time,
-        latitude = lat,
-        longitude = long,
-        method = method
-    )
+    ): Response<PrayerTimeAladhanSingleDateResponse> {
+        val url = Network.BASE_URL_ALADHAN_V1 + time + ""
+        return prayerTimeService.getSinglePrayerTime(
+            fullUrl = url,
+            latitude = lat,
+            longitude = long,
+            method = method
+        )
+    }
 
 }

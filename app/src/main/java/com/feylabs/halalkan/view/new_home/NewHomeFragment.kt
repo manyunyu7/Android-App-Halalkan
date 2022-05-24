@@ -15,12 +15,14 @@ import com.feylabs.halalkan.customview.UiKitContentProfile
 import com.feylabs.halalkan.data.remote.QumparanResource
 import com.feylabs.halalkan.data.remote.reqres.masjid.DataMasjid
 import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidResponseWithoutPagination
+import com.feylabs.halalkan.data.remote.reqres.prayertime.PrayerTimeAladhanSingleDateResponse
 import com.feylabs.halalkan.databinding.FragmentNewHomeBinding
 import com.feylabs.halalkan.utils.ImageViewUtils.loadSvg
 import com.feylabs.halalkan.utils.PermissionCommandUtil
 import com.feylabs.halalkan.utils.PermissionUtil
 import com.feylabs.halalkan.utils.PermissionUtil.Companion.isBlocked
 import com.feylabs.halalkan.utils.PermissionUtil.Companion.isNotGranted
+import com.feylabs.halalkan.utils.TimeUtil.getCurrentTimeUnix
 import com.feylabs.halalkan.utils.base.BaseFragment
 import com.feylabs.halalkan.utils.location.MyLocationListener
 import com.feylabs.halalkan.view.home.HomeViewModel
@@ -59,14 +61,17 @@ class NewHomeFragment : BaseFragment() {
     }
 
     override fun initData() {
+        viewModel.fetchPrayerTimeSingle(
+            latitude = mainViewModel.liveLatitude.value?.toDouble() ?: 0.0,
+            longitude = mainViewModel.liveLongitude.value?.toDouble() ?: 0.0,
+            method = "11",
+            time = getCurrentTimeUnix()
+        )
         viewModel.fetchAllMasjid()
     }
 
     override fun initUI() {
-
         setupPermission()
-
-
         initRecyclerView()
         initAdapter()
         loadData()
@@ -125,12 +130,48 @@ class NewHomeFragment : BaseFragment() {
             }
         }
 
-        mainViewModel.liveLatitude.observe(viewLifecycleOwner){
-
+        viewModel.prayerTimeSingleLiveData.observe(viewLifecycleOwner) {
+            when (it) {
+                is QumparanResource.Default -> {
+                    binding.shimmerViewJadwal.showShimmer(true)
+                }
+                is QumparanResource.Error -> {
+                    binding.shimmerViewJadwal.hideShimmer()
+                }
+                is QumparanResource.Loading -> {
+                    binding.shimmerViewJadwal.showShimmer(true)
+                }
+                is QumparanResource.Success -> {
+                    binding.shimmerViewJadwal.hideShimmer()
+                    it.data?.let { response ->
+                        setupPrayerTimeLiveData(response)
+                    }
+                }
+            }
         }
 
-        mainViewModel.liveLongitude.observe(viewLifecycleOwner){
+        mainViewModel.liveAddress.observe(viewLifecycleOwner) {}
 
+        mainViewModel.liveKecamatan.observe(viewLifecycleOwner) {
+            binding.layoutLandingMessage.apply {
+                tvLocation.text = it
+            }
+        }
+
+        mainViewModel.liveLatitude.observe(viewLifecycleOwner) {}
+        mainViewModel.liveLongitude.observe(viewLifecycleOwner) {}
+    }
+
+    private fun setupPrayerTimeLiveData(response: PrayerTimeAladhanSingleDateResponse) {
+        val data = response.data
+        data.timings.let { timings ->
+            binding.includeDatePray.apply {
+                txtTimeAshar.text = timings.asr
+                txtTimeDhuhur.text = timings.dhuhr
+                txtTimeIsya.text = timings.isha
+                txtTimeSubuh.text = timings.fajr
+                txtTimeMagrib.text = timings.maghrib
+            }
         }
     }
 

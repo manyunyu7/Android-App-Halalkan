@@ -86,7 +86,9 @@
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp">
 
-                    <include layout="@layout/layout_landing_message" />
+                    <include
+                        android:id="@+id/layout_landing_message"
+                        layout="@layout/layout_landing_message" />
 
                 </LinearLayout>
             </FrameLayout>
@@ -108,7 +110,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <include layout="@layout/layout_date_pray" />
+                    <include
+                        android:id="@+id/include_date_pray"
+                        layout="@layout/layout_date_pray" />
                 </com.facebook.shimmer.ShimmerFrameLayout>
             </androidx.cardview.widget.CardView>
 

@@ -9,6 +9,7 @@ import android.location.LocationListener
 import android.net.ConnectivityManager
 import android.os.Bundle
 import android.view.View
+import android.view.animation.AnimationUtils
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import com.feylabs.halalkan.MainViewModel
@@ -77,6 +78,13 @@ class ContainerActivity : BaseActivity(), LocationListener {
         binding.btnClose.setOnClickListener {
             binding.bottomContainer.makeGone()
         }
+
+        binding.btnDebug.setOnClickListener {
+            binding.bottomContainer.makeVisible()
+            binding.bottomContainer.animation = AnimationUtils.loadAnimation(
+                this,R.anim.nav_default_enter_anim
+            )
+        }
     }
 
     private fun initObserver() {
@@ -108,8 +116,6 @@ class ContainerActivity : BaseActivity(), LocationListener {
                     if (location != null) {
                         // use your location object
                         // get latitude , longitude and other info from this
-                        mainViewModel.liveLongitude.value = location.latitude
-                        mainViewModel.liveLongitude.value = location.longitude
                         extractGeoCoder(location)
                     }
                 }
@@ -120,6 +126,8 @@ class ContainerActivity : BaseActivity(), LocationListener {
         /*------- To get city name from coordinates -------- */
         val gcd = Geocoder(baseContext, Locale.getDefault())
         val addresses: List<Address>
+        mainViewModel.liveLongitude.postValue(loc.longitude)
+        mainViewModel.liveLatitude.postValue(loc.latitude)
         try {
             addresses = gcd.getFromLocation(
                 loc.latitude,
@@ -127,11 +135,12 @@ class ContainerActivity : BaseActivity(), LocationListener {
             )
             if (addresses.isNotEmpty()) {
                 val address = addresses[0].getAddressLine(0)
-                val city = addresses[0].locality ?: ""
+                val kecamatan = addresses[0].locality ?: ""
                 val state = addresses[0].adminArea ?: ""
                 val country = addresses[0].countryName ?: ""
                 val postalCode = addresses[0].postalCode ?: ""
-                mainViewModel.liveAddress.postValue("$address - $postalCode - $city - $state, $country")
+                mainViewModel.liveKecamatan.postValue(kecamatan)
+                mainViewModel.liveAddress.postValue("$address - $postalCode - $kecamatan - $state, $country")
             }
         } catch (e: IOException) {
             e.printStackTrace()
@@ -186,9 +195,6 @@ class ContainerActivity : BaseActivity(), LocationListener {
                 if (locationResult.locations.isNotEmpty()) {
                     // get latest location
                     val location = locationResult.lastLocation
-
-                    mainViewModel.liveLongitude.postValue(location.longitude)
-                    mainViewModel.liveLatitude.postValue(location.latitude)
                     extractGeoCoder(location)
                     // use your location object
                     // get latitude , longitude and other info from this
