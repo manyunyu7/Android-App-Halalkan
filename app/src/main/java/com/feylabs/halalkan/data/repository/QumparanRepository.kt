@@ -1,4 +1,4 @@
-package com.feylabs.halalkan.data
+package com.feylabs.halalkan.data.repository
 
 import com.feylabs.halalkan.data.remote.RemoteDataSource
 

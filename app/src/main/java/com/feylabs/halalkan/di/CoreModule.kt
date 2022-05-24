@@ -2,9 +2,9 @@ package com.feylabs.halalkan.di
 
 import com.chuckerteam.chucker.api.ChuckerCollector
 import com.chuckerteam.chucker.api.ChuckerInterceptor
-import com.feylabs.halalkan.data.MasjidRepository
-import com.feylabs.halalkan.data.QumparanRepository
-import com.feylabs.halalkan.data.TranslatorRepository
+import com.feylabs.halalkan.data.repository.MasjidRepository
+import com.feylabs.halalkan.data.repository.QumparanRepository
+import com.feylabs.halalkan.data.repository.TranslatorRepository
 import com.feylabs.halalkan.data.remote.service.ApiService
 import com.feylabs.halalkan.utils.Network
 import com.feylabs.halalkan.data.remote.RemoteDataSource

@@ -3,7 +3,7 @@ package com.feylabs.halalkan.view.translate
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.feylabs.halalkan.data.TranslatorRepository
+import com.feylabs.halalkan.data.repository.TranslatorRepository
 import com.feylabs.halalkan.data.remote.QumparanResource
 import com.feylabs.halalkan.data.remote.reqres.translator.TiktokTextToSpeechResponse
 import com.feylabs.halalkan.data.remote.reqres.translator.TranslateResponse

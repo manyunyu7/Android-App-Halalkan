@@ -3,7 +3,7 @@ package com.feylabs.halalkan.view.profile
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.feylabs.halalkan.data.QumparanRepository
+import com.feylabs.halalkan.data.repository.QumparanRepository
 import com.feylabs.halalkan.data.remote.QumparanResource
 import com.feylabs.halalkan.data.remote.reqres.UserAlbumResponse
 import com.feylabs.halalkan.data.remote.reqres.UserDetailResponse

@@ -3,16 +3,13 @@ package com.feylabs.halalkan.view.prayer
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.feylabs.halalkan.data.MasjidRepository
-import com.feylabs.halalkan.data.QumparanRepository
+import com.feylabs.halalkan.data.repository.MasjidRepository
+import com.feylabs.halalkan.data.repository.QumparanRepository
 import com.feylabs.halalkan.data.remote.QumparanResource
-import com.feylabs.halalkan.data.remote.reqres.AlbumPhotoResponse
-import com.feylabs.halalkan.data.remote.reqres.PostCommentResponse
 import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidDetailResponse
 import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidPhotosResponse
 import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidResponseWithoutPagination
 import kotlinx.coroutines.launch
-import timber.log.Timber
 
 class PrayerRoomViewModel(
     val repo: QumparanRepository,
