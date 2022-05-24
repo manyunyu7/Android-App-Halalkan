@@ -1,5 +1,7 @@
 package com.feylabs.halalkan.data.remote
 
+import com.feylabs.halalkan.data.remote.reqres.auth.LoginBodyRequest
+import com.feylabs.halalkan.data.remote.reqres.auth.RegisterBodyRequest
 import com.feylabs.halalkan.data.remote.reqres.prayertime.PrayerTimeAladhanSingleDateResponse
 import com.feylabs.halalkan.data.remote.service.ApiService
 import com.feylabs.halalkan.data.remote.service.MasjidService
@@ -33,6 +35,9 @@ class RemoteDataSource(
 
     suspend fun getMasjids() = commonService.getMasjids()
 
+    suspend fun login(loginBodyRequest: LoginBodyRequest) = commonService.login(loginBodyRequest)
+    suspend fun register(bodyRequest: RegisterBodyRequest) = commonService.register(bodyRequest)
+
     suspend fun getTranslation(
         langSource: String, target: String, text: String
     ) = translationService.translate(langSource = langSource, target = target, text = text)
@@ -60,5 +65,6 @@ class RemoteDataSource(
             method = method
         )
     }
+
 
 }
