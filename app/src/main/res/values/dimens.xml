@@ -21,4 +21,5 @@
     <dimen name="dimen_130dp">130dp</dimen>
     <dimen name="dimen_4dp">4dp</dimen>
     <dimen name="dimen_26dp">26dp</dimen>
+    <dimen name="dimen_100dp">100dp</dimen>
 </resources>

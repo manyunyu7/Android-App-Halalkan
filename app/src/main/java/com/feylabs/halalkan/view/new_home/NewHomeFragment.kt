@@ -10,21 +10,20 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.feylabs.halalkan.MainViewModel
 import com.feylabs.halalkan.R
 import com.feylabs.halalkan.customview.AskPermissionDialog
-import com.feylabs.halalkan.customview.SearchLanguageDialog
-import com.feylabs.halalkan.customview.UiKitContentProfile
 import com.feylabs.halalkan.data.remote.QumparanResource
 import com.feylabs.halalkan.data.remote.reqres.masjid.DataMasjid
 import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidResponseWithoutPagination
 import com.feylabs.halalkan.data.remote.reqres.prayertime.PrayerTimeAladhanSingleDateResponse
 import com.feylabs.halalkan.databinding.FragmentNewHomeBinding
-import com.feylabs.halalkan.utils.ImageViewUtils.loadSvg
 import com.feylabs.halalkan.utils.PermissionCommandUtil
 import com.feylabs.halalkan.utils.PermissionUtil
 import com.feylabs.halalkan.utils.PermissionUtil.Companion.isBlocked
 import com.feylabs.halalkan.utils.PermissionUtil.Companion.isNotGranted
 import com.feylabs.halalkan.utils.TimeUtil.getCurrentTimeUnix
 import com.feylabs.halalkan.utils.base.BaseFragment
-import com.feylabs.halalkan.utils.location.MyLocationListener
+import com.feylabs.halalkan.utils.location.LocationUtils
+import com.feylabs.halalkan.utils.location.MyLatLong
+import com.feylabs.halalkan.utils.masjid.MasjidUtility.renderWithDistanceModel
 import com.feylabs.halalkan.view.home.HomeViewModel
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -71,8 +70,8 @@ class NewHomeFragment : BaseFragment() {
 
     private fun fetchPrayerTime() {
         viewModel.fetchPrayerTimeSingle(
-            latitude = mainViewModel.liveLatLng.value?.first ?: 0.0,
-            longitude = mainViewModel.liveLatLng.value?.second ?: 0.0,
+            latitude = mainViewModel.liveLatLng.value?.lat ?: 0.0,
+            longitude = mainViewModel.liveLatLng.value?.long ?: 0.0,
             method = "11",
             time = getCurrentTimeUnix()
         )
@@ -184,7 +183,16 @@ class NewHomeFragment : BaseFragment() {
     }
 
     private fun setupMosqueData(response: MasjidResponseWithoutPagination) {
-        mMosqueAdapter.setWithNewData(response.data.toMutableList())
+
+        var initialData = response.data.toMutableList()
+
+        if(LocationUtils.checkIfLocationSet(mainViewModel.liveLatLng.value)){
+            initialData = initialData.renderWithDistanceModel(
+                myLocation = mainViewModel.liveLatLng.value ?: MyLatLong(-99.0,-99.0)
+            )
+        }
+
+        mMosqueAdapter.setWithNewData(initialData)
         mMosqueAdapter.notifyDataSetChanged()
         showLoadingMosque(false)
     }

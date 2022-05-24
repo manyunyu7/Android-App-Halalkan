@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.feylabs.halalkan.R
 import com.feylabs.halalkan.data.remote.reqres.masjid.DataMasjid
-import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidResponseWithoutPagination
 import com.feylabs.halalkan.databinding.ItemHomeMosqueBinding
 import com.feylabs.halalkan.utils.Network
 import com.feylabs.halalkan.utils.StringUtil.encodeUrl
@@ -24,7 +23,7 @@ class ListMasjidAdapter :
         this.data.addAll(data)
     }
 
-    fun setupAdapterInterface(obj:ItemInterface) {
+    fun setupAdapterInterface(obj: ItemInterface) {
         this.adapterInterface = obj
     }
 
@@ -44,11 +43,19 @@ class ListMasjidAdapter :
                 adapterInterface.onclick(model)
             }
 
-            binding.tvTitle.text=model.name
-            binding.tvMiddleCategory.text=model.address
+            binding.tvTitle.text = model.name
+            binding.tvMiddleCategory.text = model.address
+
+            if (model.distanceKm != null) {
+                val distanceRounded = model.distanceKm
+                //binding.tvDistance.visibility = View.VISIBLE
+                binding.tvDistance.text = "$distanceRounded Km"
+            } else {
+                //binding.tvDistance.visibility = View.GONE
+            }
 
             val imgUrl = Network.REAL_URL_V1 + model.img.encodeUrl()
-            binding.tvTopCategory.text=model.categoryName.uppercase()
+            binding.tvTopCategory.text = model.categoryName.uppercase()
 
             Glide.with(mContext)
                 .load(imgUrl)
@@ -59,7 +66,8 @@ class ListMasjidAdapter :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MasjidViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_home_mosque, parent, false)
+        val view =
+            LayoutInflater.from(parent.context).inflate(R.layout.item_home_mosque, parent, false)
         return MasjidViewHolder(view)
     }
 

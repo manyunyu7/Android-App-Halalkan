@@ -22,36 +22,32 @@
             app:layout_constraintBottom_toTopOf="@id/container_desc"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.cardview.widget.CardView
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/dimen_10dp"
-            app:cardCornerRadius="@dimen/dimen_20dp"
+            android:gravity="center"
+            android:background="@drawable/bg_rounded_corner_20"
+            android:orientation="horizontal"
+            android:paddingHorizontal="@dimen/dimen_12dp"
+            android:paddingVertical="@dimen/dimen_5dp"
             app:layout_constraintBottom_toTopOf="@id/container_desc"
             app:layout_constraintEnd_toEndOf="parent">
 
-            <LinearLayout
+            <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:paddingHorizontal="@dimen/dimen_12dp"
-                android:paddingVertical="@dimen/dimen_5dp">
+                android:layout_marginEnd="@dimen/dimen_10dp"
+                android:src="@drawable/ic_star_review" />
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/dimen_10dp"
-                    android:src="@drawable/ic_star_review" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_regular"
+                android:text="4.5" />
+        </LinearLayout>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/poppins_regular"
-                    android:text="4.5" />
-            </LinearLayout>
-
-        </androidx.cardview.widget.CardView>
 
         <LinearLayout
             android:id="@+id/container_desc"
@@ -65,54 +61,61 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                tools:layout_editor_absoluteY="1dp">
 
                 <TextView
                     android:id="@+id/tv_top_category"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
+                    android:layout_marginTop="@dimen/dimen_5dp"
                     android:layout_marginEnd="@dimen/dimen_20dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     android:ellipsize="marquee"
                     android:fontFamily="@font/poppins_regular"
                     android:maxLines="2"
                     android:text="SELF CERTIFIED"
                     android:textColor="@color/black"
                     android:textSize="10sp"
-                    android:layout_marginTop="@dimen/dimen_5dp"
+                    app:layout_constraintEnd_toStartOf="@id/guideline_distance"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
 
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/card_distance"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginVertical="@dimen/dimen_7dp"
-                    android:layout_marginEnd="@dimen/dimen_7dp"
-                    app:layout_constraintBottom_toBottomOf="@id/tv_top_category"
-                    app:cardCornerRadius="@dimen/dimen_20dp"
+                    android:background="@drawable/bg_rounded_corner_20"
+                    android:elevation="@dimen/dimen_100dp"
+                    android:orientation="horizontal"
+                    android:backgroundTint="@color/gray50"
+                    android:layout_marginVertical="@dimen/dimen_5dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/tv_top_category">
+                    app:layout_constraintStart_toEndOf="@id/guideline_distance"
+                    app:layout_constraintTop_toTopOf="parent">
 
-                    <LinearLayout
+                    <TextView
+                        android:id="@+id/tv_distance"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:orientation="horizontal">
+                        android:fontFamily="@font/poppins_regular"
+                        android:paddingHorizontal="@dimen/dimen_12dp"
+                        android:paddingVertical="@dimen/dimen_5dp"
+                        android:text="4.5"
+                        android:textSize="9sp" />
+                </LinearLayout>
 
-                        <TextView
-                            android:id="@+id/tv_distance"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/poppins_regular"
-                            android:paddingHorizontal="@dimen/dimen_12dp"
-                            android:paddingVertical="@dimen/dimen_5dp"
-                            android:text="4.5"
-                            android:textSize="9sp" />
-                    </LinearLayout>
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline_distance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.70"
+                    app:layout_constraintTop_toBottomOf="parent" />
 
-                </androidx.cardview.widget.CardView>
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -137,8 +140,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/dimen_7dp"
-                android:ellipsize="marquee"
                 android:layout_marginBottom="@dimen/dimen_5dp"
+                android:ellipsize="marquee"
                 android:fontFamily="@font/poppins_light"
                 android:text="General Restaurant"
                 android:textColor="@color/black" />

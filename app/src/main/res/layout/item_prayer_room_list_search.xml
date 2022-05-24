@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -83,19 +84,50 @@
                 app:layout_constraintStart_toStartOf="@id/guidelineCenter"
                 app:layout_constraintTop_toBottomOf="@id/tv_category" />
 
-            <TextView
-                android:id="@+id/tv_address"
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="5dp"
-                android:drawablePadding="10dp"
-                android:drawableTint="@color/color_blue_purplish"
-                android:fontFamily="@font/poppins_regular"
-                android:text="date"
-                android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginHorizontal="@dimen/dimen_5dp"
                 app:layout_constraintStart_toStartOf="@id/guidelineCenter"
-                app:layout_constraintTop_toBottomOf="@id/tv_title" />
+                app:layout_constraintTop_toBottomOf="@id/tv_title"
+                >
+                <TextView
+                    android:id="@+id/tv_address"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="5dp"
+                    android:drawablePadding="10dp"
+                    android:fontFamily="@font/poppins_regular"
+                    android:text="date"
+                    android:layout_gravity="center"
+                    android:textSize="14sp"
+                    app:drawableTint="@color/color_blue_purplish" />
+                <ImageView
+                    android:id="@+id/dot_separator"
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
+                    android:layout_marginStart="@dimen/dimen_10dp"
+                    android:src="@drawable/circle"
+                    android:layout_gravity="center"
+                    app:tint="@color/color_blue_purplish" />
+                <TextView
+                    android:id="@+id/tv_distance"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="5dp"
+                    android:drawablePadding="10dp"
+                    android:fontFamily="@font/poppins_regular"
+                    android:textSize="14sp"
+                    android:layout_marginStart="@dimen/dimen_10dp"
+                    tools:text="99Km"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/tv_address"
+                    app:layout_constraintTop_toBottomOf="@id/tv_title"
+                    app:drawableTint="@color/color_blue_purplish" />
+            </LinearLayout>
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/container_rating"

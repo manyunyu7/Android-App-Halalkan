@@ -62,8 +62,8 @@ class PrayerMainFragment : BaseFragment() {
 
     private fun fetchPrayerTime() {
         viewModel.fetchPrayerTimeSingle(
-            latitude = mainViewModel.liveLatLng.value?.first ?: 0.0,
-            longitude = mainViewModel.liveLatLng.value?.second ?: 0.0,
+            latitude = mainViewModel.liveLatLng.value?.lat ?: 0.0,
+            longitude = mainViewModel.liveLatLng.value?.long ?: 0.0,
             method = "11",
             time = TimeUtil.getCurrentTimeUnix()
         )

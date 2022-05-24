@@ -7,17 +7,18 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.feylabs.halalkan.R
+import com.feylabs.halalkan.data.remote.reqres.masjid.DataMasjid
 import com.feylabs.halalkan.databinding.ItemPrayerRoomListSearchBinding
-import com.feylabs.halalkan.utils.Network.REAL_URL
-import com.feylabs.halalkan.view.prayer.PrayerRoomListUIModel
+import com.feylabs.halalkan.utils.Network.REAL_URL_V1
+import com.feylabs.halalkan.utils.StringUtil.encodeUrl
 
 class ListPrayerRoomAdapter :
     RecyclerView.Adapter<ListPrayerRoomAdapter.ListPrayerRoomViewHolder>() {
 
-    val data = mutableListOf<PrayerRoomListUIModel>()
+    val data = mutableListOf<DataMasjid>()
     lateinit var adapterInterface: ItemInterface
 
-    fun setWithNewData(data: MutableList<PrayerRoomListUIModel>) {
+    fun setWithNewData(data: MutableList<DataMasjid>) {
         this.data.clear()
         this.data.addAll(data)
     }
@@ -32,18 +33,29 @@ class ListPrayerRoomAdapter :
             ItemPrayerRoomListSearchBinding.bind(itemView)
 
         @SuppressLint("SetTextI18n")
-        fun onBInd(model: PrayerRoomListUIModel) {
+        fun onBInd(model: DataMasjid) {
             val mContext = binding.root.context
 
             binding.root.setOnClickListener {
                 adapterInterface.onclick(model)
             }
 
-            binding.tvTitle.text = model?.title.toString()
-            binding.tvAddress.text = model?.address + model.categoryMiddle
+            binding.tvTitle.text = model.name
+            binding.tvAddress.text = model.address
+            val imgUrl = REAL_URL_V1 + model.img.encodeUrl()
+            binding.tvCategory.text=model.categoryName.uppercase()
+
+            if (model.distanceKm != null) {
+                val distanceRounded = model.distanceKm.toString().replaceAfter(".","")
+                binding.tvDistance.visibility = View.VISIBLE
+                binding.tvDistance.text = "$distanceRounded Km"
+            } else {
+                binding.tvDistance.visibility = View.GONE
+            }
+
 
             Glide.with(mContext)
-                .load(REAL_URL+"uploads/img/masjids/" + model?.image.toString())
+                .load(imgUrl)
                 .thumbnail(Glide.with(mContext).load(R.raw.ic_loading_google).fitCenter())
                 .skipMemoryCache(true)
                 .into(binding.ivMainImage)
@@ -65,6 +77,6 @@ class ListPrayerRoomAdapter :
     }
 
     interface ItemInterface {
-        fun onclick(model: PrayerRoomListUIModel)
+        fun onclick(model: DataMasjid)
     }
 }

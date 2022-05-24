@@ -19,6 +19,7 @@ import com.feylabs.halalkan.utils.PermissionActivityFlow
 import com.feylabs.halalkan.utils.PermissionUtil
 import com.feylabs.halalkan.utils.PermissionUtil.Companion.isGranted
 import com.feylabs.halalkan.utils.base.BaseActivity
+import com.feylabs.halalkan.utils.location.MyLatLong
 import com.google.android.gms.location.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import java.io.IOException
@@ -90,8 +91,8 @@ class ContainerActivity : BaseActivity(), LocationListener {
     private fun initObserver() {
 
         mainViewModel.liveLatLng.observe(this) {
-            binding.tvLong.text = it.first.toString()
-            binding.tvLat.text = it.second.toString()
+            binding.tvLong.text = it.lat.toString()
+            binding.tvLat.text = it.long.toString()
         }
     }
 
@@ -120,7 +121,7 @@ class ContainerActivity : BaseActivity(), LocationListener {
         /*------- To get city name from coordinates -------- */
         val gcd = Geocoder(baseContext, Locale.getDefault())
         val addresses: List<Address>
-        mainViewModel.liveLatLng.postValue(Pair(loc.latitude,loc.longitude))
+        mainViewModel.liveLatLng.postValue(MyLatLong(loc.latitude,loc.longitude))
         try {
             addresses = gcd.getFromLocation(
                 loc.latitude,
