@@ -2,12 +2,14 @@ package com.feylabs.halalkan.data.remote
 
 import com.feylabs.halalkan.data.remote.service.ApiService
 import com.feylabs.halalkan.data.remote.service.MasjidService
+import com.feylabs.halalkan.data.remote.service.PrayerTimeAladhanService
 import com.feylabs.halalkan.data.remote.service.TranslatorService
 
 class RemoteDataSource(
     private val commonService: ApiService,
     private val masjidService: MasjidService,
     private val translationService: TranslatorService,
+    private val prayerTimeService: PrayerTimeAladhanService,
 ) {
 
     /**
@@ -40,5 +42,17 @@ class RemoteDataSource(
 
     suspend fun getMasjidPhotos(id: String) = masjidService.getMasjidPhotos(id)
     suspend fun getMasjidDetail(id: String) = masjidService.getMasjidDetail(id)
+
+    suspend fun getPrayerTimeSingleDate(
+        time: String,
+        lat: String,
+        long: String,
+        method: String
+    ) = prayerTimeService.getSinglePrayerTime(
+        timeunix = time,
+        latitude = lat,
+        longitude = long,
+        method = method
+    )
 
 }
