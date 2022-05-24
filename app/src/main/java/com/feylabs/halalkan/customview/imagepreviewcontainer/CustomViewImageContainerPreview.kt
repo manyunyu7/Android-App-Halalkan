@@ -2,9 +2,11 @@ package com.feylabs.halalkan.customview.imagepreviewcontainer
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.opengl.Visibility
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.FrameLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.feylabs.halalkan.R
@@ -29,7 +31,8 @@ class CustomViewImageContainerPreview : FrameLayout {
 
     private fun setupRecyclerview() {
         binding.rv.adapter = adapter
-        binding.rv.layoutManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
+        binding.rv.layoutManager =
+            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
     }
 
     private fun setupAdapter() {
@@ -38,6 +41,21 @@ class CustomViewImageContainerPreview : FrameLayout {
 
             }
         })
+    }
+
+    fun setLoading(status: Boolean, isEmpty: Boolean = false) {
+        if (isEmpty) {
+            binding.rv.visibility = View.GONE
+            binding.loading.root.visibility = View.GONE
+        } else {
+            if (status) {
+                binding.rv.visibility = View.GONE
+                binding.loading.root.visibility = View.VISIBLE
+            } else {
+                binding.rv.visibility = View.VISIBLE
+                binding.loading.root.visibility = View.GONE
+            }
+        }
     }
 
     /**
@@ -76,7 +94,6 @@ class CustomViewImageContainerPreview : FrameLayout {
 
     private fun initView(context: Context?) {
     }
-
 
 
     private fun extractAttributes(attrs: AttributeSet) {
