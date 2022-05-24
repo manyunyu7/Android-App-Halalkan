@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.feylabs.halalkan.customview.imagepreviewcontainer.CustomViewPhotoModel
 import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidResponseWithoutPagination
 import com.feylabs.halalkan.databinding.FragmentDetailPrayerBinding
 import com.feylabs.halalkan.databinding.FragmentListAndSearchPrayerRoomBinding
@@ -31,8 +32,23 @@ class DetailMasjidFragment : BaseFragment() {
                 binding.etAddress.text = address
                 binding.etPhone.text = phone
                 binding.etKategori.text = categoryName
-
                 binding.etActionCall.text = phone
+
+                val photo = mutableListOf(
+                    CustomViewPhotoModel(
+                        name="Photo 1",
+                        url = "https://i.pinimg.com/564x/53/8f/b6/538fb6e8e1b28070e6b9aab1256e9282.jpg"
+                    ),
+                    CustomViewPhotoModel(
+                        name="Photo 2",
+                        url = "https://i.pinimg.com/736x/4c/8f/49/4c8f49756ce273966029dd0a9e9381cd.jpg"
+                    ),
+                    CustomViewPhotoModel(
+                        name="Photo 3",
+                        url = "https://i.pinimg.com/564x/fc/be/ca/fcbeca2a32f542a1bd9c4f7b74f6d9b8.jpg"
+                    )
+                )
+                binding.ipImagePreviewSlider.replaceAllImage(photo)
             }
         }
     }

@@ -1,23 +1,59 @@
 package com.feylabs.halalkan.customview.imagepreviewcontainer
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.widget.FrameLayout
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.feylabs.halalkan.R
 import com.feylabs.halalkan.databinding.CustomStatusBinding
 import com.feylabs.halalkan.databinding.CustomviewImageContainerPreviewBinding
 
+@SuppressLint("NotifyDataSetChanged")
 class CustomViewImageContainerPreview : FrameLayout {
 
     private var title: String = ""
 
-    private lateinit var binding: CustomviewImageContainerPreviewBinding
+    private var binding: CustomviewImageContainerPreviewBinding
+
+    private val adapter by lazy { CustomViewImageContainerAdapter() }
 
     init { // inflate binding and add as view
         binding = CustomviewImageContainerPreviewBinding.inflate(LayoutInflater.from(context))
         addView(binding.root)
+        setupAdapter()
+        setupRecyclerview()
+    }
+
+    private fun setupRecyclerview() {
+        binding.rv.adapter = adapter
+        binding.rv.layoutManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
+    }
+
+    private fun setupAdapter() {
+        adapter.setupAdapterInterface(object : CustomViewImageContainerAdapter.ItemInterface {
+            override fun onclick(model: CustomViewPhotoModel) {
+
+            }
+        })
+    }
+
+    /**
+     * Add all image, and replace image before to adapter
+     */
+    fun replaceAllImage(newData: MutableList<CustomViewPhotoModel>) {
+        adapter.setWithNewData(newData)
+        adapter.notifyDataSetChanged()
+    }
+
+    /**
+     * Add new image
+     */
+    fun addNewImage(newData: CustomViewPhotoModel) {
+        adapter.addNewData(newData)
+        adapter.notifyDataSetChanged()
     }
 
     constructor(context: Context) : super(context) {
@@ -39,19 +75,8 @@ class CustomViewImageContainerPreview : FrameLayout {
     }
 
     private fun initView(context: Context?) {
-        title(title)
     }
 
-    fun build(
-        text: String
-    ) {
-        binding.tvStatus.text=text
-    }
-
-    fun title(title: String) {
-        this.title = title
-        binding.tvStatus.text = title
-    }
 
 
     private fun extractAttributes(attrs: AttributeSet) {
