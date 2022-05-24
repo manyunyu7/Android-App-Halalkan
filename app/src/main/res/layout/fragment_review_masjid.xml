@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FCFCFC">
+
+    <RelativeLayout
+        android:id="@+id/cstToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/btn_back"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerInParent="true"
+            android:layout_gravity="start"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/ic_baseline_arrow_back_24"
+            app:tint="@color/color_blue_purplish" />
+
+        <TextView
+            android:id="@+id/label_page_title_topbar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginEnd="20dp"
+            android:layout_toEndOf="@id/btn_back"
+            android:ellipsize="none"
+            android:fontFamily="@font/montserrat_bold"
+            android:scrollHorizontally="false"
+            android:text="Reviews"
+            android:textColor="@color/color_blue_purplish"
+            android:textSize="17sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/btn_write_review"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:layout_centerInParent="true"
+            android:layout_marginEnd="@dimen/dimen_20dp"
+            android:src="@drawable/ic_write_review"/>
+    </RelativeLayout>
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cstToolbar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/label_masjid_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="none"
+                android:fontFamily="@font/poppins_medium"
+                android:scrollHorizontally="false"
+                android:layout_marginHorizontal="@dimen/dimen_20dp"
+                android:text="@string/general_memuat_data"
+                android:textColor="@color/color_blue_purplish"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_marginHorizontal="@dimen/dimen_20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/et_category_top"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="none"
+                    tools:text="University"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:fontFamily="@font/poppins_regular"
+                    android:scrollHorizontally="false"
+                    android:text="@string/detail_masjid_kategori"
+                    android:textColor="@color/color_subtitle_detail_masjid"
+                    android:textSize="16sp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    />
+
+                <TextView
+                    android:id="@+id/et_address_top"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="none"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:fontFamily="@font/poppins_light"
+                    android:text="@string/general_memuat_data"
+                    tools:text="Masjid Raya Bontang"
+                    android:textColor="@color/color_sub_secondary_detail"
+                    android:textSize="12sp"
+                    app:layout_constraintTop_toBottomOf="@id/et_category_top"
+                    />
+
+                <TextView
+                    android:id="@+id/et_distance"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="none"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:fontFamily="@font/poppins_light"
+                    android:text="@string/general_memuat_data"
+                    android:textColor="@color/black50"
+                    android:textSize="12sp"
+                    app:layout_constraintTop_toBottomOf="@id/et_address_top"
+                    />
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/status_open_close_card"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginVertical="@dimen/dimen_10dp"
+                    android:layout_marginHorizontal="@dimen/dimen_2dp"
+                    app:cardBackgroundColor="@color/color_bg_card_open"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/et_distance">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingHorizontal="@dimen/dimen_10dp"
+                        android:paddingVertical="@dimen/dimen_2dp"
+                        android:fontFamily="@font/poppins_regular"
+                        android:textColor="@color/color_accent_success"
+                        android:text="Buka"/>
+
+                </androidx.cardview.widget.CardView>
+
+
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="none"
+                android:fontFamily="@font/poppins_regular"
+                android:scrollHorizontally="false"
+                android:layout_marginHorizontal="@dimen/dimen_20dp"
+                android:text="@string/detail_masjid_tentang_tempat_ibadah"
+                android:textColor="@color/color_blue_purplish"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="none"
+                android:fontFamily="@font/poppins_regular"
+                android:scrollHorizontally="false"
+                android:layout_marginHorizontal="@dimen/dimen_20dp"
+                android:text="@string/photos"
+                android:textColor="@color/color_blue_purplish"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <com.feylabs.halalkan.customview.imagepreviewcontainer.CustomViewImageContainerPreview
+                android:id="@+id/ip_image_preview_slider"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:background="@color/color_separator"/>
+
+
+
+
+
+
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:id="@+id/loading_center_progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
