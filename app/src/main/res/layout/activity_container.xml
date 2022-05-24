@@ -39,6 +39,7 @@
         android:layout_width="@dimen/dimen_26dp"
         android:layout_height="@dimen/dimen_26dp"
         android:padding="@dimen/dimen_2dp"
+        android:visibility="gone"
         android:backgroundTint="@color/white"
         android:layout_gravity="end"
         android:background="@drawable/bg_circle">
@@ -57,7 +58,8 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/bottom_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent">
 
         <LinearLayout

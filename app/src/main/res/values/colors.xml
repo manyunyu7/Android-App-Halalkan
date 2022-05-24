@@ -48,7 +48,8 @@
     <color name="black50">#9E9E9E</color>
     <color name="color_accent_success">#008D36</color>
     <color name="color_bg_card_open">#E5F5E9</color>
-    <color name="gray50">#F5F5F5</color>//Action bar
+    <color name="gray50">#F5F5F5</color>
+    <color name="gray70">#757575</color>//Action bar
 
 
 </resources>

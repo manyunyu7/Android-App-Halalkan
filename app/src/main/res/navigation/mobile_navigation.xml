@@ -59,20 +59,30 @@
         android:id="@+id/navigation_qiblaFragment"
         android:name="com.feylabs.halalkan.view.prayer.qibla.QiblaFragment"
         android:label="QiblaFragment" />
+
     <fragment
         android:id="@+id/navigation_prayerMainFragment"
         android:name="com.feylabs.halalkan.view.prayer.PrayerMainFragment"
         android:label="PrayerMainFragment" />
+
     <fragment
         android:id="@+id/navigation_listAndSearchPrayerRoomFragment"
         android:name="com.feylabs.halalkan.view.prayer.list_and_search.ListAndSearchPrayerRoomFragment"
         android:label="ListAndSearchPrayerRoomFragment" />
+
     <fragment
         android:id="@+id/navigation_translateFragment"
         android:name="com.feylabs.halalkan.view.translate.TranslateFragment"
         android:label="TranslateFragment" />
+
     <fragment
         android:id="@+id/navigation_detailMasjidFragment"
         android:name="com.feylabs.halalkan.view.prayer.detail.DetailMasjidFragment"
         android:label="DetailMasjidFragment" />
+
+    <fragment
+        android:id="@+id/navigation_masjidReviewFragment"
+        android:name="com.feylabs.halalkan.view.prayer.review.MasjidReviewFragment"
+        android:label="MasjidReviewFragment" />
+
 </navigation>

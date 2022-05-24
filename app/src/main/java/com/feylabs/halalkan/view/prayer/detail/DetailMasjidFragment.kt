@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
+import com.feylabs.halalkan.R
 import com.feylabs.halalkan.customview.AskPermissionDialog
 import com.feylabs.halalkan.customview.imagepreviewcontainer.CustomViewPhotoModel
 import com.feylabs.halalkan.data.remote.QumparanResource
@@ -157,6 +159,12 @@ class DetailMasjidFragment : BaseFragment() {
     override fun initAction() {
         binding.btnBack.setOnClickListener {
             findNavController().popBackStack()
+        }
+
+        binding.btnWriteReview.setOnClickListener {
+            findNavController().navigate(R.id.navigation_masjidReviewFragment, bundleOf(
+                "id" to initModel?.id.toString()
+            ))
         }
     }
 

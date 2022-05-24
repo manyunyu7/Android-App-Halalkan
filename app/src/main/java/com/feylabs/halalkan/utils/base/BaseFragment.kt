@@ -27,8 +27,8 @@ abstract class BaseFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         showActionBar()
         initObserver()
+        initData() // should first
         initAction()
-        initData()
         initUI()
     }
 
