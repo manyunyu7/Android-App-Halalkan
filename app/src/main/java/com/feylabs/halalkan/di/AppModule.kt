@@ -1,5 +1,6 @@
 package com.feylabs.halalkan.di
 
+import com.feylabs.halalkan.MainViewModel
 import com.feylabs.halalkan.view.home.HomeViewModel
 import com.feylabs.halalkan.view.postdetail.PostDetailViewModel
 import com.feylabs.halalkan.view.prayer.PrayerRoomViewModel
@@ -10,6 +11,8 @@ import org.koin.dsl.module
 
 
 val viewModelModule = module {
+
+    viewModel { MainViewModel() }
     viewModel { HomeViewModel(get(),get()) }
 
     viewModel { PostDetailViewModel(get()) }
