@@ -1,4 +1,4 @@
-package com.feylabs.halalkan.customview
+package com.feylabs.halalkan.customview.imagepreviewcontainer
 
 import android.content.Context
 import android.util.AttributeSet
@@ -7,15 +7,16 @@ import android.view.LayoutInflater
 import android.widget.FrameLayout
 import com.feylabs.halalkan.R
 import com.feylabs.halalkan.databinding.CustomStatusBinding
+import com.feylabs.halalkan.databinding.CustomviewImageContainerPreviewBinding
 
-class CustomImageContainerPreview : FrameLayout {
+class CustomViewImageContainerPreview : FrameLayout {
 
     private var title: String = ""
 
-    private lateinit var binding: CustomStatusBinding
+    private lateinit var binding: CustomviewImageContainerPreviewBinding
 
     init { // inflate binding and add as view
-        binding = CustomStatusBinding.inflate(LayoutInflater.from(context))
+        binding = CustomviewImageContainerPreviewBinding.inflate(LayoutInflater.from(context))
         addView(binding.root)
     }
 
@@ -52,13 +53,6 @@ class CustomImageContainerPreview : FrameLayout {
         binding.tvStatus.text = title
     }
 
-    fun fontSizeSp(size: Float) {
-        binding.tvStatus.setTextSize(TypedValue.COMPLEX_UNIT_SP, size)
-    }
-
-    fun fontSizeSp(titleSize: Float, valueSize: Float) {
-        binding.tvStatus.setTextSize(TypedValue.COMPLEX_UNIT_SP, titleSize)
-    }
 
     private fun extractAttributes(attrs: AttributeSet) {
         val typedArray = context.obtainStyledAttributes(attrs, R.styleable.CustomStatus)
