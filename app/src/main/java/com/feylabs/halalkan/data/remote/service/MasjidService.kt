@@ -14,12 +14,14 @@ interface MasjidService {
     suspend fun showAllMasjid(
     ): Response<MasjidResponseWithoutPagination>
 
-    @GET("masjids/{postId}/photos")
+    @GET("masjids/{id}/photos")
     suspend fun getMasjidPhotos(
+        @Path("id") masjidId: String,
     ): Response<MasjidPhotosResponse>
 
-    @GET("masjids/{postId}/photos")
+    @GET("masjids/{id}/photos")
     suspend fun getMasjidDetail(
+        @Path("id") masjidId: String,
     ): Response<MasjidPhotosResponse>
 
 }

@@ -38,4 +38,7 @@ class RemoteDataSource(
 
     suspend fun getAllMasjid() = masjidService.showAllMasjid()
 
+    suspend fun getMasjidPhotos(id: String) = masjidService.getMasjidPhotos(id)
+    suspend fun getMasjidDetail(id: String) = masjidService.getMasjidDetail(id)
+
 }

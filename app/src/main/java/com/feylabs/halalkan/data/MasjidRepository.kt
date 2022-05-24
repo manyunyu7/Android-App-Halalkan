@@ -7,4 +7,6 @@ class MasjidRepository(
 ) {
 
     suspend fun getAllMasjid() = remoteDs.getAllMasjid()
+    suspend fun getMasjidPhotos(id: String) = remoteDs.getMasjidPhotos(id)
+    suspend fun getMasjidDetail(id: String) = remoteDs.getMasjidDetail(id)
 }

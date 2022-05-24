@@ -11,9 +11,12 @@ import org.koin.dsl.module
 
 val viewModelModule = module {
     viewModel { HomeViewModel(get(),get()) }
+
     viewModel { PostDetailViewModel(get()) }
+
     viewModel { UserProfileViewModel(get()) }
-    viewModel { PrayerRoomViewModel(get()) }
+
+    viewModel { PrayerRoomViewModel(get(),get()) }
 
     viewModel { TranslateViewModel(get()) }
 }
