@@ -88,16 +88,10 @@ class ContainerActivity : BaseActivity(), LocationListener {
     }
 
     private fun initObserver() {
-        mainViewModel.liveLongitude.observe(this) {
-            binding.tvLat.text = it.toString()
-        }
 
-        mainViewModel.liveLatitude.observe(this) {
-            binding.tvLong.text = it.toString()
-        }
-
-        mainViewModel.liveAddress.observe(this) {
-            binding.tvGeocoder.text = it.toString()
+        mainViewModel.liveLatLng.observe(this) {
+            binding.tvLong.text = it.first.toString()
+            binding.tvLat.text = it.second.toString()
         }
     }
 
@@ -126,8 +120,7 @@ class ContainerActivity : BaseActivity(), LocationListener {
         /*------- To get city name from coordinates -------- */
         val gcd = Geocoder(baseContext, Locale.getDefault())
         val addresses: List<Address>
-        mainViewModel.liveLongitude.postValue(loc.longitude)
-        mainViewModel.liveLatitude.postValue(loc.latitude)
+        mainViewModel.liveLatLng.postValue(Pair(loc.latitude,loc.longitude))
         try {
             addresses = gcd.getFromLocation(
                 loc.latitude,

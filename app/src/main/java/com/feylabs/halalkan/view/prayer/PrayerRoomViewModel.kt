@@ -9,16 +9,25 @@ import com.feylabs.halalkan.data.remote.QumparanResource
 import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidDetailResponse
 import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidPhotosResponse
 import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidResponseWithoutPagination
+import com.feylabs.halalkan.data.remote.reqres.prayertime.PrayerTimeAladhanSingleDateResponse
+import com.feylabs.halalkan.data.repository.PrayerTimeRepository
 import kotlinx.coroutines.launch
 
 class PrayerRoomViewModel(
     val repo: QumparanRepository,
-    val masjidRepository: MasjidRepository
+    val masjidRepository: MasjidRepository,
+    val ds : PrayerTimeRepository
 ) : ViewModel() {
 
     private var _masjidLiveData =
         MutableLiveData<QumparanResource<MasjidResponseWithoutPagination?>>()
     val masjidLiveData get() = _masjidLiveData
+
+    private var _prayerTimeSingleLiveData:
+            MutableLiveData<QumparanResource<PrayerTimeAladhanSingleDateResponse?>> =
+        MutableLiveData()
+    val prayerTimeSingleLiveData get() = _prayerTimeSingleLiveData
+
 
 
     private var _masjidDetailLiveData =
@@ -41,6 +50,31 @@ class PrayerRoomViewModel(
                 }
             } catch (e: Exception) {
                 _masjidLiveData.postValue(QumparanResource.Error(e.message.toString()))
+            }
+        }
+    }
+
+    fun fetchPrayerTimeSingle(
+        latitude: Double,
+        longitude: Double,
+        method: String,
+        time: String
+    ) {
+        viewModelScope.launch {
+            try {
+                val res = ds.getPrayerTimeSingleDate(
+                    lat = latitude.toString(),
+                    long = longitude.toString(),
+                    method = method,
+                    time = time
+                )
+                if (res.isSuccessful) {
+                    _prayerTimeSingleLiveData.postValue(QumparanResource.Success(res.body()))
+                } else {
+                    _prayerTimeSingleLiveData.postValue(QumparanResource.Error("Terjadi Kesalahan"))
+                }
+            } catch (e: Exception) {
+                _prayerTimeSingleLiveData.postValue(QumparanResource.Error(e.message.toString()))
             }
         }
     }

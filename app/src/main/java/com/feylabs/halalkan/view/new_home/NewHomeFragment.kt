@@ -61,13 +61,21 @@ class NewHomeFragment : BaseFragment() {
     }
 
     override fun initData() {
+        fetchPrayerTime()
+        fetchAllMasjid()
+    }
+
+    private fun fetchAllMasjid() {
+        viewModel.fetchAllMasjid()
+    }
+
+    private fun fetchPrayerTime() {
         viewModel.fetchPrayerTimeSingle(
-            latitude = mainViewModel.liveLatitude.value?.toDouble() ?: 0.0,
-            longitude = mainViewModel.liveLongitude.value?.toDouble() ?: 0.0,
+            latitude = mainViewModel.liveLatLng.value?.first ?: 0.0,
+            longitude = mainViewModel.liveLatLng.value?.second ?: 0.0,
             method = "11",
             time = getCurrentTimeUnix()
         )
-        viewModel.fetchAllMasjid()
     }
 
     override fun initUI() {
@@ -158,8 +166,8 @@ class NewHomeFragment : BaseFragment() {
             }
         }
 
-        mainViewModel.liveLatitude.observe(viewLifecycleOwner) {}
-        mainViewModel.liveLongitude.observe(viewLifecycleOwner) {}
+        mainViewModel.liveLatLng.observe(viewLifecycleOwner){}
+
     }
 
     private fun setupPrayerTimeLiveData(response: PrayerTimeAladhanSingleDateResponse) {

@@ -11,6 +11,7 @@ import timber.log.Timber
 
 class MainViewModel : ViewModel() {
 
+    val liveLatLng = MutableLiveData(Pair(-99.0,-99.0))
     val liveLatitude = MutableLiveData(-99.0)
     val liveLongitude = MutableLiveData(-99.0)
     val liveAddress = MutableLiveData("-")

@@ -42,7 +42,6 @@ class HomeViewModel(
         MutableLiveData()
     val prayerTimeSingleLiveData get() = _prayerTimeSingleLiveData
 
-
     fun fetchPrayerTimeSingle(
         latitude: Double,
         longitude: Double,
@@ -57,7 +56,6 @@ class HomeViewModel(
                     method = method,
                     time = time
                 )
-                Timber.d("users response $")
                 if (res.isSuccessful) {
                     _prayerTimeSingleLiveData.postValue(QumparanResource.Success(res.body()))
                 } else {

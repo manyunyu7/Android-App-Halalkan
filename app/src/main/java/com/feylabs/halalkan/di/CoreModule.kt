@@ -11,6 +11,7 @@ import com.feylabs.halalkan.data.remote.RemoteDataSource
 import com.feylabs.halalkan.data.remote.service.MasjidService
 import com.feylabs.halalkan.data.remote.service.PrayerTimeAladhanService
 import com.feylabs.halalkan.data.remote.service.TranslatorService
+import com.feylabs.halalkan.data.repository.PrayerTimeRepository
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.android.ext.koin.androidContext
@@ -90,4 +91,5 @@ val repositoryModule = module {
     single { MasjidRepository(get()) }
     single { QumparanRepository(get()) }
     single { TranslatorRepository(get()) }
+    single { PrayerTimeRepository(get())}
 }
