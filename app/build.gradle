@@ -10,6 +10,8 @@ plugins {
 android {
     compileSdk 31
 
+    configurations { implementation.exclude group: 'org.jetbrains', module: 'annotations' }
+
     defaultConfig {
         applicationId "com.feylabs.halalkan"
         minSdk 21
@@ -103,6 +105,12 @@ dependencies {
     implementation 'com.google.android.gms:play-services-maps:17.0.1'
     implementation "com.google.android.gms:play-services-location:18.0.0"
 
+
+    //ratingviews
+    implementation ('com.github.Inconnu08:android-ratingreviews:1.2.0')
+            {
+                exclude group: 'org.jetbrains', module: 'annotations'
+            }
 
 
 }

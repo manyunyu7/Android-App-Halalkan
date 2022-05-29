@@ -52,6 +52,7 @@
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <View
+            android:id="@+id/separator"
             android:layout_width="2dp"
             android:layout_height="0dp"
             android:layout_marginStart="@dimen/dimen_10dp"
@@ -61,6 +62,27 @@
             app:layout_constraintBottom_toBottomOf="@id/container_stat_left"
             app:layout_constraintStart_toEndOf="@id/container_stat_left"
             app:layout_constraintTop_toTopOf="@id/container_stat_left" />
+
+        <com.taufiqrahman.reviewratings.RatingReviews
+            xmlns:bar="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/ratings_reviews"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="42dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            bar:layout_constraintStart_toEndOf="@id/separator"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.499"
+            bar:animation="true"
+            bar:max_value="100"
+            bar:show_label="true"
+            bar:spaces="0dp"
+            bar:text_color="#333333"
+            bar:text_size="10sp"
+            bar:width="15dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

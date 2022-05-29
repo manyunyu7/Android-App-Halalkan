@@ -105,7 +105,7 @@ class TurnByTurnExperienceActivity : AppCompatActivity() {
         const val startingPointLat = 37.563229
         const val startingPointLong = 126.947639
         private const val BUTTON_ANIMATION_DURATION = 1500L
-        private val IS_SIMULATION = false
+        private val IS_SIMULATION = true
     }
 
     /**

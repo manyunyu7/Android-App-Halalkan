@@ -4,6 +4,7 @@ import com.feylabs.halalkan.data.remote.reqres.auth.LoginBodyRequest
 import com.feylabs.halalkan.data.remote.reqres.auth.RegisterBodyRequest
 import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidDetailResponse
 import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidPhotosResponse
+import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidReviewsResponse
 import com.feylabs.halalkan.data.remote.reqres.prayertime.PrayerTimeAladhanSingleDateResponse
 import com.feylabs.halalkan.data.remote.service.ApiService
 import com.feylabs.halalkan.data.remote.service.MasjidService
@@ -36,6 +37,10 @@ class RemoteDataSource(
     suspend fun getAlbumPhoto(albumId: String) = commonService.getPhotoByAlbum(albumId)
 
     override suspend fun getMasjids() = commonService.getMasjids()
+
+    override suspend fun getMasjidReviews(masjidId:String): Response<MasjidReviewsResponse> {
+        return masjidService.getMasjidReviews(masjidId)
+    }
 
     override suspend fun login(loginBodyRequest: LoginBodyRequest) = commonService.login(loginBodyRequest)
     override suspend fun register(bodyRequest: RegisterBodyRequest) = commonService.register(bodyRequest)
