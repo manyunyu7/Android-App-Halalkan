@@ -15,7 +15,6 @@ import kotlinx.coroutines.*
 class SplashScreenActivity : BaseActivity() {
     private val binding by lazy { ActivitySplashScreenBinding.inflate(layoutInflater) }
 
-    @DelicateCoroutinesApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)

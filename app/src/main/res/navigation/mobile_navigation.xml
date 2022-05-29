@@ -84,5 +84,10 @@
         android:id="@+id/navigation_masjidReviewFragment"
         android:name="com.feylabs.halalkan.view.prayer.review.MasjidReviewFragment"
         android:label="MasjidReviewFragment" />
+    <fragment
+        android:id="@+id/navigation_mapsFragment"
+        android:name="com.feylabs.halalkan.direction.MapsFragment"
+        android:label="fragment_maps"
+        tools:layout="@layout/fragment_maps" />
 
 </navigation>

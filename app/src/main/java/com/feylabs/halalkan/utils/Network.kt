@@ -2,6 +2,7 @@ package com.feylabs.halalkan.utils
 
 object Network {
 
+    const val MAP_API = "AIzaSyC0-LbUHmkGHWdTwOfek7q2erdCzfR4UGA"
     const val REAL_URL = "http://192.168.0.101:3500/"
     const val BASE_URL = "https://jsonplaceholder.typicode.com/"
 

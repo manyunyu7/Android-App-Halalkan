@@ -1,6 +1,7 @@
 package com.feylabs.halalkan
 
 import android.app.Application
+import com.androidnetworking.AndroidNetworking
 import com.feylabs.halalkan.di.networkModule
 import com.feylabs.halalkan.di.repositoryModule
 import com.feylabs.halalkan.di.viewModelModule
@@ -14,6 +15,7 @@ class MuskoApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        AndroidNetworking.initialize(applicationContext)
         Timber.plant(Timber.DebugTree())
 
         startKoin {

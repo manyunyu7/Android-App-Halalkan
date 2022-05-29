@@ -68,6 +68,9 @@ dependencies {
     implementation "com.squareup.retrofit2:retrofit:$retrofit2_version"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit2_version"
 
+    //FAST ANDROID NETWORKIN
+    implementation 'com.amitshekhar.android:android-networking:1.0.2'
+
     // Timber
     implementation 'com.jakewharton.timber:timber:4.7.1'
 
