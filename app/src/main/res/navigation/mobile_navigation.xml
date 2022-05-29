@@ -84,10 +84,16 @@
         android:id="@+id/navigation_masjidReviewFragment"
         android:name="com.feylabs.halalkan.view.prayer.review.MasjidReviewFragment"
         android:label="MasjidReviewFragment" />
+
     <fragment
         android:id="@+id/navigation_mapsFragment"
         android:name="com.feylabs.halalkan.view.direction.MapsFragment"
         android:label="fragment_maps"
         tools:layout="@layout/fragment_maps" />
+
+    <fragment
+        android:id="@+id/navigation_mapBoxFragment"
+        android:name="com.feylabs.halalkan.view.direction.ExampleMapBoxFragment"
+        android:label="MapBoxFragment" />
 
 </navigation>

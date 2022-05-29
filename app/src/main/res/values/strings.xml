@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Halalkan</string>
     <string name="map_key">AIzaSyC0-LbUHmkGHWdTwOfek7q2erdCzfR4UGA</string>
-    <string name="mapbox_access_token" translatable="false">pk.eyJ1IjoiaGVucnlhdWd1c3RhIiwiYSI6ImNra2pjaDAxcDAyYngydnF0dnppZzByZzgifQ.UKzJXFzQPNIzrri9UrALxQ</string>
+    <string name="mapbox_access_token" translatable="false">sk.eyJ1IjoiaGVucnlhdWd1c3RhIiwiYSI6ImNsM3I0cjg1NzA1M2Izam8wcjZlZ3hlZ2EifQ.j8vLApt4WD_sqhKnEQ3wfQ</string>
     <string name="title_activity_container">ContainerActivity</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>

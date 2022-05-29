@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.mapbox.mapboxsdk.maps.MapView
+    <com.mapbox.maps.MapView
         android:id="@+id/mapView"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -15,5 +15,45 @@
         app:mapbox_cameraTargetLat="-6.1753924"
         app:mapbox_cameraTargetLng="106.8271528"
         app:mapbox_cameraZoom="12" />
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dimen_10dp"
+        android:elevation="99dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:padding="@dimen/dimen_10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_change_style"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ganti style"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_change_style2"
+                android:layout_weight="1"
+                android:layout_marginStart="@dimen/dimen_10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ganti style"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_change_style3"
+                android:layout_weight="1"
+                android:layout_marginStart="@dimen/dimen_10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ganti style"/>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

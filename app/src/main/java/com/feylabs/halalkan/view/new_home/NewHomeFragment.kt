@@ -82,13 +82,12 @@ class NewHomeFragment : BaseFragment() {
         initRecyclerView()
         initAdapter()
         loadData()
-        findNavController().navigate(R.id.navigation_mapsFragment)
+        findNavController().navigate(R.id.navigation_mapBoxFragment)
     }
 
     private fun initAdapter() {
         mAdapter.setupAdapterInterface(object : ListRestaurantAdapter.ItemInterface {
             override fun onclick(model: RestaurantHomeUIModel) {
-
             }
         })
 

@@ -91,11 +91,13 @@ dependencies {
 
     implementation 'com.github.fondesa:kpermissions:3.3.0'
 
+    //mapbox version 9
+    implementation 'com.mapbox.maps:android:10.5.0'
+
     //gmaps
     implementation 'com.google.android.gms:play-services-maps:17.0.1'
     implementation "com.google.android.gms:play-services-location:18.0.0"
 
-    //mapbox
-    implementation 'com.mapbox.mapboxsdk:mapbox-android-sdk:8.6.7'
+
 
 }
