@@ -96,6 +96,9 @@ dependencies {
     implementation "com.mapbox.navigation:ui-dropin:2.6.0-alpha.2"
     implementation "com.mapbox.navigation:android:2.5.0"
 
+    // Telegram Photo Picker
+    implementation 'com.library.tangxiaolv:telegramgallery:1.0.5'
+
     //gmaps
     implementation 'com.google.android.gms:play-services-maps:17.0.1'
     implementation "com.google.android.gms:play-services-location:18.0.0"
