@@ -2,6 +2,8 @@ package com.feylabs.halalkan.data.remote
 
 import com.feylabs.halalkan.data.remote.reqres.auth.LoginBodyRequest
 import com.feylabs.halalkan.data.remote.reqres.auth.RegisterBodyRequest
+import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidDetailResponse
+import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidPhotosResponse
 import com.feylabs.halalkan.data.remote.reqres.prayertime.PrayerTimeAladhanSingleDateResponse
 import com.feylabs.halalkan.data.remote.service.ApiService
 import com.feylabs.halalkan.data.remote.service.MasjidService
@@ -15,7 +17,7 @@ class RemoteDataSource(
     private val masjidService: MasjidService,
     private val translationService: TranslatorService,
     private val prayerTimeService: PrayerTimeAladhanService,
-) {
+) : RemoteDataSourceInterface {
 
     /**
      * get news
@@ -33,25 +35,26 @@ class RemoteDataSource(
     suspend fun getUserAlbum(userId: String) = commonService.getUserAlbum(userId)
     suspend fun getAlbumPhoto(albumId: String) = commonService.getPhotoByAlbum(albumId)
 
-    suspend fun getMasjids() = commonService.getMasjids()
+    override suspend fun getMasjids() = commonService.getMasjids()
 
-    suspend fun login(loginBodyRequest: LoginBodyRequest) = commonService.login(loginBodyRequest)
-    suspend fun register(bodyRequest: RegisterBodyRequest) = commonService.register(bodyRequest)
+    override suspend fun login(loginBodyRequest: LoginBodyRequest) = commonService.login(loginBodyRequest)
+    override suspend fun register(bodyRequest: RegisterBodyRequest) = commonService.register(bodyRequest)
 
-    suspend fun getTranslation(
+    override suspend fun getTranslation(
         langSource: String, target: String, text: String
     ) = translationService.translate(langSource = langSource, target = target, text = text)
 
-    suspend fun getTextToSpeech(
+    override suspend fun getTextToSpeech(
         langSource: String, text: String
     ) = translationService.getTTS(lang = langSource, text = text)
 
-    suspend fun getAllMasjid() = masjidService.showAllMasjid()
+    override suspend fun getAllMasjid() = masjidService.showAllMasjid()
 
-    suspend fun getMasjidPhotos(id: String) = masjidService.getMasjidPhotos(id)
-    suspend fun getMasjidDetail(id: String) = masjidService.getMasjidDetail(id)
+    override suspend fun getMasjidPhotos(id: String): Response<MasjidPhotosResponse> =
+        masjidService.getMasjidPhotos(id)
 
-    suspend fun getPrayerTimeSingleDate(
+
+    override suspend fun getPrayerTimeSingleDate(
         time: String,
         lat: String,
         long: String,
@@ -64,6 +67,10 @@ class RemoteDataSource(
             longitude = long,
             method = method
         )
+    }
+
+    override suspend fun getMasjidDetail(id: String): Response<MasjidDetailResponse> {
+        return masjidService.getMasjidDetail(id)
     }
 
 

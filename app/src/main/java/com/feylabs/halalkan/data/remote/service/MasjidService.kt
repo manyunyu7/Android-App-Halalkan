@@ -4,6 +4,7 @@ import com.feylabs.halalkan.data.remote.reqres.*
 import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidDetailResponse
 import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidPhotosResponse
 import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidResponseWithoutPagination
+import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidReviewsResponse
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.*
@@ -24,5 +25,10 @@ interface MasjidService {
     suspend fun getMasjidDetail(
         @Path("id") masjidId: String,
     ): Response<MasjidDetailResponse>
+
+    @GET("masjids/{id}/reviews/")
+    suspend fun getMasjidReviews(
+        @Path("id") masjidId: String,
+    ): Response<MasjidReviewsResponse>
 
 }
