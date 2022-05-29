@@ -18,6 +18,8 @@ import com.mapbox.maps.plugin.gestures.gestures
 import com.mapbox.maps.plugin.locationcomponent.OnIndicatorBearingChangedListener
 import com.mapbox.maps.plugin.locationcomponent.OnIndicatorPositionChangedListener
 import com.mapbox.maps.plugin.locationcomponent.location
+import com.mapbox.navigation.base.options.NavigationOptions
+import com.mapbox.navigation.core.MapboxNavigationProvider
 import com.mapbox.maps.Style as Gaya
 
 class ExampleMapBoxFragment : BaseFragment() {
@@ -29,6 +31,11 @@ class ExampleMapBoxFragment : BaseFragment() {
     private val binding get() = _binding!!
 
     lateinit var mapView: MapView
+
+    val navigationOptions = NavigationOptions.Builder(requireContext())
+        .accessToken("YOUR_ACCESS_TOKEN")
+        .build()
+    val mapboxNavigation = MapboxNavigationProvider.create(navigationOptions)
 
     private val onIndicatorBearingChangedListener = OnIndicatorBearingChangedListener {
         binding.mapView.getMapboxMap().setCamera(CameraOptions.Builder().bearing(it).build())

@@ -82,7 +82,6 @@ class NewHomeFragment : BaseFragment() {
         initRecyclerView()
         initAdapter()
         loadData()
-        findNavController().navigate(R.id.navigation_mapBoxFragment)
     }
 
     private fun initAdapter() {

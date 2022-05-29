@@ -25,7 +25,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Qumparan"
         android:usesCleartextTraffic="true">
+        <activity
+            android:name=".view.direction.TurnByTurnExperienceActivity"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <!--
              TODO: Before you run your application, you need a Google Maps API key.
 
@@ -43,16 +51,14 @@
 
         <activity
             android:name=".view.SplashScreenActivity"
-            android:exported="true" />
+            android:exported="true" >
+
+        </activity>
         <activity
             android:name=".view.ContainerActivity"
             android:exported="true"
             android:label="@string/app_name">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 

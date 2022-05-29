@@ -93,6 +93,8 @@ dependencies {
 
     //mapbox version 9
     implementation 'com.mapbox.maps:android:10.5.0'
+    implementation "com.mapbox.navigation:ui-dropin:2.6.0-alpha.2"
+    implementation "com.mapbox.navigation:android:2.5.0"
 
     //gmaps
     implementation 'com.google.android.gms:play-services-maps:17.0.1'
