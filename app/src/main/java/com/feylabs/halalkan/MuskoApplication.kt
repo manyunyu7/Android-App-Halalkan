@@ -10,7 +10,7 @@ import org.koin.core.context.startKoin
 import org.koin.core.logger.Level
 import timber.log.Timber
 
-class KumparanApplication : Application() {
+class MuskoApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
@@ -18,7 +18,7 @@ class KumparanApplication : Application() {
 
         startKoin {
             androidLogger(Level.NONE)
-            androidContext(this@KumparanApplication)
+            androidContext(this@MuskoApplication)
             modules(listOf(
                 networkModule,
                 repositoryModule,
