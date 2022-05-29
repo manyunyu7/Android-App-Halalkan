@@ -1,7 +1,7 @@
 package com.feylabs.halalkan.di
 
 import com.feylabs.halalkan.MainViewModel
-import com.feylabs.halalkan.direction.DirectionViewModel
+import com.feylabs.halalkan.view.direction.DirectionViewModel
 import com.feylabs.halalkan.view.home.HomeViewModel
 import com.feylabs.halalkan.view.postdetail.PostDetailViewModel
 import com.feylabs.halalkan.view.prayer.PrayerRoomViewModel

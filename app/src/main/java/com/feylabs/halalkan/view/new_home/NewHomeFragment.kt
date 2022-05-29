@@ -33,11 +33,11 @@ class NewHomeFragment : BaseFragment() {
     val viewModel: HomeViewModel by viewModel()
     val mainViewModel: MainViewModel by sharedViewModel()
 
-    private var _binding: FragmentNewHomeBinding? = null
 
     private val mAdapter by lazy { ListRestaurantAdapter() }
     private val mMosqueAdapter by lazy { ListMasjidAdapter() }
 
+    private var _binding: FragmentNewHomeBinding? = null
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!

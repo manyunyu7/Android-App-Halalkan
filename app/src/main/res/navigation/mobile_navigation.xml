@@ -86,7 +86,7 @@
         android:label="MasjidReviewFragment" />
     <fragment
         android:id="@+id/navigation_mapsFragment"
-        android:name="com.feylabs.halalkan.direction.MapsFragment"
+        android:name="com.feylabs.halalkan.view.direction.MapsFragment"
         android:label="fragment_maps"
         tools:layout="@layout/fragment_maps" />
 
