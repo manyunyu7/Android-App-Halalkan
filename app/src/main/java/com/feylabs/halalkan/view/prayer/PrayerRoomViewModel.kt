@@ -6,17 +6,21 @@ import androidx.lifecycle.viewModelScope
 import com.feylabs.halalkan.data.repository.MasjidRepository
 import com.feylabs.halalkan.data.repository.QumparanRepository
 import com.feylabs.halalkan.data.remote.QumparanResource
+import com.feylabs.halalkan.data.remote.RemoteDataSource
 import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidDetailResponse
 import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidPhotosResponse
 import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidResponseWithoutPagination
+import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidReviewsResponse
 import com.feylabs.halalkan.data.remote.reqres.prayertime.PrayerTimeAladhanSingleDateResponse
 import com.feylabs.halalkan.data.repository.PrayerTimeRepository
 import kotlinx.coroutines.launch
+import javax.sql.DataSource
 
 class PrayerRoomViewModel(
     val repo: QumparanRepository,
     val masjidRepository: MasjidRepository,
-    val ds : PrayerTimeRepository
+    val prayerTimeRepository : PrayerTimeRepository,
+    val ds : RemoteDataSource
 ) : ViewModel() {
 
     private var _masjidLiveData =
@@ -28,6 +32,9 @@ class PrayerRoomViewModel(
         MutableLiveData()
     val prayerTimeSingleLiveData get() = _prayerTimeSingleLiveData
 
+    private var _masjidReviewsLiveData =
+        MutableLiveData<QumparanResource<MasjidReviewsResponse?>>()
+    val masjidReviewsLiveData get() = _masjidReviewsLiveData
 
 
     private var _masjidDetailLiveData =
@@ -62,7 +69,7 @@ class PrayerRoomViewModel(
     ) {
         viewModelScope.launch {
             try {
-                val res = ds.getPrayerTimeSingleDate(
+                val res = prayerTimeRepository.getPrayerTimeSingleDate(
                     lat = latitude.toString(),
                     long = longitude.toString(),
                     method = method,
@@ -107,6 +114,22 @@ class PrayerRoomViewModel(
                 }
             } catch (e: Exception) {
                 _masjidLiveData.postValue(QumparanResource.Error(e.message.toString()))
+            }
+        }
+    }
+
+    fun getMasjidReview(masjidId:String) {
+        viewModelScope.launch {
+            try {
+                _masjidReviewsLiveData.postValue(QumparanResource.Loading())
+                val res = ds.getMasjidReviews(masjidId)
+                if (res.isSuccessful) {
+                    _masjidReviewsLiveData.postValue(QumparanResource.Success(res.body()))
+                } else {
+                    _masjidReviewsLiveData.postValue(QumparanResource.Error(res.errorBody().toString()))
+                }
+            } catch (e: Exception) {
+                _masjidReviewsLiveData.postValue(QumparanResource.Error(e.message.toString()))
             }
         }
     }

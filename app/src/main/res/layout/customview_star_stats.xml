@@ -26,12 +26,14 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
+                android:id="@+id/tv_star"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/montserrat_regular"
                 android:textAlignment="center"
                 android:textSize="@dimen/dimen_20sp"
                 android:textStyle="bold"
+                android:text="-"
                 tools:text="2" />
 
             <com.feylabs.halalkan.customview.CustomStarIndicatorReview
@@ -77,7 +79,6 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.499"
             bar:animation="true"
-            bar:max_value="100"
             bar:show_label="true"
             bar:spaces="0dp"
             bar:text_color="#333333"

@@ -19,7 +19,9 @@ data class MasjidReviewsResponse(
         @SerializedName("rating4")
         val rating4: Int,
         @SerializedName("rating5")
-        val rating5: Int
+        val rating5: Int,
+        @SerializedName("avg")
+        val avg: Double
     )
 
     data class Review(

@@ -38,17 +38,16 @@ class CustomStarIndicatorReview : FrameLayout {
     }
 
     private fun initView(context: Context?) {
-        starCount(starCount)
+        setupStarUi(0.0)
     }
 
     fun starCount(count:Double){
-        this.starCount=count
         setupStarUi(count)
     }
 
     private fun setupStarUi(count: Double) {
         when{
-            count>0.0 && count<=1.0->{
+            count in 0.0..1.0 ->{
                 binding.star1.setBackgroundResource(R.drawable.ic_star_grey)
                 binding.star2.setBackgroundResource(R.drawable.ic_star_grey)
                 binding.star3.setBackgroundResource(R.drawable.ic_star_grey)
@@ -98,7 +97,6 @@ class CustomStarIndicatorReview : FrameLayout {
                 binding.star5.setBackgroundResource(R.drawable.ic_star_gold)
             }
         }
-
     }
 
 

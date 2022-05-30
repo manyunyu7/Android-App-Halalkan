@@ -20,7 +20,7 @@ val viewModelModule = module {
 
     viewModel { UserProfileViewModel(get()) }
 
-    viewModel { PrayerRoomViewModel(get(),get(),get()) }
+    viewModel { PrayerRoomViewModel(get(),get(),get(),get()) }
 
     viewModel { TranslateViewModel(get()) }
 

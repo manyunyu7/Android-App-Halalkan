@@ -9,6 +9,7 @@ import android.widget.FrameLayout
 import com.feylabs.halalkan.R
 import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidReviewsResponse
 import com.feylabs.halalkan.databinding.CustomviewStarStatsBinding
+import com.feylabs.halalkan.utils.NumberUtil.Companion.round
 import com.taufiqrahman.reviewratings.BarLabels
 import com.taufiqrahman.reviewratings.RatingReviews
 import java.util.*
@@ -44,10 +45,15 @@ class CustomStarStatsReview : FrameLayout {
     }
 
     private fun initView(context: Context?) {
-       setupStarUi()
+        setStartBarUi()
     }
 
-    fun setupStarUi(reviews: MasjidReviewsResponse.ReviewCount? = null) {
+    fun setStarCount(starCount: Double) {
+        binding.starOnStats.starCount(starCount)
+        binding.tvStar.text = starCount.round(2).toString()
+    }
+
+    fun setStartBarUi(reviews: MasjidReviewsResponse.ReviewCount? = null) {
         val ratingReviews = binding.ratingsReviews
 
         val colors = intArrayOf(
@@ -66,7 +72,7 @@ class CustomStarStatsReview : FrameLayout {
             Random().nextInt(100)
         )
 
-        if(reviews!=null){
+        if (reviews != null) {
             raters = intArrayOf(
                 reviews.rating1,
                 reviews.rating2,
@@ -74,8 +80,10 @@ class CustomStarStatsReview : FrameLayout {
                 reviews.rating4,
                 reviews.rating5,
             )
-        }
 
+            val maxValues = raters.maxOrNull() ?: 100
+            ratingReviews.setMaxBarValue(maxValues)
+        }
         ratingReviews.createRatingBars(100, BarLabels.STYPE1, colors, raters)
     }
 
