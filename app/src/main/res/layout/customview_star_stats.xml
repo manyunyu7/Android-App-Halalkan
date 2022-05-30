@@ -16,12 +16,15 @@
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/container_stat_left"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dimen_20dp"
+            android:layout_marginHorizontal="@dimen/dimen_10dp"
             android:layout_marginTop="@dimen/dimen_20dp"
+            android:layout_marginBottom="@dimen/dimen_20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             android:gravity="center"
             android:orientation="vertical"
+            app:layout_constraintEnd_toStartOf="@id/separator"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -30,10 +33,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/montserrat_regular"
+                android:text="-"
                 android:textAlignment="center"
                 android:textSize="@dimen/dimen_20sp"
                 android:textStyle="bold"
-                android:text="-"
                 tools:text="2" />
 
             <com.feylabs.halalkan.customview.CustomStarIndicatorReview
@@ -43,12 +46,14 @@
                 android:layout_gravity="center" />
 
             <TextView
+                android:id="@+id/desc_star_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_regular"
                 android:textAlignment="center"
+                android:layout_marginTop="@dimen/dimen_10dp"
                 android:textColor="@color/gray70"
-                android:textSize="@dimen/dimen_12sp"
+                android:textSize="@dimen/dimen_11sp"
                 tools:text="2 Ratings" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
@@ -61,29 +66,36 @@
             android:layout_marginTop="-20dp"
             android:layout_marginBottom="-20dp"
             android:background="@color/color_separator"
+            app:layout_constraintEnd_toEndOf="@id/guideline_center"
             app:layout_constraintBottom_toBottomOf="@id/container_stat_left"
-            app:layout_constraintStart_toEndOf="@id/container_stat_left"
+            app:layout_constraintStart_toStartOf="@id/guideline_center"
             app:layout_constraintTop_toTopOf="@id/container_stat_left" />
 
-        <com.taufiqrahman.reviewratings.RatingReviews
-            xmlns:bar="http://schemas.android.com/apk/res-auto"
+        <com.taufiqrahman.reviewratings.RatingReviews xmlns:bar="http://schemas.android.com/apk/res-auto"
             android:id="@+id/ratings_reviews"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginStart="42dp"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            bar:layout_constraintStart_toEndOf="@id/separator"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.499"
             bar:animation="true"
+            bar:layout_constraintStart_toEndOf="@id/separator"
             bar:show_label="true"
             bar:spaces="0dp"
             bar:text_color="#333333"
             bar:text_size="10sp"
             bar:width="15dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.35" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

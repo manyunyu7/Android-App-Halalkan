@@ -1,5 +1,6 @@
 package com.feylabs.halalkan.customview
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
 import android.util.AttributeSet
@@ -46,15 +47,23 @@ class CustomStarStatsReview : FrameLayout {
 
     private fun initView(context: Context?) {
         setStartBarUi()
+        setStarCount(0.0)
     }
 
+    @SuppressLint("SetTextI18n")
     fun setStarCount(starCount: Double) {
-        binding.starOnStats.starCount(starCount)
+        binding.starOnStats.setupStarUi(starCount)
         binding.tvStar.text = starCount.round(2).toString()
     }
 
+    @SuppressLint("SetTextI18n")
     fun setStartBarUi(reviews: MasjidReviewsResponse.ReviewCount? = null) {
         val ratingReviews = binding.ratingsReviews
+
+        reviews?.let {
+            binding.descStarCount.text =
+                (it.rating1 + it.rating2 + it.rating3 + it.rating4 + it.rating5).toString() + " Rating"
+        }
 
         val colors = intArrayOf(
             Color.parseColor("#0e9d58"),
@@ -64,27 +73,22 @@ class CustomStarStatsReview : FrameLayout {
             Color.parseColor("#d36259")
         )
 
-        var raters = intArrayOf(
-            Random().nextInt(100),
-            Random().nextInt(100),
-            Random().nextInt(100),
-            Random().nextInt(100),
-            Random().nextInt(100)
-        )
+        var raters = intArrayOf(0, 0, 0, 0, 0)
 
         if (reviews != null) {
             raters = intArrayOf(
-                reviews.rating1,
-                reviews.rating2,
-                reviews.rating3,
-                reviews.rating4,
                 reviews.rating5,
+                reviews.rating4,
+                reviews.rating3,
+                reviews.rating2,
+                reviews.rating1,
             )
 
             val maxValues = raters.maxOrNull() ?: 100
-            ratingReviews.setMaxBarValue(maxValues)
+            ratingReviews.createRatingBars(1, BarLabels.STYPE1, colors, raters)
+        } else {
+            ratingReviews.createRatingBars(100, BarLabels.STYPE4, colors, raters)
         }
-        ratingReviews.createRatingBars(100, BarLabels.STYPE1, colors, raters)
     }
 
 
