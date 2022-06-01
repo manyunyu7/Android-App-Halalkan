@@ -1,6 +1,7 @@
 package com.feylabs.halalkan.utils
 
 import android.content.Context
+import android.net.Uri
 import android.view.View
 import android.widget.ImageView
 import com.bumptech.glide.Glide
@@ -10,14 +11,15 @@ import com.feylabs.halalkan.utils.Network.REAL_URL
 import com.feylabs.halalkan.utils.StringUtil.encodeUrl
 import com.pixplicity.sharp.Sharp
 import okhttp3.*
+import java.io.File
 import java.io.IOException
 
 object ImageViewUtils {
 
-    fun String.urlHalal(){
+    fun String.urlHalal() {
         var url = this.encodeUrl()
-        if(url.contains("/"))
-        url = REAL_URL+url
+        if (url.contains("/"))
+            url = REAL_URL + url
     }
 
     fun String.imgFullUserPath() =
@@ -63,6 +65,32 @@ object ImageViewUtils {
             .diskCacheStrategy(DiskCacheStrategy.NONE)
             .skipMemoryCache(true)
             .into(this)
+    }
+
+    fun ImageView.loadImage(
+        context: Context,
+        uri: Uri? = null,
+        file: File? = null,
+        thumbnailsType: ThumbnailsType = ThumbnailsType.LOADING_1
+    ) {
+        if(file!=null){
+            Glide.with(context)
+                .load(file)
+                .placeholder(thumbnailsType.value)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(true)
+                .into(this)
+        }else{
+            if(uri!=null){
+                Glide.with(context)
+                    .load(uri)
+                    .placeholder(thumbnailsType.value)
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .skipMemoryCache(true)
+                    .into(this)
+            }
+        }
+
     }
 
     fun ImageView.loadImage(

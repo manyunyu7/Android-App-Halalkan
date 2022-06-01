@@ -51,124 +51,149 @@
         app:layout_constraintTop_toBottomOf="@id/cstToolbar">
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <com.chaek.android.RatingBar
-                android:id="@+id/rating_bar"
-                android:layout_gravity="center"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="Hello World!"
-                app:rating_flag="FIVE"
-                app:rating_star_color="@color/colorGold"
-                app:rating_star_empty_color="@color/black40"
-                app:rating_star_height="30dp"
-                app:rating_star_margin="5dp"
-                app:rating_star_width="30dp"
-                app:rating_start_count="3" />
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="3dp"
                 android:layout_marginVertical="@dimen/dimen_20dp"
-                android:background="@color/color_separator"/>
+                android:background="@color/color_separator" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/dimen_20dp"
+                android:background="@android:color/transparent"
+                android:fontFamily="@font/poppins_regular"
+                android:gravity="top"
+                android:hint="Skor"
+                android:textSize="15sp" />
+
+            <RatingBar
+                android:id="@+id/rating_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="@dimen/dimen_10dp"
+                android:numStars="5"
+                android:stepSize="1" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:layout_marginVertical="@dimen/dimen_20dp"
+                android:background="@color/color_separator" />
 
             <TextView
                 android:id="@+id/et_translate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="top"
-                android:textSize="15sp"
                 android:layout_marginHorizontal="@dimen/dimen_20dp"
-                android:fontFamily="@font/poppins_regular"
-                android:hint="Photo"
                 android:background="@android:color/transparent"
-                />
+                android:fontFamily="@font/poppins_regular"
+                android:gravity="top"
+                android:hint="Photo"
+                android:textSize="15sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:layout_marginTop="@dimen/dimen_10dp"
-                android:padding="@dimen/dimen_20dp"
                 android:layout_marginHorizontal="@dimen/dimen_20dp"
-                android:background="@drawable/bg_rounded_border_20">
+                android:layout_marginTop="@dimen/dimen_10dp"
+                android:background="@drawable/bg_rounded_border_20"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="@dimen/dimen_20dp">
 
-                <ImageView
-                    android:id="@+id/icon_pick_photo"
-                    android:layout_gravity="center"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/ic_baseline_add_a_photo_24"
-                    app:tint="@color/halalkan_primary" />
-
-                <TextView
-                    android:id="@+id/tv_pick_photo"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:id="@+id/container_photo"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="top"
-                    android:textSize="15sp"
-                    android:layout_gravity="center"
-                    android:layout_marginHorizontal="@dimen/dimen_20dp"
-                    android:fontFamily="@font/poppins_regular"
-                    android:hint="Photo"
-                    android:background="@android:color/transparent"
-                    />
+                    android:gravity="center">
 
-                <com.feylabs.halalkan.customview.imagepreviewcontainer.small.CustomViewImageContainerPreviewSmall
-                    android:id="@+id/photo_container"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    <ImageView
+                        android:id="@+id/icon_pick_photo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_baseline_add_a_photo_24"
+                        app:tint="@color/halalkan_primary" />
+
+                    <TextView
+                        android:id="@+id/tv_pick_photo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginHorizontal="@dimen/dimen_20dp"
+                        android:background="@android:color/transparent"
+                        android:fontFamily="@font/poppins_regular"
+                        android:gravity="top"
+                        android:hint="Photo"
+                        android:textSize="15sp" />
+
+                </LinearLayout>
 
             </LinearLayout>
 
+            <com.feylabs.halalkan.customview.imagepreviewcontainer.small.CustomViewImageContainerPreviewSmall
+                android:id="@+id/photo_container"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone" />
+
 
             <TextView
-                android:layout_marginTop="@dimen/dimen_20dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="top"
-                android:textSize="15sp"
                 android:layout_marginHorizontal="@dimen/dimen_20dp"
-                android:fontFamily="@font/poppins_regular"
-                android:hint="Deskripsi"
+                android:layout_marginTop="@dimen/dimen_20dp"
                 android:background="@android:color/transparent"
-                />
+                android:fontFamily="@font/poppins_regular"
+                android:gravity="top"
+                android:hint="Deskripsi"
+                android:textSize="15sp" />
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/et_kasus_posisi"
+                android:id="@+id/et_deskripsi"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="@dimen/dimen_50dp"
                 android:layout_marginHorizontal="@dimen/dimen_20dp"
+                android:layout_marginTop="8dp"
+                android:hint="Tambahkan Deskripsi"
+                android:minHeight="@dimen/dimen_50dp"
                 app:boxCornerRadiusBottomEnd="@dimen/dimen_10dp"
                 app:boxCornerRadiusBottomStart="@dimen/dimen_10dp"
-                app:boxCornerRadiusTopStart="@dimen/dimen_10dp"
                 app:boxCornerRadiusTopEnd="@dimen/dimen_10dp"
-                android:layout_marginTop="8dp"
-                app:boxStrokeColor="@color/black30"
-                android:hint="Tambahkan Deskripsi">
+                app:boxCornerRadiusTopStart="@dimen/dimen_10dp"
+                app:boxStrokeColor="@color/black30">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:minHeight="@dimen/dimen_50dp"
-                    android:gravity="top"
                     android:fontFamily="@font/poppins_regular"
+                    android:gravity="top"
+                    android:inputType="textMultiLine"
                     android:lines="5"
-                    android:inputType="textMultiLine" />
+                    android:minHeight="@dimen/dimen_50dp" />
             </com.google.android.material.textfield.TextInputLayout>
 
-
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_publish_review"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Publish Review"
+                android:backgroundTint="@color/halalkan_primary"
+                app:cornerRadius="@dimen/dimen_10dp"
+                android:layout_marginHorizontal="@dimen/dimen_20dp"
+                android:fontFamily="@font/poppins_regular"
+                android:layout_marginTop="20dp"
+                />
 
         </LinearLayout>
-
-
-
     </androidx.core.widget.NestedScrollView>
 
 

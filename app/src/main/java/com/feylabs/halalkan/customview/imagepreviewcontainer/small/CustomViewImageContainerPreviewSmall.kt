@@ -6,13 +6,13 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.AdapterDataObserver
 import com.feylabs.halalkan.R
-import com.feylabs.halalkan.customview.imagepreviewcontainer.CustomViewImageContainerAdapter
-import com.feylabs.halalkan.customview.imagepreviewcontainer.CustomViewImageContainerAdapterSmall
 import com.feylabs.halalkan.customview.imagepreviewcontainer.CustomViewPhotoModel
 import com.feylabs.halalkan.databinding.CustomviewImageContainerPreviewBinding
+
 
 @SuppressLint("NotifyDataSetChanged")
 class CustomViewImageContainerPreviewSmall : FrameLayout {
@@ -20,6 +20,7 @@ class CustomViewImageContainerPreviewSmall : FrameLayout {
     private var title: String = ""
 
     private var binding: CustomviewImageContainerPreviewBinding
+    lateinit var changeInterface: ListenPhotoChange
 
     private val adapter by lazy { CustomViewImageContainerAdapterSmall() }
 
@@ -30,12 +31,33 @@ class CustomViewImageContainerPreviewSmall : FrameLayout {
         setupRecyclerview()
     }
 
-    private fun setupRecyclerview() {
-        binding.rv.adapter = adapter
-        binding.rv.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+    fun itemCount(): Int {
+        return adapter.itemCount
     }
 
+    fun registerChange(listener:ListenPhotoChange){
+        changeInterface = listener
+
+        adapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
+            override fun onItemRangeRemoved(positionStart: Int, itemCount: Int) {
+                super.onItemRangeRemoved(positionStart, itemCount)
+                changeInterface.listen()
+            }
+        })
+
+    }
+
+    private fun setupRecyclerview() {
+        binding.rv.adapter = adapter
+        binding.rv.layoutManager =
+            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+    }
+
+
     private fun setupAdapter() {
+
+
+
         adapter.setupAdapterInterface(object : CustomViewImageContainerAdapterSmall.ItemInterface {
             override fun onclick(model: CustomViewPhotoModel) {
 
@@ -97,4 +119,8 @@ class CustomViewImageContainerPreviewSmall : FrameLayout {
         typedArray.recycle()
     }
 
+    interface ListenPhotoChange {
+        fun listen()
+    }
 }
+

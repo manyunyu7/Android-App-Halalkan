@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.feylabs.halalkan.R
 import com.feylabs.halalkan.data.remote.QumparanResource
 import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidReviewPaginationResponse
 import com.feylabs.halalkan.databinding.FragmentReviewNewMasjidBinding
@@ -91,6 +93,9 @@ class MasjidReviewNewFragment : BaseFragment() {
     }
 
     override fun initAction() {
+        binding.btnWriteReview.setOnClickListener {
+            findNavController().navigate(R.id.navigation_masjidCreateReviewFragment)
+        }
     }
 
     override fun initData() {
