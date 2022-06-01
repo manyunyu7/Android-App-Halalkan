@@ -57,13 +57,14 @@
                 android:orientation="vertical"
                 app:layout_constraintGuide_percent="0.6" />
 
-            <androidx.constraintlayout.widget.Barrier
-                android:id="@+id/barrier2"
-                android:layout_width="wrap_content"
+            <com.feylabs.halalkan.customview.imagepreviewcontainer.small.CustomViewImageContainerPreviewSmall
+                android:id="@+id/image_preview"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:barrierDirection="bottom"
-                app:constraint_referenced_ids="container_profile,star_indicator"
-                />
+                app:layout_constraintTop_toBottomOf="@id/tv_question"
+                app:layout_constraintEnd_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

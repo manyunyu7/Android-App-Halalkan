@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.RecyclerView
 import com.feylabs.halalkan.R
+import com.feylabs.halalkan.customview.imagepreviewcontainer.CustomViewPhotoModel
 import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidReviewPaginationResponse.Reviews.Data
 import com.feylabs.halalkan.databinding.ItemReviewBinding
 import com.feylabs.halalkan.databinding.ItemRvLoadMoreBinding
@@ -84,6 +85,18 @@ class MasjidReviewAdapter :
              */
 
             binding.tvQuestion.text = model.comment
+
+
+            val listPhotos = mutableListOf<CustomViewPhotoModel>()
+            model.reviewPhotos.forEachIndexed { index, any ->
+                if (any is String){
+                    listPhotos.add(CustomViewPhotoModel(
+                        url = any
+                    ))
+                }
+            }
+
+            binding.imagePreview.replaceAllImage(listPhotos)
 
             model.userInfo?.let {user->
                 binding.includeUserProfile.apply {
