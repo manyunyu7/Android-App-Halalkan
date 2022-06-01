@@ -5,14 +5,11 @@ import android.content.Context
 import android.graphics.Color
 import android.util.AttributeSet
 import android.view.LayoutInflater
-import android.view.View
 import android.widget.FrameLayout
-import com.feylabs.halalkan.R
-import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidReviewsResponse
+import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidReviewPaginationResponse
 import com.feylabs.halalkan.databinding.CustomviewStarStatsBinding
 import com.feylabs.halalkan.utils.NumberUtil.Companion.round
 import com.taufiqrahman.reviewratings.BarLabels
-import com.taufiqrahman.reviewratings.RatingReviews
 import java.util.*
 
 
@@ -57,7 +54,7 @@ class CustomStarStatsReview : FrameLayout {
     }
 
     @SuppressLint("SetTextI18n")
-    fun setStartBarUi(reviews: MasjidReviewsResponse.ReviewCount? = null) {
+    fun setStartBarUi(reviews: MasjidReviewPaginationResponse.ReviewCount? = null) {
         val ratingReviews = binding.ratingsReviews
 
         reviews?.let {
@@ -85,7 +82,7 @@ class CustomStarStatsReview : FrameLayout {
             )
 
             val maxValues = raters.maxOrNull() ?: 100
-            ratingReviews.createRatingBars(1, BarLabels.STYPE1, colors, raters)
+            ratingReviews.createRatingBars(maxValues, BarLabels.STYPE1, colors, raters)
         } else {
             ratingReviews.createRatingBars(100, BarLabels.STYPE4, colors, raters)
         }

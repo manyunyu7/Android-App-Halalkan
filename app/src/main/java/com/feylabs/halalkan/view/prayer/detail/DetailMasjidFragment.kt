@@ -1,11 +1,13 @@
 package com.feylabs.halalkan.view.prayer.detail
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
+import com.feylabs.halalkan.MainViewModel
 import com.feylabs.halalkan.R
 import com.feylabs.halalkan.customview.AskPermissionDialog
 import com.feylabs.halalkan.customview.imagepreviewcontainer.CustomViewPhotoModel
@@ -15,6 +17,8 @@ import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidDetailResponse
 import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidPhotosResponse
 import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidResponseWithoutPagination
 import com.feylabs.halalkan.databinding.FragmentDetailPrayerBinding
+import com.feylabs.halalkan.utils.NumberUtil.Companion.round
+import com.feylabs.halalkan.utils.NumberUtil.Companion.roundOffDecimal
 import com.feylabs.halalkan.utils.PermissionCommandUtil
 import com.feylabs.halalkan.utils.PermissionUtil
 import com.feylabs.halalkan.utils.PermissionUtil.Companion.isBlocked
@@ -22,7 +26,11 @@ import com.feylabs.halalkan.utils.PermissionUtil.Companion.isNotGranted
 import com.feylabs.halalkan.utils.StringUtil.extractElementArrayFromStringArrayBE
 import com.feylabs.halalkan.utils.StringUtil.extractStringFromStringArrayBE
 import com.feylabs.halalkan.utils.base.BaseFragment
+import com.feylabs.halalkan.utils.location.LocationUtils
+import com.feylabs.halalkan.utils.location.MyLatLong
+import com.feylabs.halalkan.view.direction.TurnByTurnExperienceActivity
 import com.feylabs.halalkan.view.prayer.PrayerRoomViewModel
+import org.koin.android.viewmodel.ext.android.sharedViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
 
@@ -35,6 +43,8 @@ class DetailMasjidFragment : BaseFragment() {
     private val binding get() = _binding!!
 
     val viewModel: PrayerRoomViewModel by viewModel()
+
+    val mainViewModel : MainViewModel by sharedViewModel()
 
     var initModel: DataMasjid? = null
 
@@ -49,34 +59,26 @@ class DetailMasjidFragment : BaseFragment() {
                 binding.labelMasjidName.text = name
                 binding.etCategoryTop.text = categoryName
                 binding.etAddressTop.text = address
-                binding.etDistance.text = calculateMasjidDistance(lat, long)
+                binding.etDistance.text = calculateMasjidDistance(lat.toDoubleOrNull(), long.toDoubleOrNull())
                 binding.etAddress.text = address
-                binding.labelPhone.text = phone
                 binding.etKategori.text = categoryName
                 binding.etActionCall.text = phone
                 binding.etOperatingHours.text = getOperatingHours()
                 binding.etFacilities.text = facilities.extractStringFromStringArrayBE()
 
-                val photo = mutableListOf(
-                    CustomViewPhotoModel(
-                        name = "Photo 1",
-                        url = ""
-                    ),
-                    CustomViewPhotoModel(
-                        name = "Photo 2",
-                        url = "https://i.pinimg.com/736x/4c/8f/49/4c8f49756ce273966029dd0a9e9381cd.jpg"
-                    ),
-                    CustomViewPhotoModel(
-                        name = "Photo 3",
-                        url = "https://i.pinimg.com/564x/fc/be/ca/fcbeca2a32f542a1bd9c4f7b74f6d9b8.jpg"
-                    )
-                )
-                binding.ipImagePreviewSlider.replaceAllImage(photo)
+                viewModel.targetLong.postValue(long.toDoubleOrNull())
+                viewModel.targetLat.postValue(lat.toDoubleOrNull())
+
             }
         }
     }
 
     override fun initObserver() {
+
+        mainViewModel.liveLatLng.observe(viewLifecycleOwner){
+
+        }
+
         viewModel.masjidDetailLiveData.observe(viewLifecycleOwner) {
             when (it) {
                 is QumparanResource.Default -> {}
@@ -132,13 +134,15 @@ class DetailMasjidFragment : BaseFragment() {
                 binding.labelMasjidName.text = name
                 binding.etCategoryTop.text = categoryName
                 binding.etAddressTop.text = address
-                binding.etDistance.text = calculateMasjidDistance(lat, long)
+                binding.etDistance.text = calculateMasjidDistance(lat.toDoubleOrNull(), long.toDoubleOrNull())
                 binding.etAddress.text = address
-                binding.labelPhone.text = phone
                 binding.etKategori.text = categoryName
                 binding.etActionCall.text = phone
                 binding.etFacilities.text = facilities.extractStringFromStringArrayBE()
                 binding.etOperatingHours.text=getOperatingHours()
+
+                viewModel.targetLong.postValue(long.toDoubleOrNull())
+                viewModel.targetLat.postValue(lat.toDoubleOrNull())
             }
         }
     }
@@ -161,8 +165,15 @@ class DetailMasjidFragment : BaseFragment() {
             findNavController().popBackStack()
         }
 
+        binding.btnFavorite.setOnClickListener {
+            startActivity(Intent(requireActivity(),TurnByTurnExperienceActivity::class.java)
+                .putExtra(TurnByTurnExperienceActivity.DESTINATION_LONG,viewModel.targetLong.value)
+                .putExtra(TurnByTurnExperienceActivity.DESTINATION_LAT,viewModel.targetLat.value)
+            )
+        }
+
         binding.btnWriteReview.setOnClickListener {
-            findNavController().navigate(R.id.navigation_masjidReviewFragment, bundleOf(
+            findNavController().navigate(R.id.navigation_masjidReviewNewFragment, bundleOf(
                 "id" to initModel?.id.toString()
             ))
         }
@@ -187,8 +198,15 @@ class DetailMasjidFragment : BaseFragment() {
         _binding = null
     }
 
-    private fun calculateMasjidDistance(lat: String, long: String): CharSequence? {
-        return ""
+    private fun calculateMasjidDistance(lat: Double?, long: Double?): CharSequence? {
+        val mLat = lat ?: -99.0
+        val mLong = long ?: -99.0
+        val myLocation = mainViewModel.liveLatLng.value
+        val distance = LocationUtils.calculateDistance(
+            loc1 = myLocation,
+            loc2 = MyLatLong(mLat, mLong)
+        )
+        return distance.roundOffDecimal() + " Km"
     }
 
     private fun showCenterLoadingIndicator(value: Boolean) {

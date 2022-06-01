@@ -20,6 +20,9 @@ object ImageViewUtils {
         url = REAL_URL+url
     }
 
+    fun String.imgFullUserPath() =
+        REAL_URL + "uploads/img/users/$this"
+
     fun ImageView.loadSvg(context: Context, url: String) {
         val imageView = this
         val httpClient = OkHttpClient.Builder()

@@ -4,11 +4,15 @@ import androidx.lifecycle.MutableLiveData
 
 class LocationUtils {
     companion object{
-        fun calculateDistance(loc1: MyLatLong, loc2: MyLatLong): Double {
-            val lat1 = loc1.lat
-            val lon1 = loc1.long
-            val lat2 = loc2.lat
-            val lon2 = loc2.long
+        fun calculateDistance(loc1: MyLatLong?, loc2: MyLatLong?): Double {
+            val mLoc2 = loc2 ?: MyLatLong(-99.0,-22.0)
+            val mLoc1 = loc1 ?: MyLatLong(-99.0,-22.0)
+
+            val lat1 = mLoc1.lat
+            val lon1 = mLoc1.long
+
+            val lat2 = mLoc2.lat
+            val lon2 = mLoc2.long
 
             val theta = lon1 - lon2
             var dist = (Math.sin(deg2rad(lat1))

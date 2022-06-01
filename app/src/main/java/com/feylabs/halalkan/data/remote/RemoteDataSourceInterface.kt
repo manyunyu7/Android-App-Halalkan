@@ -5,10 +5,7 @@ import com.feylabs.halalkan.data.remote.reqres.auth.LoginBodyRequest
 import com.feylabs.halalkan.data.remote.reqres.auth.LoginResponse
 import com.feylabs.halalkan.data.remote.reqres.auth.RegisterBodyRequest
 import com.feylabs.halalkan.data.remote.reqres.auth.RegisterResponse
-import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidDetailResponse
-import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidPhotosResponse
-import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidResponseWithoutPagination
-import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidReviewsResponse
+import com.feylabs.halalkan.data.remote.reqres.masjid.*
 import com.feylabs.halalkan.data.remote.reqres.prayertime.PrayerTimeAladhanSingleDateResponse
 import com.feylabs.halalkan.data.remote.reqres.translator.TiktokTextToSpeechResponse
 import com.feylabs.halalkan.data.remote.reqres.translator.TranslateResponse
@@ -38,12 +35,16 @@ interface RemoteDataSourceInterface {
         langSource: String, target: String, text: String
     ): Response<TranslateResponse>
 
-    suspend fun register(bodyRequest: RegisterBodyRequest) : Response<RegisterResponse>
+    suspend fun register(bodyRequest: RegisterBodyRequest): Response<RegisterResponse>
 
-    suspend fun login(loginBodyRequest: LoginBodyRequest) : Response<LoginResponse>
+    suspend fun login(loginBodyRequest: LoginBodyRequest): Response<LoginResponse>
 
-    suspend fun getMasjids() : Response<MasjidResponseWithoutPagination>
+    suspend fun getMasjids(): Response<MasjidResponseWithoutPagination>
 
-    suspend fun getMasjidReviews(masjidId:String) : Response<MasjidReviewsResponse>
+    suspend fun getMasjidReviews(
+        masjidId: String,
+        perPage: Int,
+        page: Int
+    ): Response<MasjidReviewPaginationResponse>
 
 }

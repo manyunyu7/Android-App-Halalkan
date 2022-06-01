@@ -8,9 +8,11 @@ import android.content.res.Configuration
 import android.content.res.Resources
 import android.location.Location
 import android.view.View
+import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.feylabs.halalkan.databinding.ActivityTurnByTurnExperienceBinding
+import com.feylabs.halalkan.utils.base.BaseActivity
 import com.mapbox.api.directions.v5.models.Bearing
 import com.mapbox.api.directions.v5.models.DirectionsRoute
 import com.mapbox.api.directions.v5.models.RouteOptions
@@ -72,6 +74,7 @@ import com.mapbox.navigation.ui.voice.model.SpeechAnnouncement
 import com.mapbox.navigation.ui.voice.model.SpeechError
 import com.mapbox.navigation.ui.voice.model.SpeechValue
 import com.mapbox.navigation.ui.voice.model.SpeechVolume
+import kotlinx.coroutines.*
 import java.util.Locale
 
 /**
@@ -99,13 +102,15 @@ import java.util.Locale
  * - At any point in time you can finish guidance or select a new destination.
  * - You can use buttons to mute/unmute voice instructions, recenter the camera, or show the route overview.
  */
-class TurnByTurnExperienceActivity : AppCompatActivity() {
+class TurnByTurnExperienceActivity : BaseActivity() {
 
-    private companion object {
+    companion object {
+        const val DESTINATION_LAT = "DES"
+        const val DESTINATION_LONG = "faf"
         const val startingPointLat = 37.563229
         const val startingPointLong = 126.947639
         private const val BUTTON_ANIMATION_DURATION = 1500L
-        private val IS_SIMULATION = true
+        private val IS_SIMULATION = false
     }
 
     /**
@@ -235,6 +240,18 @@ class TurnByTurnExperienceActivity : AppCompatActivity() {
             }
         }
 
+    private fun startNavigation(lat: Double, long: Double) {
+        GlobalScope.launch {
+            withContext(Dispatchers.Main) {
+                delay(2000L)
+                showToast("Start Navigation lat: $lat, long:$long")
+                val point = Point.fromLngLat(long, lat)
+                findRoute(point)
+            }
+        }
+
+    }
+
     /**
      * Extracts message that should be communicated to the driver about the upcoming maneuver.
      * When possible, downloads a synthesized audio file that can be played back to the driver.
@@ -283,7 +300,7 @@ class TurnByTurnExperienceActivity : AppCompatActivity() {
      */
     private val voiceInstructionsPlayerCallback =
         MapboxNavigationConsumer<SpeechAnnouncement> { value ->
-// remove already consumed file to free-up space
+            // remove already consumed file to free-up space
             speechApi.clean(value)
         }
 
@@ -441,8 +458,9 @@ class TurnByTurnExperienceActivity : AppCompatActivity() {
             binding.mapView.camera,
             viewportDataSource
         )
-// set the animations lifecycle listener to ensure the NavigationCamera stops
-// automatically following the user location when the map is interacted with
+
+        // set the animations lifecycle listener to ensure the NavigationCamera stops
+        // automatically following the user location when the map is interacted with
         binding.mapView.camera.addCameraAnimationsLifecycleListener(
             NavigationBasicGesturesHandler(navigationCamera)
         )
@@ -456,7 +474,8 @@ class TurnByTurnExperienceActivity : AppCompatActivity() {
                 NavigationCameraState.IDLE -> binding.recenter.visibility = View.VISIBLE
             }
         }
-// set the padding values depending on screen orientation and visible view layout
+
+        // set the padding values depending on screen orientation and visible view layout
         if (this.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             viewportDataSource.overviewPadding = landscapeOverviewPadding
         } else {
@@ -468,15 +487,15 @@ class TurnByTurnExperienceActivity : AppCompatActivity() {
             viewportDataSource.followingPadding = followingPadding
         }
 
-// make sure to use the same DistanceFormatterOptions across different features
+        // make sure to use the same DistanceFormatterOptions across different features
         val distanceFormatterOptions = mapboxNavigation.navigationOptions.distanceFormatterOptions
 
-// initialize maneuver api that feeds the data to the top banner maneuver view
+        // initialize maneuver api that feeds the data to the top banner maneuver view
         maneuverApi = MapboxManeuverApi(
             MapboxDistanceFormatter(distanceFormatterOptions)
         )
 
-// initialize bottom progress view
+        // initialize bottom progress view
         tripProgressApi = MapboxTripProgressApi(
             TripProgressUpdateFormatter.Builder(this)
                 .distanceRemainingFormatter(
@@ -494,7 +513,7 @@ class TurnByTurnExperienceActivity : AppCompatActivity() {
                 .build()
         )
 
-// initialize voice instructions api and the voice instruction player
+        // initialize voice instructions api and the voice instruction player
         speechApi = MapboxSpeechApi(
             this,
             getString(R.string.mapbox_access_token),
@@ -506,33 +525,32 @@ class TurnByTurnExperienceActivity : AppCompatActivity() {
             Locale.getDefault().language
         )
 
-// initialize route line, the withRouteLineBelowLayerId is specified to place
-// the route line below road labels layer on the map
-// the value of this option will depend on the style that you are using
-// and under which layer the route line should be placed on the map layers stack
+        // initialize route line, the withRouteLineBelowLayerId is specified to place
+        // the route line below road labels layer on the map
+        // the value of this option will depend on the style that you are using
+        // and under which layer the route line should be placed on the map layers stack
         val mapboxRouteLineOptions = MapboxRouteLineOptions.Builder(this)
             .withRouteLineBelowLayerId("road-label")
             .build()
         routeLineApi = MapboxRouteLineApi(mapboxRouteLineOptions)
         routeLineView = MapboxRouteLineView(mapboxRouteLineOptions)
 
-// initialize maneuver arrow view to draw arrows on the map
+        // initialize maneuver arrow view to draw arrows on the map
         val routeArrowOptions = RouteArrowOptions.Builder(this).build()
         routeArrowView = MapboxRouteArrowView(routeArrowOptions)
 
-// load map style
+        // load map style
         mapboxMap.loadStyleUri(
             Style.MAPBOX_STREETS
         ) {
-// add long click listener that search for a route to the clicked destination
+            // add long click listener that search for a route to the clicked destination
             binding.mapView.gestures.addOnMapLongClickListener { point ->
                 findRoute(point)
-//                val a : Point = Point.fromLngLat()
                 true
             }
         }
 
-// initialize view interactions
+        // initialize view interactions
         binding.stop.setOnClickListener {
             clearRouteAndStopNavigation()
         }
@@ -544,17 +562,25 @@ class TurnByTurnExperienceActivity : AppCompatActivity() {
             navigationCamera.requestNavigationCameraToOverview()
             binding.recenter.showTextAndExtend(BUTTON_ANIMATION_DURATION)
         }
+
         binding.soundButton.setOnClickListener {
-// mute/unmute voice instructions
+            // mute/unmute voice instructions
             isVoiceInstructionsMuted = !isVoiceInstructionsMuted
         }
 
-// set initial sounds button state
+        // set initial sounds button state
         binding.soundButton.unmute()
 
-// start the trip session to being receiving location updates in free drive
-// and later when a route is set also receiving route progress updates
+        // start the trip session to being receiving location updates in free drive
+        // and later when a route is set also receiving route progress updates
         mapboxNavigation.startTripSession()
+
+        val navFromIntentLat = intent.getDoubleExtra(DESTINATION_LAT, -99.0) ?: -99.0
+        val navFromIntentLong = intent.getDoubleExtra(DESTINATION_LONG, -99.0) ?: -99.0
+
+        if (navFromIntentLat != 99.0 && navFromIntentLong != 99.0) {
+            startNavigation(lat = navFromIntentLat, long = navFromIntentLong)
+        }
     }
 
     private fun getMapBoxNavigation(): MapboxNavigation {
@@ -572,8 +598,10 @@ class TurnByTurnExperienceActivity : AppCompatActivity() {
             } else {
                 return MapboxNavigationProvider.create(
                     NavigationOptions.Builder(this.applicationContext)
+                        .locationEngine(replayLocationEngine)
                         .accessToken(getString(R.string.mapbox_access_token))
-                        .build())
+                        .build()
+                )
             }
         }
     }
@@ -667,11 +695,17 @@ class TurnByTurnExperienceActivity : AppCompatActivity() {
                     reasons: List<RouterFailure>,
                     routeOptions: RouteOptions
                 ) {
-// no impl
+                    var text = ""
+                    reasons.forEachIndexed { index, routerFailure ->
+                        text += routerFailure.message.toString()+"\n"
+                        text += routerFailure.throwable?.message.toString()+"\n"
+                    }
+                    binding.textDebug.text=text
+                    showToast(reasons.toString())
                 }
 
                 override fun onCanceled(routeOptions: RouteOptions, routerOrigin: RouterOrigin) {
-// no impl
+                    showToast("Navigasi Dibatalkan")
                 }
             }
         )

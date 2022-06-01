@@ -80,10 +80,6 @@
         android:name="com.feylabs.halalkan.view.prayer.detail.DetailMasjidFragment"
         android:label="DetailMasjidFragment" />
 
-    <fragment
-        android:id="@+id/navigation_masjidReviewFragment"
-        android:name="com.feylabs.halalkan.view.prayer.review.MasjidReviewFragment"
-        android:label="MasjidReviewFragment" />
 
     <fragment
         android:id="@+id/navigation_mapsFragment"
@@ -95,5 +91,10 @@
         android:id="@+id/navigation_mapBoxFragment"
         android:name="com.feylabs.halalkan.view.direction.ExampleMapBoxFragment"
         android:label="MapBoxFragment" />
+
+    <fragment
+        android:id="@+id/navigation_masjidReviewNewFragment"
+        android:name="com.feylabs.halalkan.view.prayer.review.MasjidReviewNewFragment"
+        android:label="MasjidReviewNewFragment" />
 
 </navigation>

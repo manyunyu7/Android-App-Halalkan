@@ -107,10 +107,11 @@ dependencies {
 
 
     //ratingviews
-    implementation ('com.github.Inconnu08:android-ratingreviews:1.2.0')
+    implementation('com.github.Inconnu08:android-ratingreviews:1.2.0')
             {
                 exclude group: 'org.jetbrains', module: 'annotations'
             }
 
+    implementation 'com.github.markomilos:paginate:1.0.0'
 
 }

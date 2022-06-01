@@ -29,6 +29,7 @@
         <entry key="..\:/Project/Android/Android-App-Halalkan/app/src/main/res/drawable/bg_shimmer_text.xml" value="0.134" />
         <entry key="..\:/Project/Android/Android-App-Halalkan/app/src/main/res/drawable/bg_shimmer_white.xml" value="0.134" />
         <entry key="..\:/Project/Android/Android-App-Halalkan/app/src/main/res/drawable/profile_shadow.xml" value="0.1" />
+        <entry key="..\:/Project/Android/Android-App-Halalkan/app/src/main/res/layout-land/fragment_login.xml" value="0.17724867724867724" />
         <entry key="..\:/Project/Android/Android-App-Halalkan/app/src/main/res/layout/activity_container.xml" value="0.1" />
         <entry key="..\:/Project/Android/Android-App-Halalkan/app/src/main/res/layout/activity_splash_screen.xml" value="0.1" />
         <entry key="..\:/Project/Android/Android-App-Halalkan/app/src/main/res/layout/activity_turn_by_turn_experience.xml" value="0.1" />
@@ -46,28 +47,31 @@
         <entry key="..\:/Project/Android/Android-App-Halalkan/app/src/main/res/layout/customview_star_indicator.xml" value="0.2" />
         <entry key="..\:/Project/Android/Android-App-Halalkan/app/src/main/res/layout/customview_star_stats.xml" value="0.25" />
         <entry key="..\:/Project/Android/Android-App-Halalkan/app/src/main/res/layout/example_pagination_fragment.xml" value="0.12" />
-        <entry key="..\:/Project/Android/Android-App-Halalkan/app/src/main/res/layout/fragment_detail_prayer.xml" value="0.16" />
+        <entry key="..\:/Project/Android/Android-App-Halalkan/app/src/main/res/layout/fragment_detail_prayer.xml" value="0.1" />
         <entry key="..\:/Project/Android/Android-App-Halalkan/app/src/main/res/layout/fragment_forum.xml" value="0.1766304347826087" />
         <entry key="..\:/Project/Android/Android-App-Halalkan/app/src/main/res/layout/fragment_home.xml" value="0.1" />
         <entry key="..\:/Project/Android/Android-App-Halalkan/app/src/main/res/layout/fragment_list_photo.xml" value="0.20153985507246377" />
+        <entry key="..\:/Project/Android/Android-App-Halalkan/app/src/main/res/layout/fragment_login.xml" value="0.2" />
         <entry key="..\:/Project/Android/Android-App-Halalkan/app/src/main/res/layout/fragment_map_box.xml" value="0.14739583333333334" />
         <entry key="..\:/Project/Android/Android-App-Halalkan/app/src/main/res/layout/fragment_maps.xml" value="0.11875" />
         <entry key="..\:/Project/Android/Android-App-Halalkan/app/src/main/res/layout/fragment_new_home.xml" value="0.12" />
         <entry key="..\:/Project/Android/Android-App-Halalkan/app/src/main/res/layout/fragment_notifications.xml" value="0.209375" />
         <entry key="..\:/Project/Android/Android-App-Halalkan/app/src/main/res/layout/fragment_prayer_main.xml" value="0.10182370820668693" />
         <entry key="..\:/Project/Android/Android-App-Halalkan/app/src/main/res/layout/fragment_preview_photo.xml" value="0.209375" />
-        <entry key="..\:/Project/Android/Android-App-Halalkan/app/src/main/res/layout/fragment_review_masjid.xml" value="0.1" />
+        <entry key="..\:/Project/Android/Android-App-Halalkan/app/src/main/res/layout/fragment_review_masjid.xml" value="0.18" />
+        <entry key="..\:/Project/Android/Android-App-Halalkan/app/src/main/res/layout/fragment_review_new_masjid.xml" value="0.1" />
         <entry key="..\:/Project/Android/Android-App-Halalkan/app/src/main/res/layout/fragment_search_with_image.xml" value="0.20153985507246377" />
         <entry key="..\:/Project/Android/Android-App-Halalkan/app/src/main/res/layout/fragment_translate.xml" value="0.25" />
         <entry key="..\:/Project/Android/Android-App-Halalkan/app/src/main/res/layout/item_comment.xml" value="0.20153985507246377" />
         <entry key="..\:/Project/Android/Android-App-Halalkan/app/src/main/res/layout/item_forum.xml" value="0.14479166666666668" />
+        <entry key="..\:/Project/Android/Android-App-Halalkan/app/src/main/res/layout/item_grid_rs.xml" value="0.13958333333333334" />
         <entry key="..\:/Project/Android/Android-App-Halalkan/app/src/main/res/layout/item_home_mosque.xml" value="0.2" />
         <entry key="..\:/Project/Android/Android-App-Halalkan/app/src/main/res/layout/item_home_prayer_room.xml" value="0.20153985507246377" />
         <entry key="..\:/Project/Android/Android-App-Halalkan/app/src/main/res/layout/item_home_restaurant.xml" value="0.20153985507246377" />
         <entry key="..\:/Project/Android/Android-App-Halalkan/app/src/main/res/layout/item_photo.xml" value="0.20153985507246377" />
         <entry key="..\:/Project/Android/Android-App-Halalkan/app/src/main/res/layout/item_prayer_room_list_search.xml" value="0.18" />
-        <entry key="..\:/Project/Android/Android-App-Halalkan/app/src/main/res/layout/item_review.xml" value="0.25" />
-        <entry key="..\:/Project/Android/Android-App-Halalkan/app/src/main/res/layout/item_rv_load_more.xml" value="0.14739583333333334" />
+        <entry key="..\:/Project/Android/Android-App-Halalkan/app/src/main/res/layout/item_review.xml" value="0.22" />
+        <entry key="..\:/Project/Android/Android-App-Halalkan/app/src/main/res/layout/item_rv_load_more.xml" value="0.25" />
         <entry key="..\:/Project/Android/Android-App-Halalkan/app/src/main/res/layout/item_shimmer_home_masjid.xml" value="0.11666666666666667" />
         <entry key="..\:/Project/Android/Android-App-Halalkan/app/src/main/res/layout/item_shimmer_home_resto.xml" value="0.1" />
         <entry key="..\:/Project/Android/Android-App-Halalkan/app/src/main/res/layout/item_shimmer_yt.xml" value="0.25" />

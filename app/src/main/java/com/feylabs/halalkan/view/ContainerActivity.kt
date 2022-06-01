@@ -89,7 +89,6 @@ class ContainerActivity : BaseActivity(), LocationListener {
     }
 
     private fun initObserver() {
-
         mainViewModel.liveLatLng.observe(this) {
             binding.tvLong.text = it.lat.toString()
             binding.tvLat.text = it.long.toString()

@@ -48,6 +48,8 @@ data class DataMasjid(
     val updatedAt: String,
     @SerializedName("category_name")
     val categoryName: String,
+    @SerializedName("review_avg")
+    val review_avg: String,
     var distanceKm: String? = null,
     var distanceKmDoubleRounded: Double? = null,
     var distanceKmDouble: Double? = null,

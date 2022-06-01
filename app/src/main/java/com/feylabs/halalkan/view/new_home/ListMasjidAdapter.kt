@@ -45,13 +45,14 @@ class ListMasjidAdapter :
 
             binding.tvTitle.text = model.name
             binding.tvMiddleCategory.text = model.address
+            binding.tvRatingCount.text=model.review_avg.toString()
 
             if (model.distanceKm != null) {
                 val distanceRounded = model.distanceKm
-                //binding.tvDistance.visibility = View.VISIBLE
+                binding.tvDistance.visibility = View.VISIBLE
                 binding.tvDistance.text = "$distanceRounded Km"
             } else {
-                //binding.tvDistance.visibility = View.GONE
+                binding.tvDistance.visibility = View.GONE
             }
 
             val imgUrl = Network.REAL_URL_V1 + model.img.encodeUrl()
