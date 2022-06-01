@@ -1,4 +1,4 @@
-package com.feylabs.halalkan.view.prayer.review
+package com.feylabs.halalkan.view.prayer.review.see
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,21 +6,20 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.feylabs.halalkan.data.remote.QumparanResource
-import com.feylabs.halalkan.data.remote.reqres.MenteeResponse
 import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidReviewPaginationResponse
 import com.feylabs.halalkan.databinding.FragmentReviewMasjidBinding
-import com.feylabs.halalkan.databinding.FragmentReviewNewMasjidBinding
 import com.feylabs.halalkan.utils.base.BaseFragment
 import com.feylabs.halalkan.view.prayer.PrayerRoomViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
 
-class MasjidReviewNewFragment : BaseFragment() {
+@Deprecated(message = "Deprecated", replaceWith = ReplaceWith("Masjid Review New Fragment"))
+class MasjidReviewFragment : BaseFragment() {
 
 
     // This property is only valid between onCreateView and
     // onDestroyView.
-    private var _binding: FragmentReviewNewMasjidBinding? = null
+    private var _binding: FragmentReviewMasjidBinding? = null
     private val binding get() = _binding!!
 
     private val viewModel: PrayerRoomViewModel by viewModel()
@@ -35,23 +34,13 @@ class MasjidReviewNewFragment : BaseFragment() {
         binding.rv.apply {
             adapter = mAdapter
             layoutManager = LinearLayoutManager(requireContext())
-            setHasFixedSize(true)
         }
 
-        mAdapter.setupAdapterInterface(object : MasjidReviewAdapter.ItemInterface {
-            override fun onclick(model: MasjidReviewPaginationResponse.Reviews.Data) {
 
-            }
-
-            override fun loadMore(page: Int) {
-                var currentPage = mAdapter.page
-                viewModel.getMasjidReview(getMasjidId(), page = ++currentPage)
-            }
-        })
     }
 
     private fun getMasjidId(): String {
-        return arguments?.getString("id") ?: ""
+        return arguments?.getString("id").toString()
     }
 
     override fun initObserver() {
@@ -78,13 +67,8 @@ class MasjidReviewNewFragment : BaseFragment() {
             if (it.data.isEmpty()) {
                 showToast("Tidak Ada Data")
             } else {
-                if (it.currentPage == 1) {
-                    mAdapter.page = it.currentPage
-                    mAdapter.addNewData(it.data.toMutableList())
-                } else {
-                    mAdapter.addNewData(it.data.toMutableList())
-                    mAdapter.page = ++it.currentPage
-                }
+                mAdapter.setWithNewData(it.data.toMutableList())
+                mAdapter.notifyDataSetChanged()
             }
         }
 
@@ -103,7 +87,7 @@ class MasjidReviewNewFragment : BaseFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentReviewNewMasjidBinding.inflate(inflater)
+        _binding = FragmentReviewMasjidBinding.inflate(inflater)
         return binding.root
     }
 

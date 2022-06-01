@@ -94,7 +94,7 @@
 
     <fragment
         android:id="@+id/navigation_masjidReviewNewFragment"
-        android:name="com.feylabs.halalkan.view.prayer.review.MasjidReviewNewFragment"
+        android:name="com.feylabs.halalkan.view.prayer.review.see.MasjidReviewNewFragment"
         android:label="MasjidReviewNewFragment" />
 
 </navigation>

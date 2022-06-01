@@ -23,12 +23,14 @@
         <entry key="..\:/AndroidStudioProjects/Qumparan/app/src/main/res/layout/raz_custom_info_vert.xml" value="0.25" />
         <entry key="..\:/AndroidStudioProjects/Qumparan/app/src/main/res/layout/user_profile_fragment.xml" value="0.12" />
         <entry key="..\:/Project/Android/Android-App-Halalkan/app/src/main/res/drawable/bg_circle.xml" value="0.1225" />
+        <entry key="..\:/Project/Android/Android-App-Halalkan/app/src/main/res/drawable/bg_rounded_border_20.xml" value="0.1255" />
         <entry key="..\:/Project/Android/Android-App-Halalkan/app/src/main/res/drawable/bg_rounded_corner_10.xml" value="0.1" />
         <entry key="..\:/Project/Android/Android-App-Halalkan/app/src/main/res/drawable/bg_rounded_corner_20.xml" value="0.1" />
         <entry key="..\:/Project/Android/Android-App-Halalkan/app/src/main/res/drawable/bg_shimmer_soft.xml" value="0.135" />
         <entry key="..\:/Project/Android/Android-App-Halalkan/app/src/main/res/drawable/bg_shimmer_text.xml" value="0.134" />
         <entry key="..\:/Project/Android/Android-App-Halalkan/app/src/main/res/drawable/bg_shimmer_white.xml" value="0.134" />
         <entry key="..\:/Project/Android/Android-App-Halalkan/app/src/main/res/drawable/profile_shadow.xml" value="0.1" />
+        <entry key="..\:/Project/Android/Android-App-Halalkan/app/src/main/res/drawable/rectangle_photo.xml" value="0.1255" />
         <entry key="..\:/Project/Android/Android-App-Halalkan/app/src/main/res/layout-land/fragment_login.xml" value="0.17724867724867724" />
         <entry key="..\:/Project/Android/Android-App-Halalkan/app/src/main/res/layout/activity_container.xml" value="0.1" />
         <entry key="..\:/Project/Android/Android-App-Halalkan/app/src/main/res/layout/activity_splash_screen.xml" value="0.1" />
@@ -49,6 +51,7 @@
         <entry key="..\:/Project/Android/Android-App-Halalkan/app/src/main/res/layout/customview_star_indicator.xml" value="0.2" />
         <entry key="..\:/Project/Android/Android-App-Halalkan/app/src/main/res/layout/customview_star_stats.xml" value="0.25" />
         <entry key="..\:/Project/Android/Android-App-Halalkan/app/src/main/res/layout/example_pagination_fragment.xml" value="0.12" />
+        <entry key="..\:/Project/Android/Android-App-Halalkan/app/src/main/res/layout/fragment_create_review_masjid.xml" value="0.16" />
         <entry key="..\:/Project/Android/Android-App-Halalkan/app/src/main/res/layout/fragment_detail_prayer.xml" value="0.1" />
         <entry key="..\:/Project/Android/Android-App-Halalkan/app/src/main/res/layout/fragment_forum.xml" value="0.1766304347826087" />
         <entry key="..\:/Project/Android/Android-App-Halalkan/app/src/main/res/layout/fragment_home.xml" value="0.1" />

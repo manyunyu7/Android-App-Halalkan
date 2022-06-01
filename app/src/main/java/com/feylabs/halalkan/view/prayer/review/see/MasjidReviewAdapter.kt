@@ -1,9 +1,8 @@
-package com.feylabs.halalkan.view.prayer.review
+package com.feylabs.halalkan.view.prayer.review.see
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.RecyclerView
 import com.feylabs.halalkan.R
 import com.feylabs.halalkan.customview.imagepreviewcontainer.CustomViewPhotoModel

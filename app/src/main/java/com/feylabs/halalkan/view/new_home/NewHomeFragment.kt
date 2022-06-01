@@ -25,8 +25,6 @@ import com.feylabs.halalkan.utils.location.LocationUtils
 import com.feylabs.halalkan.utils.location.MyLatLong
 import com.feylabs.halalkan.utils.masjid.MasjidUtility.renderWithDistanceModel
 import com.feylabs.halalkan.view.home.HomeViewModel
-import com.feylabs.halalkan.view.prayer.PrayerRoomViewModel
-import com.feylabs.halalkan.view.prayer.review.MasjidReviewAdapter
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 

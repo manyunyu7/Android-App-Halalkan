@@ -114,4 +114,7 @@ dependencies {
 
     implementation 'com.github.markomilos:paginate:1.0.0'
 
+    //rating bar
+    implementation 'com.github.shallcheek:RatingBar:v1.0'
+
 }

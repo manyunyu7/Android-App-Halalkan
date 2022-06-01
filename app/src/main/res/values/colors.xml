@@ -49,7 +49,10 @@
     <color name="color_accent_success">#008D36</color>
     <color name="color_bg_card_open">#E5F5E9</color>
     <color name="gray50">#F5F5F5</color>
-    <color name="gray70">#757575</color>//Action bar
+    <color name="gray70">#757575</color>
+    <color name="black40">#E0E0E0</color>
+    <color name="halalkan_primary">#156DBE</color>
+    <color name="black30">#eeeeee</color>//Action bar
 
 
 </resources>
