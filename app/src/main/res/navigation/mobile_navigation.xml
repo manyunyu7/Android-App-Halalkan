@@ -76,6 +76,11 @@
         android:label="TranslateFragment" />
 
     <fragment
+        android:id="@+id/navigation_CategoryProductsFragment"
+        android:name="com.feylabs.halalkan.view.products.CategoryProductsFragment"
+        android:label="CategoryProductsFragment" />
+
+    <fragment
         android:id="@+id/navigation_detailMasjidFragment"
         android:name="com.feylabs.halalkan.view.prayer.detail.DetailMasjidFragment"
         android:label="DetailMasjidFragment" />
