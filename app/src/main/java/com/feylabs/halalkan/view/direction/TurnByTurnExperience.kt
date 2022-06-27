@@ -598,7 +598,7 @@ class TurnByTurnExperienceActivity : BaseActivity() {
             } else {
                 return MapboxNavigationProvider.create(
                     NavigationOptions.Builder(this.applicationContext)
-                        .locationEngine(replayLocationEngine)
+                        //.locationEngine(replayLocationEngine)
                         .accessToken(getString(R.string.mapbox_access_token))
                         .build()
                 )

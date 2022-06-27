@@ -27,6 +27,12 @@ class MasjidReviewNewFragment : BaseFragment() {
 
     private val mAdapter by lazy { MasjidReviewAdapter() }
 
+    override fun onResume() {
+        super.onResume()
+        mAdapter.clearData()
+        mAdapter.page=1;
+    }
+
     override fun initUI() {
         setupAdapterRv()
     }
@@ -82,8 +88,12 @@ class MasjidReviewNewFragment : BaseFragment() {
                     mAdapter.page = it.currentPage
                     mAdapter.addNewData(it.data.toMutableList())
                 } else {
-                    mAdapter.addNewData(it.data.toMutableList())
-                    mAdapter.page = ++it.currentPage
+                    if (it.lastPage == it.currentPage) {
+                        showToast("Anda Berada di Halaman Terakhir")
+                    } else {
+                        mAdapter.addNewData(it.data.toMutableList())
+                        mAdapter.page = ++it.currentPage
+                    }
                 }
             }
         }

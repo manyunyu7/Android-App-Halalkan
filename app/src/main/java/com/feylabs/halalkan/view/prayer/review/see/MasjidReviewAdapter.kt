@@ -29,6 +29,11 @@ class MasjidReviewAdapter :
         this.data.add(getLastPlaceholder())
     }
 
+    fun clearData(){
+        this.data.clear()
+        notifyDataSetChanged()
+    }
+
     fun addNewData(newData: MutableList<Data>, newPage: Int = this.page) {
         this.data.addAll(newData)
         this.data.forEachIndexed { index, mData ->
@@ -85,7 +90,6 @@ class MasjidReviewAdapter :
 
             binding.tvQuestion.text = model.comment
 
-
             val listPhotos = mutableListOf<CustomViewPhotoModel>()
             model.reviewPhotos.forEachIndexed { index, any ->
                 if (any is String){
@@ -103,7 +107,7 @@ class MasjidReviewAdapter :
                     labelCategory.text = model.ratingId.toString()
                     labelTime.text = model.createdAt
                     ivMainImage.loadImageFromURL(
-                        mContext, user.photo.imgFullUserPath()
+                        mContext, user.photo?.imgFullUserPath()
                     )
                 }
             }

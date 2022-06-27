@@ -17,7 +17,7 @@ data class UserBasicResponse(
     @SerializedName("phone_number")
     val phoneNumber: String,
     @SerializedName("photo")
-    val photo: String,
+    val photo: String? = "",
     @SerializedName("roles_id")
     val rolesId: Int,
     @SerializedName("updated_at")

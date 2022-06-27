@@ -273,12 +273,14 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginVertical="20dp"
                     android:layout_marginHorizontal="@dimen/dimen_20dp"
                     android:fontFamily="@font/montserrat_regular"
                     android:text="@string/home_masjid_near_you"
                     android:textColor="@color/black" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_marginBottom="240dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 

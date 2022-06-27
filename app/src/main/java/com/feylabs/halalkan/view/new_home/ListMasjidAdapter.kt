@@ -23,6 +23,10 @@ class ListMasjidAdapter :
         this.data.addAll(data)
     }
 
+    fun sortByDistance(){
+        
+    }
+
     fun setupAdapterInterface(obj: ItemInterface) {
         this.adapterInterface = obj
     }

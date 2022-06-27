@@ -98,7 +98,6 @@ class NewHomeFragment : BaseFragment() {
                     bundleOf("data" to model)
                 )
             }
-
         })
     }
 
@@ -191,10 +190,10 @@ class NewHomeFragment : BaseFragment() {
 
         if(LocationUtils.checkIfLocationSet(mainViewModel.liveLatLng.value)){
             initialData = initialData.renderWithDistanceModel(
-                myLocation = mainViewModel.liveLatLng.value ?: MyLatLong(-99.0,-99.0)
+                myLocation = mainViewModel.liveLatLng.value ?: MyLatLong(-99.0,-99.0),
+                sortByNearest = true, limit = 10
             )
         }
-
         mMosqueAdapter.setWithNewData(initialData)
         mMosqueAdapter.notifyDataSetChanged()
         showLoadingMosque(false)
