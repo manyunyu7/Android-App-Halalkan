@@ -35,4 +35,12 @@ object StringUtil {
         initialString = initialString.dropLast(1)
         return initialString
     }
+
+    fun String?.orMuskoEmpty(replacable:String): String {
+        return if(this.isNullOrEmpty()){
+            replacable
+        }else{
+            this
+        }
+    }
 }

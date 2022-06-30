@@ -6,6 +6,7 @@ import com.feylabs.halalkan.data.remote.reqres.auth.LoginResponse
 import com.feylabs.halalkan.data.remote.reqres.auth.RegisterBodyRequest
 import com.feylabs.halalkan.data.remote.reqres.auth.RegisterResponse
 import com.feylabs.halalkan.data.remote.reqres.masjid.*
+import com.feylabs.halalkan.data.remote.reqres.masjid.pagination.AllMasjidPaginationResponse
 import com.feylabs.halalkan.data.remote.reqres.prayertime.PrayerTimeAladhanSingleDateResponse
 import com.feylabs.halalkan.data.remote.reqres.translator.TiktokTextToSpeechResponse
 import com.feylabs.halalkan.data.remote.reqres.translator.TranslateResponse
@@ -40,6 +41,8 @@ interface RemoteDataSourceInterface {
     suspend fun login(loginBodyRequest: LoginBodyRequest): Response<LoginResponse>
 
     suspend fun getMasjids(): Response<MasjidResponseWithoutPagination>
+
+    suspend fun getMasjidsPagination(page:Int): Response<AllMasjidPaginationResponse>
 
     suspend fun getMasjidReviews(
         masjidId: String,

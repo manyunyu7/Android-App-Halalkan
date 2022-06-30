@@ -11,6 +11,7 @@ import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidDetailResponse
 import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidPhotosResponse
 import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidResponseWithoutPagination
 import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidReviewPaginationResponse
+import com.feylabs.halalkan.data.remote.reqres.masjid.pagination.AllMasjidPaginationResponse
 import com.feylabs.halalkan.data.remote.reqres.prayertime.PrayerTimeAladhanSingleDateResponse
 import com.feylabs.halalkan.data.repository.PrayerTimeRepository
 import kotlinx.coroutines.launch
@@ -28,6 +29,10 @@ class PrayerRoomViewModel(
     private var _masjidLiveData =
         MutableLiveData<QumparanResource<MasjidResponseWithoutPagination?>>()
     val masjidLiveData get() = _masjidLiveData
+
+    private var _masjidPaginateLiveData =
+        MutableLiveData<QumparanResource<AllMasjidPaginationResponse?>>()
+    val masjidPaginateLiveData get() = _masjidPaginateLiveData
 
     private var _prayerTimeSingleLiveData:
             MutableLiveData<QumparanResource<PrayerTimeAladhanSingleDateResponse?>> =
@@ -47,6 +52,26 @@ class PrayerRoomViewModel(
     private var _masjidPhotoLiveData =
         MutableLiveData<QumparanResource<MasjidPhotosResponse?>>()
     val masjidPhotoLiveData get() = _masjidPhotoLiveData
+
+    fun getMasjidWithPagination(page: Int) {
+        _masjidPaginateLiveData.postValue(QumparanResource.Loading())
+        viewModelScope.launch {
+            try {
+                val res = masjidRepository.getMasjidPaginate(page)
+                if (res.isSuccessful) {
+                    _masjidPaginateLiveData.postValue(QumparanResource.Success(res.body()))
+                } else {
+                    _masjidPaginateLiveData.postValue(
+                        QumparanResource.Error(
+                            res.errorBody().toString()
+                        )
+                    )
+                }
+            } catch (e: Exception) {
+                _masjidPaginateLiveData.postValue(QumparanResource.Error(e.message.toString()))
+            }
+        }
+    }
 
     fun getMasjidPhoto(id: String) {
         viewModelScope.launch {

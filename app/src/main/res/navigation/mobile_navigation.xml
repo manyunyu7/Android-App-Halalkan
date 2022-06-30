@@ -15,7 +15,7 @@
             app:destination="@id/postDetailFragment" />
         <action
             android:id="@+id/action_navigation_home_to_userProfileFragment"
-            app:destination="@id/userProfileFragment" />
+            app:destination="@id/navigation_userProfileFragment" />
     </fragment>
 
     <fragment
@@ -24,10 +24,10 @@
         android:label="PostDetailFragment">
         <action
             android:id="@+id/action_postDetailFragment_to_userProfileFragment"
-            app:destination="@id/userProfileFragment" />
+            app:destination="@id/navigation_userProfileFragment" />
     </fragment>
     <fragment
-        android:id="@+id/userProfileFragment"
+        android:id="@+id/navigation_userProfileFragment"
         android:name="com.feylabs.halalkan.view.profile.UserProfileFragment"
         android:label="user_profile_fragment"
         tools:layout="@layout/user_profile_fragment">
@@ -52,6 +52,7 @@
 
     <fragment
         android:id="@+id/navigation_newHomeFragment"
+        tools:layout="@layout/fragment_new_home"
         android:name="com.feylabs.halalkan.view.new_home.NewHomeFragment"
         android:label="NewHomeFragment" />
 
@@ -77,6 +78,7 @@
 
     <fragment
         android:id="@+id/navigation_detailMasjidFragment"
+        tools:layout="@layout/fragment_detail_prayer"
         android:name="com.feylabs.halalkan.view.prayer.detail.DetailMasjidFragment"
         android:label="DetailMasjidFragment" />
 
@@ -101,5 +103,44 @@
         android:id="@+id/navigation_masjidCreateReviewFragment"
         android:name="com.feylabs.halalkan.view.prayer.review.create.MasjidCreateReviewFragment"
         android:label="MasjidCreateReviewFragment" />
+
+    <fragment
+        android:id="@+id/navigation_allMasjidFragment"
+        tools:layout="@layout/fragment_all_prayer_room"
+        android:name="com.feylabs.halalkan.view.prayer.all_prayer_room.AllMasjidFragment"
+        android:label="AllMasjidFragment" >
+        <action
+            android:id="@+id/action_navigation_allMasjidFragment_to_navigation_detailMasjidFragment"
+            app:destination="@id/navigation_detailMasjidFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_loginFragment"
+        tools:layout="@layout/fragment_login"
+        android:name="com.feylabs.halalkan.view.auth.LoginFragment"
+        android:label="LoginFragment" >
+        <action
+            android:id="@+id/action_loginFragment_to_registerFragment"
+            app:destination="@id/navigation_registerFragment" />
+        <action
+            android:id="@+id/action_navigation_loginFragment_to_navigation_newHomeFragment"
+            app:popUpToInclusive="true"
+            app:popUpTo="@id/navigation_newHomeFragment"
+            app:destination="@id/navigation_newHomeFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_registerFragment"
+        android:name="com.feylabs.halalkan.view.auth.RegisterFragment"
+        android:label="RegisterFragment"
+        tools:layout="@layout/fragment_register"
+        >
+        <action
+            android:id="@+id/action_navigation_registerFragment_to_navigation_newHomeFragment"
+            app:destination="@id/navigation_newHomeFragment" />
+        <action
+            android:id="@+id/action_navigation_registerFragment_to_navigation_loginFragment"
+            app:destination="@id/navigation_loginFragment" />
+    </fragment>
 
 </navigation>

@@ -11,6 +11,7 @@ import com.feylabs.halalkan.data.remote.QumparanResource
 import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidReviewPaginationResponse
 import com.feylabs.halalkan.databinding.FragmentReviewNewMasjidBinding
 import com.feylabs.halalkan.utils.base.BaseFragment
+import com.feylabs.halalkan.utils.snackbar.SnackbarType
 import com.feylabs.halalkan.view.prayer.PrayerRoomViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -29,8 +30,6 @@ class MasjidReviewNewFragment : BaseFragment() {
 
     override fun onResume() {
         super.onResume()
-        mAdapter.clearData()
-        mAdapter.page=1;
     }
 
     override fun initUI() {
@@ -50,8 +49,8 @@ class MasjidReviewNewFragment : BaseFragment() {
             }
 
             override fun loadMore(page: Int) {
-                var currentPage = mAdapter.page
-                viewModel.getMasjidReview(getMasjidId(), page = ++currentPage)
+                val currentPage = mAdapter.page
+                viewModel.getMasjidReview(getMasjidId(), page =currentPage+1)
             }
         })
     }
@@ -66,6 +65,7 @@ class MasjidReviewNewFragment : BaseFragment() {
                 is QumparanResource.Default -> {
                 }
                 is QumparanResource.Error -> {
+                    showToast("Error")
                 }
                 is QumparanResource.Loading -> {
                 }
@@ -86,13 +86,14 @@ class MasjidReviewNewFragment : BaseFragment() {
             } else {
                 if (it.currentPage == 1) {
                     mAdapter.page = it.currentPage
-                    mAdapter.addNewData(it.data.toMutableList())
+                    mAdapter.setWithNewData(it.data.toMutableList())
+                    showToast("Menambahkan data halaman pertama /${reviewRes.currentPage}")
                 } else {
                     if (it.lastPage == it.currentPage) {
-                        showToast("Anda Berada di Halaman Terakhir")
+                        showSnackbar("Anda Berada di Halaman Terakhir",SnackbarType.INFO)
                     } else {
+                        mAdapter.page = it.currentPage
                         mAdapter.addNewData(it.data.toMutableList())
-                        mAdapter.page = ++it.currentPage
                     }
                 }
             }

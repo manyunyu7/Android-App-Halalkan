@@ -153,7 +153,7 @@ class DetailMasjidFragment : BaseFragment() {
 
     override fun initAction() {
         binding.btnBack.setOnClickListener {
-            findNavController().popBackStack()
+            findNavController().navigateUp()
         }
 
         binding.btnFavorite.setOnClickListener {

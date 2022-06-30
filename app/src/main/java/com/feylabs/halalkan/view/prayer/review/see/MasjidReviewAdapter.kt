@@ -3,6 +3,7 @@ package com.feylabs.halalkan.view.prayer.review.see
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.RecyclerView
 import com.feylabs.halalkan.R
 import com.feylabs.halalkan.customview.imagepreviewcontainer.CustomViewPhotoModel
@@ -23,10 +24,14 @@ class MasjidReviewAdapter :
     var page = 1
     lateinit var adapterInterface: ItemInterface
 
+    // Allows to remember the last item shown on screen
+    private val lastPosition = -1
+
     fun setWithNewData(data: MutableList<Data>) {
         this.data.clear()
         this.data.addAll(data)
         this.data.add(getLastPlaceholder())
+        notifyDataSetChanged()
     }
 
     fun clearData(){
@@ -35,15 +40,19 @@ class MasjidReviewAdapter :
     }
 
     fun addNewData(newData: MutableList<Data>, newPage: Int = this.page) {
-        this.data.addAll(newData)
         this.data.forEachIndexed { index, mData ->
             if (mData.ViewType == VFooter) {
                 this.data[index].isFooterVisible = false
             }
+            notifyItemChanged(index)
+        }
+        newData.forEachIndexed { index, data ->
+            this.data.add(data)
+            notifyItemInserted(itemCount-1)
         }
         this.data.add(getLastPlaceholder())
+        notifyItemInserted(itemCount-1)
         this.page = newPage
-        notifyDataSetChanged()
     }
 
     fun setupAdapterInterface(obj: ItemInterface) {
@@ -81,12 +90,11 @@ class MasjidReviewAdapter :
             val binding: ItemReviewBinding = ItemReviewBinding.bind(itemView)
             val mContext = binding.root.context
 
-            /**
+//            /**
             binding.root.animation = AnimationUtils.loadAnimation(
                 mContext,
                 R.anim.fade_transition_animation
             )
-             */
 
             binding.tvQuestion.text = model.comment
 

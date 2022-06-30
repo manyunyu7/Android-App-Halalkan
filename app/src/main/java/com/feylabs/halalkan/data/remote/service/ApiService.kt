@@ -29,12 +29,12 @@ interface ApiService {
     /**
      * Login Request
      */
-    @POST("/users/login")
+    @POST("users/login")
     suspend fun login(
         @Body body: LoginBodyRequest
     ): Response<LoginResponse>
 
-    @POST("/users/register")
+    @POST("users/register")
     suspend fun register(
         @Body body: RegisterBodyRequest
     ): Response<RegisterResponse>

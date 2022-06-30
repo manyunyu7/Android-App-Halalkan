@@ -47,6 +47,10 @@ class PrayerMainFragment : BaseFragment() {
 
     override fun initAction() {
 
+        binding.btnSeeAllMasjid.setOnClickListener {
+            findNavController().navigate(R.id.navigation_allMasjidFragment)
+        }
+
         binding.btnExit.setOnClickListener {
             findNavController().popBackStack()
         }

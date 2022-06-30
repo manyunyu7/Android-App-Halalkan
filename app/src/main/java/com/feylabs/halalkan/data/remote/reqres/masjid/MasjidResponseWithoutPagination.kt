@@ -2,6 +2,8 @@ package com.feylabs.halalkan.data.remote.reqres.masjid
 
 
 import android.os.Parcelable
+import androidx.annotation.Nullable
+import com.feylabs.halalkan.utils.PaginationPlaceholder
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
@@ -53,6 +55,9 @@ data class DataMasjid(
     var distanceKm: String? = null,
     var distanceKmDoubleRounded: Double? = null,
     var distanceKmDouble: Double? = null,
+    @Nullable
+    val ViewType: Int = PaginationPlaceholder.VNormal,
+    var isFooterVisible: Boolean = true,
 ) : Parcelable{
     fun getOperatingHours() = operatingStart.replace("T", "") + "-" + operatingEnd.replace("T", "")
 }

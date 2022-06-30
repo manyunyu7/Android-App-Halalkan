@@ -77,7 +77,7 @@
                 android:id="@+id/rv"
                 android:layout_marginTop="@dimen/dimen_20dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:layout_marginHorizontal="@dimen/dimen_10dp"
                 tools:listitem="@layout/item_review"

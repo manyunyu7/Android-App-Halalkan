@@ -30,7 +30,15 @@ class AuthViewModel(val repo: QumparanRepository, ds: RemoteDataSource) : ViewMo
                 val res = repo.login(loginBodyRequest)
                 Timber.d("users response $")
                 if (res.isSuccessful) {
-                    _loginLiveData.postValue(QumparanResource.Success(res.body()))
+
+                    val body = res.body()
+                    body?.let { loginResponse ->
+                        if (loginResponse.mCode > 299 || loginResponse.mCode < 200) {
+                            _loginLiveData.postValue(QumparanResource.Error(message =  loginResponse.mMessage.orEmpty() + " (Musko)"))
+                        } else {
+                            _loginLiveData.postValue(QumparanResource.Success(data = loginResponse, message = loginResponse.mMessage.toString()))
+                        }
+                    }
                 } else {
                     _loginLiveData.postValue(QumparanResource.Error("Terjadi Kesalahan"))
                 }
@@ -46,7 +54,17 @@ class AuthViewModel(val repo: QumparanRepository, ds: RemoteDataSource) : ViewMo
             try {
                 val res = repo.register(registerBodyRequest)
                 if (res.isSuccessful) {
-                    _registerLiveData.postValue(QumparanResource.Success(res.body()))
+
+                    val body = res.body()
+                    body?.let { registerResponse ->
+                        if (registerResponse.code > 299 || registerResponse.code < 200) {
+                            _registerLiveData.postValue(QumparanResource.Error(registerResponse.message))
+                        } else {
+                            _registerLiveData.postValue(QumparanResource.Success(registerResponse,registerResponse.code.toString()))
+                        }
+                    } ?: run{
+                        _registerLiveData.postValue(QumparanResource.Error("Terjadi Kesalahan"))
+                    }
                 } else {
                     _registerLiveData.postValue(QumparanResource.Error("Terjadi Kesalahan"))
                 }
@@ -54,6 +72,10 @@ class AuthViewModel(val repo: QumparanRepository, ds: RemoteDataSource) : ViewMo
                 _registerLiveData.postValue(QumparanResource.Error(e.message.toString()))
             }
         }
+    }
+
+    fun resetLogin() {
+        _loginLiveData.postValue(QumparanResource.Default())
     }
 
 }

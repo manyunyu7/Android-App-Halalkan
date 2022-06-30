@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.feylabs.halalkan.MainViewModel
 import com.feylabs.halalkan.R
 import com.feylabs.halalkan.customview.AskPermissionDialog
+import com.feylabs.halalkan.data.local.MyPreference
 import com.feylabs.halalkan.data.remote.QumparanResource
 import com.feylabs.halalkan.data.remote.reqres.masjid.DataMasjid
 import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidResponseWithoutPagination
@@ -24,6 +25,7 @@ import com.feylabs.halalkan.utils.base.BaseFragment
 import com.feylabs.halalkan.utils.location.LocationUtils
 import com.feylabs.halalkan.utils.location.MyLatLong
 import com.feylabs.halalkan.utils.masjid.MasjidUtility.renderWithDistanceModel
+import com.feylabs.halalkan.utils.snackbar.UtilSnackbar
 import com.feylabs.halalkan.view.home.HomeViewModel
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -38,6 +40,7 @@ class NewHomeFragment : BaseFragment() {
     private val mMosqueAdapter by lazy { ListMasjidAdapter() }
 
     private var _binding: FragmentNewHomeBinding? = null
+
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
@@ -47,6 +50,25 @@ class NewHomeFragment : BaseFragment() {
     }
 
     private fun setupMenuClickListener() {
+
+        binding.bottomNav.apply {
+
+            setBottomMenuActive(tvHome)
+            setBottomMenuActive(ivMenuHome)
+
+            btnMenuProfile.setOnClickListener {
+                val userToken = muskoPref().getToken().orEmpty()
+                if(userToken.isEmpty()){
+                    UtilSnackbar.showSnackbar(getRootView(),"Silakan Login Terlebih Dahulu")
+                    findNavController().navigate(R.id.navigation_loginFragment)
+                }else{
+                    findNavController().navigate(R.id.navigation_userProfileFragment)
+                }
+            }
+        }
+
+
+
         binding.menuPrayer.setOnClickListener {
             findNavController().navigate(R.id.navigation_prayerMainFragment)
         }
@@ -164,7 +186,7 @@ class NewHomeFragment : BaseFragment() {
             }
         }
 
-        mainViewModel.liveLatLng.observe(viewLifecycleOwner){
+        mainViewModel.liveLatLng.observe(viewLifecycleOwner) {
             fetchPrayerTime()
             fetchAllMasjid()
         }
@@ -188,12 +210,13 @@ class NewHomeFragment : BaseFragment() {
 
         var initialData = response.data.toMutableList()
 
-        if(LocationUtils.checkIfLocationSet(mainViewModel.liveLatLng.value)){
+        if (LocationUtils.checkIfLocationSet(mainViewModel.liveLatLng.value)) {
             initialData = initialData.renderWithDistanceModel(
-                myLocation = mainViewModel.liveLatLng.value ?: MyLatLong(-99.0,-99.0),
+                myLocation = mainViewModel.liveLatLng.value ?: MyLatLong(-99.0, -99.0),
                 sortByNearest = true, limit = 10
             )
         }
+
         mMosqueAdapter.setWithNewData(initialData)
         mMosqueAdapter.notifyDataSetChanged()
         showLoadingMosque(false)
