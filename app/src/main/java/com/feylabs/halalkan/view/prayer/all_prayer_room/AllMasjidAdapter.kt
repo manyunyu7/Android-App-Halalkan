@@ -42,10 +42,13 @@ class AllMasjidAdapter :
             }
             notifyItemChanged(index)
         }
-        this.data.addAll(newData)
+        newData.forEachIndexed { index, data ->
+            this.data.add(data)
+            notifyItemInserted(itemCount-1)
+        }
         this.data.add(getLastPlaceholder())
+        notifyItemInserted(itemCount-1)
         this.page = newPage
-        notifyItemInserted(3)
     }
 
     fun setupAdapterInterface(obj: ItemInterface) {
