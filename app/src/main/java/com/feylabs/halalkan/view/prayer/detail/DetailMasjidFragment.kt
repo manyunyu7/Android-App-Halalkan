@@ -43,6 +43,8 @@ class DetailMasjidFragment : BaseFragment() {
     }
 
     private fun setupInitialUi(showError: Boolean = false, messageError: String = "") {
+//        binding.labelMasjidName.text = "blabla"
+
         initModel?.apply {
             binding.apply {
                 binding.labelPageTitleTopbar.text = name

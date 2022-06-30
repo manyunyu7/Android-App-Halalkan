@@ -100,5 +100,13 @@
         android:id="@+id/navigation_mapBoxFragment"
         android:name="com.feylabs.halalkan.view.direction.ExampleMapBoxFragment"
         android:label="MapBoxFragment" />
+    <fragment
+        android:id="@+id/categoryListFragment"
+        android:name="com.feylabs.halalkan.view.products.CategoryListFragment"
+        android:label="CategoryListFragment" />
+    <fragment
+        android:id="@+id/categoryDetailsFragment"
+        android:name="com.feylabs.halalkan.view.products.CategoryDetailsFragment"
+        android:label="CategoryDetailsFragment" />
 
 </navigation>

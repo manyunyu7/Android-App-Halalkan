@@ -13,10 +13,10 @@ import com.feylabs.halalkan.view.prayer.PrayerRoomListUIModel
 import com.google.android.material.imageview.ShapeableImageView
 import org.w3c.dom.Text
 
-class CategoryProductAdapter (private val categoryproductsList:List<CategoryProductsModel>)
-    : RecyclerView.Adapter<CategoryProductAdapter.CategoryProductsViewHolder>() {
+class CategoryListAdapter (private val categoryproductsList:List<CategoryProductsModel>)
+    : RecyclerView.Adapter<CategoryListAdapter.CategoryProductsViewHolder>() {
 
-    lateinit var adapterInterface: CategoryProductAdapter.ItemInterface
+    lateinit var adapterInterface: CategoryListAdapter.ItemInterface
 
     class CategoryProductsViewHolder (itemView: View) : RecyclerView.ViewHolder(itemView){
 
@@ -25,7 +25,7 @@ class CategoryProductAdapter (private val categoryproductsList:List<CategoryProd
         val base : CardView = itemView.findViewById(R.id.base)
     }
 
-    fun setupAdapterInterface(obj: CategoryProductAdapter.ItemInterface) {
+    fun setupAdapterInterface(obj: CategoryListAdapter.ItemInterface) {
         this.adapterInterface = obj
     }
 

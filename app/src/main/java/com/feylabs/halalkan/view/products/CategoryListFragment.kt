@@ -10,16 +10,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.feylabs.halalkan.R
 import com.feylabs.halalkan.databinding.FragmentListAndSearchPrayerRoomBinding
 import com.feylabs.halalkan.databinding.FragmentCategoryProductsBinding
+import com.feylabs.halalkan.databinding.FragmentListProductsBinding
 import com.feylabs.halalkan.utils.base.BaseFragment
 import com.mapbox.maps.extension.style.expressions.dsl.generated.product
 
 
-class CategoryProductsFragment : BaseFragment() {
+class CategoryListFragment : BaseFragment() {
 
     private lateinit var newArrayList: ArrayList<CategoryProductsModel>
-    private var _binding: FragmentCategoryProductsBinding? = null
+    private var _binding: FragmentListProductsBinding? = null
     private val binding get() = _binding!!
-
 
     override fun initUI() {
         initCategoryProductsList()
@@ -41,7 +41,7 @@ class CategoryProductsFragment : BaseFragment() {
         val madapter = CategoryProductAdapter(newArrayList)
         madapter.setupAdapterInterface(object : CategoryProductAdapter.ItemInterface{
             override fun onclick(model: CategoryProductsModel) {
-                findNavController().navigate(R.id.categoryListFragment)
+                findNavController().navigate(R.id.categoryDetailsFragment)
             }
 
         })
@@ -69,7 +69,7 @@ class CategoryProductsFragment : BaseFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentCategoryProductsBinding.inflate(inflater)
+        _binding = FragmentListProductsBinding.inflate(inflater)
         return binding.root
     }
 
