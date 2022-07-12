@@ -9,6 +9,7 @@ import com.bumptech.glide.Glide
 import com.feylabs.halalkan.R
 import com.feylabs.halalkan.data.remote.reqres.masjid.DataMasjid
 import com.feylabs.halalkan.databinding.ItemHomeMosqueBinding
+import com.feylabs.halalkan.utils.ImageViewUtils.imgFullPath
 import com.feylabs.halalkan.utils.Network
 import com.feylabs.halalkan.utils.StringUtil.encodeUrl
 
@@ -59,7 +60,7 @@ class ListMasjidAdapter :
                 binding.tvDistance.visibility = View.GONE
             }
 
-            val imgUrl = Network.REAL_URL_V1 + model.img.encodeUrl()
+            val imgUrl = model.img.encodeUrl().imgFullPath()
             binding.tvTopCategory.text = model.categoryName.uppercase()
 
             Glide.with(mContext)

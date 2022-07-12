@@ -22,6 +22,8 @@ object ImageViewUtils {
             url = REAL_URL + url
     }
 
+    fun String.imgFullPath() = Network.STORAGE_V1 + this
+
     fun String.imgFullUserPath() =
         REAL_URL + "uploads/img/users/$this"
 

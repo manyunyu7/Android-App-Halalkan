@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.feylabs.halalkan.R
@@ -50,7 +51,7 @@ class MasjidReviewNewFragment : BaseFragment() {
 
             override fun loadMore(page: Int) {
                 val currentPage = mAdapter.page
-                viewModel.getMasjidReview(getMasjidId(), page =currentPage+1)
+                viewModel.getMasjidReview(getMasjidId(), page = currentPage + 1)
             }
         })
     }
@@ -61,9 +62,8 @@ class MasjidReviewNewFragment : BaseFragment() {
 
     override fun initObserver() {
         viewModel.masjidReviewsLiveData.observe(viewLifecycleOwner) {
+            if (it is QumparanResource.Loading) showLoading(true) else showLoading(false)
             when (it) {
-                is QumparanResource.Default -> {
-                }
                 is QumparanResource.Error -> {
                     showToast("Error")
                 }
@@ -78,19 +78,30 @@ class MasjidReviewNewFragment : BaseFragment() {
         }
     }
 
+    private fun showLoading(b: Boolean) {
+        if (b) {
+            binding.loadingAnim.makeVisible()
+        } else {
+            binding.loadingAnim.makeGone()
+        }
+    }
+
     private fun setupReviewFromNetwork(response: MasjidReviewPaginationResponse) {
         val reviewRes = response.reviews
         reviewRes.let {
             if (it.data.isEmpty()) {
-                showToast("Tidak Ada Data")
+                if (it.currentPage == 1) {
+                    showEmptyLayout(true)
+                }
             } else {
+                showEmptyLayout(false)
                 if (it.currentPage == 1) {
                     mAdapter.page = it.currentPage
                     mAdapter.setWithNewData(it.data.toMutableList())
                     showToast("Menambahkan data halaman pertama /${reviewRes.currentPage}")
                 } else {
                     if (it.lastPage == it.currentPage) {
-                        showSnackbar("Anda Berada di Halaman Terakhir",SnackbarType.INFO)
+                        showSnackbar("Anda Berada di Halaman Terakhir", SnackbarType.INFO)
                     } else {
                         mAdapter.page = it.currentPage
                         mAdapter.addNewData(it.data.toMutableList())
@@ -103,9 +114,33 @@ class MasjidReviewNewFragment : BaseFragment() {
         binding.startStats.setStartBarUi(response.reviewCount)
     }
 
+    private fun showEmptyLayout(b: Boolean) {
+        if (b) {
+            binding.layoutEmptyState.makeVisible()
+        } else {
+            binding.layoutEmptyState.makeGone()
+        }
+    }
+
+    private fun goToWriteReview() {
+        findNavController().navigate(
+            R.id.navigation_masjidCreateReviewFragment, bundleOf(
+                "id" to getMasjidId()
+            )
+        )
+    }
+
     override fun initAction() {
+
+        binding.btnNewReview.setOnClickListener {
+            goToWriteReview()
+        }
+
+        binding.btnBack.setOnClickListener {
+            findNavController().popBackStack()
+        }
         binding.btnWriteReview.setOnClickListener {
-            findNavController().navigate(R.id.navigation_masjidCreateReviewFragment)
+            goToWriteReview()
         }
     }
 

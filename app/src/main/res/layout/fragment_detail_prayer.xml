@@ -260,7 +260,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_flag_south_korea"/>
+                    android:src="@drawable/ic_masjid_detail_type"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -311,7 +311,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_flag_south_korea"/>
+                    android:src="@drawable/ic_masjid_detail_address"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -362,7 +362,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_flag_south_korea"/>
+                    android:src="@drawable/ic_masjid_detail_operating_hour"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -418,7 +418,7 @@
                     android:fontFamily="@font/poppins_light"
                     android:scrollHorizontally="false"
                     android:layout_marginHorizontal="@dimen/dimen_20dp"
-                    android:text="@string/general_memuat_data"
+                    android:text="@string/label_hubungi"
                     android:textColor="@color/color_link_call"
                     android:textSize="12sp"
                     android:textStyle="bold"
@@ -431,7 +431,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_flag_south_korea"/>
+                    android:src="@drawable/ic_masjid_detail_phone_number"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -482,7 +482,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_flag_south_korea"/>
+                    android:src="@drawable/ic_masjid_detail_facility"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

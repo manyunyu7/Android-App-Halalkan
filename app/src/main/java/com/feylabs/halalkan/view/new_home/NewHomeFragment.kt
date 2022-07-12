@@ -49,6 +49,13 @@ class NewHomeFragment : BaseFragment() {
         setupMenuClickListener()
     }
 
+    override fun onResume() {
+        super.onResume()
+        if(mMosqueAdapter.itemCount==0){
+            fetchAllMasjid()
+        }
+    }
+
     private fun setupMenuClickListener() {
 
         binding.bottomNav.apply {

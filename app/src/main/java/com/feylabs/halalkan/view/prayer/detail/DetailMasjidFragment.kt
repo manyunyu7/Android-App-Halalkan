@@ -53,7 +53,7 @@ class DetailMasjidFragment : BaseFragment() {
                 binding.etDistance.text = calculateMasjidDistance(lat.toDoubleOrNull(), long.toDoubleOrNull())
                 binding.etAddress.text = address
                 binding.etKategori.text = categoryName
-                binding.etActionCall.text = phone
+                binding.etPhone.text = phone
                 binding.etOperatingHours.text = getOperatingHours()
                 binding.etFacilities.text = facilities.extractStringFromStringArrayBE()
 

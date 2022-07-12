@@ -10,6 +10,9 @@ import com.feylabs.halalkan.R
 import com.feylabs.halalkan.databinding.ItemPrayerRoomBinding as AdapterBinding
 import  com.feylabs.halalkan.data.remote.reqres.masjid.DataMasjid as AdapterData
 import com.feylabs.halalkan.databinding.ItemRvLoadMoreBinding
+import com.feylabs.halalkan.utils.ImageViewUtils.imgFullPath
+import com.feylabs.halalkan.utils.ImageViewUtils.loadImage
+import com.feylabs.halalkan.utils.ImageViewUtils.loadImageFromURL
 import com.feylabs.halalkan.utils.Network
 import com.feylabs.halalkan.utils.PaginationPlaceholder
 import com.feylabs.halalkan.utils.PaginationPlaceholder.Companion.VFooter
@@ -99,7 +102,7 @@ class AllMasjidAdapter :
 
             binding.tvTitle.text = model.name
             binding.tvAddress.text = model.address
-            val imgUrl = Network.REAL_URL_V1 + model.img.encodeUrl()
+            val imgUrl = model.img.encodeUrl().imgFullPath()
             binding.tvCategory.text = model.categoryName.uppercase()
 
             if (model.distanceKm != null) {
@@ -113,11 +116,8 @@ class AllMasjidAdapter :
                 binding.tvDistance.visibility = View.GONE
             }
 
-            Glide.with(mContext)
-                .load(imgUrl)
-                .thumbnail(Glide.with(mContext).load(R.raw.ic_loading_google).fitCenter())
-                .skipMemoryCache(true)
-                .into(binding.ivMainImage)
+            binding.ivMainImage.loadImageFromURL(mContext,imgUrl)
+
 
             binding.root.setOnClickListener {
                 if (::adapterInterface.isInitialized)

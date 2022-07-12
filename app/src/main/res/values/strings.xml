@@ -35,6 +35,7 @@
     <string name="detail_masjid_jam_operasional">Jam Operasional</string>
     <string name="detail_masjid_alamat">Alamat</string>
     <string name="detail_masjid_kategori">Kategori</string>
+    <string name="label_hubungi">Hubungi</string>
 
 
 </resources>
