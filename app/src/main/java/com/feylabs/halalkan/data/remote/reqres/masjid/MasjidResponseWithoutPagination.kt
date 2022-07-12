@@ -52,6 +52,8 @@ data class DataMasjid(
     val categoryName: String,
     @SerializedName("review_avg")
     val review_avg: String,
+    @SerializedName("review_count")
+    val review_count: String,
     var distanceKm: String? = null,
     var distanceKmDoubleRounded: Double? = null,
     var distanceKmDouble: Double? = null,

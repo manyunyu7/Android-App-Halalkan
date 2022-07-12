@@ -42,6 +42,7 @@ class PaginationPlaceholder {
             phone = "",
             review_avg = "",
             typeId = 0,
+            review_count = "",
             ViewType = VFooter
         )
     }

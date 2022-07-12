@@ -1,6 +1,7 @@
 package com.feylabs.halalkan.view.prayer.detail
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -128,9 +129,14 @@ class DetailMasjidFragment : BaseFragment() {
                 binding.etDistance.text = calculateMasjidDistance(lat.toDoubleOrNull(), long.toDoubleOrNull())
                 binding.etAddress.text = address
                 binding.etKategori.text = categoryName
-                binding.etActionCall.text = phone
+                binding.etPhone.text = phone
                 binding.etFacilities.text = facilities.extractStringFromStringArrayBE()
                 binding.etOperatingHours.text=getOperatingHours()
+
+                binding.includeRatingInfo.apply {
+                    reviewScore.text=masjidDetailResponse.review_avg
+                    tvReviewCount.text=masjidDetailResponse.review_count
+                }
 
                 viewModel.targetLong.postValue(long.toDoubleOrNull())
                 viewModel.targetLat.postValue(lat.toDoubleOrNull())
@@ -154,6 +160,13 @@ class DetailMasjidFragment : BaseFragment() {
     override fun initAction() {
         binding.btnBack.setOnClickListener {
             findNavController().navigateUp()
+        }
+
+        binding.etActionCall.setOnClickListener {
+            val number = binding.labelPhone.text.toString()
+            val callIntent = Intent(Intent.ACTION_CALL)
+            callIntent.data = Uri.parse("tel:" + number) //change the number
+            startActivity(callIntent)
         }
 
         binding.btnFavorite.setOnClickListener {
