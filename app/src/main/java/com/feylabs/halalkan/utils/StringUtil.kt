@@ -1,10 +1,16 @@
 package com.feylabs.halalkan.utils
 
 import android.net.Uri
+import com.feylabs.halalkan.utils.ImageViewUtils.imgFullPath
 
 object StringUtil {
 
-    fun String.encodeUrl(): String {
+
+    fun String.loadMuskoImage() : String{
+        return this.decodeMuskoUrl().imgFullPath()
+    }
+
+    fun String.decodeMuskoUrl(): String {
         var url = ""
         url = this.replace("(", "%28")
         url = url.replace(")", "%29")

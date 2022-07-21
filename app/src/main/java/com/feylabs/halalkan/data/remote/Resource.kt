@@ -9,3 +9,4 @@ sealed class QumparanResource<T>(
     class Error<T>(message: String) : QumparanResource<T>(null, message)
     class Default<T>(data: T? = null) : QumparanResource<T>(data)
 }
+

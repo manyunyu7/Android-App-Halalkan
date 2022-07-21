@@ -1,23 +1,18 @@
-package com.feylabs.halalkan.view.prayer
+package com.feylabs.halalkan.view.prayer.main
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.feylabs.halalkan.MainViewModel
 import com.feylabs.halalkan.R
 import com.feylabs.halalkan.data.remote.QumparanResource
-import com.feylabs.halalkan.data.remote.reqres.PostResponse
-import com.feylabs.halalkan.data.remote.reqres.UserResponse
-import com.feylabs.halalkan.data.remote.reqres.masjid.DataMasjid
+import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidModelResponse
 import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidResponseWithoutPagination
 import com.feylabs.halalkan.data.remote.reqres.prayertime.PrayerTimeAladhanSingleDateResponse
-import com.feylabs.halalkan.databinding.FragmentHomeBinding
-import com.feylabs.halalkan.databinding.FragmentNewHomeBinding
 import com.feylabs.halalkan.databinding.FragmentPrayerMainBinding
 import com.feylabs.halalkan.utils.TimeUtil
 import com.feylabs.halalkan.utils.base.BaseFragment
@@ -25,9 +20,7 @@ import com.feylabs.halalkan.utils.location.LocationUtils
 import com.feylabs.halalkan.utils.location.MyLatLong
 import com.feylabs.halalkan.utils.masjid.MasjidUtility.renderWithDistanceModel
 import com.feylabs.halalkan.view.home.HomeViewModel
-import com.feylabs.halalkan.view.home.ListPostsAdapter
 import com.feylabs.halalkan.view.new_home.ListMasjidAdapter
-import com.feylabs.halalkan.view.new_home.RestaurantHomeUIModel
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -39,7 +32,6 @@ class PrayerMainFragment : BaseFragment() {
 
 
     private val mMosqueAdapter by lazy { ListMasjidAdapter() }
-
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -92,7 +84,7 @@ class PrayerMainFragment : BaseFragment() {
 
     private fun initAdapter() {
         mMosqueAdapter.setupAdapterInterface(object : ListMasjidAdapter.ItemInterface {
-            override fun onclick(model: DataMasjid) {
+            override fun onclick(model: MasjidModelResponse) {
                 findNavController().navigate(
                     R.id.navigation_detailMasjidFragment,
                     bundleOf("data" to model)

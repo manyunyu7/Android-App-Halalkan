@@ -2,13 +2,12 @@ package com.feylabs.halalkan.utils
 
 import android.content.Context
 import android.net.Uri
-import android.view.View
 import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.feylabs.halalkan.R
 import com.feylabs.halalkan.utils.Network.REAL_URL
-import com.feylabs.halalkan.utils.StringUtil.encodeUrl
+import com.feylabs.halalkan.utils.StringUtil.decodeMuskoUrl
 import com.pixplicity.sharp.Sharp
 import okhttp3.*
 import java.io.File
@@ -17,7 +16,7 @@ import java.io.IOException
 object ImageViewUtils {
 
     fun String.urlHalal() {
-        var url = this.encodeUrl()
+        var url = this.decodeMuskoUrl()
         if (url.contains("/"))
             url = REAL_URL + url
     }

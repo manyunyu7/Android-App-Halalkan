@@ -1,7 +1,6 @@
 package com.feylabs.halalkan.view.prayer.list_and_search
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.feylabs.halalkan.MainViewModel
 import com.feylabs.halalkan.R
 import com.feylabs.halalkan.data.remote.QumparanResource
-import com.feylabs.halalkan.data.remote.reqres.masjid.DataMasjid
+import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidModelResponse
 import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidResponseWithoutPagination
 import com.feylabs.halalkan.databinding.FragmentListAndSearchPrayerRoomBinding
 import com.feylabs.halalkan.utils.base.BaseFragment
@@ -48,7 +47,7 @@ class ListAndSearchPrayerRoomFragment : BaseFragment() {
 
         adapter.adapterInterface = object  : ListPrayerRoomAdapter.ItemInterface{
 
-            override fun onclick(model: DataMasjid) {
+            override fun onclick(model: MasjidModelResponse) {
                 findNavController().navigate(
                     R.id.navigation_detailMasjidFragment,
                     bundleOf("data" to model)

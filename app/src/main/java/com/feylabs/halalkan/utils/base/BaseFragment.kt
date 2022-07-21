@@ -12,6 +12,8 @@ import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.feylabs.halalkan.R
 import com.feylabs.halalkan.data.local.MyPreference
 import com.feylabs.halalkan.data.remote.reqres.auth.UserModel
@@ -122,6 +124,12 @@ abstract class BaseFragment : Fragment() {
     }
 
     fun colorActive() = "#156DBE"
+
+    fun setLayoutManagerGridVertical(spanCount:Int=2) = GridLayoutManager(requireContext(),spanCount,
+        GridLayoutManager.VERTICAL,false)
+
+    fun setLayoutManagerLinear() = LinearLayoutManager(requireContext())
+    fun setLayoutManagerHorizontal() = LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false)
 
 
 }

@@ -1,4 +1,4 @@
-package com.feylabs.halalkan.view.prayer.detail
+package com.feylabs.halalkan.view.resto.detail
 
 import android.content.Intent
 import android.net.Uri
@@ -12,21 +12,22 @@ import com.feylabs.halalkan.MainViewModel
 import com.feylabs.halalkan.R
 import com.feylabs.halalkan.customview.imagepreviewcontainer.CustomViewPhotoModel
 import com.feylabs.halalkan.data.remote.QumparanResource
-import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidModelResponse
 import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidPhotosResponse
+import com.feylabs.halalkan.data.remote.reqres.resto.RestoDetailResponse
+import com.feylabs.halalkan.data.remote.reqres.resto.RestoModelResponse
 import com.feylabs.halalkan.databinding.FragmentDetailPrayerBinding
 import com.feylabs.halalkan.utils.NumberUtil.Companion.roundOffDecimal
-import com.feylabs.halalkan.utils.StringUtil.extractStringFromStringArrayBE
 import com.feylabs.halalkan.utils.base.BaseFragment
 import com.feylabs.halalkan.utils.location.LocationUtils
 import com.feylabs.halalkan.utils.location.MyLatLong
 import com.feylabs.halalkan.view.direction.TurnByTurnExperienceActivity
 import com.feylabs.halalkan.view.prayer.PrayerRoomViewModel
+import com.feylabs.halalkan.view.resto.RestoViewModel
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
 
-class DetailMasjidFragment : BaseFragment() {
+class DetailRestoFragment : BaseFragment() {
 
 
     // This property is only valid between onCreateView and
@@ -34,11 +35,11 @@ class DetailMasjidFragment : BaseFragment() {
     private var _binding: FragmentDetailPrayerBinding? = null
     private val binding get() = _binding!!
 
-    val viewModel: PrayerRoomViewModel by viewModel()
+    val viewModel: RestoViewModel by viewModel()
 
-    val mainViewModel : MainViewModel by sharedViewModel()
+    val mainViewModel: MainViewModel by sharedViewModel()
 
-    var initModel: MasjidModelResponse? = null
+    var initModel: RestoModelResponse? = null
 
     override fun initUI() {
         setupInitialUi()
@@ -49,14 +50,13 @@ class DetailMasjidFragment : BaseFragment() {
             binding.apply {
                 binding.labelPageTitleTopbar.text = name
                 binding.labelName.text = name
-                binding.etCategoryTop.text = categoryName
                 binding.etAddressTop.text = address
-                binding.etDistance.text = calculateMasjidDistance(lat.toDoubleOrNull(), long.toDoubleOrNull())
+                binding.etDistance.text =
+                    calculateDistance(lat.toDoubleOrNull(), long.toDoubleOrNull())
                 binding.etAddress.text = address
-                binding.etKategori.text = categoryName
-                binding.etPhone.text = phone
-                binding.etOperatingHours.text = getOperatingHours()
-                binding.etFacilities.text = facilities.extractStringFromStringArrayBE()
+//                binding.etPhone.text = phone
+                binding.etOperatingHours.text = "24 Jam"
+//                binding.etFacilities.text = facilities.extractStringFromStringArrayBE()
 
                 viewModel.targetLong.postValue(long.toDoubleOrNull())
                 viewModel.targetLat.postValue(lat.toDoubleOrNull())
@@ -67,11 +67,11 @@ class DetailMasjidFragment : BaseFragment() {
 
     override fun initObserver() {
 
-        mainViewModel.liveLatLng.observe(viewLifecycleOwner){
+        mainViewModel.liveLatLng.observe(viewLifecycleOwner) {
 
         }
 
-        viewModel.masjidDetailLiveData.observe(viewLifecycleOwner) {
+        viewModel.detailRestoLiveData.observe(viewLifecycleOwner) {
             when (it) {
                 is QumparanResource.Default -> {}
                 is QumparanResource.Error -> {
@@ -83,59 +83,36 @@ class DetailMasjidFragment : BaseFragment() {
                 is QumparanResource.Success -> {
                     showCenterLoadingIndicator(false)
                     it.data?.let { masjidDetailResponse ->
-                        val data = masjidDetailResponse.data
-                        if (data.isNotEmpty()) {
-                            val firstData = masjidDetailResponse.data[0]
-                            setupMasjidDetailFromNetwork(firstData)
-                        } else {
-                            setupInitialUi(showError = true, messageError = "")
-                            // TODO() : handle empty masjid
-                        }
+                        setupDetailFromNetwork(masjidDetailResponse)
+                    } ?: run{
+                        setupInitialUi(showError = true, messageError = "")
                     }
                 }
             }
         }
 
-        viewModel.masjidPhotoLiveData.observe(viewLifecycleOwner) {
-            when (it) {
-                is QumparanResource.Default -> {
-                    binding.ipImagePreviewSlider.setLoading(true)
-                }
-                is QumparanResource.Error -> {
-                    binding.ipImagePreviewSlider.setLoading(false)
-                }
-                is QumparanResource.Loading -> {
-                    binding.ipImagePreviewSlider.setLoading(true)
-                }
-                is QumparanResource.Success -> {
-                    binding.ipImagePreviewSlider.setLoading(false)
-                    it.data?.let {
-                        setupMasjidPhotoData(it)
-                    } ?: run {
-                        binding.ipImagePreviewSlider.setLoading(false, isEmpty = true)
-                    }
-                }
-            }
-        }
     }
 
-    private fun setupMasjidDetailFromNetwork(masjidDetailResponse: MasjidModelResponse) {
+    private fun setupDetailFromNetwork(restoDetailResponse: RestoDetailResponse) {
         binding.apply {
-            masjidDetailResponse.apply {
+            restoDetailResponse.data.detailResto.apply {
+                val resto = this
                 binding.labelPageTitleTopbar.text = name
                 binding.labelName.text = name
-                binding.etCategoryTop.text = categoryName
+                binding.etCategoryTop.text = "-"
                 binding.etAddressTop.text = address
-                binding.etDistance.text = calculateMasjidDistance(lat.toDoubleOrNull(), long.toDoubleOrNull())
+                binding.etDistance.text =
+                    calculateDistance(lat.toDoubleOrNull(), long.toDoubleOrNull())
                 binding.etAddress.text = address
-                binding.etKategori.text = categoryName
-                binding.etPhone.text = phone
-                binding.etFacilities.text = facilities.extractStringFromStringArrayBE()
-                binding.etOperatingHours.text=getOperatingHours()
+                binding.etKategori.text = "-"
+                binding.etPhone.text = phoneNumber
+                binding.etFacilities.text = "-"
+                binding.etOperatingHours.text = getOperatingHours()
 
                 binding.includeRatingInfo.apply {
-                    reviewScore.text=masjidDetailResponse.review_avg
-                    tvReviewCount.text=masjidDetailResponse.review_count
+                    reviewScore.text =
+                        restoDetailResponse.data.totalRating.toString()
+                    tvReviewCount.text = restoDetailResponse.data.totalReview.toString()
                 }
 
                 viewModel.targetLong.postValue(long.toDoubleOrNull())
@@ -170,23 +147,31 @@ class DetailMasjidFragment : BaseFragment() {
         }
 
         binding.btnFavorite.setOnClickListener {
-            startActivity(Intent(requireActivity(),TurnByTurnExperienceActivity::class.java)
-                .putExtra(TurnByTurnExperienceActivity.DESTINATION_LONG,viewModel.targetLong.value)
-                .putExtra(TurnByTurnExperienceActivity.DESTINATION_LAT,viewModel.targetLat.value)
+            startActivity(
+                Intent(requireActivity(), TurnByTurnExperienceActivity::class.java)
+                    .putExtra(
+                        TurnByTurnExperienceActivity.DESTINATION_LONG,
+                        viewModel.targetLong.value
+                    )
+                    .putExtra(
+                        TurnByTurnExperienceActivity.DESTINATION_LAT,
+                        viewModel.targetLat.value
+                    )
             )
         }
 
         binding.btnWriteReview.setOnClickListener {
-            findNavController().navigate(R.id.navigation_masjidReviewNewFragment, bundleOf(
-                "id" to initModel?.id.toString()
-            ))
+            findNavController().navigate(
+                R.id.navigation_masjidReviewNewFragment, bundleOf(
+                    "id" to initModel?.id.toString()
+                )
+            )
         }
     }
 
     override fun initData() {
-        initModel = arguments?.getParcelable<MasjidModelResponse>("data")
-        viewModel.getMasjidPhoto(initModel?.id.toString())
-        viewModel.getDetailMasjid(initModel?.id.toString())
+        initModel = arguments?.getParcelable<RestoModelResponse>("data")
+        viewModel.getDetailResto(initModel?.id.toString())
     }
 
     override fun onCreateView(
@@ -202,7 +187,7 @@ class DetailMasjidFragment : BaseFragment() {
         _binding = null
     }
 
-    private fun calculateMasjidDistance(lat: Double?, long: Double?): CharSequence? {
+    private fun calculateDistance(lat: Double?, long: Double?): CharSequence? {
         val mLat = lat ?: -99.0
         val mLong = long ?: -99.0
         val myLocation = mainViewModel.liveLatLng.value

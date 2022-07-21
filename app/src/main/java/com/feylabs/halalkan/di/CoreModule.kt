@@ -5,12 +5,9 @@ import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.feylabs.halalkan.data.repository.MasjidRepository
 import com.feylabs.halalkan.data.repository.QumparanRepository
 import com.feylabs.halalkan.data.repository.TranslatorRepository
-import com.feylabs.halalkan.data.remote.service.ApiService
 import com.feylabs.halalkan.utils.Network
 import com.feylabs.halalkan.data.remote.RemoteDataSource
-import com.feylabs.halalkan.data.remote.service.MasjidService
-import com.feylabs.halalkan.data.remote.service.PrayerTimeAladhanService
-import com.feylabs.halalkan.data.remote.service.TranslatorService
+import com.feylabs.halalkan.data.remote.service.*
 import com.feylabs.halalkan.data.repository.PrayerTimeRepository
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -49,6 +46,15 @@ val networkModule = module {
         retrofit.create(ApiService::class.java)
     }
 
+    single<RestoService>(named("restoService")) {
+        val retrofit = Retrofit.Builder()
+            .baseUrl(Network.BASE_URL_V1)
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(get())
+            .build()
+        retrofit.create(RestoService::class.java)
+    }
+
     single<MasjidService>(named("masjidService")) {
         val retrofit = Retrofit.Builder()
             .baseUrl(Network.BASE_URL_V1)
@@ -85,7 +91,8 @@ val repositoryModule = module {
             get(named("mainService")),
             get(named("masjidService")),
             get(named("translatorService")),
-            get(named("prayerTimeAladhanService"))
+            get(named("prayerTimeAladhanService")),
+            get(named("restoService"))
         )
     }
     single { MasjidRepository(get()) }

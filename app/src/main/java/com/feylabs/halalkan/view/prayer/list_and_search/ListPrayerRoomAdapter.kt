@@ -7,18 +7,18 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.feylabs.halalkan.R
-import com.feylabs.halalkan.data.remote.reqres.masjid.DataMasjid
+import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidModelResponse
 import com.feylabs.halalkan.databinding.ItemPrayerRoomListSearchBinding
 import com.feylabs.halalkan.utils.Network.REAL_URL_V1
-import com.feylabs.halalkan.utils.StringUtil.encodeUrl
+import com.feylabs.halalkan.utils.StringUtil.decodeMuskoUrl
 
 class ListPrayerRoomAdapter :
     RecyclerView.Adapter<ListPrayerRoomAdapter.ListPrayerRoomViewHolder>() {
 
-    val data = mutableListOf<DataMasjid>()
+    val data = mutableListOf<MasjidModelResponse>()
     lateinit var adapterInterface: ItemInterface
 
-    fun setWithNewData(data: MutableList<DataMasjid>) {
+    fun setWithNewData(data: MutableList<MasjidModelResponse>) {
         this.data.clear()
         this.data.addAll(data)
     }
@@ -33,7 +33,7 @@ class ListPrayerRoomAdapter :
             ItemPrayerRoomListSearchBinding.bind(itemView)
 
         @SuppressLint("SetTextI18n")
-        fun onBInd(model: DataMasjid) {
+        fun onBInd(model: MasjidModelResponse) {
             val mContext = binding.root.context
 
             binding.root.setOnClickListener {
@@ -42,7 +42,7 @@ class ListPrayerRoomAdapter :
 
             binding.tvTitle.text = model.name
             binding.tvAddress.text = model.address
-            val imgUrl = REAL_URL_V1 + model.img.encodeUrl()
+            val imgUrl = REAL_URL_V1 + model.img.decodeMuskoUrl()
             binding.tvCategory.text=model.categoryName.uppercase()
 
             if (model.distanceKm != null) {
@@ -77,6 +77,6 @@ class ListPrayerRoomAdapter :
     }
 
     interface ItemInterface {
-        fun onclick(model: DataMasjid)
+        fun onclick(model: MasjidModelResponse)
     }
 }

@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.feylabs.halalkan.R
 import com.feylabs.halalkan.data.remote.QumparanResource
+import com.feylabs.halalkan.data.remote.QumparanResource.*
 import com.feylabs.halalkan.data.remote.reqres.PostResponse
 import com.feylabs.halalkan.data.remote.reqres.UserResponse
 import com.feylabs.halalkan.databinding.FragmentHomeBinding
@@ -70,17 +71,17 @@ class HomeFragment : BaseFragment() {
     override fun initObserver() {
         viewModel.userLiveData.observe(viewLifecycleOwner, Observer {
             when (it) {
-                is QumparanResource.Default -> {
+                is Default -> {
                     showLoading(false)
                 }
-                is QumparanResource.Error -> {
+                is Error -> {
                     showLoading(false)
                     showToast(it.message.toString())
                 }
-                is QumparanResource.Loading -> {
+                is Loading -> {
                     showLoading(true)
                 }
-                is QumparanResource.Success -> {
+                is Success -> {
                     showLoading(false)
                     listUsers.clear()
                     it.data.let { list ->
@@ -96,21 +97,7 @@ class HomeFragment : BaseFragment() {
             }
         })
 
-        viewModel.postLiveData.observe(viewLifecycleOwner) {
-            when (it) {
-                is QumparanResource.Default -> {
-                }
-                is QumparanResource.Error -> {
-                    showToast(it.message.toString())
-                }
-                is QumparanResource.Loading -> {
-                    showToast("Loading")
-                }
-                is QumparanResource.Success -> {
-                    combinePostAndUsers(it.data)
-                }
-            }
-        }
+
     }
 
     private fun showLoading(b: Boolean) {

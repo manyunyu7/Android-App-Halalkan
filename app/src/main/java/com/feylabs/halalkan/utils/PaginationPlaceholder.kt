@@ -1,6 +1,6 @@
 package com.feylabs.halalkan.utils
 
-import com.feylabs.halalkan.data.remote.reqres.masjid.DataMasjid
+import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidModelResponse
 import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidReviewPaginationResponse
 
 
@@ -23,7 +23,7 @@ class PaginationPlaceholder {
                 ViewType = VFooter
             )
 
-        fun getMasjidDataPaginationResponsePlaceHolder() = DataMasjid(
+        fun getMasjidDataPaginationResponsePlaceHolder() = MasjidModelResponse(
             id = 0,
             createdAt = "",
             updatedAt = "",

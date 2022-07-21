@@ -1,29 +1,29 @@
-package com.feylabs.halalkan.utils.masjid
+package com.feylabs.halalkan.utils.resto
 
 import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidModelResponse
+import com.feylabs.halalkan.data.remote.reqres.resto.RestoModelResponse
 import com.feylabs.halalkan.utils.NumberUtil.Companion.roundOffDecimal
 import com.feylabs.halalkan.utils.location.LocationUtils
 import com.feylabs.halalkan.utils.location.MyLatLong
 
-object MasjidUtility {
+object RestoUtility {
 
-    fun MutableList<MasjidModelResponse>.renderWithDistanceModel(
+    fun MutableList<RestoModelResponse>.renderWithDistanceModel(
         myLocation: MyLatLong,
         limit: Int = 100,
         limitDistance: Int = 20000,
         sortByNearest: Boolean = true
-    ): MutableList<MasjidModelResponse> {
+    ): MutableList<RestoModelResponse> {
+        val resultList = mutableListOf<RestoModelResponse>()
 
-        val resultList = mutableListOf<MasjidModelResponse>()
-
-        this.forEachIndexed { index, dataMasjid ->
+        this.forEachIndexed { index, dataResto ->
             val distance = LocationUtils.calculateDistance(
                 loc1 = myLocation,
-                loc2 = MyLatLong(dataMasjid.lat.toDouble(), dataMasjid.long.toDouble())
+                loc2 = MyLatLong(dataResto.lat.toDouble(), dataResto.long.toDouble())
             )
-            dataMasjid.distanceKmDouble = distance
-            dataMasjid.distanceKm = distance.roundOffDecimal()
-            resultList.add(dataMasjid)
+            dataResto.distanceKmDouble = distance
+            dataResto.distanceKm = distance.roundOffDecimal()
+            resultList.add(dataResto)
         }
 
         var tempResult = resultList

@@ -5,19 +5,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.feylabs.halalkan.R
 import com.feylabs.halalkan.databinding.ItemPrayerRoomBinding as AdapterBinding
-import  com.feylabs.halalkan.data.remote.reqres.masjid.DataMasjid as AdapterData
+import  com.feylabs.halalkan.data.remote.reqres.masjid.MasjidModelResponse as AdapterData
 import com.feylabs.halalkan.databinding.ItemRvLoadMoreBinding
 import com.feylabs.halalkan.utils.ImageViewUtils.imgFullPath
-import com.feylabs.halalkan.utils.ImageViewUtils.loadImage
 import com.feylabs.halalkan.utils.ImageViewUtils.loadImageFromURL
-import com.feylabs.halalkan.utils.Network
 import com.feylabs.halalkan.utils.PaginationPlaceholder
 import com.feylabs.halalkan.utils.PaginationPlaceholder.Companion.VFooter
 import com.feylabs.halalkan.utils.PaginationPlaceholder.Companion.VNormal
-import com.feylabs.halalkan.utils.StringUtil.encodeUrl
+import com.feylabs.halalkan.utils.StringUtil.decodeMuskoUrl
 
 class AllMasjidAdapter :
     RecyclerView.Adapter<AllMasjidAdapter.ManyunyuViewHolder>() {
@@ -102,7 +99,7 @@ class AllMasjidAdapter :
 
             binding.tvTitle.text = model.name
             binding.tvAddress.text = model.address
-            val imgUrl = model.img.encodeUrl().imgFullPath()
+            val imgUrl = model.img.decodeMuskoUrl().imgFullPath()
             binding.tvCategory.text = model.categoryName.uppercase()
 
             if (model.distanceKm != null) {

@@ -12,7 +12,7 @@ import com.feylabs.halalkan.MainViewModel
 import com.feylabs.halalkan.R
 import com.feylabs.halalkan.data.local.MyPreference
 import com.feylabs.halalkan.data.remote.QumparanResource
-import com.feylabs.halalkan.data.remote.reqres.masjid.DataMasjid
+import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidModelResponse
 import com.feylabs.halalkan.data.remote.reqres.masjid.pagination.AllMasjidPaginationResponse
 import com.feylabs.halalkan.databinding.FragmentAllPrayerRoomBinding
 import com.feylabs.halalkan.utils.base.BaseFragment
@@ -76,7 +76,7 @@ class AllMasjidFragment : BaseFragment() {
 
 
         mAdapter.setupAdapterInterface(object : AllMasjidAdapter.ItemInterface {
-            override fun onclick(model: DataMasjid) {
+            override fun onclick(model: MasjidModelResponse) {
                 findNavController().navigate(
                     R.id.action_navigation_allMasjidFragment_to_navigation_detailMasjidFragment,
                     bundleOf("data" to model)
@@ -116,7 +116,6 @@ class AllMasjidFragment : BaseFragment() {
         var initialData = response.data.data.toMutableList()
 
         if (LocationUtils.checkIfLocationSet(mainViewModel.liveLatLng.value)) {
-            showToast("Lat Long Available")
             initialData = initialData.renderWithDistanceModel(
                 myLocation = mainViewModel.liveLatLng.value ?: MyLatLong(-99.0, -99.0),
                 sortByNearest = false, limit = 999

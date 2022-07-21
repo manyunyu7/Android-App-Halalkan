@@ -3,7 +3,7 @@ package com.feylabs.halalkan.data.remote.reqres.masjid.pagination
 
 import com.google.gson.annotations.SerializedName
 import androidx.annotation.Keep
-import com.feylabs.halalkan.data.remote.reqres.masjid.DataMasjid
+import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidModelResponse
 
 @Keep
 data class AllMasjidPaginationResponse(
@@ -21,7 +21,7 @@ data class AllMasjidPaginationResponse(
         @SerializedName("current_page")
         var currentPage: Int = 0,
         @SerializedName("data")
-        var `data`: List<DataMasjid> = listOf(),
+        var `data`: List<MasjidModelResponse> = listOf(),
         @SerializedName("first_page_url")
         var firstPageUrl: String = "",
         @SerializedName("from")

@@ -7,10 +7,11 @@ import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidPhotosResponse
 import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidReviewPaginationResponse
 import com.feylabs.halalkan.data.remote.reqres.masjid.pagination.AllMasjidPaginationResponse
 import com.feylabs.halalkan.data.remote.reqres.prayertime.PrayerTimeAladhanSingleDateResponse
-import com.feylabs.halalkan.data.remote.service.ApiService
-import com.feylabs.halalkan.data.remote.service.MasjidService
-import com.feylabs.halalkan.data.remote.service.PrayerTimeAladhanService
-import com.feylabs.halalkan.data.remote.service.TranslatorService
+import com.feylabs.halalkan.data.remote.reqres.resto.AllRestoNoPagination
+import com.feylabs.halalkan.data.remote.reqres.resto.FoodTypeResponse
+import com.feylabs.halalkan.data.remote.reqres.resto.RestaurantCertificationResponse
+import com.feylabs.halalkan.data.remote.reqres.resto.RestoDetailResponse
+import com.feylabs.halalkan.data.remote.service.*
 import com.feylabs.halalkan.utils.Network
 import retrofit2.Response
 
@@ -19,6 +20,7 @@ class RemoteDataSource(
     private val masjidService: MasjidService,
     private val translationService: TranslatorService,
     private val prayerTimeService: PrayerTimeAladhanService,
+    private val restoService: RestoService
 ) : RemoteDataSourceInterface {
 
     /**
@@ -38,15 +40,23 @@ class RemoteDataSource(
     suspend fun getAlbumPhoto(albumId: String) = commonService.getPhotoByAlbum(albumId)
 
     override suspend fun getMasjids() = commonService.getMasjids()
-    override suspend fun getMasjidsPagination(page: Int): Response<AllMasjidPaginationResponse>  =
+    override suspend fun getMasjidsPagination(page: Int): Response<AllMasjidPaginationResponse> =
         masjidService.showAllMasjidPaginate(page = page)
 
-    override suspend fun getMasjidReviews(masjidId:String,page:Int,perPage:Int): Response<MasjidReviewPaginationResponse> {
+    override suspend fun getMasjidReviews(
+        masjidId: String,
+        perPage: Int,
+        page: Int,
+    ): Response<MasjidReviewPaginationResponse> {
         return masjidService.getMasjidReviews(masjidId, page = page, perPage = perPage)
     }
 
-    override suspend fun login(loginBodyRequest: LoginBodyRequest) = commonService.login(loginBodyRequest)
-    override suspend fun register(bodyRequest: RegisterBodyRequest) = commonService.register(bodyRequest)
+
+    override suspend fun login(loginBodyRequest: LoginBodyRequest) =
+        commonService.login(loginBodyRequest)
+
+    override suspend fun register(bodyRequest: RegisterBodyRequest) =
+        commonService.register(bodyRequest)
 
     override suspend fun getTranslation(
         langSource: String, target: String, text: String
@@ -79,6 +89,22 @@ class RemoteDataSource(
 
     override suspend fun getMasjidDetail(id: String): Response<MasjidDetailResponse> {
         return masjidService.getMasjidDetail(id)
+    }
+
+    override suspend fun getRestoCert(): Response<RestaurantCertificationResponse> {
+        return restoService.getCert()
+    }
+
+    override suspend fun getRestoAll(): Response<AllRestoNoPagination> {
+        return restoService.getAllRaw()
+    }
+
+    override suspend fun getFoodType(): Response<FoodTypeResponse> {
+        return restoService.getFoodType()
+    }
+
+    override suspend fun getRestoDetail(id: String): Response<RestoDetailResponse> {
+        return restoService.getDetail(id)
     }
 
 

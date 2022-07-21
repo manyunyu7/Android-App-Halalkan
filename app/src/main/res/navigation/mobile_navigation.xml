@@ -54,7 +54,12 @@
         android:id="@+id/navigation_newHomeFragment"
         tools:layout="@layout/fragment_new_home"
         android:name="com.feylabs.halalkan.view.new_home.NewHomeFragment"
-        android:label="NewHomeFragment" />
+        android:label="NewHomeFragment" >
+
+        <action
+            android:id="@+id/action_navigation_newHomeFragment_to_navigation_restoMainFragment"
+            app:destination="@id/navigation_restoMainFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_qiblaFragment"
@@ -63,7 +68,7 @@
 
     <fragment
         android:id="@+id/navigation_prayerMainFragment"
-        android:name="com.feylabs.halalkan.view.prayer.PrayerMainFragment"
+        android:name="com.feylabs.halalkan.view.prayer.main.PrayerMainFragment"
         android:label="PrayerMainFragment" />
 
     <fragment
@@ -142,5 +147,11 @@
             android:id="@+id/action_navigation_registerFragment_to_navigation_loginFragment"
             app:destination="@id/navigation_loginFragment" />
     </fragment>
+
+    <fragment
+        android:id="@+id/navigation_restoMainFragment"
+        tools:layout="@layout/fragment_resto_main"
+        android:name="com.feylabs.halalkan.view.resto.main.RestoMainFragment"
+        android:label="RestoMainFragment" />
 
 </navigation>

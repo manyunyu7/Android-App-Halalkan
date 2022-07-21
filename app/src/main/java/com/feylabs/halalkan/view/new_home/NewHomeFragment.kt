@@ -10,9 +10,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.feylabs.halalkan.MainViewModel
 import com.feylabs.halalkan.R
 import com.feylabs.halalkan.customview.AskPermissionDialog
-import com.feylabs.halalkan.data.local.MyPreference
 import com.feylabs.halalkan.data.remote.QumparanResource
-import com.feylabs.halalkan.data.remote.reqres.masjid.DataMasjid
+import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidModelResponse
 import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidResponseWithoutPagination
 import com.feylabs.halalkan.data.remote.reqres.prayertime.PrayerTimeAladhanSingleDateResponse
 import com.feylabs.halalkan.databinding.FragmentNewHomeBinding
@@ -51,7 +50,7 @@ class NewHomeFragment : BaseFragment() {
 
     override fun onResume() {
         super.onResume()
-        if(mMosqueAdapter.itemCount==0){
+        if (mMosqueAdapter.itemCount == 0) {
             fetchAllMasjid()
         }
     }
@@ -65,22 +64,21 @@ class NewHomeFragment : BaseFragment() {
 
             btnMenuProfile.setOnClickListener {
                 val userToken = muskoPref().getToken().orEmpty()
-                if(userToken.isEmpty()){
-                    UtilSnackbar.showSnackbar(getRootView(),"Silakan Login Terlebih Dahulu")
+                if (userToken.isEmpty()) {
+                    UtilSnackbar.showSnackbar(getRootView(), "Silakan Login Terlebih Dahulu")
                     findNavController().navigate(R.id.navigation_loginFragment)
-                }else{
+                } else {
                     findNavController().navigate(R.id.navigation_userProfileFragment)
                 }
             }
         }
 
 
-
         binding.menuPrayer.setOnClickListener {
             findNavController().navigate(R.id.navigation_prayerMainFragment)
         }
         binding.menuResto.setOnClickListener {
-
+            findNavController().navigate(R.id.action_navigation_newHomeFragment_to_navigation_restoMainFragment)
         }
         binding.menuTranslate.setOnClickListener {
             findNavController().navigate(R.id.navigation_translateFragment)
@@ -121,7 +119,7 @@ class NewHomeFragment : BaseFragment() {
         })
 
         mMosqueAdapter.setupAdapterInterface(object : ListMasjidAdapter.ItemInterface {
-            override fun onclick(model: DataMasjid) {
+            override fun onclick(model: MasjidModelResponse) {
                 findNavController().navigate(
                     R.id.navigation_detailMasjidFragment,
                     bundleOf("data" to model)

@@ -8,6 +8,10 @@ import com.feylabs.halalkan.data.remote.reqres.auth.RegisterResponse
 import com.feylabs.halalkan.data.remote.reqres.masjid.*
 import com.feylabs.halalkan.data.remote.reqres.masjid.pagination.AllMasjidPaginationResponse
 import com.feylabs.halalkan.data.remote.reqres.prayertime.PrayerTimeAladhanSingleDateResponse
+import com.feylabs.halalkan.data.remote.reqres.resto.AllRestoNoPagination
+import com.feylabs.halalkan.data.remote.reqres.resto.FoodTypeResponse
+import com.feylabs.halalkan.data.remote.reqres.resto.RestaurantCertificationResponse
+import com.feylabs.halalkan.data.remote.reqres.resto.RestoDetailResponse
 import com.feylabs.halalkan.data.remote.reqres.translator.TiktokTextToSpeechResponse
 import com.feylabs.halalkan.data.remote.reqres.translator.TranslateResponse
 import retrofit2.Call
@@ -49,5 +53,12 @@ interface RemoteDataSourceInterface {
         perPage: Int,
         page: Int
     ): Response<MasjidReviewPaginationResponse>
+
+
+
+    suspend fun getRestoCert() : Response<RestaurantCertificationResponse>
+    suspend fun getRestoAll() : Response<AllRestoNoPagination>
+    suspend fun getFoodType() : Response<FoodTypeResponse>
+    suspend fun getRestoDetail(id:String) : Response<RestoDetailResponse>
 
 }
