@@ -57,10 +57,10 @@ class TranslateFragment : BaseFragment() {
             setBottomMenuActive(tvTranslate)
             setBottomMenuActive(ivTranslate)
             btnMenuConvo.setOnClickListener {
-                findNavController().navigate(R.id.navigation_translateConvoFragment)
+                findNavController().navigate(R.id.action_navigation_translateFragment_to_navigation_translateConvoFragment)
             }
             btnMenuTranslate.setOnClickListener {
-                findNavController().navigate(R.id.navigation_translateFragment)
+                // do nothing
             }
         }
     }

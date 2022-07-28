@@ -57,8 +57,14 @@
         android:label="NewHomeFragment" >
 
         <action
+            app:popUpTo="@+id/navigation_newHomeFragment"
             android:id="@+id/action_navigation_newHomeFragment_to_navigation_restoMainFragment"
             app:destination="@id/navigation_restoMainFragment" />
+
+        <action
+            app:popUpTo="@+id/navigation_newHomeFragment"
+            android:id="@+id/action_navigation_newHomeFragment_to_navigation_translateFragment"
+            app:destination="@id/navigation_translateFragment" />
     </fragment>
 
     <fragment
@@ -75,11 +81,6 @@
         android:id="@+id/navigation_listAndSearchPrayerRoomFragment"
         android:name="com.feylabs.halalkan.view.prayer.list_and_search.ListAndSearchPrayerRoomFragment"
         android:label="ListAndSearchPrayerRoomFragment" />
-
-    <fragment
-        android:id="@+id/navigation_translateFragment"
-        android:name="com.feylabs.halalkan.view.translate.TranslateFragment"
-        android:label="TranslateFragment" />
 
     <fragment
         android:id="@+id/navigation_detailMasjidFragment"
@@ -158,6 +159,24 @@
         android:id="@+id/navigation_translateConvoFragment"
         tools:layout="@layout/fragment_translate_convo"
         android:name="com.feylabs.halalkan.view.translate.convo.TranslateConvoFragment"
-        android:label="TranslateConvoFragment" />
+        android:label="TranslateConvoFragment" >
+        <action
+            app:popUpTo="@+id/navigation_translateFragment"
+            android:id="@+id/action_navigation_translateConvoFragment_to_navigation_translateFragment"
+            app:destination="@id/navigation_translateFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_translateFragment"
+        tools:layout="@layout/fragment_translate"
+        android:name="com.feylabs.halalkan.view.translate.TranslateFragment"
+        android:label="TranslateFragment" >
+        <action
+            app:popUpToInclusive="true"
+            app:popUpTo="@+id/navigation_translateFragment"
+            android:id="@+id/action_navigation_translateFragment_to_navigation_translateConvoFragment"
+            app:destination="@id/navigation_translateConvoFragment" />
+    </fragment>
+
 
 </navigation>

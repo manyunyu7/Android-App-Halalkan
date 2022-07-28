@@ -81,7 +81,7 @@ class NewHomeFragment : BaseFragment() {
             findNavController().navigate(R.id.action_navigation_newHomeFragment_to_navigation_restoMainFragment)
         }
         binding.menuTranslate.setOnClickListener {
-            findNavController().navigate(R.id.navigation_translateFragment)
+            findNavController().navigate(R.id.action_navigation_newHomeFragment_to_navigation_translateFragment)
         }
         binding.menuScan.setOnClickListener {}
     }
