@@ -8,7 +8,7 @@ data class TranslateResponse(
     data class Data(
         val simple_translate: String,
         val source: String,
-        val spelling: String,
+        val spelling: String?,
         val target: String,
         val text: String
     )

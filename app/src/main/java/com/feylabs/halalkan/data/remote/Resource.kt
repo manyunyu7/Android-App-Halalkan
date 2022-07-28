@@ -6,7 +6,7 @@ sealed class QumparanResource<T>(
 ) {
     class Loading<T>(data: T? = null) : QumparanResource<T>(data)
     class Success<T>(data: T, message: String = "") : QumparanResource<T>(data, message)
-    class Error<T>(message: String) : QumparanResource<T>(null, message)
+    class Error<T>(message: String, data: T? = null) : QumparanResource<T>(data, message)
     class Default<T>(data: T? = null) : QumparanResource<T>(data)
 }
 

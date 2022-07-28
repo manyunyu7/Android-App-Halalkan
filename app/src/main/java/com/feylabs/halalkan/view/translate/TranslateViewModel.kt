@@ -5,8 +5,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.feylabs.halalkan.data.repository.TranslatorRepository
 import com.feylabs.halalkan.data.remote.QumparanResource
+import com.feylabs.halalkan.data.remote.QumparanResource.*
 import com.feylabs.halalkan.data.remote.reqres.translator.TiktokTextToSpeechResponse
 import com.feylabs.halalkan.data.remote.reqres.translator.TranslateResponse
+import com.feylabs.halalkan.databinding.ItemChatBinding
+import com.feylabs.halalkan.view.translate.convo.ConvoModel
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
@@ -14,6 +18,13 @@ class TranslateViewModel(val repo: TranslatorRepository) : ViewModel() {
 
     private var _translateLiveData = MutableLiveData<QumparanResource<TranslateResponse?>>()
     val translateLiveData get() = _translateLiveData
+
+    private var _convoTranslateLiveData =
+        MutableLiveData<QumparanResource<Pair<ItemChatBinding, TranslateResponse?>>>()
+    val convoTranslateLiveData get() = _convoTranslateLiveData
+
+    // first : source, second : target
+    val languagePair = MutableLiveData<Pair<String, String>>()
 
     val sourceLanguage = MutableLiveData("id")
     val targetLanguage = MutableLiveData("ko")
@@ -26,6 +37,8 @@ class TranslateViewModel(val repo: TranslatorRepository) : ViewModel() {
 
 
     val clickedContainer = MutableLiveData(0)
+    val clickedMicrophone = MutableLiveData(0)
+    val textSpeaked = MutableLiveData("")
 
     fun getTextToSpeech(text: String, isSource: Boolean = false) {
         viewModelScope.launch {
@@ -40,32 +53,63 @@ class TranslateViewModel(val repo: TranslatorRepository) : ViewModel() {
                 val res = repo.getTextToSpeech(mSource, text)
                 Timber.d("users response $")
                 if (res.isSuccessful) {
-                    _ttlLiveData.postValue(QumparanResource.Success(res.body()))
+                    _ttlLiveData.postValue(Success(res.body()))
                 } else {
-                    _ttlLiveData.postValue(QumparanResource.Error("Terjadi Kesalahan"))
+                    _ttlLiveData.postValue(Error("Terjadi Kesalahan"))
                 }
             } catch (e: Exception) {
-                _ttlLiveData.postValue(QumparanResource.Error(e.message.toString()))
+                _ttlLiveData.postValue(Error(e.message.toString()))
             }
         }
     }
 
-    fun getTranslation(text: String) {
+    fun getTextToSpeechConvo(convoModel: ConvoModel) {
+        viewModelScope.launch {
+            try {
+                var mFrom = convoModel.from
+                if(convoModel.type=="1"){
+                    mFrom=convoModel.to
+                }
+                val res = repo.getTextToSpeech(mFrom, convoModel.result)
+                if (res.isSuccessful) {
+                    _ttlLiveData.postValue(Success(res.body()))
+                } else {
+                    _ttlLiveData.postValue(Error("Terjadi Kesalahan"))
+                }
+            } catch (e: Exception) {
+                _ttlLiveData.postValue(Error(e.message.toString()))
+            }
+        }
+    }
+
+    fun getTranslation(text: String, type: String? = null) {
         viewModelScope.launch {
             try {
                 val source = sourceLanguage.value ?: "id"
                 val target = targetLanguage.value ?: "ko"
-                val res = repo.getTranslation(source, target, text)
-                Timber.d("users response $")
+
+                var mSource = source
+                var mTarget = target
+
+                type?.let {
+                    if (it == "target" && it.isNotEmpty()) {
+                        mSource = target
+                        mTarget = source
+                    }
+                }
+
+                val res = repo.getTranslation(mSource, mTarget, text)
+
                 if (res.isSuccessful) {
-                    _translateLiveData.postValue(QumparanResource.Success(res.body()))
+                    _translateLiveData.postValue(Success(res.body()))
                 } else {
-                    _translateLiveData.postValue(QumparanResource.Error("Terjadi Kesalahan"))
+                    _translateLiveData.postValue(Error("Terjadi Kesalahan"))
                 }
             } catch (e: Exception) {
-                _translateLiveData.postValue(QumparanResource.Error(e.message.toString()))
+                _translateLiveData.postValue(Error(e.message.toString()))
             }
         }
     }
+
 
 }

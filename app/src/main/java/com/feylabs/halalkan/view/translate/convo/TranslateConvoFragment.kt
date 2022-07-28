@@ -1,4 +1,4 @@
-package com.feylabs.halalkan.view.translate
+package com.feylabs.halalkan.view.translate.convo
 
 import android.app.Activity.RESULT_OK
 import android.content.Intent
@@ -8,15 +8,14 @@ import android.speech.RecognizerIntent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.widget.doAfterTextChanged
 import androidx.navigation.fragment.findNavController
+import com.androidnetworking.AndroidNetworking
 import com.feylabs.halalkan.R
 import com.feylabs.halalkan.customview.AskPermissionDialog
 import com.feylabs.halalkan.customview.SearchLangDialogFragment
 import com.feylabs.halalkan.data.remote.QumparanResource
 import com.feylabs.halalkan.data.remote.reqres.translator.TiktokTextToSpeechResponse
 import com.feylabs.halalkan.databinding.CustomViewSearchLanguageDialogBinding
-import com.feylabs.halalkan.databinding.FragmentTranslateBinding
 import com.feylabs.halalkan.utils.PermissionUtil
 import com.feylabs.halalkan.utils.PermissionUtil.Companion.getPermissionStatus
 import com.feylabs.halalkan.utils.PermissionUtil.Companion.isBlocked
@@ -25,19 +24,25 @@ import com.feylabs.halalkan.utils.TranslatorUtil
 import com.feylabs.halalkan.utils.base.BaseFragment
 import com.feylabs.halalkan.customview.searchwithimage.ListSearchWithImageAdapter
 import com.feylabs.halalkan.customview.searchwithimage.SearchWithImageModel
+import com.feylabs.halalkan.data.remote.QumparanResource.*
+import com.feylabs.halalkan.data.remote.reqres.resto.RestaurantCertificationResponse
+import com.feylabs.halalkan.databinding.FragmentTranslateConvoBinding
+import com.feylabs.halalkan.databinding.ItemChatBinding
 import com.feylabs.halalkan.utils.PermissionCommandUtil
 import com.feylabs.halalkan.utils.PermissionUtil.Companion.openSetting
+import com.feylabs.halalkan.utils.TimeUtil
+import com.feylabs.halalkan.view.translate.TranslateViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 import java.io.IOException
 import java.util.*
 
 
-class TranslateFragment : BaseFragment() {
+class TranslateConvoFragment : BaseFragment() {
 
 
     // This property is only valid between onCreateView and
     // onDestroyView.
-    private var _binding: FragmentTranslateBinding? = null
+    private var _binding: FragmentTranslateConvoBinding? = null
     private val binding get() = _binding!!
 
     val viewmodel: TranslateViewModel by viewModel()
@@ -45,17 +50,41 @@ class TranslateFragment : BaseFragment() {
     lateinit var searchLangDialog: SearchLangDialogFragment
     lateinit var searchLangDialogBinding: CustomViewSearchLanguageDialogBinding
 
+    private val adapter by lazy { ConvoAdapter() }
+
+    companion object {
+        const val REQUEST_CODE_TTS_SOURCE = 11
+        const val REQUEST_CODE_SPT_TARGET = 12
+    }
+
 
     override fun initUI() {
         searchLangDialog = SearchLangDialogFragment()
         initLanguageContainerUI()
         setupBottomNav()
+        initRvAndAdapter()
+    }
+
+    private fun initRvAndAdapter() {
+        binding.rvConvo.apply {
+            adapter = this@TranslateConvoFragment.adapter
+            layoutManager = setLayoutManagerLinear()
+        }
+
+        adapter.setupAdapterInterface(object : ConvoAdapter.ItemInterface {
+            override fun translate(model: ConvoModel, binding: ItemChatBinding) {
+            }
+
+            override fun speak(model: ConvoModel) {
+                viewmodel.getTextToSpeechConvo(model)
+            }
+        })
     }
 
     private fun setupBottomNav() {
         binding.bottomNav.apply {
-            setBottomMenuActive(tvTranslate)
-            setBottomMenuActive(ivTranslate)
+            setBottomMenuActive(tvConvo)
+            setBottomMenuActive(ivConvo)
             btnMenuConvo.setOnClickListener {
                 findNavController().navigate(R.id.navigation_translateConvoFragment)
             }
@@ -105,49 +134,52 @@ class TranslateFragment : BaseFragment() {
             setWithNewData(TranslatorUtil.getLanguageArray())
             setupAdapterInterface(object : ListSearchWithImageAdapter.ItemInterface {
                 override fun onclick(model: SearchWithImageModel) {
-                    setupLanguageTTS()
-                    val sourceContainer = binding.containerSourceLanguage
-                    val targetCountainer = binding.containerTargetLanguage
+                    val containerInput = binding.containerInput
 
-                    binding.layoutDropdownTranslator.apply {
-                        if (viewmodel.clickedContainer.value == 1) {
-                            viewmodel.sourceLanguage.value = model.code
-                            viewmodel.sourceLanguageDesc.value = model.name
-                            labelLanguage1.text = model.name
-                            sourceContainer.labelLanguage.text = model.name
-                            //showToast("source is ${model.name}")
-                        }
-
-                        if (viewmodel.clickedContainer.value == 2) {
-                            viewmodel.targetLanguage.value = model.code
-                            viewmodel.targetLanguageDesc.value = model.name
-                            labelLanguage2.text = model.name
-                            targetCountainer.labelLanguage.text = model.name
-                            //showToast("target is ${model.name}")
-                        }
-
-                        // fetch new translation
-                        viewmodel.getTranslation(sourceContainer.etTranslate.text.toString())
-
-                        searchLangDialog.dismiss()
+                    if (viewmodel.clickedContainer.value == 1) {
+                        viewmodel.sourceLanguage.value = model.code
+                        viewmodel.sourceLanguageDesc.value = model.name
+                        containerInput.labelLanguageLeft.text = model.name
                     }
+
+                    if (viewmodel.clickedContainer.value == 2) {
+                        viewmodel.targetLanguage.value = model.code
+                        viewmodel.targetLanguageDesc.value = model.name
+                        containerInput.labelLanguageRight.text = model.name
+                    }
+
+                    searchLangDialog.dismiss()
                 }
             })
         }
     }
 
     override fun initObserver() {
+
         viewmodel.translateLiveData.observe(viewLifecycleOwner) {
-            showToast(it.data.toString() + it.message.toString())
             when (it) {
-                is QumparanResource.Success -> {
+                is Success -> {
                     it.data?.let { translateResponse ->
                         if (translateResponse.status != 0) {
                             //if translation is success
-                            val simpleTranslate = translateResponse.data.simple_translate.toString()
+                            val simpleTranslate = translateResponse.data.simple_translate
                             val simpleSpelling = translateResponse.data.spelling
-                            binding.containerTargetLanguage.etTranslate.setText(simpleTranslate)
-                            binding.containerTargetLanguage.etSpelling.setText(simpleSpelling)
+
+                            val sourceLanguage = viewmodel.sourceLanguage.value
+                            val targetLanguage = viewmodel.targetLanguage.value
+
+                            val text = simpleTranslate
+
+                            val convoModel = ConvoModel(
+                                from = sourceLanguage.toString(),
+                                to = targetLanguage.toString(),
+                                text = viewmodel.textSpeaked.value.toString(),
+                                result = text,
+                                spelling = simpleSpelling,
+                                type = viewmodel.clickedMicrophone.value.toString()
+                            )
+
+                            adapter.addData(convoModel)
                         }
                     }
                 }
@@ -155,42 +187,24 @@ class TranslateFragment : BaseFragment() {
             }
         }
 
-        viewmodel.targetLanguage.observe(viewLifecycleOwner) {
-            TranslatorUtil.loadFlagImage(
-                requireContext(),
-                binding.layoutDropdownTranslator.imgFlag2,
-                it.toString()
-            )
-        }
-
-        viewmodel.sourceLanguage.observe(viewLifecycleOwner) {
-            TranslatorUtil.loadFlagImage(
-                requireContext(),
-                binding.layoutDropdownTranslator.imgFlag1,
-                it.toString()
-            )
-        }
 
         // observe lang desc
+        val containerInput = binding.containerInput
         viewmodel.targetLanguageDesc.observe(viewLifecycleOwner) {
-            binding.containerTargetLanguage.labelLanguage.text = it.toString()
-            binding.layoutDropdownTranslator.labelLanguage2.text = it.toString()
+            containerInput.labelLanguageRight.text = it.toString()
         }
         viewmodel.sourceLanguageDesc.observe(viewLifecycleOwner) {
-            binding.containerSourceLanguage.labelLanguage.text = it.toString()
-            binding.layoutDropdownTranslator.labelLanguage1.text = it.toString()
+            containerInput.labelLanguageLeft.text = it.toString()
         }
 
         viewmodel.ttlLiveData.observe(viewLifecycleOwner) {
             when (it) {
-                is QumparanResource.Default -> {}
-                is QumparanResource.Error -> {}
-                is QumparanResource.Loading -> {}
-                is QumparanResource.Success -> {
+                is Success -> {
                     it.data?.let { response ->
                         playMediaSource(response)
                     }
                 }
+                else -> {}
             }
         }
     }
@@ -208,18 +222,30 @@ class TranslateFragment : BaseFragment() {
             findNavController().popBackStack()
         }
 
-        handleMicrophoneClicked()
-        handleLanguageSwitch()
+        microphoneClickedListener()
         handleTranslate()
-        setupLanguageTTS()
         handleLanguageDropdownPickerClick()
     }
 
-    private fun handleMicrophoneClicked() {
-        binding.containerSourceLanguage.imgMic.setOnClickListener {
+    private fun microphoneClickedListener() {
+        binding.containerInput.apply {
+            imgSpeakLeft.setOnClickListener {
+                viewmodel.clickedMicrophone.value = 1
+                proceedMicrophoneClicked("source")
+            }
+
+            imgSpeakRight.setOnClickListener {
+                viewmodel.clickedMicrophone.value = 2
+                proceedMicrophoneClicked("target")
+            }
+        }
+    }
+
+    private fun proceedMicrophoneClicked(type: String) {
+        binding.containerInput.apply {
             val checkAudio = getPermissionStatus(requireActivity(), PermissionUtil.PER_RECORD_AUDIO)
             if (checkAudio.isNotGranted().not()) {
-                getSpeechInput()
+                getSpeechInput(type)
             } else {
                 checkMicUsingPermission()
             }
@@ -227,103 +253,52 @@ class TranslateFragment : BaseFragment() {
     }
 
     private fun handleLanguageDropdownPickerClick() {
-        binding.layoutDropdownTranslator.containerLang1.setOnClickListener {
-            viewmodel.clickedContainer.value = 1
-            searchLangDialog.show(getMFragmentManager(), "langPicker")
-        }
+        binding.containerInput.apply {
+            arrayOf(labelLanguageLeft, imgDropdownLeft).forEachIndexed { index, view ->
+                view.setOnClickListener {
+                    viewmodel.clickedContainer.value = 1
+                    searchLangDialog.show(getMFragmentManager(), "langPickerz")
+                }
+            }
 
-        binding.layoutDropdownTranslator.containerLang2.setOnClickListener {
-            viewmodel.clickedContainer.value = 2
-            searchLangDialog.show(getMFragmentManager(), "langPicker2")
+            arrayOf(labelLanguageRight, imgDropdownRight).forEachIndexed { index, view ->
+                view.setOnClickListener {
+                    viewmodel.clickedContainer.value = 2
+                    searchLangDialog.show(getMFragmentManager(), "langPickerz2")
+                }
+            }
         }
     }
 
-    private fun getSpeechInput() {
-        val chooseLocale = TranslatorUtil.mapLocaleToSpeechToText(viewmodel.sourceLanguage.value)
+    private fun getSpeechInput(type: String) {
+        var requestCode = REQUEST_CODE_TTS_SOURCE
+        val locale = if (type == "source") {
+            requestCode = REQUEST_CODE_TTS_SOURCE
+            viewmodel.sourceLanguage.value
+        } else {
+            requestCode = REQUEST_CODE_SPT_TARGET
+            viewmodel.targetLanguage.value
+        }
+
+        val chooseLocale = TranslatorUtil.mapLocaleToSpeechToText(locale)
+
         val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
         intent.putExtra(
             RecognizerIntent.EXTRA_LANGUAGE_MODEL,
             RecognizerIntent.LANGUAGE_MODEL_FREE_FORM
         )
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, chooseLocale)
-        showToast(chooseLocale)
         if (intent.resolveActivity(requireActivity().packageManager) != null) {
-            startActivityForResult(intent, 10)
+            startActivityForResult(intent, requestCode)
         }
     }
 
     private fun handleTranslate() {
         var timer = Timer()
         val DELAY: Long = 3000 // Milliseconds
-        binding.containerSourceLanguage.etTranslate.doAfterTextChanged {
-            binding.containerTargetLanguage.etTranslate.setText(".....")
-            if (it.toString().isNotEmpty()) {
-                val text = it.toString()
-                timer.cancel()
-                timer = Timer()
-                timer.schedule(
-                    object : TimerTask() {
-                        override fun run() {
-                            // You will probably need to use
-                            // runOnUiThread(Runnable action) for some
-                            // specific actions (e.g., manipulating views).
-                            viewmodel.getTranslation(text)
-                        }
-                    },
-                    DELAY
-                )
-            }
-        }
-
+        viewmodel.getTranslation("")
     }
 
-    private fun handleLanguageSwitch() {
-        binding.layoutDropdownTranslator.logoSwitch.setOnClickListener {
-            val currentTextOnTarget = binding.containerTargetLanguage.etTranslate.text
-            binding.containerSourceLanguage.etTranslate.text = currentTextOnTarget
-            val currentTextOnSource = binding.containerSourceLanguage.etTranslate.text
-            viewmodel.apply {
-                val currentSource = sourceLanguage.value.toString()
-                val currentTarget = targetLanguage.value.toString()
-                val currentSourceDesc = sourceLanguageDesc.value.toString()
-                val currentTargetDesc = targetLanguageDesc.value.toString()
-
-                binding.layoutDropdownTranslator.apply {
-                    sourceLanguage.value = currentTarget
-                    sourceLanguageDesc.value = currentTargetDesc
-                    labelLanguage1.text = currentTargetDesc
-                    binding.containerSourceLanguage.labelLanguage.text = currentTargetDesc
-
-                    targetLanguage.value = currentSource
-                    targetLanguageDesc.value = currentSourceDesc
-                    labelLanguage2.text = currentSourceDesc
-                    binding.containerTargetLanguage.labelLanguage.text = currentSourceDesc
-                }
-            }
-            if (currentTextOnSource.toString().isNotEmpty())
-                viewmodel.getTranslation(currentTextOnSource.toString())
-        }
-    }
-
-    private fun setupLanguageTTS() {
-        binding.containerSourceLanguage.apply {
-            imgSpeaker.setOnClickListener {
-                val text = this.etTranslate.text.toString()
-                if (text.isNotEmpty()) {
-                    viewmodel.getTextToSpeech(text, isSource = true)
-                }
-            }
-        }
-
-        binding.containerTargetLanguage.apply {
-            imgSpeaker.setOnClickListener {
-                val text = this.etTranslate.text.toString()
-                if (text.isNotEmpty()) {
-                    viewmodel.getTextToSpeech(text, isSource = false)
-                }
-            }
-        }
-    }
 
     override fun initData() {
     }
@@ -332,7 +307,7 @@ class TranslateFragment : BaseFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentTranslateBinding.inflate(inflater)
+        _binding = FragmentTranslateConvoBinding.inflate(inflater)
         return binding.root
     }
 
@@ -371,19 +346,30 @@ class TranslateFragment : BaseFragment() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        when (requestCode) {
-            10 -> if (resultCode == RESULT_OK &&
-                data != null
-            ) {
-                val textView = binding.containerSourceLanguage.etTranslate
-                val result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
-                result?.let {
-                    if (it.isNotEmpty()) {
-                        textView.setText(it[0])
-                        viewmodel.getTranslation(textView.text.toString())
-                    }
+        if (data != null) {
+            when (requestCode) {
+                REQUEST_CODE_SPT_TARGET -> {
+                    renderConvo("target", data)
+                }
+                REQUEST_CODE_TTS_SOURCE -> {
+                    renderConvo("source", data)
                 }
             }
+        }
+
+    }
+
+    private fun renderConvo(type: String, data: Intent, targetLang: String = "") {
+        val textView = binding.debug
+        try {
+            var result = ""
+            data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)?.let {
+                result = it[0].toString()
+            }
+            viewmodel.textSpeaked.value = result
+            viewmodel.getTranslation(result, type)
+        } catch (e: Exception) {
+            showSnackbar("Gagal Menerjemahkan Text")
         }
     }
 

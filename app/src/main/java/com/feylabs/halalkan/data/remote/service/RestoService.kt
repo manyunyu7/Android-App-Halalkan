@@ -1,11 +1,6 @@
 package com.feylabs.halalkan.data.remote.service
 
-import com.feylabs.halalkan.data.remote.reqres.*
-import com.feylabs.halalkan.data.remote.reqres.auth.LoginBodyRequest
-import com.feylabs.halalkan.data.remote.reqres.auth.LoginResponse
-import com.feylabs.halalkan.data.remote.reqres.auth.RegisterBodyRequest
-import com.feylabs.halalkan.data.remote.reqres.auth.RegisterResponse
-import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidResponseWithoutPagination
+import com.feylabs.halalkan.data.remote.reqres.UserResponse
 import com.feylabs.halalkan.data.remote.reqres.resto.AllRestoNoPagination
 import com.feylabs.halalkan.data.remote.reqres.resto.FoodTypeResponse
 import com.feylabs.halalkan.data.remote.reqres.resto.RestaurantCertificationResponse

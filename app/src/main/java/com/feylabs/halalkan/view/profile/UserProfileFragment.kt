@@ -54,14 +54,11 @@ class UserProfileFragment : BaseFragment() {
         binding.loadingAnim.makeGone()
 
         binding.bottomNav.apply {
-
             setBottomMenuActive(tvProfile)
             setBottomMenuActive(logoProfile)
-
             btnMenuProfile.setOnClickListener {
                 findNavController().navigate(R.id.navigation_userProfileFragment)
             }
-
             btnMenuHome.setOnClickListener {
                 findNavController().navigate(R.id.navigation_newHomeFragment)
             }

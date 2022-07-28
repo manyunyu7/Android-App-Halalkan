@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#FCFCFC"
+    android:padding="@dimen/dimen_10dp"
+    app:cardCornerRadius="@dimen/dimen_10dp">
+
+
+    <View
+        android:id="@+id/separator"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@color/color_separator"/>
+
+    <TextView
+        android:id="@+id/label_language_left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_regular"
+        android:text="English"
+        android:layout_marginTop="@dimen/dimen_10dp"
+        android:textColor="@color/halalkan_primary"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/separator" />
+
+
+    <ImageView
+        android:id="@+id/img_dropdown_left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_10dp"
+        android:src="@drawable/ic_dropdown_arrow"
+        app:layout_constraintBottom_toBottomOf="@id/label_language_left"
+        app:layout_constraintStart_toEndOf="@id/label_language_left"
+        app:layout_constraintTop_toTopOf="@id/label_language_left"
+        app:tint="@color/halalkan_primary" />
+
+
+    <ImageView
+        android:id="@+id/img_speak_left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="99dp"
+        android:src="@drawable/ic_mic_blue"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/label_language_left" />
+
+    <TextView
+        android:id="@+id/label_language_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_regular"
+        android:text="English"
+        android:layout_marginTop="@dimen/dimen_10dp"
+        android:textColor="@color/orange50"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/separator" />
+
+    <ImageView
+        android:id="@+id/img_dropdown_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:src="@drawable/ic_dropdown_arrow"
+        app:layout_constraintBottom_toBottomOf="@id/label_language_right"
+        app:layout_constraintEnd_toStartOf="@id/label_language_right"
+        app:layout_constraintTop_toTopOf="@id/label_language_right"
+        app:tint="@color/orange50" />
+
+    <ImageView
+        android:id="@+id/img_speak_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="99dp"
+        android:src="@drawable/ic_mic_orange"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/label_language_right" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

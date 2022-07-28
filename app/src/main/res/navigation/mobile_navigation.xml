@@ -154,4 +154,10 @@
         android:name="com.feylabs.halalkan.view.resto.main.RestoMainFragment"
         android:label="RestoMainFragment" />
 
+    <fragment
+        android:id="@+id/navigation_translateConvoFragment"
+        tools:layout="@layout/fragment_translate_convo"
+        android:name="com.feylabs.halalkan.view.translate.convo.TranslateConvoFragment"
+        android:label="TranslateConvoFragment" />
+
 </navigation>

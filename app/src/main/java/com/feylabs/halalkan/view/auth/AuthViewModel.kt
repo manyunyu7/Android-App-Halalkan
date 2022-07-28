@@ -6,8 +6,6 @@ import androidx.lifecycle.viewModelScope
 import com.feylabs.halalkan.data.repository.QumparanRepository
 import com.feylabs.halalkan.data.remote.QumparanResource
 import com.feylabs.halalkan.data.remote.RemoteDataSource
-import com.feylabs.halalkan.data.remote.reqres.AlbumPhotoResponse
-import com.feylabs.halalkan.data.remote.reqres.PostCommentResponse
 import com.feylabs.halalkan.data.remote.reqres.auth.LoginBodyRequest
 import com.feylabs.halalkan.data.remote.reqres.auth.LoginResponse
 import com.feylabs.halalkan.data.remote.reqres.auth.RegisterBodyRequest

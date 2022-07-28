@@ -46,7 +46,7 @@ abstract class BaseFragment : Fragment() {
 
     fun getRootView() = view
 
-    fun getMFragmentManager() = getParentFragmentManager()
+    fun getMFragmentManager() = parentFragmentManager
 
     fun showToast(text: String, isLong: Boolean = false) {
         var duration = Toast.LENGTH_LONG
@@ -109,7 +109,7 @@ abstract class BaseFragment : Fragment() {
         }
 
         if(view is ImageView){
-            view.backgroundTintList = (ContextCompat.getColorStateList(requireContext(),R.color.menu_bottom_active));
+            view.setColorFilter(ContextCompat.getColor(requireContext(), R.color.menu_bottom_active));
         }
     }
 

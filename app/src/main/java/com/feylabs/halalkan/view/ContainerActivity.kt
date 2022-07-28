@@ -201,7 +201,6 @@ class ContainerActivity : BaseActivity(), LocationListener {
     @SuppressLint("MissingPermission")
     private fun startLocationUpdates() {
         if (checkLocationPemission()) {
-            showToast("Mengupdate Lokasi")
             fusedLocationClient.requestLocationUpdates(
                 locationRequest,
                 locationCallback,
