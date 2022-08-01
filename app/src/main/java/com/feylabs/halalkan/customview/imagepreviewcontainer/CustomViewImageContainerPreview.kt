@@ -44,13 +44,13 @@ class CustomViewImageContainerPreview : FrameLayout {
     }
 
     fun setLoading(status: Boolean, isEmpty: Boolean = false) {
-        if (status) {
-            binding.rv.visibility = View.GONE
-            binding.loading.root.visibility = View.VISIBLE
-        } else {
-            binding.rv.visibility = View.VISIBLE
-            binding.loading.root.visibility = View.GONE
-        }
+//        if (status) {
+//            binding.rv.visibility = View.GONE
+//            binding.loading.root.visibility = View.VISIBLE
+//        } else {
+//            binding.rv.visibility = View.VISIBLE
+//            binding.loading.root.visibility = View.GONE
+//        }
     }
 
     /**

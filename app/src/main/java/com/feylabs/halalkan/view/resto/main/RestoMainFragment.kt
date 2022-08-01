@@ -4,12 +4,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
+import androidx.navigation.fragment.findNavController
 import com.feylabs.halalkan.MainViewModel
+import com.feylabs.halalkan.R
 import com.feylabs.halalkan.data.remote.QumparanResource
 import com.feylabs.halalkan.data.remote.QumparanResource.*
 import com.feylabs.halalkan.data.remote.reqres.resto.AllRestoNoPagination
 import com.feylabs.halalkan.data.remote.reqres.resto.FoodTypeResponse
 import com.feylabs.halalkan.data.remote.reqres.resto.RestaurantCertificationResponse
+import com.feylabs.halalkan.data.remote.reqres.resto.RestoModelResponse
 import com.feylabs.halalkan.databinding.FragmentRestoMainBinding
 import com.feylabs.halalkan.utils.base.BaseFragment
 import com.feylabs.halalkan.utils.location.LocationUtils
@@ -38,16 +42,26 @@ class RestoMainFragment : BaseFragment() {
     override fun initUI() {
         binding.rvCertification.adapter = certificationAdapter
         binding.rvCertification.apply {
-            layoutManager = setLayoutManagerGridVertical(4)
+            layoutManager = setLayoutManagerHorizontal()
         }
 
         binding.rvRestoNearby.apply {
-            layoutManager =setLayoutManagerGridVertical(4)
+            layoutManager =setLayoutManagerHorizontal()
             adapter = nearbyRestoAdapter
         }
 
+        nearbyRestoAdapter.setupAdapterInterface(object :RestoMainAdapter.ItemInterface{
+            override fun onclick(model: RestoModelResponse) {
+                findNavController().navigate(
+                    R.id.navigation_detailRestoFragment,
+                    bundleOf("data" to model)
+                )
+            }
+
+        })
+
         binding.rvTypeOfFood.apply {
-            layoutManager = setLayoutManagerGridVertical(4)
+            layoutManager = setLayoutManagerGridHorizontal(1)
             adapter = foodTypeAdapter
         }
     }
@@ -95,7 +109,7 @@ class RestoMainFragment : BaseFragment() {
             if (LocationUtils.checkIfLocationSet(mainViewModel.liveLatLng.value)) {
                 initialData = initialData.renderWithDistanceModel(
                     myLocation = mainViewModel.liveLatLng.value ?: MyLatLong(-99.0, -99.0),
-                    sortByNearest = false, limit = 999
+                    sortByNearest = true, limit = 999
                 )
             }
 

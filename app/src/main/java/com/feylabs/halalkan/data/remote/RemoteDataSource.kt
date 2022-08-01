@@ -11,6 +11,7 @@ import com.feylabs.halalkan.data.remote.reqres.resto.AllRestoNoPagination
 import com.feylabs.halalkan.data.remote.reqres.resto.FoodTypeResponse
 import com.feylabs.halalkan.data.remote.reqres.resto.RestaurantCertificationResponse
 import com.feylabs.halalkan.data.remote.reqres.resto.RestoDetailResponse
+import com.feylabs.halalkan.data.remote.reqres.resto.food.RestoFoodByCommonCategoryResponse
 import com.feylabs.halalkan.data.remote.service.*
 import com.feylabs.halalkan.utils.Network
 import retrofit2.Response
@@ -105,6 +106,13 @@ class RemoteDataSource(
 
     override suspend fun getRestoDetail(id: String): Response<RestoDetailResponse> {
         return restoService.getDetail(id)
+    }
+
+    override suspend fun getRestoFoodByCommonCategory(
+        restoId: String,
+        categoryId: String
+    ): Response<RestoFoodByCommonCategoryResponse> {
+        return restoService.getFoodByResto(restoId,categoryId)
     }
 
 

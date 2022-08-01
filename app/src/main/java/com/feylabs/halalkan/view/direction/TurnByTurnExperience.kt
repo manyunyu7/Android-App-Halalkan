@@ -110,7 +110,7 @@ class TurnByTurnExperienceActivity : BaseActivity() {
         const val startingPointLat = 37.563229
         const val startingPointLong = 126.947639
         private const val BUTTON_ANIMATION_DURATION = 1500L
-        private val IS_SIMULATION = true
+        private val IS_SIMULATION = false
     }
 
     /**
@@ -598,7 +598,7 @@ class TurnByTurnExperienceActivity : BaseActivity() {
             } else {
                 return MapboxNavigationProvider.create(
                     NavigationOptions.Builder(this.applicationContext)
-                        //.locationEngine(replayLocationEngine)
+//                        .locationEngine(replayLocationEngine)
                         .accessToken(getString(R.string.mapbox_access_token))
                         .build()
                 )

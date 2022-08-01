@@ -17,6 +17,7 @@ import com.feylabs.halalkan.data.remote.reqres.resto.AllRestoNoPagination
 import com.feylabs.halalkan.data.remote.reqres.resto.FoodTypeResponse
 import com.feylabs.halalkan.data.remote.reqres.resto.RestaurantCertificationResponse
 import com.feylabs.halalkan.data.remote.reqres.resto.RestoDetailResponse
+import com.feylabs.halalkan.data.remote.reqres.resto.food.RestoFoodByCommonCategoryResponse
 import com.feylabs.halalkan.data.repository.PrayerTimeRepository
 import kotlinx.coroutines.launch
 
@@ -24,10 +25,11 @@ class RestoViewModel(
     val ds: RemoteDataSource
 ) : ViewModel() {
 
-
     // for mapbox direction
     val targetLat: MutableLiveData<Double> = MutableLiveData(-99.0)
     val targetLong: MutableLiveData<Double> = MutableLiveData(-99.0)
+
+    val currentMenuTab: MutableLiveData<Pair<Int, String>> = MutableLiveData()
 
     private var _certLiveData =
         MutableLiveData<QumparanResource<RestaurantCertificationResponse?>>()
@@ -36,6 +38,10 @@ class RestoViewModel(
     private var _foodTypeLiveData =
         MutableLiveData<QumparanResource<FoodTypeResponse?>>()
     val foodTypeLiveData get() = _foodTypeLiveData
+
+    private var _restoFoodByCategoryLiveData =
+        MutableLiveData<QumparanResource<RestoFoodByCommonCategoryResponse?>>()
+    val restoFoodByCategoryLiveData get() = _restoFoodByCategoryLiveData
 
     private var _allRestoRawLiveData =
         MutableLiveData<QumparanResource<AllRestoNoPagination?>>()
@@ -65,7 +71,27 @@ class RestoViewModel(
         }
     }
 
-    fun getDetailResto(id:String) {
+    fun getRestoFoodByCategory(restoId: String, categoryId: String) {
+        _restoFoodByCategoryLiveData.postValue(QumparanResource.Loading())
+        viewModelScope.launch {
+            try {
+                val res = ds.getRestoFoodByCommonCategory(restoId, categoryId)
+                if (res.isSuccessful) {
+                    _restoFoodByCategoryLiveData.postValue(QumparanResource.Success(res.body()))
+                } else {
+                    _restoFoodByCategoryLiveData.postValue(
+                        QumparanResource.Error(
+                            res.errorBody().toString()
+                        )
+                    )
+                }
+            } catch (e: Exception) {
+                _restoFoodByCategoryLiveData.postValue(QumparanResource.Error(e.message.toString()))
+            }
+        }
+    }
+
+    fun getDetailResto(id: String) {
         _detailRestoLiveData.postValue(QumparanResource.Loading())
         viewModelScope.launch {
             try {
@@ -84,7 +110,6 @@ class RestoViewModel(
             }
         }
     }
-
 
     fun getRestoCert() {
         _certLiveData.postValue(QumparanResource.Loading())

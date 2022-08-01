@@ -3,6 +3,7 @@ package com.feylabs.halalkan.data.remote.reqres.resto
 
 import com.google.gson.annotations.SerializedName
 import androidx.annotation.Keep
+import com.feylabs.halalkan.utils.Network.FEYLABS_CDN
 
 class FoodTypeResponse : ArrayList<FoodTypeResponse.FoodTypeResponseItem>() {
     @Keep
@@ -13,7 +14,7 @@ class FoodTypeResponse : ArrayList<FoodTypeResponse.FoodTypeResponseItem>() {
         var name: String = ""
     ) {
         fun getImage(): String? {
-            return ""
+            return FEYLABS_CDN+"resto_type/$name.png"
         }
     }
 }

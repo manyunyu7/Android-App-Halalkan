@@ -1,6 +1,7 @@
 package com.feylabs.halalkan.data.remote.reqres.resto
 
 
+import com.feylabs.halalkan.utils.Network.FEYLABS_CDN
 import com.google.gson.annotations.SerializedName
 
 class RestaurantCertificationResponse : ArrayList<RestaurantCertificationResponse.RestaurantCertificationItem>(){
@@ -11,7 +12,7 @@ class RestaurantCertificationResponse : ArrayList<RestaurantCertificationRespons
         var name: String = ""
     ){
         fun getImage():String{
-            return ""
+            return FEYLABS_CDN+"resto_certif/$name.jpg"
         }
     }
 }

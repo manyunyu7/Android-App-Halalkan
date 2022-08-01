@@ -128,6 +128,9 @@ abstract class BaseFragment : Fragment() {
     fun setLayoutManagerGridVertical(spanCount:Int=2) = GridLayoutManager(requireContext(),spanCount,
         GridLayoutManager.VERTICAL,false)
 
+    fun setLayoutManagerGridHorizontal(spanCount:Int=2) = GridLayoutManager(requireContext(),spanCount,
+        GridLayoutManager.HORIZONTAL,false)
+
     fun setLayoutManagerLinear() = LinearLayoutManager(requireContext())
     fun setLayoutManagerHorizontal() = LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false)
 

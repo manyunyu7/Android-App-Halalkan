@@ -89,7 +89,7 @@ class MasjidReviewNewFragment : BaseFragment() {
     private fun setupReviewFromNetwork(response: MasjidReviewPaginationResponse) {
         val reviewRes = response.reviews
         reviewRes.let {
-            if (it.data.isEmpty()) {
+            if (it.data ==null) {
                 if (it.currentPage == 1) {
                     showEmptyLayout(true)
                 }

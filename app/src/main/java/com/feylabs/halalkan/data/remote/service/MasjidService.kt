@@ -20,7 +20,7 @@ interface MasjidService {
         @Query("page") page:Int=1
     ): Response<AllMasjidPaginationResponse>
 
-    @GET("masjids/{id}/photos")
+    @GET("fe/masjids/{id}/photos")
     suspend fun getMasjidPhotos(
         @Path("id") masjidId: String,
     ): Response<MasjidPhotosResponse>

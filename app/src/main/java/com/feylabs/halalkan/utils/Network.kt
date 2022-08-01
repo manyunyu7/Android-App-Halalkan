@@ -14,6 +14,6 @@ object Network {
     const val BASE_URL_TRANSLATOR = "http://feylabs.my.id/skripsweet/"
 
     const val BASE_URL_ALADHAN_V1 = "https://api.aladhan.com/v1/timings/"
-
+    const val FEYLABS_CDN = "http://feylabs.my.id/fm/skripsweet/cdn/"
 
 }

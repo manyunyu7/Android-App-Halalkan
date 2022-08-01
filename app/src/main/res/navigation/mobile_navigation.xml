@@ -178,5 +178,11 @@
             app:destination="@id/navigation_translateConvoFragment" />
     </fragment>
 
+    <fragment
+        android:id="@+id/navigation_detailRestoFragment"
+        tools:layout="@layout/fragment_detail_resto"
+        android:name="com.feylabs.halalkan.view.resto.detail.DetailRestoFragment"
+        android:label="DetailRestoFragment" />
+
 
 </navigation>

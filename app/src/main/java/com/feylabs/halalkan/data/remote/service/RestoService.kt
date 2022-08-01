@@ -5,6 +5,7 @@ import com.feylabs.halalkan.data.remote.reqres.resto.AllRestoNoPagination
 import com.feylabs.halalkan.data.remote.reqres.resto.FoodTypeResponse
 import com.feylabs.halalkan.data.remote.reqres.resto.RestaurantCertificationResponse
 import com.feylabs.halalkan.data.remote.reqres.resto.RestoDetailResponse
+import com.feylabs.halalkan.data.remote.reqres.resto.food.RestoFoodByCommonCategoryResponse
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -20,6 +21,12 @@ interface RestoService {
 
     @GET("fe/restoran/food-type")
     suspend fun getFoodType(): Response<FoodTypeResponse>
+
+    @GET("foods/getFood/{restoId}/{categoryId}")
+    suspend fun getFoodByResto(
+        @Path("restoId") restoId:String,
+        @Path("categoryId") categoryId:String,
+    ): Response<RestoFoodByCommonCategoryResponse>
 
     @GET("fe/restoran/{id}/detail")
     suspend fun getDetail(
