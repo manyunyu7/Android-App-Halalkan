@@ -1,4 +1,4 @@
-package com.feylabs.halalkan.view.prayer
+package com.feylabs.halalkan.view.prayer.main
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,10 +7,8 @@ import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.feylabs.halalkan.R
-import com.feylabs.halalkan.databinding.ItemGridRsBinding
 import com.feylabs.halalkan.databinding.ItemHomePrayerRoomBinding
-import com.feylabs.halalkan.databinding.ItemHomeRestaurantBinding
-import com.feylabs.halalkan.view.new_home.RestaurantHomeUIModel
+import com.feylabs.halalkan.view.prayer.PrayerRoomListUIModel
 
 class ListPrayerRoomAdapter :
     RecyclerView.Adapter<ListPrayerRoomAdapter.RestaurantHomeViewHolder>() {
@@ -23,7 +21,7 @@ class ListPrayerRoomAdapter :
         this.data.addAll(data)
     }
 
-    fun setupAdapterInterface(obj:ItemInterface) {
+    fun setupAdapterInterface(obj: ItemInterface) {
         this.adapterInterface = obj
     }
 

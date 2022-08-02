@@ -14,11 +14,11 @@
         android:layout_height="wrap_content"
         android:baselineAlignBottom="true"
         android:scaleType="fitEnd"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:lottie_autoPlay="true"
-        android:visibility="gone"
         app:lottie_fileName="lootie_citie.json"
         app:lottie_loop="true" />
 
@@ -27,84 +27,123 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <RelativeLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-
-            <FrameLayout
+            <ImageView
+                android:id="@+id/greeting_img"
                 android:layout_width="match_parent"
-                android:layout_height="220dp">
+                android:layout_height="0dp"
+                android:layout_marginBottom="20dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/bg_header_daylight"
+                app:layout_constraintBottom_toBottomOf="@id/container_all_prayer_time"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <LinearLayout
+                android:id="@+id/container_top"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top"
+                android:layout_marginTop="14dp"
+                android:elevation="3dp"
+                android:orientation="horizontal"
+                android:padding="10dp"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
-                    android:id="@+id/greeting_img"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/bg_header_daylight" />
+                    android:id="@+id/btn_exit"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_gravity="center"
+                    android:layout_marginEnd="20dp"
+                    android:src="@drawable/ic_cross_exit" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="top"
-                    android:layout_marginTop="24dp"
-                    android:elevation="3dp"
-                    android:orientation="vertical"
-                    android:padding="10dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:fontFamily="@font/montserrat_regular"
-                            android:text="Korea Halal Tourism"
-                            android:textColor="#ffffff"
-                            android:textSize="25sp" />
-
-                    </LinearLayout>
+                    android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/tv_city_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/montserrat_regular"
+                        android:text="Seoul"
+                        android:textColor="#ffffff"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/tv_address"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:ellipsize="marquee"
                         android:fontFamily="@font/montserrat_regular"
-                        android:text="Your Halal Travel Companion"
+                        android:maxLines="2"
+                        android:text="Loading..."
                         android:textColor="#fff"
-                        android:textSize="16dp" />
-
+                        android:textSize="12sp" />
 
                 </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/container_current_prayer_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingVertical="@dimen/dimen_10dp"
+                app:layout_constraintTop_toBottomOf="@id/container_top">
+
+                <TextView
+                    android:id="@+id/tv_prayer_top_time_name"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="150dp"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp">
+                    android:fontFamily="@font/poppins_regular"
+                    android:text="Asr"
+                    android:textColor="@color/white"
+                    android:textSize="28sp" />
 
-                    <include
-                        android:id="@+id/include_landing_message"
-                        layout="@layout/layout_landing_message" />
+                <TextView
+                    android:id="@+id/tv_prayer_top_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_medium"
+                    android:text="15:33"
+                    android:textColor="@color/white"
+                    android:textSize="52sp"
+                    android:textStyle="bold" />
 
-                </LinearLayout>
-            </FrameLayout>
+                <TextView
+                    android:id="@+id/tv_prayer_top_time_counter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_regular"
+                    android:text="15:33"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
 
+            </LinearLayout>
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/container_all_prayer_time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:layout_marginTop="190dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="10dp"
                 android:elevation="1px"
                 android:orientation="horizontal"
-                app:cardCornerRadius="20dp">
+                app:cardCornerRadius="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/container_current_prayer_time">
 
                 <com.facebook.shimmer.ShimmerFrameLayout
                     android:id="@+id/shimmer_view_jadwal"
@@ -117,11 +156,13 @@
                 </com.facebook.shimmer.ShimmerFrameLayout>
             </androidx.cardview.widget.CardView>
 
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="245dp"
-                android:orientation="vertical">
+                android:layout_marginTop="@dimen/dimen_20dp"
+                android:orientation="vertical"
+                app:layout_constraintTop_toBottomOf="@id/greeting_img">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -131,9 +172,9 @@
                     android:layout_marginBottom="20dp">
 
                     <LinearLayout
-                        android:layout_weight="1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:gravity="center"
                         android:orientation="vertical">
 
@@ -154,9 +195,9 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_weight="1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:gravity="center"
                         android:orientation="vertical">
 
@@ -177,9 +218,9 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_weight="1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:gravity="center"
                         android:orientation="vertical">
 
@@ -200,19 +241,42 @@
                     </LinearLayout>
                 </LinearLayout>
 
-                <TextView
+
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/dimen_20dp"
-                    android:fontFamily="@font/montserrat_regular"
-                    android:text="Prayers Room Around"
-                    android:textColor="@color/black" />
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerInParent="true"
+                        android:layout_marginHorizontal="@dimen/dimen_20dp"
+                        android:fontFamily="@font/poppins_regular"
+                        android:text="Prayers Room Around"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/dimen_15sp" />
+
+                    <TextView
+                        android:id="@+id/btn_see_all_masjid"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerInParent="true"
+                        android:layout_marginHorizontal="@dimen/dimen_20dp"
+                        android:fontFamily="@font/poppins_regular"
+                        android:text="Lihat Semua"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/dimen_13sp" />
+
+                </RelativeLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
                     <include
+                        android:id="@+id/loading_mosque"
                         layout="@layout/layout_shimmer_home_resto"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -222,7 +286,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rv_resto"
+                        android:id="@+id/rv_masjid"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
@@ -239,6 +303,6 @@
             </LinearLayout>
 
 
-        </RelativeLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

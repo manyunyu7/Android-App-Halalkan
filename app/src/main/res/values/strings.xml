@@ -22,7 +22,7 @@
     <string name="gps_settings_title">GPS settings</string>
     <string name="gps_settings_text">GPS is not enabled, you must activate it first from the settings to get the Qibla direction.</string>
     <string name="pilih_bahasa">Pilih Bahasa</string>
-    <string name="MuatLebihBanyak">load_more</string>
+    <string name="MuatLebihBanyak">Tampilkan Data</string>
 
     <string name="home_restaurant_around_you">Restoran di Sekitar Anda</string>
     <string name="home_masjid_near_you">Masjid di Sekitar Anda</string>
@@ -35,6 +35,9 @@
     <string name="detail_masjid_jam_operasional">Jam Operasional</string>
     <string name="detail_masjid_alamat">Alamat</string>
     <string name="detail_masjid_kategori">Kategori</string>
+    <string name="label_hubungi">Hubungi</string>
+
+    <string name="lorem_ipsum_short">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam blandit risus vel ante ornare</string>
 
 
 </resources>

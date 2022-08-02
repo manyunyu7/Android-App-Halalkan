@@ -89,7 +89,6 @@ class ContainerActivity : BaseActivity(), LocationListener {
     }
 
     private fun initObserver() {
-
         mainViewModel.liveLatLng.observe(this) {
             binding.tvLong.text = it.lat.toString()
             binding.tvLat.text = it.long.toString()
@@ -202,7 +201,6 @@ class ContainerActivity : BaseActivity(), LocationListener {
     @SuppressLint("MissingPermission")
     private fun startLocationUpdates() {
         if (checkLocationPemission()) {
-            showToast("Mengupdate Lokasi")
             fusedLocationClient.requestLocationUpdates(
                 locationRequest,
                 locationCallback,

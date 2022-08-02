@@ -47,6 +47,8 @@ class CustomViewImageContainerAdapter :
             else
                 binding.photo.loadImage(mContext, model.drawable)
 
+            binding.textDescPhoto.text = model.url
+
         }
     }
 

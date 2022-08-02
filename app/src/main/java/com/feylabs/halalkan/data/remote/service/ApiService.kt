@@ -6,7 +6,6 @@ import com.feylabs.halalkan.data.remote.reqres.auth.LoginResponse
 import com.feylabs.halalkan.data.remote.reqres.auth.RegisterBodyRequest
 import com.feylabs.halalkan.data.remote.reqres.auth.RegisterResponse
 import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidResponseWithoutPagination
-import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -29,12 +28,12 @@ interface ApiService {
     /**
      * Login Request
      */
-    @POST("/users/login")
+    @POST("users/login")
     suspend fun login(
         @Body body: LoginBodyRequest
     ): Response<LoginResponse>
 
-    @POST("/users/register")
+    @POST("users/register")
     suspend fun register(
         @Body body: RegisterBodyRequest
     ): Response<RegisterResponse>

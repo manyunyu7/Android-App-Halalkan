@@ -79,7 +79,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/label_masjid_name"
+                android:id="@+id/label_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ellipsize="none"
@@ -92,76 +92,91 @@
                 android:textStyle="bold" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_marginHorizontal="@dimen/dimen_20dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/dimen_20dp">
+
                 <TextView
                     android:id="@+id/et_category_top"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:ellipsize="none"
-                    tools:text="University"
-                    app:layout_constraintStart_toStartOf="parent"
                     android:fontFamily="@font/poppins_regular"
                     android:scrollHorizontally="false"
                     android:text="@string/detail_masjid_kategori"
                     android:textColor="@color/color_subtitle_detail_masjid"
                     android:textSize="16sp"
+                    android:layout_marginEnd="@dimen/dimen_10dp"
+                    app:layout_constraintEnd_toStartOf="@id/guideline4"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    />
+                    tools:text="University" />
 
                 <TextView
                     android:id="@+id/et_address_top"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:ellipsize="none"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
                     android:fontFamily="@font/poppins_light"
                     android:text="@string/general_memuat_data"
-                    tools:text="Masjid Raya Bontang"
                     android:textColor="@color/color_sub_secondary_detail"
                     android:textSize="12sp"
+                    android:layout_marginEnd="@dimen/dimen_10dp"
+                    app:layout_constraintEnd_toStartOf="@id/guideline4"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/et_category_top"
-                    />
+                    tools:text="Masjid Raya Bontang" />
 
                 <TextView
                     android:id="@+id/et_distance"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:ellipsize="none"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
                     android:fontFamily="@font/poppins_light"
                     android:text="@string/general_memuat_data"
                     android:textColor="@color/black50"
                     android:textSize="12sp"
-                    app:layout_constraintTop_toBottomOf="@id/et_address_top"
-                    />
+                    android:layout_marginEnd="@dimen/dimen_10dp"
+                    app:layout_constraintEnd_toStartOf="@id/guideline4"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/et_address_top" />
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/status_open_close_card"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:layout_marginVertical="@dimen/dimen_10dp"
                     android:layout_marginHorizontal="@dimen/dimen_2dp"
+                    android:layout_marginVertical="@dimen/dimen_10dp"
                     app:cardBackgroundColor="@color/color_bg_card_open"
                     app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/et_distance">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_regular"
                         android:paddingHorizontal="@dimen/dimen_10dp"
                         android:paddingVertical="@dimen/dimen_2dp"
-                        android:fontFamily="@font/poppins_regular"
-                        android:textColor="@color/color_accent_success"
-                        android:text="Buka"/>
+                        android:text="Buka"
+                        android:textColor="@color/color_accent_success" />
 
                 </androidx.cardview.widget.CardView>
 
+                <include
+                    android:id="@+id/include_rating_info"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    layout="@layout/layout_masjid_card_review_information"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/guideline4" />
 
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.8" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -260,7 +275,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_flag_south_korea"/>
+                    android:src="@drawable/ic_masjid_detail_type"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -311,7 +326,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_flag_south_korea"/>
+                    android:src="@drawable/ic_masjid_detail_address"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -362,7 +377,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_flag_south_korea"/>
+                    android:src="@drawable/ic_masjid_detail_operating_hour"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -418,7 +433,7 @@
                     android:fontFamily="@font/poppins_light"
                     android:scrollHorizontally="false"
                     android:layout_marginHorizontal="@dimen/dimen_20dp"
-                    android:text="@string/general_memuat_data"
+                    android:text="@string/label_hubungi"
                     android:textColor="@color/color_link_call"
                     android:textSize="12sp"
                     android:textStyle="bold"
@@ -431,7 +446,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_flag_south_korea"/>
+                    android:src="@drawable/ic_masjid_detail_phone_number"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -482,7 +497,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_flag_south_korea"/>
+                    android:src="@drawable/ic_masjid_detail_facility"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -493,14 +508,19 @@
 
     </ScrollView>
 
-    <com.google.android.material.progressindicator.CircularProgressIndicator
+    <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/loading_center_progress_bar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:padding="50dp"
         android:visibility="gone"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@android:color/transparent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:lottie_autoPlay="true"
+        app:lottie_fileName="loading_circle_rgb.json"
+        app:lottie_loop="true" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

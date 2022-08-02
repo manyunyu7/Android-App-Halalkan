@@ -10,22 +10,29 @@ import com.feylabs.halalkan.data.remote.RemoteDataSource
 import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidDetailResponse
 import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidPhotosResponse
 import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidResponseWithoutPagination
-import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidReviewsResponse
+import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidReviewPaginationResponse
+import com.feylabs.halalkan.data.remote.reqres.masjid.pagination.AllMasjidPaginationResponse
 import com.feylabs.halalkan.data.remote.reqres.prayertime.PrayerTimeAladhanSingleDateResponse
 import com.feylabs.halalkan.data.repository.PrayerTimeRepository
 import kotlinx.coroutines.launch
-import javax.sql.DataSource
 
 class PrayerRoomViewModel(
     val repo: QumparanRepository,
     val masjidRepository: MasjidRepository,
-    val prayerTimeRepository : PrayerTimeRepository,
-    val ds : RemoteDataSource
+    val prayerTimeRepository: PrayerTimeRepository,
+    val ds: RemoteDataSource
 ) : ViewModel() {
+
+    val targetLat: MutableLiveData<Double> = MutableLiveData(-99.0)
+    val targetLong: MutableLiveData<Double> = MutableLiveData(-99.0)
 
     private var _masjidLiveData =
         MutableLiveData<QumparanResource<MasjidResponseWithoutPagination?>>()
     val masjidLiveData get() = _masjidLiveData
+
+    private var _masjidPaginateLiveData =
+        MutableLiveData<QumparanResource<AllMasjidPaginationResponse?>>()
+    val masjidPaginateLiveData get() = _masjidPaginateLiveData
 
     private var _prayerTimeSingleLiveData:
             MutableLiveData<QumparanResource<PrayerTimeAladhanSingleDateResponse?>> =
@@ -33,7 +40,7 @@ class PrayerRoomViewModel(
     val prayerTimeSingleLiveData get() = _prayerTimeSingleLiveData
 
     private var _masjidReviewsLiveData =
-        MutableLiveData<QumparanResource<MasjidReviewsResponse?>>()
+        MutableLiveData<QumparanResource<MasjidReviewPaginationResponse?>>()
     val masjidReviewsLiveData get() = _masjidReviewsLiveData
 
 
@@ -46,14 +53,38 @@ class PrayerRoomViewModel(
         MutableLiveData<QumparanResource<MasjidPhotosResponse?>>()
     val masjidPhotoLiveData get() = _masjidPhotoLiveData
 
-    fun getMasjidPhoto(id:String){
+    fun getMasjidWithPagination(page: Int) {
+        _masjidPaginateLiveData.postValue(QumparanResource.Loading())
+        viewModelScope.launch {
+            try {
+                val res = masjidRepository.getMasjidPaginate(page)
+                if (res.isSuccessful) {
+                    _masjidPaginateLiveData.postValue(QumparanResource.Success(res.body()))
+                } else {
+                    _masjidPaginateLiveData.postValue(
+                        QumparanResource.Error(
+                            res.errorBody().toString()
+                        )
+                    )
+                }
+            } catch (e: Exception) {
+                _masjidPaginateLiveData.postValue(QumparanResource.Error(e.message.toString()))
+            }
+        }
+    }
+
+    fun getMasjidPhoto(id: String) {
         viewModelScope.launch {
             try {
                 val res = masjidRepository.getMasjidPhotos(id)
                 if (res.isSuccessful) {
                     _masjidPhotoLiveData.postValue(QumparanResource.Success(res.body()))
                 } else {
-                    _masjidPhotoLiveData.postValue(QumparanResource.Error(res.errorBody().toString()))
+                    _masjidPhotoLiveData.postValue(
+                        QumparanResource.Error(
+                            res.errorBody().toString()
+                        )
+                    )
                 }
             } catch (e: Exception) {
                 _masjidLiveData.postValue(QumparanResource.Error(e.message.toString()))
@@ -86,7 +117,7 @@ class PrayerRoomViewModel(
         }
     }
 
-    fun getDetailMasjid(id:String){
+    fun getDetailMasjid(id: String) {
         viewModelScope.launch {
             _masjidDetailLiveData.postValue(QumparanResource.Loading())
             try {
@@ -94,7 +125,11 @@ class PrayerRoomViewModel(
                 if (res.isSuccessful) {
                     _masjidDetailLiveData.postValue(QumparanResource.Success(res.body()))
                 } else {
-                    _masjidDetailLiveData.postValue(QumparanResource.Error(res.errorBody().toString()))
+                    _masjidDetailLiveData.postValue(
+                        QumparanResource.Error(
+                            res.errorBody().toString()
+                        )
+                    )
                 }
             } catch (e: Exception) {
                 _masjidDetailLiveData.postValue(QumparanResource.Error(e.message.toString()))
@@ -118,15 +153,19 @@ class PrayerRoomViewModel(
         }
     }
 
-    fun getMasjidReview(masjidId:String) {
+    fun getMasjidReview(masjidId: String, page: Int, perPage: Int=5) {
         viewModelScope.launch {
             try {
                 _masjidReviewsLiveData.postValue(QumparanResource.Loading())
-                val res = ds.getMasjidReviews(masjidId)
+                val res = ds.getMasjidReviews(masjidId, page = page, perPage = perPage)
                 if (res.isSuccessful) {
                     _masjidReviewsLiveData.postValue(QumparanResource.Success(res.body()))
                 } else {
-                    _masjidReviewsLiveData.postValue(QumparanResource.Error(res.errorBody().toString()))
+                    _masjidReviewsLiveData.postValue(
+                        QumparanResource.Error(
+                            res.errorBody().toString()
+                        )
+                    )
                 }
             } catch (e: Exception) {
                 _masjidReviewsLiveData.postValue(QumparanResource.Error(e.message.toString()))

@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.doAfterTextChanged
 import androidx.navigation.fragment.findNavController
+import com.feylabs.halalkan.R
 import com.feylabs.halalkan.customview.AskPermissionDialog
 import com.feylabs.halalkan.customview.SearchLangDialogFragment
 import com.feylabs.halalkan.data.remote.QumparanResource
@@ -48,6 +49,20 @@ class TranslateFragment : BaseFragment() {
     override fun initUI() {
         searchLangDialog = SearchLangDialogFragment()
         initLanguageContainerUI()
+        setupBottomNav()
+    }
+
+    private fun setupBottomNav() {
+        binding.bottomNav.apply {
+            setBottomMenuActive(tvTranslate)
+            setBottomMenuActive(ivTranslate)
+            btnMenuConvo.setOnClickListener {
+                findNavController().navigate(R.id.action_navigation_translateFragment_to_navigation_translateConvoFragment)
+            }
+            btnMenuTranslate.setOnClickListener {
+                // do nothing
+            }
+        }
     }
 
     private fun checkMicUsingPermission(): Boolean {
@@ -125,9 +140,6 @@ class TranslateFragment : BaseFragment() {
         viewmodel.translateLiveData.observe(viewLifecycleOwner) {
             showToast(it.data.toString() + it.message.toString())
             when (it) {
-                is QumparanResource.Default -> {}
-                is QumparanResource.Error -> {}
-                is QumparanResource.Loading -> {}
                 is QumparanResource.Success -> {
                     it.data?.let { translateResponse ->
                         if (translateResponse.status != 0) {
@@ -139,6 +151,7 @@ class TranslateFragment : BaseFragment() {
                         }
                     }
                 }
+                else -> {}
             }
         }
 

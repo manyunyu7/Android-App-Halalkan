@@ -59,7 +59,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/cstToolbar">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -68,34 +68,44 @@
             <com.feylabs.halalkan.customview.CustomStarStatsReview
                 android:id="@+id/start_stats"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
 
 
             <com.feylabs.halalkan.customview.imagepreviewcontainer.CustomViewImageContainerPreview
                 android:id="@+id/ip_image_preview_slider"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/start_stats"
+                />
 
             <View
+                android:id="@+id/separator1"
                 android:layout_width="match_parent"
                 android:layout_height="3dp"
-                android:background="@color/color_separator"/>
+                android:background="@color/color_separator"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ip_image_preview_slider"
+                />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:layout_marginTop="@dimen/dimen_10dp"
+                android:id="@+id/rv"
+                android:layout_marginTop="@dimen/dimen_20dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:layout_marginHorizontal="@dimen/dimen_10dp"
-                tools:itemCount="3"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:listitem="@layout/item_review"/>
+                tools:listitem="@layout/item_review"
+                app:layout_constraintTop_toBottomOf="@id/separator1"
+                />
 
-
-
-
-
-        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     </ScrollView>

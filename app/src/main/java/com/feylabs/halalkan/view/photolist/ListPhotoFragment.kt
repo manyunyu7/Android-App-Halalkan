@@ -8,14 +8,11 @@ import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.feylabs.halalkan.R
 import com.feylabs.halalkan.data.remote.QumparanResource
 import com.feylabs.halalkan.data.remote.reqres.AlbumPhotoResponse
-import com.feylabs.halalkan.data.remote.reqres.PostCommentResponse
 import com.feylabs.halalkan.databinding.FragmentListPhotoBinding
 import com.feylabs.halalkan.utils.base.BaseFragment
-import com.feylabs.halalkan.view.home.ShowedPosts
 import com.feylabs.halalkan.view.postdetail.PostDetailViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 

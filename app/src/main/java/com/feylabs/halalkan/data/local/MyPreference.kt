@@ -2,6 +2,7 @@ package com.feylabs.halalkan.data.local
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.feylabs.halalkan.data.remote.reqres.auth.UserModel
 
 class MyPreference(context: Context) {
 
@@ -25,12 +26,51 @@ class MyPreference(context: Context) {
         editor.commit()
     }
 
+    fun getUserData(): UserModel {
+        return UserModel(
+            name = getUserName(),
+            phoneNumber = getUserPhone().orEmpty(),
+            email = getUserEmail().orEmpty(),
+            createdAt = "",
+            id = getUserID()?.toIntOrNull() ?: 0,
+            photo_path = "",
+            rolesId = getUserRole()?.toIntOrNull() ?: 0,
+            updatedAt = ""
+        )
+    }
+
+    fun saveLoginData(
+        userId: String,
+        name: String,
+        email: String,
+        photo: String,
+        role: String,
+        token: String? = null,
+        phone: String? = null
+    ) {
+        saveUserRole(role)
+        saveUserPhoto(photo)
+        saveUserEmail(email)
+        saveUserName(name)
+        saveUserID(userId)
+        saveUserPhone(phone.orEmpty())
+
+        if (token != null) {
+            saveTokenWithTemplate(token)
+        }
+    }
+
+
     fun getToken(): String {
         return sharedPref.getString("TOKEN", "").orEmpty()
     }
 
-    fun getRole(): String? {
+    fun getUserRole(): String? {
         return sharedPref.getString("ROLE", "")
+    }
+
+    fun getUserPhoto(): String {
+        return sharedPref.getString("USER_PHOTO", "").orEmpty()
     }
 
     fun getTokenRaw(): String? {
@@ -46,6 +86,21 @@ class MyPreference(context: Context) {
         editor.commit()
     }
 
+    fun saveUserRole(role: String) {
+        editor.putString("ROLE", role)
+        editor.commit()
+    }
+
+    fun saveUserPhoto(photo: String) {
+        editor.putString("USER_PHOTO", photo)
+        editor.commit()
+    }
+
+    fun removeKey(key: String) {
+        editor.remove(key)
+        editor.commit()
+    }
+
     fun saveUserEmail(id: String) {
         editor.putString("USER_EMAIL", id)
         editor.commit()
@@ -55,11 +110,19 @@ class MyPreference(context: Context) {
         return sharedPref.getString("USER_EMAIL", "")
     }
 
+    fun getUserPhone(): String? {
+        return sharedPref.getString("USER_PHONE", "")
+    }
+
+    fun saveUserPhone(phone: String) {
+        editor.putString("USER_PHONE", phone)
+        editor.commit()
+    }
+
     fun saveUserPassword(id: String) {
         editor.putString("USER_PASSWORD", id)
         editor.commit()
     }
-
 
 
     fun getUserPassword(): String? {
@@ -86,6 +149,10 @@ class MyPreference(context: Context) {
 
     fun getPrefFloat(KEY_NAME: String): Float {
         return sharedPref.getFloat(KEY_NAME, 0f)
+    }
+
+    fun getPrefInt(KEY_NAME: String): Int {
+        return sharedPref.getInt(KEY_NAME, 0)
     }
 
     fun clearPreferences() {

@@ -7,20 +7,24 @@ import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.feylabs.halalkan.R
-import com.feylabs.halalkan.data.remote.reqres.masjid.DataMasjid
+import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidModelResponse
 import com.feylabs.halalkan.databinding.ItemHomeMosqueBinding
-import com.feylabs.halalkan.utils.Network
-import com.feylabs.halalkan.utils.StringUtil.encodeUrl
+import com.feylabs.halalkan.utils.ImageViewUtils.imgFullPath
+import com.feylabs.halalkan.utils.StringUtil.decodeMuskoUrl
 
 class ListMasjidAdapter :
     RecyclerView.Adapter<ListMasjidAdapter.MasjidViewHolder>() {
 
-    val data = mutableListOf<DataMasjid>()
+    val data = mutableListOf<MasjidModelResponse>()
     lateinit var adapterInterface: ItemInterface
 
-    fun setWithNewData(data: MutableList<DataMasjid>) {
+    fun setWithNewData(data: MutableList<MasjidModelResponse>) {
         this.data.clear()
         this.data.addAll(data)
+    }
+
+    fun sortByDistance(){
+        
     }
 
     fun setupAdapterInterface(obj: ItemInterface) {
@@ -31,7 +35,7 @@ class ListMasjidAdapter :
 
         var binding: ItemHomeMosqueBinding = ItemHomeMosqueBinding.bind(itemView)
 
-        fun onBind(model: DataMasjid) {
+        fun onBind(model: MasjidModelResponse) {
             val mContext = binding.root.context
 
             binding.base.animation = AnimationUtils.loadAnimation(
@@ -45,16 +49,17 @@ class ListMasjidAdapter :
 
             binding.tvTitle.text = model.name
             binding.tvMiddleCategory.text = model.address
+            binding.tvRatingCount.text=model.review_avg.toString()
 
             if (model.distanceKm != null) {
                 val distanceRounded = model.distanceKm
-                //binding.tvDistance.visibility = View.VISIBLE
+                binding.tvDistance.visibility = View.VISIBLE
                 binding.tvDistance.text = "$distanceRounded Km"
             } else {
-                //binding.tvDistance.visibility = View.GONE
+                binding.tvDistance.visibility = View.GONE
             }
 
-            val imgUrl = Network.REAL_URL_V1 + model.img.encodeUrl()
+            val imgUrl = model.img.decodeMuskoUrl().imgFullPath()
             binding.tvTopCategory.text = model.categoryName.uppercase()
 
             Glide.with(mContext)
@@ -80,6 +85,6 @@ class ListMasjidAdapter :
     }
 
     interface ItemInterface {
-        fun onclick(model: DataMasjid)
+        fun onclick(model: MasjidModelResponse)
     }
 }

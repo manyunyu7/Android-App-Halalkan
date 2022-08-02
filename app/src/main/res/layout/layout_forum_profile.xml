@@ -8,11 +8,11 @@
         android:id="@+id/container_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_10dp"
+        android:layout_marginTop="@dimen/dimen_10dp"
         android:background="#0000FF"
         android:src="@drawable/placeholder"
         app:cardCornerRadius="20dp"
-        android:layout_marginStart="@dimen/dimen_10dp"
-        android:layout_marginTop="@dimen/dimen_10dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -29,50 +29,47 @@
         android:id="@+id/label_user_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_10dp"
         android:fontFamily="@font/poppins_regular"
         android:text="Korean"
-        android:textSize="12sp"
-        android:layout_marginStart="@dimen/dimen_10dp"
-        app:layout_constraintStart_toEndOf="@id/container_image"
         android:textColor="@color/colorBlack"
-        app:layout_constraintTop_toTopOf="@id/container_image"
-        />
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@id/container_image"
+        app:layout_constraintTop_toTopOf="@id/container_image" />
 
     <TextView
         android:id="@+id/label_category"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_10dp"
         android:fontFamily="@font/poppins_light"
         android:text="Korean"
-        android:textSize="12sp"
-        android:layout_marginStart="@dimen/dimen_10dp"
-        app:layout_constraintStart_toEndOf="@id/container_image"
         android:textColor="#757575"
-        app:layout_constraintTop_toBottomOf="@id/label_user_name"
-        />
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@id/container_image"
+        app:layout_constraintTop_toBottomOf="@id/label_user_name" />
 
     <ImageView
         android:id="@+id/dot_separator"
         android:layout_width="5dp"
         android:layout_height="5dp"
         android:layout_marginStart="@dimen/dimen_5dp"
-        app:layout_constraintStart_toEndOf="@id/label_category"
+        android:src="@drawable/circle"
         app:layout_constraintBottom_toBottomOf="@id/label_category"
-        app:layout_constraintTop_toTopOf="@id/label_category"
-        android:src="@drawable/circle"/>
+        app:layout_constraintStart_toEndOf="@id/label_category"
+        app:layout_constraintTop_toTopOf="@id/label_category" />
 
     <TextView
         android:id="@+id/label_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_10dp"
         android:fontFamily="@font/poppins_light"
         android:text="12h"
-        android:textSize="12sp"
-        android:layout_marginStart="@dimen/dimen_10dp"
-        app:layout_constraintStart_toEndOf="@id/dot_separator"
         android:textColor="#757575"
-        app:layout_constraintTop_toBottomOf="@id/label_user_name"
-        />
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@id/dot_separator"
+        app:layout_constraintTop_toBottomOf="@id/label_user_name" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

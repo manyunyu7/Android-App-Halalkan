@@ -49,7 +49,40 @@
     <color name="color_accent_success">#008D36</color>
     <color name="color_bg_card_open">#E5F5E9</color>
     <color name="gray50">#F5F5F5</color>
-    <color name="gray70">#757575</color>//Action bar
+    <color name="gray70">#757575</color>
+    <color name="black40">#E0E0E0</color>
+    <color name="halalkan_primary">#156DBE</color>
+    <color name="black30">#eeeeee</color>//Action bar
+
+    <color name="color_blue_golapak_darker">#000031</color>
+    <color name="color_blue_golapak">#22215B</color>
+    <color name="color_giok">#03DAC6</color>
+    <color name="color_blue_another1">#567DF4</color>
+    <color name="home_secondary">#59597C</color>
+    <color name="blue_menu">#EEF7FE</color>
+    <color name="menu1_color">#415EB6</color>
+    <color name="yellow_menu">#FFFBEC</color>
+    <color name="menu_yellow">#FFB110</color>
+    <color name="light_cyan">#F0FFFF</color>
+    <color name="menu_cyan">#23B0B0</color>
+    <color name="color_cat">#4EB0E8</color>
+    <color name="color_price">#1492D2</color>
+    <color name="blue_auth">#1F244B</color>
+
+
+    <color name="colorOrangePrice">#f08a5d</color>
+    <color name="colorWaiting">#FF6B6B</color>
+
+    <color name="colorGreenLight">#EFF5F4</color>
+    <color name="blue_selected">#7C83FD</color>
+    <color name="base_color">#F5FDFB</color>
+    <color name="soft_blue">#EEF2FE</color>
+    <color name="menu_bottom_active">#156DBE</color>
+    <color name="link_color">#156DBE</color>
+    <color name="orange50">#EF6D21</color>
+    <color name="blue10">#E4F3FC</color>
+    <color name="black90">#424242</color>
+    <color name="orange10">#FFF3E1</color>
 
 
 </resources>

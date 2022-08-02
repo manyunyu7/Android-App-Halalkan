@@ -1,12 +1,24 @@
 package com.feylabs.halalkan.utils.base
 
 import android.Manifest
+import android.graphics.Color
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.View
+import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.feylabs.halalkan.R
+import com.feylabs.halalkan.data.local.MyPreference
+import com.feylabs.halalkan.data.remote.reqres.auth.UserModel
+import com.feylabs.halalkan.utils.snackbar.SnackbarType
+import com.feylabs.halalkan.utils.snackbar.UtilSnackbar
 import com.fondesa.kpermissions.extension.permissionsBuilder
 import com.fondesa.kpermissions.request.PermissionRequest
 import kotlinx.coroutines.CoroutineScope
@@ -32,7 +44,9 @@ abstract class BaseFragment : Fragment() {
         initUI()
     }
 
-    fun getMFragmentManager() = getParentFragmentManager()
+    fun getRootView() = view
+
+    fun getMFragmentManager() = parentFragmentManager
 
     fun showToast(text: String, isLong: Boolean = false) {
         var duration = Toast.LENGTH_LONG
@@ -40,6 +54,12 @@ abstract class BaseFragment : Fragment() {
             duration = Toast.LENGTH_SHORT
         Toast.makeText(requireContext(), text, Toast.LENGTH_SHORT).show()
     }
+
+    fun showSnackbar(text: String, type: SnackbarType = SnackbarType.INFO) {
+        UtilSnackbar.showSnackbar(getRootView(), text, type)
+    }
+
+    fun muskoPref() = MyPreference(requireContext())
 
     fun hideActionBar() {
         requireActivity().actionBar?.hide()
@@ -78,6 +98,41 @@ abstract class BaseFragment : Fragment() {
             }
             )
     }
+
+    fun getMuskoDrawable(source: Int): Drawable {
+        return ContextCompat.getDrawable(requireActivity(), source)!!
+    }
+
+    fun setBottomMenuActive(view:View){
+        if(view is TextView){
+            view.setTextColor(Color.parseColor(colorActive()))
+        }
+
+        if(view is ImageView){
+            view.setColorFilter(ContextCompat.getColor(requireContext(), R.color.menu_bottom_active));
+        }
+    }
+
+    fun updateUserData(userData: UserModel) {
+        muskoPref().saveLoginData(
+            userId = userData.id.toString(),
+            name = userData.name,
+            email = userData.email,
+            photo = userData.getPhotoPath(),
+            role = userData.rolesId.toString()
+        )
+    }
+
+    fun colorActive() = "#156DBE"
+
+    fun setLayoutManagerGridVertical(spanCount:Int=2) = GridLayoutManager(requireContext(),spanCount,
+        GridLayoutManager.VERTICAL,false)
+
+    fun setLayoutManagerGridHorizontal(spanCount:Int=2) = GridLayoutManager(requireContext(),spanCount,
+        GridLayoutManager.HORIZONTAL,false)
+
+    fun setLayoutManagerLinear() = LinearLayoutManager(requireContext())
+    fun setLayoutManagerHorizontal() = LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false)
 
 
 }
