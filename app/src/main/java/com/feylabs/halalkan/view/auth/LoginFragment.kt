@@ -7,14 +7,12 @@ import android.view.ViewGroup
 import androidx.core.widget.doOnTextChanged
 import androidx.navigation.fragment.findNavController
 import com.feylabs.halalkan.R
-import com.feylabs.halalkan.data.remote.QumparanResource
+import com.feylabs.halalkan.data.remote.MuskoResource
 import com.feylabs.halalkan.data.remote.reqres.auth.LoginBodyRequest
-import com.feylabs.halalkan.data.remote.reqres.auth.LoginResponse
 import com.feylabs.halalkan.data.remote.reqres.auth.UserModel
 import com.feylabs.halalkan.databinding.FragmentLoginBinding
 import com.feylabs.halalkan.utils.base.BaseFragment
 import com.feylabs.halalkan.utils.snackbar.SnackbarType
-import com.feylabs.halalkan.utils.snackbar.UtilSnackbar
 import org.koin.android.viewmodel.ext.android.viewModel
 
 
@@ -34,18 +32,18 @@ class LoginFragment : BaseFragment() {
     override fun initObserver() {
         viewModel.loginLiveData.observe(viewLifecycleOwner) {
             when (it) {
-                is QumparanResource.Default -> {
+                is MuskoResource.Default -> {
                     showLoading(false)
                 }
-                is QumparanResource.Error -> {
+                is MuskoResource.Error -> {
                     showSnackbar(it.message.toString(),SnackbarType.ERROR)
                     viewModel.resetLogin()
                     showLoading(false)
                 }
-                is QumparanResource.Loading -> {
+                is MuskoResource.Loading -> {
                     showLoading(true)
                 }
-                is QumparanResource.Success -> {
+                is MuskoResource.Success -> {
                     viewModel.resetLogin()
                     val token = it.data?.accessToken.orEmpty()
                     it.data?.user?.let { userData ->

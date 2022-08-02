@@ -8,10 +8,13 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.feylabs.halalkan.R
+import com.feylabs.halalkan.data.remote.MuskoResource
+import com.feylabs.halalkan.data.remote.reqres.product.ProductCateogryResponse
 import com.feylabs.halalkan.databinding.FragmentListAndSearchPrayerRoomBinding
 import com.feylabs.halalkan.databinding.FragmentCategoryProductsBinding
 import com.feylabs.halalkan.utils.base.BaseFragment
 import com.mapbox.maps.extension.style.expressions.dsl.generated.product
+import org.koin.android.viewmodel.ext.android.viewModel
 
 
 class CategoryProductsFragment : BaseFragment() {
@@ -20,40 +23,50 @@ class CategoryProductsFragment : BaseFragment() {
     private var _binding: FragmentCategoryProductsBinding? = null
     private val binding get() = _binding!!
 
+    val viewModel: ProductViewModel by viewModel()
 
     override fun initUI() {
-        initCategoryProductsList()
         initRecyclerView()
     }
 
-    fun initCategoryProductsList() {
-        newArrayList = arrayListOf<CategoryProductsModel>()
-        getUserData()
-    }
-
-    private fun getUserData() {
-        newArrayList.add(CategoryProductsModel(R.drawable.menu_home_restaurant,"restaurant"))
-        newArrayList.add(CategoryProductsModel(R.drawable.menu_home_scan,"scan"))
-        newArrayList.add(CategoryProductsModel(R.drawable.menu_home_prayer,"prayer"))
-    }
+    private val adapter by lazy { CategoryProductAdapter() }
 
     private fun initRecyclerView() {
-        val madapter = CategoryProductAdapter(newArrayList)
-        madapter.setupAdapterInterface(object : CategoryProductAdapter.ItemInterface{
-            override fun onclick(model: CategoryProductsModel) {
+
+        adapter.setupAdapterInterface(object : CategoryProductAdapter.ItemInterface{
+            override fun onclick(model: ProductCateogryResponse.ProductCateogryResponseItem) {
                 findNavController().navigate(R.id.categoryListFragment)
             }
 
         })
         binding.categoryproductRecycler.let {
-            it.layoutManager =
-                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-            it.adapter = madapter
+            it.layoutManager = setLayoutManagerGridVertical(3)
+            it.adapter = adapter
         }
-
     }
 
     override fun initObserver() {
+        viewModel.ProductCategoryLiveData.observe(viewLifecycleOwner) {
+            when (it) {
+                is MuskoResource.Default -> {
+
+                }
+                is MuskoResource.Error -> {
+                    showToast(it.message.toString())
+
+                }
+                is MuskoResource.Loading -> {
+                    showToast("Loading")
+                }
+
+                is MuskoResource.Success -> {
+                    it?.data?.let {
+                        adapter.setWithNewData(it)
+                        adapter.notifyDataSetChanged()
+                    }
+                }
+            }
+        }
     }
 
     override fun initAction() {
@@ -62,7 +75,10 @@ class CategoryProductsFragment : BaseFragment() {
         }
     }
 
+
+
     override fun initData() {
+        viewModel.getProductCategory()
     }
 
     override fun onCreateView(

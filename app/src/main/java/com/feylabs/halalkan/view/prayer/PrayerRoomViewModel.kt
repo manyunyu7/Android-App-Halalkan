@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.feylabs.halalkan.data.repository.MasjidRepository
 import com.feylabs.halalkan.data.repository.QumparanRepository
-import com.feylabs.halalkan.data.remote.QumparanResource
+import com.feylabs.halalkan.data.remote.MuskoResource
 import com.feylabs.halalkan.data.remote.RemoteDataSource
 import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidDetailResponse
 import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidPhotosResponse
@@ -27,48 +27,48 @@ class PrayerRoomViewModel(
     val targetLong: MutableLiveData<Double> = MutableLiveData(-99.0)
 
     private var _masjidLiveData =
-        MutableLiveData<QumparanResource<MasjidResponseWithoutPagination?>>()
+        MutableLiveData<MuskoResource<MasjidResponseWithoutPagination?>>()
     val masjidLiveData get() = _masjidLiveData
 
     private var _masjidPaginateLiveData =
-        MutableLiveData<QumparanResource<AllMasjidPaginationResponse?>>()
+        MutableLiveData<MuskoResource<AllMasjidPaginationResponse?>>()
     val masjidPaginateLiveData get() = _masjidPaginateLiveData
 
     private var _prayerTimeSingleLiveData:
-            MutableLiveData<QumparanResource<PrayerTimeAladhanSingleDateResponse?>> =
+            MutableLiveData<MuskoResource<PrayerTimeAladhanSingleDateResponse?>> =
         MutableLiveData()
     val prayerTimeSingleLiveData get() = _prayerTimeSingleLiveData
 
     private var _masjidReviewsLiveData =
-        MutableLiveData<QumparanResource<MasjidReviewPaginationResponse?>>()
+        MutableLiveData<MuskoResource<MasjidReviewPaginationResponse?>>()
     val masjidReviewsLiveData get() = _masjidReviewsLiveData
 
 
     private var _masjidDetailLiveData =
-        MutableLiveData<QumparanResource<MasjidDetailResponse?>>()
+        MutableLiveData<MuskoResource<MasjidDetailResponse?>>()
     val masjidDetailLiveData get() = _masjidDetailLiveData
 
 
     private var _masjidPhotoLiveData =
-        MutableLiveData<QumparanResource<MasjidPhotosResponse?>>()
+        MutableLiveData<MuskoResource<MasjidPhotosResponse?>>()
     val masjidPhotoLiveData get() = _masjidPhotoLiveData
 
     fun getMasjidWithPagination(page: Int) {
-        _masjidPaginateLiveData.postValue(QumparanResource.Loading())
+        _masjidPaginateLiveData.postValue(MuskoResource.Loading())
         viewModelScope.launch {
             try {
                 val res = masjidRepository.getMasjidPaginate(page)
                 if (res.isSuccessful) {
-                    _masjidPaginateLiveData.postValue(QumparanResource.Success(res.body()))
+                    _masjidPaginateLiveData.postValue(MuskoResource.Success(res.body()))
                 } else {
                     _masjidPaginateLiveData.postValue(
-                        QumparanResource.Error(
+                        MuskoResource.Error(
                             res.errorBody().toString()
                         )
                     )
                 }
             } catch (e: Exception) {
-                _masjidPaginateLiveData.postValue(QumparanResource.Error(e.message.toString()))
+                _masjidPaginateLiveData.postValue(MuskoResource.Error(e.message.toString()))
             }
         }
     }
@@ -78,16 +78,16 @@ class PrayerRoomViewModel(
             try {
                 val res = masjidRepository.getMasjidPhotos(id)
                 if (res.isSuccessful) {
-                    _masjidPhotoLiveData.postValue(QumparanResource.Success(res.body()))
+                    _masjidPhotoLiveData.postValue(MuskoResource.Success(res.body()))
                 } else {
                     _masjidPhotoLiveData.postValue(
-                        QumparanResource.Error(
+                        MuskoResource.Error(
                             res.errorBody().toString()
                         )
                     )
                 }
             } catch (e: Exception) {
-                _masjidLiveData.postValue(QumparanResource.Error(e.message.toString()))
+                _masjidLiveData.postValue(MuskoResource.Error(e.message.toString()))
             }
         }
     }
@@ -107,32 +107,32 @@ class PrayerRoomViewModel(
                     time = time
                 )
                 if (res.isSuccessful) {
-                    _prayerTimeSingleLiveData.postValue(QumparanResource.Success(res.body()))
+                    _prayerTimeSingleLiveData.postValue(MuskoResource.Success(res.body()))
                 } else {
-                    _prayerTimeSingleLiveData.postValue(QumparanResource.Error("Terjadi Kesalahan"))
+                    _prayerTimeSingleLiveData.postValue(MuskoResource.Error("Terjadi Kesalahan"))
                 }
             } catch (e: Exception) {
-                _prayerTimeSingleLiveData.postValue(QumparanResource.Error(e.message.toString()))
+                _prayerTimeSingleLiveData.postValue(MuskoResource.Error(e.message.toString()))
             }
         }
     }
 
     fun getDetailMasjid(id: String) {
         viewModelScope.launch {
-            _masjidDetailLiveData.postValue(QumparanResource.Loading())
+            _masjidDetailLiveData.postValue(MuskoResource.Loading())
             try {
                 val res = masjidRepository.getMasjidDetail(id)
                 if (res.isSuccessful) {
-                    _masjidDetailLiveData.postValue(QumparanResource.Success(res.body()))
+                    _masjidDetailLiveData.postValue(MuskoResource.Success(res.body()))
                 } else {
                     _masjidDetailLiveData.postValue(
-                        QumparanResource.Error(
+                        MuskoResource.Error(
                             res.errorBody().toString()
                         )
                     )
                 }
             } catch (e: Exception) {
-                _masjidDetailLiveData.postValue(QumparanResource.Error(e.message.toString()))
+                _masjidDetailLiveData.postValue(MuskoResource.Error(e.message.toString()))
             }
         }
     }
@@ -143,12 +143,12 @@ class PrayerRoomViewModel(
             try {
                 val res = repo.getMasjids()
                 if (res.isSuccessful) {
-                    _masjidLiveData.postValue(QumparanResource.Success(res.body()))
+                    _masjidLiveData.postValue(MuskoResource.Success(res.body()))
                 } else {
-                    _masjidLiveData.postValue(QumparanResource.Error(res.errorBody().toString()))
+                    _masjidLiveData.postValue(MuskoResource.Error(res.errorBody().toString()))
                 }
             } catch (e: Exception) {
-                _masjidLiveData.postValue(QumparanResource.Error(e.message.toString()))
+                _masjidLiveData.postValue(MuskoResource.Error(e.message.toString()))
             }
         }
     }
@@ -156,19 +156,19 @@ class PrayerRoomViewModel(
     fun getMasjidReview(masjidId: String, page: Int, perPage: Int=5) {
         viewModelScope.launch {
             try {
-                _masjidReviewsLiveData.postValue(QumparanResource.Loading())
+                _masjidReviewsLiveData.postValue(MuskoResource.Loading())
                 val res = ds.getMasjidReviews(masjidId, page = page, perPage = perPage)
                 if (res.isSuccessful) {
-                    _masjidReviewsLiveData.postValue(QumparanResource.Success(res.body()))
+                    _masjidReviewsLiveData.postValue(MuskoResource.Success(res.body()))
                 } else {
                     _masjidReviewsLiveData.postValue(
-                        QumparanResource.Error(
+                        MuskoResource.Error(
                             res.errorBody().toString()
                         )
                     )
                 }
             } catch (e: Exception) {
-                _masjidReviewsLiveData.postValue(QumparanResource.Error(e.message.toString()))
+                _masjidReviewsLiveData.postValue(MuskoResource.Error(e.message.toString()))
             }
         }
     }

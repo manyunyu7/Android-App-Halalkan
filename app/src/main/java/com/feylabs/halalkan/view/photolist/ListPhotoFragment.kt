@@ -9,7 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.feylabs.halalkan.R
-import com.feylabs.halalkan.data.remote.QumparanResource
+import com.feylabs.halalkan.data.remote.MuskoResource
 import com.feylabs.halalkan.data.remote.reqres.AlbumPhotoResponse
 import com.feylabs.halalkan.databinding.FragmentListPhotoBinding
 import com.feylabs.halalkan.utils.base.BaseFragment
@@ -61,14 +61,14 @@ class ListPhotoFragment : BaseFragment() {
     override fun initObserver() {
         viewModel.photosLiveData.observe(viewLifecycleOwner, Observer {
             when (it) {
-                is QumparanResource.Default -> {
+                is MuskoResource.Default -> {
                 }
-                is QumparanResource.Error -> {
+                is MuskoResource.Error -> {
                     showToast(it.message.toString())
                 }
-                is QumparanResource.Loading -> {
+                is MuskoResource.Loading -> {
                 }
-                is QumparanResource.Success -> {
+                is MuskoResource.Success -> {
                     it.data?.let {
                         setupPhoto(it)
                     }

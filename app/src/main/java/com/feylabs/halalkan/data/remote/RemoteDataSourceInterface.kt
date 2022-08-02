@@ -8,6 +8,7 @@ import com.feylabs.halalkan.data.remote.reqres.auth.RegisterResponse
 import com.feylabs.halalkan.data.remote.reqres.masjid.*
 import com.feylabs.halalkan.data.remote.reqres.masjid.pagination.AllMasjidPaginationResponse
 import com.feylabs.halalkan.data.remote.reqres.prayertime.PrayerTimeAladhanSingleDateResponse
+import com.feylabs.halalkan.data.remote.reqres.product.ProductCateogryResponse
 import com.feylabs.halalkan.data.remote.reqres.resto.AllRestoNoPagination
 import com.feylabs.halalkan.data.remote.reqres.resto.FoodTypeResponse
 import com.feylabs.halalkan.data.remote.reqres.resto.RestaurantCertificationResponse
@@ -62,5 +63,9 @@ interface RemoteDataSourceInterface {
     suspend fun getFoodType() : Response<FoodTypeResponse>
     suspend fun getRestoDetail(id:String) : Response<RestoDetailResponse>
     suspend fun getRestoFoodByCommonCategory(restoId:String,categoryId:String) : Response<RestoFoodByCommonCategoryResponse>
+
+
+
+    suspend fun getProductCategory() : Response<ProductCateogryResponse>
 
 }

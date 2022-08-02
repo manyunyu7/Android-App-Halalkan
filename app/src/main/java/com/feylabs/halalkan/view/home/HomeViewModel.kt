@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.feylabs.halalkan.data.repository.MasjidRepository
 import com.feylabs.halalkan.data.repository.QumparanRepository
-import com.feylabs.halalkan.data.remote.QumparanResource
+import com.feylabs.halalkan.data.remote.MuskoResource
 import com.feylabs.halalkan.data.remote.RemoteDataSource
 import com.feylabs.halalkan.data.remote.reqres.PostResponse
 import com.feylabs.halalkan.data.remote.reqres.UserResponse
@@ -26,19 +26,19 @@ class HomeViewModel(
     }
     val text: LiveData<String> = _text
 
-    private var _userLiveData = MutableLiveData<QumparanResource<UserResponse?>>()
+    private var _userLiveData = MutableLiveData<MuskoResource<UserResponse?>>()
     val userLiveData get() = _userLiveData
 
-    private var _postLiveData = MutableLiveData<QumparanResource<PostResponse?>>()
+    private var _postLiveData = MutableLiveData<MuskoResource<PostResponse?>>()
     val postLiveData get() = _postLiveData
 
     private var _allMasjidLiveData =
-        MutableLiveData<QumparanResource<MasjidResponseWithoutPagination?>>()
+        MutableLiveData<MuskoResource<MasjidResponseWithoutPagination?>>()
     val allMasjidLiveData get() = _allMasjidLiveData
 
 
     private var _prayerTimeSingleLiveData:
-            MutableLiveData<QumparanResource<PrayerTimeAladhanSingleDateResponse?>> =
+            MutableLiveData<MuskoResource<PrayerTimeAladhanSingleDateResponse?>> =
         MutableLiveData()
     val prayerTimeSingleLiveData get() = _prayerTimeSingleLiveData
 
@@ -57,57 +57,57 @@ class HomeViewModel(
                     time = time
                 )
                 if (res.isSuccessful) {
-                    _prayerTimeSingleLiveData.postValue(QumparanResource.Success(res.body()))
+                    _prayerTimeSingleLiveData.postValue(MuskoResource.Success(res.body()))
                 } else {
-                    _prayerTimeSingleLiveData.postValue(QumparanResource.Error("Terjadi Kesalahan"))
+                    _prayerTimeSingleLiveData.postValue(MuskoResource.Error("Terjadi Kesalahan"))
                 }
             } catch (e: Exception) {
-                _prayerTimeSingleLiveData.postValue(QumparanResource.Error(e.message.toString()))
+                _prayerTimeSingleLiveData.postValue(MuskoResource.Error(e.message.toString()))
             }
         }
     }
 
     fun fetchAllMasjid() = viewModelScope.launch {
-        _allMasjidLiveData.postValue(QumparanResource.Loading())
+        _allMasjidLiveData.postValue(MuskoResource.Loading())
         try {
             val res = masjidRepo.getAllMasjid()
             if (res.isSuccessful) {
-                _allMasjidLiveData.postValue(QumparanResource.Success(res.body()))
+                _allMasjidLiveData.postValue(MuskoResource.Success(res.body()))
             } else {
-                _allMasjidLiveData.postValue(QumparanResource.Error("Terjadi Kesalahan"))
+                _allMasjidLiveData.postValue(MuskoResource.Error("Terjadi Kesalahan"))
             }
         } catch (e: Exception) {
-            _allMasjidLiveData.postValue(QumparanResource.Error(e.message.toString()))
+            _allMasjidLiveData.postValue(MuskoResource.Error(e.message.toString()))
         }
     }
 
     fun fetchUsers() = viewModelScope.launch {
-        _userLiveData.postValue(QumparanResource.Loading())
+        _userLiveData.postValue(MuskoResource.Loading())
         try {
             val res = repo.getUsers()
             Timber.d("users response $")
             if (res.isSuccessful) {
-                _userLiveData.postValue(QumparanResource.Success(res.body()))
+                _userLiveData.postValue(MuskoResource.Success(res.body()))
             } else {
-                _userLiveData.postValue(QumparanResource.Error("Terjadi Kesalahan"))
+                _userLiveData.postValue(MuskoResource.Error("Terjadi Kesalahan"))
             }
         } catch (e: Exception) {
-            _userLiveData.postValue(QumparanResource.Error(e.message.toString()))
+            _userLiveData.postValue(MuskoResource.Error(e.message.toString()))
         }
     }
 
     fun fetchPosts() = viewModelScope.launch {
-        _postLiveData.postValue(QumparanResource.Loading())
+        _postLiveData.postValue(MuskoResource.Loading())
         try {
             val res = repo.getPosts()
             Timber.d("users response $")
             if (res.isSuccessful) {
-                _postLiveData.postValue(QumparanResource.Success(res.body()))
+                _postLiveData.postValue(MuskoResource.Success(res.body()))
             } else {
-                _postLiveData.postValue(QumparanResource.Error("Terjadi Kesalahan"))
+                _postLiveData.postValue(MuskoResource.Error("Terjadi Kesalahan"))
             }
         } catch (e: Exception) {
-            _postLiveData.postValue(QumparanResource.Error(e.message.toString()))
+            _postLiveData.postValue(MuskoResource.Error(e.message.toString()))
         }
     }
 

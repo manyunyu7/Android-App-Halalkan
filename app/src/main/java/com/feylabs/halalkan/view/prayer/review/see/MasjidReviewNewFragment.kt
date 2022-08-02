@@ -8,7 +8,7 @@ import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.feylabs.halalkan.R
-import com.feylabs.halalkan.data.remote.QumparanResource
+import com.feylabs.halalkan.data.remote.MuskoResource
 import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidReviewPaginationResponse
 import com.feylabs.halalkan.databinding.FragmentReviewNewMasjidBinding
 import com.feylabs.halalkan.utils.base.BaseFragment
@@ -62,14 +62,14 @@ class MasjidReviewNewFragment : BaseFragment() {
 
     override fun initObserver() {
         viewModel.masjidReviewsLiveData.observe(viewLifecycleOwner) {
-            if (it is QumparanResource.Loading) showLoading(true) else showLoading(false)
+            if (it is MuskoResource.Loading) showLoading(true) else showLoading(false)
             when (it) {
-                is QumparanResource.Error -> {
+                is MuskoResource.Error -> {
                     showToast("Error")
                 }
-                is QumparanResource.Loading -> {
+                is MuskoResource.Loading -> {
                 }
-                is QumparanResource.Success -> {
+                is MuskoResource.Success -> {
                     it.data?.let { response ->
                         setupReviewFromNetwork(response)
                     }

@@ -11,7 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.feylabs.halalkan.MainViewModel
 import com.feylabs.halalkan.R
 import com.feylabs.halalkan.customview.imagepreviewcontainer.CustomViewPhotoModel
-import com.feylabs.halalkan.data.remote.QumparanResource
+import com.feylabs.halalkan.data.remote.MuskoResource
 import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidModelResponse
 import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidPhotosResponse
 import com.feylabs.halalkan.databinding.FragmentDetailPrayerBinding
@@ -75,14 +75,14 @@ class DetailMasjidFragment : BaseFragment() {
 
         viewModel.masjidDetailLiveData.observe(viewLifecycleOwner) {
             when (it) {
-                is QumparanResource.Default -> {}
-                is QumparanResource.Error -> {
+                is MuskoResource.Default -> {}
+                is MuskoResource.Error -> {
                     showCenterLoadingIndicator(false)
                 }
-                is QumparanResource.Loading -> {
+                is MuskoResource.Loading -> {
                     showCenterLoadingIndicator(true)
                 }
-                is QumparanResource.Success -> {
+                is MuskoResource.Success -> {
                     showCenterLoadingIndicator(false)
                     it.data?.let { masjidDetailResponse ->
                         val data = masjidDetailResponse.data
@@ -100,16 +100,16 @@ class DetailMasjidFragment : BaseFragment() {
 
         viewModel.masjidPhotoLiveData.observe(viewLifecycleOwner) {
             when (it) {
-                is QumparanResource.Default -> {
+                is MuskoResource.Default -> {
                     binding.ipImagePreviewSlider.setLoading(true)
                 }
-                is QumparanResource.Error -> {
+                is MuskoResource.Error -> {
                     binding.ipImagePreviewSlider.setLoading(false)
                 }
-                is QumparanResource.Loading -> {
+                is MuskoResource.Loading -> {
                     binding.ipImagePreviewSlider.setLoading(true)
                 }
-                is QumparanResource.Success -> {
+                is MuskoResource.Success -> {
                     binding.ipImagePreviewSlider.setLoading(false)
                     it.data?.let {
                         setupMasjidPhotoData(it)

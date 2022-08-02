@@ -10,7 +10,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.feylabs.halalkan.MainViewModel
 import com.feylabs.halalkan.R
-import com.feylabs.halalkan.data.remote.QumparanResource
+import com.feylabs.halalkan.data.remote.MuskoResource
 import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidModelResponse
 import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidResponseWithoutPagination
 import com.feylabs.halalkan.databinding.FragmentListAndSearchPrayerRoomBinding
@@ -60,16 +60,16 @@ class ListAndSearchPrayerRoomFragment : BaseFragment() {
     override fun initObserver() {
         viewModel.masjidLiveData.observe(viewLifecycleOwner, Observer {
             when (it) {
-                is QumparanResource.Default -> {
+                is MuskoResource.Default -> {
 
                 }
-                is QumparanResource.Error -> {
+                is MuskoResource.Error -> {
                     showToast(it.data.toString() + it.message.toString())
                 }
-                is QumparanResource.Loading -> {
+                is MuskoResource.Loading -> {
                     showToast("Loadingg")
                 }
-                is QumparanResource.Success -> {
+                is MuskoResource.Success -> {
                     it.data?.let { masjidData ->
                         setupData(masjidData)
                     }

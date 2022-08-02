@@ -7,6 +7,7 @@ import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidPhotosResponse
 import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidReviewPaginationResponse
 import com.feylabs.halalkan.data.remote.reqres.masjid.pagination.AllMasjidPaginationResponse
 import com.feylabs.halalkan.data.remote.reqres.prayertime.PrayerTimeAladhanSingleDateResponse
+import com.feylabs.halalkan.data.remote.reqres.product.ProductCateogryResponse
 import com.feylabs.halalkan.data.remote.reqres.resto.AllRestoNoPagination
 import com.feylabs.halalkan.data.remote.reqres.resto.FoodTypeResponse
 import com.feylabs.halalkan.data.remote.reqres.resto.RestaurantCertificationResponse
@@ -21,7 +22,8 @@ class RemoteDataSource(
     private val masjidService: MasjidService,
     private val translationService: TranslatorService,
     private val prayerTimeService: PrayerTimeAladhanService,
-    private val restoService: RestoService
+    private val restoService: RestoService,
+    private val ProductService : ProductService
 ) : RemoteDataSourceInterface {
 
     /**
@@ -113,6 +115,10 @@ class RemoteDataSource(
         categoryId: String
     ): Response<RestoFoodByCommonCategoryResponse> {
         return restoService.getFoodByResto(restoId,categoryId)
+    }
+
+    override suspend fun getProductCategory(): Response<ProductCateogryResponse> {
+        return ProductService.getProductCategory()
     }
 
 

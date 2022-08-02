@@ -1,8 +1,6 @@
 package com.feylabs.halalkan.view.postdetail
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,9 +9,8 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.feylabs.halalkan.R
-import com.feylabs.halalkan.data.remote.QumparanResource
+import com.feylabs.halalkan.data.remote.MuskoResource
 import com.feylabs.halalkan.data.remote.reqres.PostCommentResponse
-import com.feylabs.halalkan.databinding.FragmentHomeBinding
 import com.feylabs.halalkan.databinding.PostDetailFragmentBinding
 import com.feylabs.halalkan.utils.base.BaseFragment
 import com.feylabs.halalkan.view.home.ShowedPosts
@@ -83,17 +80,17 @@ class PostDetailFragment : BaseFragment() {
     override fun initObserver() {
         viewModel.commentLiveData.observe(viewLifecycleOwner, Observer {
             when (it) {
-                is QumparanResource.Default -> {
+                is MuskoResource.Default -> {
                     showLoading(false)
                 }
-                is QumparanResource.Error -> {
+                is MuskoResource.Error -> {
                     showLoading(false)
                     showToast(it.message.toString())
                 }
-                is QumparanResource.Loading -> {
+                is MuskoResource.Loading -> {
                     showLoading(true)
                 }
-                is QumparanResource.Success -> {
+                is MuskoResource.Success -> {
                     showLoading(false)
                     it.data?.let {
                         setupComment(it)

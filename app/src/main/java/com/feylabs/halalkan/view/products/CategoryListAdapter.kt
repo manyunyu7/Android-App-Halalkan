@@ -8,7 +8,6 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.feylabs.halalkan.R
-import com.feylabs.halalkan.view.prayer.ListPrayerRoomAdapter
 import com.feylabs.halalkan.view.prayer.PrayerRoomListUIModel
 import com.google.android.material.imageview.ShapeableImageView
 import org.w3c.dom.Text

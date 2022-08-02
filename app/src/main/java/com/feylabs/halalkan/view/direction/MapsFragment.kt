@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import com.feylabs.halalkan.MainViewModel
 import com.feylabs.halalkan.R
-import com.feylabs.halalkan.data.remote.QumparanResource
+import com.feylabs.halalkan.data.remote.MuskoResource
 import com.feylabs.halalkan.utils.Network
 import com.feylabs.halalkan.utils.base.BaseFragment
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -67,7 +67,7 @@ class MapsFragment : BaseFragment() {
     override fun initObserver() {
         viewModel.directionLiveData.observe(viewLifecycleOwner) {
             when (it) {
-                is QumparanResource.Success -> {
+                is MuskoResource.Success -> {
                     val routes = it.data!!
                     var points: ArrayList<LatLng?>
                     var polylineOptions: PolylineOptions? = null

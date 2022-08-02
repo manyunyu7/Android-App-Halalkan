@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.feylabs.halalkan.data.repository.QumparanRepository
-import com.feylabs.halalkan.data.remote.QumparanResource
+import com.feylabs.halalkan.data.remote.MuskoResource
 import com.feylabs.halalkan.data.remote.RemoteDataSource
 import com.feylabs.halalkan.data.remote.reqres.auth.LoginBodyRequest
 import com.feylabs.halalkan.data.remote.reqres.auth.LoginResponse
@@ -15,14 +15,14 @@ import timber.log.Timber
 
 class AuthViewModel(val repo: QumparanRepository, ds: RemoteDataSource) : ViewModel() {
 
-    private var _loginLiveData = MutableLiveData<QumparanResource<LoginResponse?>>()
+    private var _loginLiveData = MutableLiveData<MuskoResource<LoginResponse?>>()
     val loginLiveData get() = _loginLiveData
 
-    private var _registerLiveData = MutableLiveData<QumparanResource<RegisterResponse?>>()
+    private var _registerLiveData = MutableLiveData<MuskoResource<RegisterResponse?>>()
     val registerLiveData get() = _registerLiveData
 
     fun login(loginBodyRequest: LoginBodyRequest) {
-        _loginLiveData.postValue(QumparanResource.Loading())
+        _loginLiveData.postValue(MuskoResource.Loading())
         viewModelScope.launch {
             try {
                 val res = repo.login(loginBodyRequest)
@@ -32,22 +32,22 @@ class AuthViewModel(val repo: QumparanRepository, ds: RemoteDataSource) : ViewMo
                     val body = res.body()
                     body?.let { loginResponse ->
                         if (loginResponse.mCode > 299 || loginResponse.mCode < 200) {
-                            _loginLiveData.postValue(QumparanResource.Error(message =  loginResponse.mMessage.orEmpty() + " (Musko)"))
+                            _loginLiveData.postValue(MuskoResource.Error(message =  loginResponse.mMessage.orEmpty() + " (Musko)"))
                         } else {
-                            _loginLiveData.postValue(QumparanResource.Success(data = loginResponse, message = loginResponse.mMessage.toString()))
+                            _loginLiveData.postValue(MuskoResource.Success(data = loginResponse, message = loginResponse.mMessage.toString()))
                         }
                     }
                 } else {
-                    _loginLiveData.postValue(QumparanResource.Error("Terjadi Kesalahan"))
+                    _loginLiveData.postValue(MuskoResource.Error("Terjadi Kesalahan"))
                 }
             } catch (e: Exception) {
-                _loginLiveData.postValue(QumparanResource.Error(e.message.toString()))
+                _loginLiveData.postValue(MuskoResource.Error(e.message.toString()))
             }
         }
     }
 
     fun register(registerBodyRequest: RegisterBodyRequest) {
-        _registerLiveData.postValue(QumparanResource.Loading())
+        _registerLiveData.postValue(MuskoResource.Loading())
         viewModelScope.launch {
             try {
                 val res = repo.register(registerBodyRequest)
@@ -56,24 +56,24 @@ class AuthViewModel(val repo: QumparanRepository, ds: RemoteDataSource) : ViewMo
                     val body = res.body()
                     body?.let { registerResponse ->
                         if (registerResponse.code > 299 || registerResponse.code < 200) {
-                            _registerLiveData.postValue(QumparanResource.Error(registerResponse.message))
+                            _registerLiveData.postValue(MuskoResource.Error(registerResponse.message))
                         } else {
-                            _registerLiveData.postValue(QumparanResource.Success(registerResponse,registerResponse.code.toString()))
+                            _registerLiveData.postValue(MuskoResource.Success(registerResponse,registerResponse.code.toString()))
                         }
                     } ?: run{
-                        _registerLiveData.postValue(QumparanResource.Error("Terjadi Kesalahan"))
+                        _registerLiveData.postValue(MuskoResource.Error("Terjadi Kesalahan"))
                     }
                 } else {
-                    _registerLiveData.postValue(QumparanResource.Error("Terjadi Kesalahan"))
+                    _registerLiveData.postValue(MuskoResource.Error("Terjadi Kesalahan"))
                 }
             } catch (e: Exception) {
-                _registerLiveData.postValue(QumparanResource.Error(e.message.toString()))
+                _registerLiveData.postValue(MuskoResource.Error(e.message.toString()))
             }
         }
     }
 
     fun resetLogin() {
-        _loginLiveData.postValue(QumparanResource.Default())
+        _loginLiveData.postValue(MuskoResource.Default())
     }
 
 }

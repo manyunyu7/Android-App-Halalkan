@@ -9,11 +9,9 @@ import androidx.core.os.bundleOf
 import androidx.core.widget.doOnTextChanged
 import androidx.navigation.fragment.findNavController
 import com.feylabs.halalkan.R
-import com.feylabs.halalkan.data.remote.QumparanResource
-import com.feylabs.halalkan.data.remote.reqres.auth.LoginBodyRequest
+import com.feylabs.halalkan.data.remote.MuskoResource
 import com.feylabs.halalkan.data.remote.reqres.auth.RegisterBodyRequest
 import com.feylabs.halalkan.data.remote.reqres.auth.UserModel
-import com.feylabs.halalkan.databinding.FragmentListAndSearchPrayerRoomBinding
 import com.feylabs.halalkan.databinding.FragmentRegisterBinding
 import com.feylabs.halalkan.utils.base.BaseFragment
 import com.feylabs.halalkan.utils.snackbar.SnackbarType
@@ -37,18 +35,18 @@ class RegisterFragment : BaseFragment() {
     override fun initObserver() {
         viewModel.registerLiveData.observe(viewLifecycleOwner) {
             when (it) {
-                is QumparanResource.Default -> {
+                is MuskoResource.Default -> {
                     showLoading(false)
                 }
-                is QumparanResource.Error -> {
+                is MuskoResource.Error -> {
                     showSnackbar(it.message.toString(), SnackbarType.ERROR)
                     viewModel.resetLogin()
                     showLoading(false)
                 }
-                is QumparanResource.Loading -> {
+                is MuskoResource.Loading -> {
                     showLoading(true)
                 }
-                is QumparanResource.Success -> {
+                is MuskoResource.Success -> {
                     viewModel.resetLogin()
                     val token = it.data?.accessToken.orEmpty()
                     it.data?.user?.let { userData ->

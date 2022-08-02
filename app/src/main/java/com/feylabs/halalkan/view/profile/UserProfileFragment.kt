@@ -1,27 +1,16 @@
 package com.feylabs.halalkan.view.profile
 
-import android.content.res.ColorStateList
-import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
-import androidx.core.os.bundleOf
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.feylabs.halalkan.R
-import com.feylabs.halalkan.data.local.MyPreference
-import com.feylabs.halalkan.data.remote.QumparanResource
-import com.feylabs.halalkan.data.remote.reqres.PostResponse
 import com.feylabs.halalkan.data.remote.reqres.UserResponse
-import com.feylabs.halalkan.databinding.FragmentHomeBinding
 import com.feylabs.halalkan.databinding.FragmentUserProfileBinding
 import com.feylabs.halalkan.utils.ImageViewUtils.loadImageFromURL
 import com.feylabs.halalkan.utils.StringUtil.orMuskoEmpty
 import com.feylabs.halalkan.utils.base.BaseFragment
-import com.feylabs.halalkan.utils.snackbar.UtilSnackbar
 import com.feylabs.halalkan.view.auth.AuthViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 

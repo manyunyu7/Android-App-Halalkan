@@ -9,7 +9,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.feylabs.halalkan.MainViewModel
 import com.feylabs.halalkan.R
-import com.feylabs.halalkan.data.remote.QumparanResource
+import com.feylabs.halalkan.data.remote.MuskoResource
 import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidModelResponse
 import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidResponseWithoutPagination
 import com.feylabs.halalkan.data.remote.reqres.prayertime.PrayerTimeAladhanSingleDateResponse
@@ -117,16 +117,16 @@ class PrayerMainFragment : BaseFragment() {
 
         viewModel.allMasjidLiveData.observe(viewLifecycleOwner) {
             when (it) {
-                is QumparanResource.Default -> {
+                is MuskoResource.Default -> {
                     showLoadingMosque(false)
                 }
-                is QumparanResource.Error -> {
+                is MuskoResource.Error -> {
                     showLoadingMosque(false)
                 }
-                is QumparanResource.Loading -> {
+                is MuskoResource.Loading -> {
                     showLoadingMosque(true)
                 }
-                is QumparanResource.Success -> {
+                is MuskoResource.Success -> {
                     it.data?.let { response ->
                         setupMosqueData(response)
                     }
@@ -136,16 +136,16 @@ class PrayerMainFragment : BaseFragment() {
 
         viewModel.prayerTimeSingleLiveData.observe(viewLifecycleOwner) {
             when (it) {
-                is QumparanResource.Default -> {
+                is MuskoResource.Default -> {
                     binding.shimmerViewJadwal.showShimmer(true)
                 }
-                is QumparanResource.Error -> {
+                is MuskoResource.Error -> {
                     binding.shimmerViewJadwal.hideShimmer()
                 }
-                is QumparanResource.Loading -> {
+                is MuskoResource.Loading -> {
                     binding.shimmerViewJadwal.showShimmer(true)
                 }
-                is QumparanResource.Success -> {
+                is MuskoResource.Success -> {
                     binding.shimmerViewJadwal.hideShimmer()
                     it.data?.let { response ->
                         setupPrayerTimeLiveData(response)

@@ -13,7 +13,7 @@ import androidx.navigation.fragment.findNavController
 import com.feylabs.halalkan.R
 import com.feylabs.halalkan.customview.AskPermissionDialog
 import com.feylabs.halalkan.customview.SearchLangDialogFragment
-import com.feylabs.halalkan.data.remote.QumparanResource
+import com.feylabs.halalkan.data.remote.MuskoResource
 import com.feylabs.halalkan.data.remote.reqres.translator.TiktokTextToSpeechResponse
 import com.feylabs.halalkan.databinding.CustomViewSearchLanguageDialogBinding
 import com.feylabs.halalkan.databinding.FragmentTranslateBinding
@@ -140,7 +140,7 @@ class TranslateFragment : BaseFragment() {
         viewmodel.translateLiveData.observe(viewLifecycleOwner) {
             showToast(it.data.toString() + it.message.toString())
             when (it) {
-                is QumparanResource.Success -> {
+                is MuskoResource.Success -> {
                     it.data?.let { translateResponse ->
                         if (translateResponse.status != 0) {
                             //if translation is success
@@ -183,10 +183,10 @@ class TranslateFragment : BaseFragment() {
 
         viewmodel.ttlLiveData.observe(viewLifecycleOwner) {
             when (it) {
-                is QumparanResource.Default -> {}
-                is QumparanResource.Error -> {}
-                is QumparanResource.Loading -> {}
-                is QumparanResource.Success -> {
+                is MuskoResource.Default -> {}
+                is MuskoResource.Error -> {}
+                is MuskoResource.Loading -> {}
+                is MuskoResource.Success -> {
                     it.data?.let { response ->
                         playMediaSource(response)
                     }

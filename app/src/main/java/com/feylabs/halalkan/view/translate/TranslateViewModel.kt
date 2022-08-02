@@ -4,23 +4,22 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.feylabs.halalkan.data.repository.TranslatorRepository
-import com.feylabs.halalkan.data.remote.QumparanResource
-import com.feylabs.halalkan.data.remote.QumparanResource.*
+import com.feylabs.halalkan.data.remote.MuskoResource
+import com.feylabs.halalkan.data.remote.MuskoResource.*
 import com.feylabs.halalkan.data.remote.reqres.translator.TiktokTextToSpeechResponse
 import com.feylabs.halalkan.data.remote.reqres.translator.TranslateResponse
 import com.feylabs.halalkan.databinding.ItemChatBinding
 import com.feylabs.halalkan.view.translate.convo.ConvoModel
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
 class TranslateViewModel(val repo: TranslatorRepository) : ViewModel() {
 
-    private var _translateLiveData = MutableLiveData<QumparanResource<TranslateResponse?>>()
+    private var _translateLiveData = MutableLiveData<MuskoResource<TranslateResponse?>>()
     val translateLiveData get() = _translateLiveData
 
     private var _convoTranslateLiveData =
-        MutableLiveData<QumparanResource<Pair<ItemChatBinding, TranslateResponse?>>>()
+        MutableLiveData<MuskoResource<Pair<ItemChatBinding, TranslateResponse?>>>()
     val convoTranslateLiveData get() = _convoTranslateLiveData
 
     // first : source, second : target
@@ -32,7 +31,7 @@ class TranslateViewModel(val repo: TranslatorRepository) : ViewModel() {
     val sourceLanguageDesc = MutableLiveData("Indonesia")
     val targetLanguageDesc = MutableLiveData("Korea")
 
-    private var _ttlLiveData = MutableLiveData<QumparanResource<TiktokTextToSpeechResponse?>>()
+    private var _ttlLiveData = MutableLiveData<MuskoResource<TiktokTextToSpeechResponse?>>()
     val ttlLiveData get() = _ttlLiveData
 
 

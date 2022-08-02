@@ -1,6 +1,5 @@
 package com.feylabs.halalkan.view.translate.convo
 
-import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.media.MediaPlayer
 import android.os.Bundle
@@ -9,11 +8,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
-import com.androidnetworking.AndroidNetworking
 import com.feylabs.halalkan.R
 import com.feylabs.halalkan.customview.AskPermissionDialog
 import com.feylabs.halalkan.customview.SearchLangDialogFragment
-import com.feylabs.halalkan.data.remote.QumparanResource
 import com.feylabs.halalkan.data.remote.reqres.translator.TiktokTextToSpeechResponse
 import com.feylabs.halalkan.databinding.CustomViewSearchLanguageDialogBinding
 import com.feylabs.halalkan.utils.PermissionUtil
@@ -24,13 +21,11 @@ import com.feylabs.halalkan.utils.TranslatorUtil
 import com.feylabs.halalkan.utils.base.BaseFragment
 import com.feylabs.halalkan.customview.searchwithimage.ListSearchWithImageAdapter
 import com.feylabs.halalkan.customview.searchwithimage.SearchWithImageModel
-import com.feylabs.halalkan.data.remote.QumparanResource.*
-import com.feylabs.halalkan.data.remote.reqres.resto.RestaurantCertificationResponse
+import com.feylabs.halalkan.data.remote.MuskoResource.*
 import com.feylabs.halalkan.databinding.FragmentTranslateConvoBinding
 import com.feylabs.halalkan.databinding.ItemChatBinding
 import com.feylabs.halalkan.utils.PermissionCommandUtil
 import com.feylabs.halalkan.utils.PermissionUtil.Companion.openSetting
-import com.feylabs.halalkan.utils.TimeUtil
 import com.feylabs.halalkan.view.translate.TranslateViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 import java.io.IOException

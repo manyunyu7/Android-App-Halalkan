@@ -2,13 +2,7 @@ package com.feylabs.halalkan
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.feylabs.halalkan.data.remote.QumparanResource
-import com.feylabs.halalkan.data.remote.RemoteDataSource
-import com.feylabs.halalkan.data.remote.reqres.prayertime.PrayerTimeAladhanSingleDateResponse
 import com.feylabs.halalkan.utils.location.MyLatLong
-import kotlinx.coroutines.launch
-import timber.log.Timber
 
 class MainViewModel : ViewModel() {
 

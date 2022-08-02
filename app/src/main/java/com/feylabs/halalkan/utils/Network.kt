@@ -2,7 +2,7 @@ package com.feylabs.halalkan.utils
 
 object Network {
 
-    const val AIPI = "192.168.100.4"
+    const val AIPI = "10.0.2.2"
     const val AIPI_PORT = ":8000"
     const val MAP_API = "AIzaSyC0-LbUHmkGHWdTwOfek7q2erdCzfR4UGA"
     const val REAL_URL = "http://$AIPI${AIPI_PORT}/"
