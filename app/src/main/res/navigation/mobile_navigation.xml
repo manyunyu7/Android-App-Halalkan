@@ -83,11 +83,6 @@
         android:label="ListAndSearchPrayerRoomFragment" />
 
     <fragment
-        android:id="@+id/navigation_translateFragment"
-        android:name="com.feylabs.halalkan.view.translate.TranslateFragment"
-        android:label="TranslateFragment" />
-
-    <fragment
         android:id="@+id/navigation_CategoryProductsFragment"
         android:name="com.feylabs.halalkan.view.products.CategoryProductsFragment"
         android:label="CategoryProductsFragment" />
@@ -100,7 +95,7 @@
 
     <fragment
         android:id="@+id/navigation_masjidReviewFragment"
-        android:name="com.feylabs.halalkan.view.prayer.review.MasjidReviewFragment"
+        android:name="com.feylabs.halalkan.view.prayer.review.create.MasjidCreateReviewFragment"
         android:label="MasjidReviewFragment" />
 
     <fragment
