@@ -1,24 +1,30 @@
 package com.feylabs.halalkan.utils
 
 import android.content.Context
-import android.view.View
+import android.net.Uri
 import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.feylabs.halalkan.R
 import com.feylabs.halalkan.utils.Network.REAL_URL
-import com.feylabs.halalkan.utils.StringUtil.encodeUrl
+import com.feylabs.halalkan.utils.StringUtil.decodeMuskoUrl
 import com.pixplicity.sharp.Sharp
 import okhttp3.*
+import java.io.File
 import java.io.IOException
 
 object ImageViewUtils {
 
-    fun String.urlHalal(){
-        var url = this.encodeUrl()
-        if(url.contains("/"))
-        url = REAL_URL+url
+    fun String.urlHalal() {
+        var url = this.decodeMuskoUrl()
+        if (url.contains("/"))
+            url = REAL_URL + url
     }
+
+    fun String.imgFullPath() = Network.STORAGE_V1 + this
+
+    fun String.imgFullUserPath() =
+        REAL_URL + "uploads/img/users/$this"
 
     fun ImageView.loadSvg(context: Context, url: String) {
         val imageView = this
@@ -60,6 +66,32 @@ object ImageViewUtils {
             .diskCacheStrategy(DiskCacheStrategy.NONE)
             .skipMemoryCache(true)
             .into(this)
+    }
+
+    fun ImageView.loadImage(
+        context: Context,
+        uri: Uri? = null,
+        file: File? = null,
+        thumbnailsType: ThumbnailsType = ThumbnailsType.LOADING_1
+    ) {
+        if(file!=null){
+            Glide.with(context)
+                .load(file)
+                .placeholder(thumbnailsType.value)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(true)
+                .into(this)
+        }else{
+            if(uri!=null){
+                Glide.with(context)
+                    .load(uri)
+                    .placeholder(thumbnailsType.value)
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .skipMemoryCache(true)
+                    .into(this)
+            }
+        }
+
     }
 
     fun ImageView.loadImage(

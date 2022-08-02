@@ -7,7 +7,7 @@ data class MasjidDetailResponse(
     @SerializedName("code")
     val code: Int,
     @SerializedName("data")
-    val `data`: List<DataMasjid>,
+    val `data`: List<MasjidModelResponse>,
     @SerializedName("message")
     val message: String,
     @SerializedName("success")

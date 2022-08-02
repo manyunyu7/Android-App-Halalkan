@@ -51,7 +51,7 @@ class PostDetailFragment : BaseFragment() {
 
                 cardProfile.setOnClickListener {
                     findNavController().navigate(
-                        R.id.userProfileFragment,
+                        R.id.navigation_userProfileFragment,
                         bundleOf("userId" to model?.userId.toString())
                     )
                 }

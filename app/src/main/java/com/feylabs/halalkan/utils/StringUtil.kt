@@ -1,10 +1,16 @@
 package com.feylabs.halalkan.utils
 
 import android.net.Uri
+import com.feylabs.halalkan.utils.ImageViewUtils.imgFullPath
 
 object StringUtil {
 
-    fun String.encodeUrl(): String {
+
+    fun String.loadMuskoImage() : String{
+        return this.decodeMuskoUrl().imgFullPath()
+    }
+
+    fun String.decodeMuskoUrl(): String {
         var url = ""
         url = this.replace("(", "%28")
         url = url.replace(")", "%29")
@@ -34,5 +40,51 @@ object StringUtil {
         // remove last comma
         initialString = initialString.dropLast(1)
         return initialString
+    }
+
+    fun String?.orMuskoEmpty(replacable:String): String {
+        return if(this.isNullOrEmpty()){
+            replacable
+        }else{
+            this
+        }
+    }
+
+    fun Any.prettyPrint(): String {
+
+        var indentLevel = 0
+        val indentWidth = 4
+
+        fun padding() = "".padStart(indentLevel * indentWidth)
+
+        val toString = toString()
+
+        val stringBuilder = StringBuilder(toString.length)
+
+        var i = 0
+        while (i < toString.length) {
+            when (val char = toString[i]) {
+                '(', '[', '{' -> {
+                    indentLevel++
+                    stringBuilder.appendLine(char).append(padding())
+                }
+                ')', ']', '}' -> {
+                    indentLevel--
+                    stringBuilder.appendLine().append(padding()).append(char)
+                }
+                ',' -> {
+                    stringBuilder.appendLine(char).append(padding())
+                    // ignore space after comma as we have added a newline
+                    val nextChar = toString.getOrElse(i + 1) { char }
+                    if (nextChar == ' ') i++
+                }
+                else -> {
+                    stringBuilder.append(char)
+                }
+            }
+            i++
+        }
+
+        return stringBuilder.toString()
     }
 }

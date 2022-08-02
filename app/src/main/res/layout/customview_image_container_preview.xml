@@ -13,7 +13,7 @@
         app:layout_constraintStart_toStartOf="parent"
         android:orientation="horizontal"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/customview_item_photo_container_preview"
+        tools:listitem="@layout/customview_item_photo_container_preview_small"
         />
 
     <include

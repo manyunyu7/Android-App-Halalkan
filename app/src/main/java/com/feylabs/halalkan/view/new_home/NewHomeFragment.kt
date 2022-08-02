@@ -11,7 +11,7 @@ import com.feylabs.halalkan.MainViewModel
 import com.feylabs.halalkan.R
 import com.feylabs.halalkan.customview.AskPermissionDialog
 import com.feylabs.halalkan.data.remote.QumparanResource
-import com.feylabs.halalkan.data.remote.reqres.masjid.DataMasjid
+import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidModelResponse
 import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidResponseWithoutPagination
 import com.feylabs.halalkan.data.remote.reqres.prayertime.PrayerTimeAladhanSingleDateResponse
 import com.feylabs.halalkan.databinding.FragmentNewHomeBinding
@@ -24,6 +24,7 @@ import com.feylabs.halalkan.utils.base.BaseFragment
 import com.feylabs.halalkan.utils.location.LocationUtils
 import com.feylabs.halalkan.utils.location.MyLatLong
 import com.feylabs.halalkan.utils.masjid.MasjidUtility.renderWithDistanceModel
+import com.feylabs.halalkan.utils.snackbar.UtilSnackbar
 import com.feylabs.halalkan.view.home.HomeViewModel
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -38,6 +39,7 @@ class NewHomeFragment : BaseFragment() {
     private val mMosqueAdapter by lazy { ListMasjidAdapter() }
 
     private var _binding: FragmentNewHomeBinding? = null
+
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
@@ -46,15 +48,40 @@ class NewHomeFragment : BaseFragment() {
         setupMenuClickListener()
     }
 
+    override fun onResume() {
+        super.onResume()
+        if (mMosqueAdapter.itemCount == 0) {
+            fetchAllMasjid()
+        }
+    }
+
     private fun setupMenuClickListener() {
+
+        binding.bottomNav.apply {
+
+            setBottomMenuActive(tvHome)
+            setBottomMenuActive(ivMenuHome)
+
+            btnMenuProfile.setOnClickListener {
+                val userToken = muskoPref().getToken().orEmpty()
+                if (userToken.isEmpty()) {
+                    UtilSnackbar.showSnackbar(getRootView(), "Silakan Login Terlebih Dahulu")
+                    findNavController().navigate(R.id.navigation_loginFragment)
+                } else {
+                    findNavController().navigate(R.id.navigation_userProfileFragment)
+                }
+            }
+        }
+
+
         binding.menuPrayer.setOnClickListener {
             findNavController().navigate(R.id.navigation_prayerMainFragment)
         }
         binding.menuResto.setOnClickListener {
-
+            findNavController().navigate(R.id.action_navigation_newHomeFragment_to_navigation_restoMainFragment)
         }
         binding.menuTranslate.setOnClickListener {
-            findNavController().navigate(R.id.navigation_translateFragment)
+            findNavController().navigate(R.id.action_navigation_newHomeFragment_to_navigation_translateFragment)
         }
         binding.menuScan.setOnClickListener {}
 
@@ -79,6 +106,7 @@ class NewHomeFragment : BaseFragment() {
             method = "11",
             time = getCurrentTimeUnix()
         )
+
     }
 
     override fun initUI() {
@@ -95,13 +123,12 @@ class NewHomeFragment : BaseFragment() {
         })
 
         mMosqueAdapter.setupAdapterInterface(object : ListMasjidAdapter.ItemInterface {
-            override fun onclick(model: DataMasjid) {
+            override fun onclick(model: MasjidModelResponse) {
                 findNavController().navigate(
                     R.id.navigation_detailMasjidFragment,
                     bundleOf("data" to model)
                 )
             }
-
         })
     }
 
@@ -168,7 +195,10 @@ class NewHomeFragment : BaseFragment() {
             }
         }
 
-        mainViewModel.liveLatLng.observe(viewLifecycleOwner){}
+        mainViewModel.liveLatLng.observe(viewLifecycleOwner) {
+            fetchPrayerTime()
+            fetchAllMasjid()
+        }
 
     }
 
@@ -189,9 +219,10 @@ class NewHomeFragment : BaseFragment() {
 
         var initialData = response.data.toMutableList()
 
-        if(LocationUtils.checkIfLocationSet(mainViewModel.liveLatLng.value)){
+        if (LocationUtils.checkIfLocationSet(mainViewModel.liveLatLng.value)) {
             initialData = initialData.renderWithDistanceModel(
-                myLocation = mainViewModel.liveLatLng.value ?: MyLatLong(-99.0,-99.0)
+                myLocation = mainViewModel.liveLatLng.value ?: MyLatLong(-99.0, -99.0),
+                sortByNearest = true, limit = 10
             )
         }
 
@@ -223,7 +254,6 @@ class NewHomeFragment : BaseFragment() {
 
     private fun loadData() {
         val tempShowedPosts = mutableListOf<RestaurantHomeUIModel>()
-
         tempShowedPosts.add(
             RestaurantHomeUIModel(
                 title = "La Yeon at The Shilla Seoul",

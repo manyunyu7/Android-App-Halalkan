@@ -15,6 +15,7 @@ object TranslatorUtil {
         flagMap["ko"] = "kr"
         flagMap["id"] = "id"
         flagMap["id"] = "id"
+        flagMap["ar"] = "sa" // arabic
         flagMap["sq"] = "al"
         flagMap["en"] = "gb" //england
         flagMap["ms"] = "my" //malaysia
@@ -102,16 +103,18 @@ object TranslatorUtil {
         imgFlag2.setImageDrawable(image)
     }
 
+//    https://developers.google.com/admin-sdk/directory/v1/languages
     fun mapLocaleToSpeechToText(value: String?): String {
         value?.let {
             return when (value) {
                 "ko" -> "ko-rKR"
-                "en" -> "en-rUS"
+                "en" -> "en"
                 "hi" -> "hi-rIN"
                 "id" -> "in-rID"
-                else -> "en-rUS"
+                "ms" -> "hl=ms"
+                else -> it
             }
-        } ?: return "en-rUS"
+        } ?: return value.orEmpty()
     }
 
 }

@@ -15,3 +15,10 @@ data class RestaurantHomeUIModel(
     val id: String, // cuisine category
     val image: String, // cuisine category
 ) : Parcelable
+
+@Parcelize
+data class Category(
+    val id: String, // cuisine category
+    val image: String, // cuisine category
+    val name: String, // cuisine category
+) : Parcelable

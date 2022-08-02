@@ -6,11 +6,8 @@ import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.feylabs.halalkan.R
 import com.feylabs.halalkan.data.remote.reqres.AlbumPhotoResponse
-import com.feylabs.halalkan.data.remote.reqres.PostCommentResponse
-import com.feylabs.halalkan.databinding.ItemCommentBinding
 import com.feylabs.halalkan.databinding.ItemPhotoBinding
 
 class PhotoListAdapter : RecyclerView.Adapter<PhotoListAdapter.PhotoListViewHolder>() {
