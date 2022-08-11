@@ -83,6 +83,15 @@ val networkModule = module {
         retrofit.create(PrayerTimeAladhanService::class.java)
     }
 
+    single<FavoriteService>(named("favService")) {
+        val retrofit = Retrofit.Builder()
+            .baseUrl(Network.BASE_URL_ALADHAN_V1)
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(get())
+            .build()
+        retrofit.create(FavoriteService::class.java)
+    }
+
 
 }
 
@@ -93,11 +102,12 @@ val repositoryModule = module {
             get(named("masjidService")),
             get(named("translatorService")),
             get(named("prayerTimeAladhanService")),
-            get(named("restoService"))
+            get(named("restoService")),
+            get(named("favService"))
         )
     }
     single { MasjidRepository(get()) }
     single { QumparanRepository(get()) }
     single { TranslatorRepository(get()) }
-    single { PrayerTimeRepository(get())}
+    single { PrayerTimeRepository(get()) }
 }

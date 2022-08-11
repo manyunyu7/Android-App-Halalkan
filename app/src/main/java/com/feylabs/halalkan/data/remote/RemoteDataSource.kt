@@ -2,6 +2,8 @@ package com.feylabs.halalkan.data.remote
 
 import com.feylabs.halalkan.data.remote.reqres.auth.LoginBodyRequest
 import com.feylabs.halalkan.data.remote.reqres.auth.RegisterBodyRequest
+import com.feylabs.halalkan.data.remote.reqres.favorite.AddFavMasjidResponse
+import com.feylabs.halalkan.data.remote.reqres.favorite.AddFavRestoResponse
 import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidDetailResponse
 import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidPhotosResponse
 import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidReviewPaginationResponse
@@ -18,7 +20,8 @@ class RemoteDataSource(
     private val masjidService: MasjidService,
     private val translationService: TranslatorService,
     private val prayerTimeService: PrayerTimeAladhanService,
-    private val restoService: RestoService
+    private val restoService: RestoService,
+    private val favoriteService: FavoriteService,
 ) : RemoteDataSourceInterface {
 
     /**
@@ -120,6 +123,14 @@ class RemoteDataSource(
 
     override suspend fun getAllFoodByResto(id: String): Response<AllFoodByRestoResponse> {
         return restoService.getAllFoodOnResto(id)
+    }
+
+    override suspend fun addFavoriteMasjid(masjidId: String): Response<AddFavMasjidResponse> {
+        return favoriteService.addFavoriteMasjid()
+    }
+
+    override suspend fun addFavoriteResto(restoId: String): Response<AddFavRestoResponse> {
+        return favoriteService.addFavoriteResto(restoId)
     }
 
 
