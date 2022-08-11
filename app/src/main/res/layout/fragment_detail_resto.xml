@@ -498,7 +498,7 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="3dp"
+                android:layout_height="5dp"
                 android:layout_marginTop="@dimen/dimen_10dp"
                 android:background="@color/color_separator" />
 
@@ -515,40 +515,82 @@
                 android:textSize="15sp"
                 android:textStyle="bold" />
 
-            <HorizontalScrollView
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_menu_category"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/dimen_20dp">
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/dimen_10dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:itemCount="4"
+                tools:listitem="@layout/custom_view_item_menu_tab" />
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                    <include
-                        android:id="@+id/menu_halal_food"
-                        layout="@layout/custom_view_item_menu_tab"
-                        android:layout_width="wrap_content" />
-
-                    <include
-                        android:id="@+id/menu_non_halal_food"
-                        layout="@layout/custom_view_item_menu_tab" />
-
-                    <include
-                        android:id="@+id/menu_alcohol"
-                        layout="@layout/custom_view_item_menu_tab" />
-
-                </LinearLayout>
-
-            </HorizontalScrollView>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_list"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="@dimen/dimen_10dp"
+                android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/dimen_10dp"
+                android:layout_marginTop="@dimen/dimen_10dp"
                 tools:itemCount="2"
                 tools:listitem="@layout/item_food" />
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/loading_list_food"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginBottom="90dp"
+                android:padding="50dp"
+                android:visibility="gone"
+                tools:layout_marginBottom="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:lottie_autoPlay="true"
+                app:lottie_fileName="loading_food.json"
+                app:lottie_loop="true"
+                tools:visibility="visible" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/state_no_food"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:visibility="gone"
+                tools:visibility="visible"
+                android:layout_marginBottom="90dp"
+                android:orientation="vertical"
+                >
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    tools:layout_marginBottom="0dp"
+                    android:padding="50dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:lottie_autoPlay="true"
+                    app:lottie_fileName="food_questionable.json"
+                    app:lottie_loop="true"
+                     />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/dimen_20dp"
+                    android:ellipsize="none"
+                    android:textAlignment="center"
+                    android:fontFamily="@font/poppins_regular"
+                    android:scrollHorizontally="false"
+                    android:text="Belum Ada Data"
+                    android:textColor="@color/color_blue_purplish"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
 
         </LinearLayout>

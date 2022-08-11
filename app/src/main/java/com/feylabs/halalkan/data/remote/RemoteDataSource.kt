@@ -7,10 +7,7 @@ import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidPhotosResponse
 import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidReviewPaginationResponse
 import com.feylabs.halalkan.data.remote.reqres.masjid.pagination.AllMasjidPaginationResponse
 import com.feylabs.halalkan.data.remote.reqres.prayertime.PrayerTimeAladhanSingleDateResponse
-import com.feylabs.halalkan.data.remote.reqres.resto.AllRestoNoPagination
-import com.feylabs.halalkan.data.remote.reqres.resto.FoodTypeResponse
-import com.feylabs.halalkan.data.remote.reqres.resto.RestaurantCertificationResponse
-import com.feylabs.halalkan.data.remote.reqres.resto.RestoDetailResponse
+import com.feylabs.halalkan.data.remote.reqres.resto.*
 import com.feylabs.halalkan.data.remote.reqres.resto.food.RestoFoodByCommonCategoryResponse
 import com.feylabs.halalkan.data.remote.service.*
 import com.feylabs.halalkan.utils.Network
@@ -111,8 +108,18 @@ class RemoteDataSource(
     override suspend fun getRestoFoodByCommonCategory(
         restoId: String,
         categoryId: String
-    ): Response<RestoFoodByCommonCategoryResponse> {
-        return restoService.getFoodByResto(restoId,categoryId)
+    ) = restoService.getFoodByResto(categoryId)
+
+    override suspend fun getFoodCategoryOnResto(id: String): Response<FoodCategoryResponse> {
+        return restoService.getFoodCategoryOnResto(id)
+    }
+
+    override suspend fun getFoodByCategory(id: String): Response<AllFoodByRestoResponse> {
+        return restoService.getFoodByCategory(id)
+    }
+
+    override suspend fun getAllFoodByResto(id: String): Response<AllFoodByRestoResponse> {
+        return restoService.getAllFoodOnResto(id)
     }
 
 

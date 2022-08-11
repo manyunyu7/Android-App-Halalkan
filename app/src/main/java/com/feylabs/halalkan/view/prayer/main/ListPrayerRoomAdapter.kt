@@ -10,6 +10,7 @@ import com.feylabs.halalkan.R
 import com.feylabs.halalkan.databinding.ItemHomePrayerRoomBinding
 import com.feylabs.halalkan.view.prayer.PrayerRoomListUIModel
 
+@Deprecated("Pakai Yang Adapter Utama")
 class ListPrayerRoomAdapter :
     RecyclerView.Adapter<ListPrayerRoomAdapter.RestaurantHomeViewHolder>() {
 
@@ -48,8 +49,9 @@ class ListPrayerRoomAdapter :
             binding.tvMiddleCategory.text = model?.categoryMiddle.toString()
             binding.tvAddress.text = model?.address
 
+            val imgUrl = model.image
             Glide.with(mContext)
-                .load(model?.image.toString())
+                .load(imgUrl)
                 .thumbnail(Glide.with(mContext).load(R.raw.ic_loading_google).fitCenter())
                 .skipMemoryCache(true)
                 .into(binding.imgCover)

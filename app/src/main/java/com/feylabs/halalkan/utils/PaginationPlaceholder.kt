@@ -43,6 +43,7 @@ class PaginationPlaceholder {
             review_avg = "",
             typeId = 0,
             review_count = "",
+            img_full_path = "",
             ViewType = VFooter
         )
     }

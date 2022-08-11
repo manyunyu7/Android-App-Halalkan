@@ -99,7 +99,7 @@ class AllMasjidAdapter :
 
             binding.tvTitle.text = model.name
             binding.tvAddress.text = model.address
-            val imgUrl = model.img.decodeMuskoUrl().imgFullPath()
+
             binding.tvCategory.text = model.categoryName.uppercase()
 
             if (model.distanceKm != null) {
@@ -113,7 +113,7 @@ class AllMasjidAdapter :
                 binding.tvDistance.visibility = View.GONE
             }
 
-            binding.ivMainImage.loadImageFromURL(mContext,imgUrl)
+            binding.ivMainImage.loadImageFromURL(mContext,model.img_full_path)
 
 
             binding.root.setOnClickListener {

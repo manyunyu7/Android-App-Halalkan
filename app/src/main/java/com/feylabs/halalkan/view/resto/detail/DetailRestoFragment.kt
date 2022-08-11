@@ -14,6 +14,8 @@ import com.feylabs.halalkan.customview.imagepreviewcontainer.CustomViewPhotoMode
 import com.feylabs.halalkan.data.remote.QumparanResource
 import com.feylabs.halalkan.data.remote.QumparanResource.*
 import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidPhotosResponse
+import com.feylabs.halalkan.data.remote.reqres.resto.FoodCategoryResponse
+import com.feylabs.halalkan.data.remote.reqres.resto.FoodCategoryResponse.FoodCategoryResponseItem
 import com.feylabs.halalkan.data.remote.reqres.resto.RestoDetailResponse
 import com.feylabs.halalkan.data.remote.reqres.resto.RestoModelResponse
 import com.feylabs.halalkan.databinding.FragmentDetailPrayerBinding
@@ -45,42 +47,33 @@ class DetailRestoFragment : BaseFragment() {
     var initModel: RestoModelResponse? = null
 
     private val foodAdapter by lazy { RestoFoodAdapter() }
+    private val categoryAdapter by lazy { FoodCategoryAdapter() }
 
     override fun initUI() {
         setupInitialUi()
         setupFoodAdapter()
-        setupMenuTab()
     }
 
     private fun setupFoodAdapter() {
         binding.rvList.apply {
             adapter = foodAdapter
+            setHasFixedSize(true)
             layoutManager = setLayoutManagerLinear()
         }
+
+        binding.rvMenuCategory.apply {
+            adapter = categoryAdapter
+            layoutManager = setLayoutManagerHorizontal()
+        }
+
+        categoryAdapter.setupAdapterInterface(object : FoodCategoryAdapter.ItemInterface{
+            override fun onclick(model: FoodCategoryResponseItem) {
+                //set current active menu
+                viewModel.currentMenuTab.postValue(Pair(model.id,model.name))
+            }
+        })
     }
 
-    private fun setupMenuTab() {
-        binding.menuAlcohol.apply {
-            tabMenuName.text = "Alcohol"
-            root.setOnClickListener {
-                viewModel.currentMenuTab.value = Pair(3, "Alcohol")
-            }
-        }
-
-        binding.menuHalalFood.apply {
-            tabMenuName.text = "Halal"
-            root.setOnClickListener {
-                viewModel.currentMenuTab.value = Pair(1, "Halal")
-            }
-        }
-
-        binding.menuNonHalalFood.apply {
-            tabMenuName.text = "Non Halal"
-            root.setOnClickListener {
-                viewModel.currentMenuTab.value = Pair(2, "Non Halal")
-            }
-        }
-    }
 
     private fun setupInitialUi(showError: Boolean = false, messageError: String = "") {
         initModel?.apply {
@@ -103,26 +96,64 @@ class DetailRestoFragment : BaseFragment() {
     }
 
     override fun initObserver() {
-        mainViewModel.liveLatLng.observe(viewLifecycleOwner) {
+        viewModel.foodByCategoryLiveData.observe(viewLifecycleOwner){
+            when(it){
+                is Default -> {
+                    showCenterLoadingIndicator(false)
+                }
+                is Error ->{
+                    showToast(it.message.toString())
+                    showCenterLoadingIndicator(false)
+                }
+                is Loading -> {
+                    showCenterLoadingIndicator(false)
+                }
+                is Success -> {
+                    if(!isAllMenu().not()){
+                        it.data?.let {
+                            foodAdapter.setWithNewData(it)
+                            foodAdapter.notifyDataSetChanged()
+                            checkFoodAdapter()
+                        }
+                    }
+                }
+            }
+        }
 
+        viewModel.foodCategoryLiveData.observe(viewLifecycleOwner) {
+            when (it) {
+                is Success -> {
+                    it.data?.let {
+                        setupFoodCategory(it)
+                    }
+                }
+                is Loading->{
+                    showLoadingListFood(true)
+                }
+                else->{
+                    showLoadingListFood(false)
+                }
+            }
         }
 
         viewModel.restoFoodByCategoryLiveData.observe(viewLifecycleOwner) {
             when (it) {
                 is Default -> {
-                    showCenterLoadingIndicator(false)
+                    showLoadingListFood(false)
                 }
                 is Error -> {
-                    showCenterLoadingIndicator(false)
+                    showToast(it.message.toString())
+                    showLoadingListFood(false)
                 }
                 is Loading -> {
-                    showCenterLoadingIndicator(true)
+                    showLoadingListFood(true)
                 }
                 is Success -> {
-                    showCenterLoadingIndicator(false)
+                    showLoadingListFood(false)
                     it.data?.let {
-                        foodAdapter.setWithNewData(it.data.toMutableList())
+                        foodAdapter.setWithNewData(it)
                         foodAdapter.notifyDataSetChanged()
+                        checkFoodAdapter()
                     }
                 }
             }
@@ -130,32 +161,41 @@ class DetailRestoFragment : BaseFragment() {
         }
 
         viewModel.currentMenuTab.observe(viewLifecycleOwner) {
-            val foodCategoryId = it.first.toString()
-            when (it.second) {
-                "Halal" -> {
-                    viewModel.getRestoFoodByCategory(getRestoId(), foodCategoryId)
-                    binding.menuHalalFood.activeIndicator.makeVisible()
-                    binding.menuAlcohol.activeIndicator.makeGone()
-                    binding.menuNonHalalFood.activeIndicator.makeGone()
+            val foodCategoryId = it.first
+            categoryAdapter.setActiveMenu(it.first)
+            if(isAllMenu()){
+                viewModel.getAllFoodByResto(getRestoId())
+            }else{
+                viewModel.getRestoFoodByCategory(getRestoId(),foodCategoryId.toString())
+            }
+        }
+
+        viewModel.allFoodLiveData.observe(viewLifecycleOwner) {
+            when (it) {
+                is Error -> {
+                    showLoadingListFood(false)
                 }
-                "Non Halal" -> {
-                    viewModel.getRestoFoodByCategory(getRestoId(), foodCategoryId)
-                    binding.menuHalalFood.activeIndicator.makeGone()
-                    binding.menuAlcohol.activeIndicator.makeGone()
-                    binding.menuNonHalalFood.activeIndicator.makeVisible()
+                is Loading -> {
+                    showLoadingListFood(true)
                 }
-                "Alcohol" -> {
-                    viewModel.getRestoFoodByCategory(getRestoId(), foodCategoryId)
-                    binding.menuHalalFood.activeIndicator.makeGone()
-                    binding.menuAlcohol.activeIndicator.makeVisible()
-                    binding.menuNonHalalFood.activeIndicator.makeGone()
+                is Success -> {
+                    showLoadingListFood(false)
+                    it.data?.let { data ->
+                        if(isAllMenu()){
+                            foodAdapter.setWithNewData(data)
+                            foodAdapter.notifyDataSetChanged()
+                            checkFoodAdapter()
+                        }
+                    } ?: run {
+                       //TODO
+                    }
                 }
             }
         }
 
+
         viewModel.detailRestoLiveData.observe(viewLifecycleOwner) {
             when (it) {
-                is Default -> {}
                 is Error -> {
                     showCenterLoadingIndicator(false)
                 }
@@ -174,6 +214,27 @@ class DetailRestoFragment : BaseFragment() {
         }
 
     }
+
+    private fun checkFoodAdapter() {
+        if(foodAdapter.itemCount==0){
+            binding.stateNoFood.makeVisible()
+        }else{
+            binding.stateNoFood.makeGone()
+        }
+    }
+
+    private fun setupFoodCategory(data: FoodCategoryResponse) {
+        val tempData = data
+        tempData.add(
+            0, FoodCategoryResponseItem(id=-99,"All")
+        )
+        categoryAdapter.setWithNewData(tempData)
+        categoryAdapter.notifyDataSetChanged()
+        setAllMenu()
+    }
+
+    private fun setAllMenu() = viewModel.currentMenuTab.postValue(Pair(-99,""))
+    private fun isAllMenu() = viewModel.currentMenuTab.value?.first==-99
 
     private fun setupDetailFromNetwork(restoDetailResponse: RestoDetailResponse) {
         binding.apply {
@@ -254,9 +315,10 @@ class DetailRestoFragment : BaseFragment() {
     }
 
     override fun initData() {
-        viewModel.currentMenuTab.value = (Pair(0, "Halal"))
         initModel = arguments?.getParcelable<RestoModelResponse>("data")
-        viewModel.getDetailResto(initModel?.id.toString())
+        viewModel.getDetailResto(getRestoId())
+        viewModel.getFoodCategoryOnResto(getRestoId())
+        viewModel.getAllFoodByResto(getRestoId())
     }
 
     override fun onCreateView(
@@ -281,6 +343,16 @@ class DetailRestoFragment : BaseFragment() {
             loc2 = MyLatLong(mLat, mLong)
         )
         return distance.roundOffDecimal() + " Km"
+    }
+
+    private fun showLoadingListFood(value: Boolean){
+        if (value){
+            binding.rvList.makeGone()
+            binding.loadingListFood.makeVisible()
+        }else{
+            binding.rvList.makeVisible()
+            binding.loadingListFood.makeGone()
+        }
     }
 
     private fun showCenterLoadingIndicator(value: Boolean) {

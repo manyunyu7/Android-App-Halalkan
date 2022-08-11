@@ -8,10 +8,7 @@ import com.feylabs.halalkan.data.remote.reqres.auth.RegisterResponse
 import com.feylabs.halalkan.data.remote.reqres.masjid.*
 import com.feylabs.halalkan.data.remote.reqres.masjid.pagination.AllMasjidPaginationResponse
 import com.feylabs.halalkan.data.remote.reqres.prayertime.PrayerTimeAladhanSingleDateResponse
-import com.feylabs.halalkan.data.remote.reqres.resto.AllRestoNoPagination
-import com.feylabs.halalkan.data.remote.reqres.resto.FoodTypeResponse
-import com.feylabs.halalkan.data.remote.reqres.resto.RestaurantCertificationResponse
-import com.feylabs.halalkan.data.remote.reqres.resto.RestoDetailResponse
+import com.feylabs.halalkan.data.remote.reqres.resto.*
 import com.feylabs.halalkan.data.remote.reqres.resto.food.RestoFoodByCommonCategoryResponse
 import com.feylabs.halalkan.data.remote.reqres.translator.TiktokTextToSpeechResponse
 import com.feylabs.halalkan.data.remote.reqres.translator.TranslateResponse
@@ -61,6 +58,9 @@ interface RemoteDataSourceInterface {
     suspend fun getRestoAll() : Response<AllRestoNoPagination>
     suspend fun getFoodType() : Response<FoodTypeResponse>
     suspend fun getRestoDetail(id:String) : Response<RestoDetailResponse>
-    suspend fun getRestoFoodByCommonCategory(restoId:String,categoryId:String) : Response<RestoFoodByCommonCategoryResponse>
+    suspend fun getRestoFoodByCommonCategory(restoId:String,categoryId:String) : Response<AllFoodByRestoResponse>
 
+    suspend fun getFoodCategoryOnResto(id:String) : Response<FoodCategoryResponse>
+    suspend fun getFoodByCategory(id:String) : Response<AllFoodByRestoResponse>
+    suspend fun getAllFoodByResto(id:String) : Response<AllFoodByRestoResponse>
 }

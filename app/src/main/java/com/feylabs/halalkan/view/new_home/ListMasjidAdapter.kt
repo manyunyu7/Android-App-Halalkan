@@ -10,6 +10,7 @@ import com.feylabs.halalkan.R
 import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidModelResponse
 import com.feylabs.halalkan.databinding.ItemHomeMosqueBinding
 import com.feylabs.halalkan.utils.ImageViewUtils.imgFullPath
+import com.feylabs.halalkan.utils.ImageViewUtils.loadImageFromURL
 import com.feylabs.halalkan.utils.StringUtil.decodeMuskoUrl
 
 class ListMasjidAdapter :
@@ -59,14 +60,8 @@ class ListMasjidAdapter :
                 binding.tvDistance.visibility = View.GONE
             }
 
-            val imgUrl = model.img.decodeMuskoUrl().imgFullPath()
             binding.tvTopCategory.text = model.categoryName.uppercase()
-
-            Glide.with(mContext)
-                .load(imgUrl)
-                .thumbnail(Glide.with(mContext).load(R.raw.ic_loading_google).fitCenter())
-                .skipMemoryCache(true)
-                .into(binding.imgCover)
+            binding.imgCover.loadImageFromURL(mContext,model.img_full_path)
         }
     }
 

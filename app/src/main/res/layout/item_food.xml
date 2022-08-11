@@ -30,7 +30,6 @@
                 android:background="#0000FF"
                 android:src="@drawable/placeholder"
                 app:cardCornerRadius="15dp"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/guidelineCenter"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -42,7 +41,6 @@
                     android:scaleType="centerCrop"
                     android:src="@drawable/placeholder" />
             </androidx.cardview.widget.CardView>
-
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guidelineCenter"
@@ -57,11 +55,10 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="5dp"
+                android:layout_marginTop="@dimen/dimen_10dp"
                 android:ellipsize="marquee"
                 android:fontFamily="@font/poppins_medium"
                 android:maxLines="3"
-                android:singleLine="true"
-                android:layout_marginTop="@dimen/dimen_10dp"
                 android:text="Seoul Central Masjid"
                 android:textColor="@color/color_blue_purplish"
                 android:textSize="16sp"
@@ -69,8 +66,8 @@
                 app:layout_constraintStart_toStartOf="@id/guidelineCenter"
                 app:layout_constraintTop_toTopOf="parent" />
 
-
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/container_right"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/dimen_5dp"
@@ -83,10 +80,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    >
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <TextView
                         android:id="@+id/tv_food_desc"
@@ -108,9 +104,8 @@
                         android:drawablePadding="10dp"
                         android:fontFamily="@font/poppins_medium"
                         android:text="40.000 won"
-                        android:textSize="16sp"
                         android:textColor="@color/black"
-                        />
+                        android:textSize="12sp" />
 
 
                 </LinearLayout>
@@ -118,6 +113,42 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <androidx.constraintlayout.widget.Barrier
+                android:id="@+id/barrier"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:barrierDirection="bottom"
+                app:constraint_referenced_ids="container_image,container_right" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                app:layout_constraintTop_toBottomOf="@id/barrier"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_order"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen_10dp"
+                    android:layout_marginTop="@dimen/dimen_10dp"
+                    android:text="Tambah Pesan"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:cornerRadius="@dimen/dimen_20dp"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_edit"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen_10dp"
+                    android:layout_marginTop="@dimen/dimen_10dp"
+                    android:text="Ubah Pesanan"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:cornerRadius="@dimen/dimen_20dp"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

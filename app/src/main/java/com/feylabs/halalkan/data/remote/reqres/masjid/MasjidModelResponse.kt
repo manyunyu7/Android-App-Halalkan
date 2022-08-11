@@ -17,6 +17,8 @@ data class MasjidModelResponse(
     val id: Int,
     @SerializedName("img")
     val img: String,
+    @SerializedName("img_full_path")
+    val img_full_path: String,
     @SerializedName("lat")
     val lat: String,
     @SerializedName("long")

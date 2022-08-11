@@ -13,10 +13,7 @@ import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidResponseWithoutPagin
 import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidReviewPaginationResponse
 import com.feylabs.halalkan.data.remote.reqres.masjid.pagination.AllMasjidPaginationResponse
 import com.feylabs.halalkan.data.remote.reqres.prayertime.PrayerTimeAladhanSingleDateResponse
-import com.feylabs.halalkan.data.remote.reqres.resto.AllRestoNoPagination
-import com.feylabs.halalkan.data.remote.reqres.resto.FoodTypeResponse
-import com.feylabs.halalkan.data.remote.reqres.resto.RestaurantCertificationResponse
-import com.feylabs.halalkan.data.remote.reqres.resto.RestoDetailResponse
+import com.feylabs.halalkan.data.remote.reqres.resto.*
 import com.feylabs.halalkan.data.remote.reqres.resto.food.RestoFoodByCommonCategoryResponse
 import com.feylabs.halalkan.data.repository.PrayerTimeRepository
 import kotlinx.coroutines.launch
@@ -35,12 +32,25 @@ class RestoViewModel(
         MutableLiveData<QumparanResource<RestaurantCertificationResponse?>>()
     val certLiveData get() = _certLiveData
 
+    private var _foodCategoryLiveData =
+        MutableLiveData<QumparanResource<FoodCategoryResponse?>>()
+    val foodCategoryLiveData get() = _foodCategoryLiveData
+
+    private var _foodByCategoryLiveData =
+        MutableLiveData<QumparanResource<AllFoodByRestoResponse?>>()
+    val foodByCategoryLiveData get() = _foodByCategoryLiveData
+
+    //saved
+    private var _allFoodLiveData =
+        MutableLiveData<QumparanResource<AllFoodByRestoResponse?>>()
+    val allFoodLiveData get() = _allFoodLiveData
+
     private var _foodTypeLiveData =
         MutableLiveData<QumparanResource<FoodTypeResponse?>>()
     val foodTypeLiveData get() = _foodTypeLiveData
 
     private var _restoFoodByCategoryLiveData =
-        MutableLiveData<QumparanResource<RestoFoodByCommonCategoryResponse?>>()
+        MutableLiveData<QumparanResource<AllFoodByRestoResponse?>>()
     val restoFoodByCategoryLiveData get() = _restoFoodByCategoryLiveData
 
     private var _allRestoRawLiveData =
@@ -147,6 +157,45 @@ class RestoViewModel(
                 }
             } catch (e: Exception) {
                 _foodTypeLiveData.postValue(QumparanResource.Error(e.message.toString()))
+            }
+        }
+    }
+
+    fun getFoodCategoryOnResto(restoId:String){
+        _foodCategoryLiveData.postValue(QumparanResource.Loading())
+        viewModelScope.launch {
+            try {
+                val res = ds.getFoodCategoryOnResto(restoId)
+                if (res.isSuccessful) {
+                    _foodCategoryLiveData.postValue(QumparanResource.Success(res.body()))
+                } else {
+                    _foodCategoryLiveData.postValue(
+                        QumparanResource.Error(
+                            res.errorBody().toString()
+                        )
+                    )
+                }
+            } catch (e: Exception) {
+                _foodCategoryLiveData.postValue(QumparanResource.Error(e.message.toString()))
+            }
+        }
+    }
+
+    fun getAllFoodByResto(restoId: String){
+        viewModelScope.launch {
+            try {
+                val res = ds.getAllFoodByResto(restoId)
+                if (res.isSuccessful) {
+                    _allFoodLiveData.postValue(QumparanResource.Success(res.body()))
+                } else {
+                    _allFoodLiveData.postValue(
+                        QumparanResource.Error(
+                            res.errorBody().toString()
+                        )
+                    )
+                }
+            } catch (e: Exception) {
+                _allFoodLiveData.postValue(QumparanResource.Error(e.message.toString()))
             }
         }
     }

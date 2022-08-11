@@ -106,6 +106,7 @@
         <entry key="..\:/Users/Henry Augusta/Desktop/#PA/Android-App-Halalkan/app/src/main/res/drawable/ic_svgrepo_door_logout.xml" value="0.1475" />
         <entry key="..\:/Users/Henry Augusta/Desktop/#PA/Android-App-Halalkan/app/src/main/res/layout-v23/item_chat.xml" value="0.10572916666666667" />
         <entry key="..\:/Users/Henry Augusta/Desktop/#PA/Android-App-Halalkan/app/src/main/res/layout/activity_container.xml" value="0.15520833333333334" />
+        <entry key="..\:/Users/Henry Augusta/Desktop/#PA/Android-App-Halalkan/app/src/main/res/layout/activity_turn_by_turn_experience.xml" value="0.1" />
         <entry key="..\:/Users/Henry Augusta/Desktop/#PA/Android-App-Halalkan/app/src/main/res/layout/custom_view_item_menu_tab.xml" value="0.22" />
         <entry key="..\:/Users/Henry Augusta/Desktop/#PA/Android-App-Halalkan/app/src/main/res/layout/custom_view_layout_popup_profile_content.xml" value="0.1375" />
         <entry key="..\:/Users/Henry Augusta/Desktop/#PA/Android-App-Halalkan/app/src/main/res/layout/custom_view_layout_popup_profile_content_pg.xml" value="0.33" />
@@ -118,7 +119,7 @@
         <entry key="..\:/Users/Henry Augusta/Desktop/#PA/Android-App-Halalkan/app/src/main/res/layout/fragment_all_prayer_room.xml" value="0.12" />
         <entry key="..\:/Users/Henry Augusta/Desktop/#PA/Android-App-Halalkan/app/src/main/res/layout/fragment_create_review_masjid.xml" value="0.1" />
         <entry key="..\:/Users/Henry Augusta/Desktop/#PA/Android-App-Halalkan/app/src/main/res/layout/fragment_detail_prayer.xml" value="0.22" />
-        <entry key="..\:/Users/Henry Augusta/Desktop/#PA/Android-App-Halalkan/app/src/main/res/layout/fragment_detail_resto.xml" value="0.22" />
+        <entry key="..\:/Users/Henry Augusta/Desktop/#PA/Android-App-Halalkan/app/src/main/res/layout/fragment_detail_resto.xml" value="0.14" />
         <entry key="..\:/Users/Henry Augusta/Desktop/#PA/Android-App-Halalkan/app/src/main/res/layout/fragment_home.xml" value="0.15081521739130435" />
         <entry key="..\:/Users/Henry Augusta/Desktop/#PA/Android-App-Halalkan/app/src/main/res/layout/fragment_list_and_search_prayer_room.xml" value="0.18" />
         <entry key="..\:/Users/Henry Augusta/Desktop/#PA/Android-App-Halalkan/app/src/main/res/layout/fragment_login.xml" value="0.33" />
@@ -149,6 +150,7 @@
         <entry key="..\:/Users/Henry Augusta/Desktop/#PA/Android-App-Halalkan/app/src/main/res/layout/layout_bottom_nav_translator.xml" value="0.22" />
         <entry key="..\:/Users/Henry Augusta/Desktop/#PA/Android-App-Halalkan/app/src/main/res/layout/layout_forum_profile.xml" value="0.33" />
         <entry key="..\:/Users/Henry Augusta/Desktop/#PA/Android-App-Halalkan/app/src/main/res/layout/layout_landing_message.xml" value="0.25" />
+        <entry key="..\:/Users/Henry Augusta/Desktop/#PA/Android-App-Halalkan/app/src/main/res/layout/layout_loading_screen_food.xml" value="0.1" />
         <entry key="..\:/Users/Henry Augusta/Desktop/#PA/Android-App-Halalkan/app/src/main/res/layout/layout_loading_screen_full.xml" value="0.109375" />
         <entry key="..\:/Users/Henry Augusta/Desktop/#PA/Android-App-Halalkan/app/src/main/res/layout/layout_loading_screen_rgb.xml" value="0.109375" />
         <entry key="..\:/Users/Henry Augusta/Desktop/#PA/Android-App-Halalkan/app/src/main/res/layout/layout_masjid_card_review_information.xml" value="0.33" />
