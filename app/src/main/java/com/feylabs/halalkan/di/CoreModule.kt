@@ -9,6 +9,7 @@ import com.feylabs.halalkan.utils.Network
 import com.feylabs.halalkan.data.remote.RemoteDataSource
 import com.feylabs.halalkan.data.remote.service.*
 import com.feylabs.halalkan.data.repository.PrayerTimeRepository
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.android.ext.koin.androidContext
@@ -31,7 +32,7 @@ val networkModule = module {
                     .alwaysReadResponseBody(true)
                     .build()
             )
-
+            .addInterceptor(ServiceInterceptor(androidContext()))
             .connectTimeout(120, TimeUnit.SECONDS)
             .readTimeout(120, TimeUnit.SECONDS)
             .build()
