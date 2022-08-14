@@ -3,6 +3,8 @@ package com.feylabs.halalkan.data.remote.service
 import com.feylabs.halalkan.data.remote.reqres.UserResponse
 import com.feylabs.halalkan.data.remote.reqres.resto.*
 import com.feylabs.halalkan.data.remote.reqres.resto.food.RestoFoodByCommonCategoryResponse
+import okhttp3.RequestBody
+import okhttp3.ResponseBody
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -53,6 +55,19 @@ interface RestoService {
 
     @GET("fe/restoran/nearby")
     suspend fun getNearby(): Response<RestaurantCertificationResponse>
+
+    @GET("fe/restoran/{id}/reviews/")
+    suspend fun getReviews(
+        @Path("id") restoId: String,
+        @Query("perPage") perPage: Int = 5,
+        @Query("page") page: Int = 1
+    ): Response<RestoReviewPaginationResponse>
+
+    @POST("reviewResto/store/{id}")
+    suspend fun createReview(
+        @Body file: RequestBody?,
+        @Path("id") restoId: String,
+    ): Response<ResponseBody?>?
 
 
 }

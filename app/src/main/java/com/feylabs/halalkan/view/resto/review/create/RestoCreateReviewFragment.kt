@@ -15,16 +15,13 @@ import com.feylabs.halalkan.customview.RazkyGalleryActivity
 import com.feylabs.halalkan.customview.imagepreviewcontainer.CustomViewPhotoModel
 import com.feylabs.halalkan.customview.imagepreviewcontainer.TypePhotoModel
 import com.feylabs.halalkan.customview.imagepreviewcontainer.small.CustomViewImageContainerPreviewSmall
-import com.feylabs.halalkan.data.remote.QumparanResource
 import com.feylabs.halalkan.data.remote.QumparanResource.*
 import com.feylabs.halalkan.databinding.FragmentCreateReviewMasjidBinding
-import com.feylabs.halalkan.databinding.FragmentReviewNewMasjidBinding
 import com.feylabs.halalkan.utils.PermissionUtil
 import com.feylabs.halalkan.utils.PermissionUtil.Companion.isGranted
 import com.feylabs.halalkan.utils.base.BaseFragment
 import com.feylabs.halalkan.utils.snackbar.SnackbarType
-import com.feylabs.halalkan.view.prayer.PrayerRoomViewModel
-import com.feylabs.halalkan.view.prayer.review.PrayerRoomReviewViewModel
+import com.feylabs.halalkan.view.prayer.review.RestoReviewViewModel
 import com.tangxiaolv.telegramgallery.GalleryActivity
 import com.tangxiaolv.telegramgallery.GalleryConfig
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -32,7 +29,7 @@ import timber.log.Timber
 import java.io.File
 
 
-class MasjidCreateReviewFragment : BaseFragment() {
+class RestoCreateReviewFragment : BaseFragment() {
 
 
     // This property is only valid between onCreateView and
@@ -40,12 +37,12 @@ class MasjidCreateReviewFragment : BaseFragment() {
     private var _binding: FragmentCreateReviewMasjidBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: PrayerRoomViewModel by viewModel()
-    private val reviewViewModel: PrayerRoomReviewViewModel by viewModel()
+    private val viewModel: RestoReviewViewModel by viewModel()
     private val PERMISSION_CODE_STORAGE = 1001
 
     override fun initUI() {
-        binding.ratingBar.rating=5f
+        binding.labelPageTitleTopbar.text="Review Restoran"
+        binding.ratingBar.rating = 5f
         binding.photoContainer.registerChange(
             object : CustomViewImageContainerPreviewSmall.ListenPhotoChange {
                 override fun listen() {
@@ -60,20 +57,12 @@ class MasjidCreateReviewFragment : BaseFragment() {
     }
 
 
-    private fun getMasjidId(): String {
+    private fun getRestoId(): String {
         return arguments?.getString("id") ?: ""
     }
 
-    private fun showLoading(b: Boolean) {
-        if (b){
-            binding.loadingScreen.root.makeVisible()
-        }else{
-            binding.loadingScreen.root.makeGone()
-        }
-    }
-
     override fun initObserver() {
-        reviewViewModel.createReviewLiveData.observe(viewLifecycleOwner) {
+        viewModel.createReviewLiveData.observe(viewLifecycleOwner) {
             when (it) {
                 is Default -> {}
                 is Error -> {
@@ -90,6 +79,14 @@ class MasjidCreateReviewFragment : BaseFragment() {
                     showSnackbar("Review Berhasil Ditambahkan", SnackbarType.SUCCESS)
                 }
             }
+        }
+    }
+
+    private fun showLoading(b: Boolean) {
+        if (b){
+            binding.loadingScreen.root.makeVisible()
+        }else{
+            binding.loadingScreen.root.makeGone()
         }
     }
 
@@ -116,8 +113,8 @@ class MasjidCreateReviewFragment : BaseFragment() {
                 }
             }
 
-            reviewViewModel.addReview(
-                masjidId = getMasjidId(),
+            viewModel.addReview(
+                restoId = getRestoId(),
                 comment = comment,
                 ratingId = rating,
                 filePaths = files
@@ -168,7 +165,7 @@ class MasjidCreateReviewFragment : BaseFragment() {
     }
 
     override fun initData() {
-        viewModel.getMasjidReview(getMasjidId(), page = 1)
+        viewModel.getReview(getRestoId(), page = 1)
     }
 
     override fun onCreateView(

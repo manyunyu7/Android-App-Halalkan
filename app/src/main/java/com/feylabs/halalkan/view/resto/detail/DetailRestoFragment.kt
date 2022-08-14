@@ -66,10 +66,10 @@ class DetailRestoFragment : BaseFragment() {
             layoutManager = setLayoutManagerHorizontal()
         }
 
-        categoryAdapter.setupAdapterInterface(object : FoodCategoryAdapter.ItemInterface{
+        categoryAdapter.setupAdapterInterface(object : FoodCategoryAdapter.ItemInterface {
             override fun onclick(model: FoodCategoryResponseItem) {
                 //set current active menu
-                viewModel.currentMenuTab.postValue(Pair(model.id,model.name))
+                viewModel.currentMenuTab.postValue(Pair(model.id, model.name))
             }
         })
     }
@@ -96,12 +96,12 @@ class DetailRestoFragment : BaseFragment() {
     }
 
     override fun initObserver() {
-        viewModel.foodByCategoryLiveData.observe(viewLifecycleOwner){
-            when(it){
+        viewModel.foodByCategoryLiveData.observe(viewLifecycleOwner) {
+            when (it) {
                 is Default -> {
                     showCenterLoadingIndicator(false)
                 }
-                is Error ->{
+                is Error -> {
                     showToast(it.message.toString())
                     showCenterLoadingIndicator(false)
                 }
@@ -109,7 +109,7 @@ class DetailRestoFragment : BaseFragment() {
                     showCenterLoadingIndicator(false)
                 }
                 is Success -> {
-                    if(!isAllMenu().not()){
+                    if (!isAllMenu().not()) {
                         it.data?.let {
                             foodAdapter.setWithNewData(it)
                             foodAdapter.notifyDataSetChanged()
@@ -127,10 +127,10 @@ class DetailRestoFragment : BaseFragment() {
                         setupFoodCategory(it)
                     }
                 }
-                is Loading->{
+                is Loading -> {
                     showLoadingListFood(true)
                 }
-                else->{
+                else -> {
                     showLoadingListFood(false)
                 }
             }
@@ -163,10 +163,10 @@ class DetailRestoFragment : BaseFragment() {
         viewModel.currentMenuTab.observe(viewLifecycleOwner) {
             val foodCategoryId = it.first
             categoryAdapter.setActiveMenu(it.first)
-            if(isAllMenu()){
+            if (isAllMenu()) {
                 viewModel.getAllFoodByResto(getRestoId())
-            }else{
-                viewModel.getRestoFoodByCategory(getRestoId(),foodCategoryId.toString())
+            } else {
+                viewModel.getRestoFoodByCategory(getRestoId(), foodCategoryId.toString())
             }
         }
 
@@ -181,13 +181,13 @@ class DetailRestoFragment : BaseFragment() {
                 is Success -> {
                     showLoadingListFood(false)
                     it.data?.let { data ->
-                        if(isAllMenu()){
+                        if (isAllMenu()) {
                             foodAdapter.setWithNewData(data)
                             foodAdapter.notifyDataSetChanged()
                             checkFoodAdapter()
                         }
                     } ?: run {
-                       //TODO
+                        //TODO
                     }
                 }
             }
@@ -216,9 +216,9 @@ class DetailRestoFragment : BaseFragment() {
     }
 
     private fun checkFoodAdapter() {
-        if(foodAdapter.itemCount==0){
+        if (foodAdapter.itemCount == 0) {
             binding.stateNoFood.makeVisible()
-        }else{
+        } else {
             binding.stateNoFood.makeGone()
         }
     }
@@ -226,15 +226,15 @@ class DetailRestoFragment : BaseFragment() {
     private fun setupFoodCategory(data: FoodCategoryResponse) {
         val tempData = data
         tempData.add(
-            0, FoodCategoryResponseItem(id=-99,"All")
+            0, FoodCategoryResponseItem(id = -99, "All")
         )
         categoryAdapter.setWithNewData(tempData)
         categoryAdapter.notifyDataSetChanged()
         setAllMenu()
     }
 
-    private fun setAllMenu() = viewModel.currentMenuTab.postValue(Pair(-99,""))
-    private fun isAllMenu() = viewModel.currentMenuTab.value?.first==-99
+    private fun setAllMenu() = viewModel.currentMenuTab.postValue(Pair(-99, ""))
+    private fun isAllMenu() = viewModel.currentMenuTab.value?.first == -99
 
     private fun setupDetailFromNetwork(restoDetailResponse: RestoDetailResponse) {
         binding.apply {
@@ -307,7 +307,7 @@ class DetailRestoFragment : BaseFragment() {
 
         binding.btnWriteReview.setOnClickListener {
             findNavController().navigate(
-                R.id.navigation_masjidReviewNewFragment, bundleOf(
+                R.id.navigation_restoReviewFragment, bundleOf(
                     "id" to initModel?.id.toString()
                 )
             )
@@ -345,11 +345,11 @@ class DetailRestoFragment : BaseFragment() {
         return distance.roundOffDecimal() + " Km"
     }
 
-    private fun showLoadingListFood(value: Boolean){
-        if (value){
+    private fun showLoadingListFood(value: Boolean) {
+        if (value) {
             binding.rvList.makeGone()
             binding.loadingListFood.makeVisible()
-        }else{
+        } else {
             binding.rvList.makeVisible()
             binding.loadingListFood.makeGone()
         }

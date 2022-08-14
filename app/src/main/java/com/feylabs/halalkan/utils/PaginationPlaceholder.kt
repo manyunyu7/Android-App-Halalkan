@@ -2,6 +2,7 @@ package com.feylabs.halalkan.utils
 
 import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidModelResponse
 import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidReviewPaginationResponse
+import com.feylabs.halalkan.data.remote.reqres.resto.RestoReviewPaginationResponse
 
 
 class PaginationPlaceholder {
@@ -46,5 +47,21 @@ class PaginationPlaceholder {
             img_full_path = "",
             ViewType = VFooter
         )
+
+        fun getRestoReviewPaginationResponsePlaceHolder(): RestoReviewPaginationResponse.Reviews.Data {
+            return RestoReviewPaginationResponse.Reviews.Data(
+                id = 0,
+                restoranId = 0,
+                ratingId = 0,
+                reviewCategory = "",
+                comment = "",
+                createdAt = "",
+                updatedAt = "",
+                reviewPhotos = mutableListOf(),
+                userId = 0,
+                userInfo = null,
+                ViewType = VFooter
+            )
+        }
     }
 }

@@ -10,7 +10,6 @@ import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidReviewPaginationResp
 import com.feylabs.halalkan.databinding.CustomviewStarStatsBinding
 import com.feylabs.halalkan.utils.NumberUtil.Companion.round
 import com.taufiqrahman.reviewratings.BarLabels
-import java.util.*
 
 
 class CustomStarStatsReview : FrameLayout {

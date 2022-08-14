@@ -22,7 +22,7 @@ class CustomViewImageContainerPreviewSmall : FrameLayout {
     private var binding: CustomviewImageContainerPreviewBinding
     lateinit var changeInterface: ListenPhotoChange
 
-    private val adapter by lazy { CustomViewImageContainerAdapterSmall() }
+    val adapter by lazy { CustomViewImageContainerAdapterSmall() }
 
     init { // inflate binding and add as view
         binding = CustomviewImageContainerPreviewBinding.inflate(LayoutInflater.from(context))

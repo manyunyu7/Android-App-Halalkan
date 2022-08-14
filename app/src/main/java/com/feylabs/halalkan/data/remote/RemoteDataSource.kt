@@ -10,9 +10,10 @@ import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidReviewPaginationResp
 import com.feylabs.halalkan.data.remote.reqres.masjid.pagination.AllMasjidPaginationResponse
 import com.feylabs.halalkan.data.remote.reqres.prayertime.PrayerTimeAladhanSingleDateResponse
 import com.feylabs.halalkan.data.remote.reqres.resto.*
-import com.feylabs.halalkan.data.remote.reqres.resto.food.RestoFoodByCommonCategoryResponse
 import com.feylabs.halalkan.data.remote.service.*
 import com.feylabs.halalkan.utils.Network
+import okhttp3.RequestBody
+import okhttp3.ResponseBody
 import retrofit2.Response
 
 class RemoteDataSource(
@@ -50,6 +51,13 @@ class RemoteDataSource(
         page: Int,
     ): Response<MasjidReviewPaginationResponse> {
         return masjidService.getMasjidReviews(masjidId, page = page, perPage = perPage)
+    }
+
+    override suspend fun createMasjidReview(
+        masjidId: String,
+        body: RequestBody
+    ): Response<ResponseBody?>? {
+        return masjidService.createReviewMasjid(body, masjidId)
     }
 
 
@@ -113,6 +121,19 @@ class RemoteDataSource(
         categoryId: String
     ) = restoService.getFoodByResto(categoryId)
 
+    override suspend fun createRestoReview(
+        restoId: String,
+        body: RequestBody
+    ): Response<ResponseBody?>? = restoService.createReview(body, restoId)
+
+    override suspend fun getRestoReviews(
+        restoId: String,
+        perPage: Int,
+        page: Int
+    ): Response<RestoReviewPaginationResponse> =
+        restoService.getReviews(restoId, page = page, perPage = perPage)
+
+
     override suspend fun getFoodCategoryOnResto(id: String): Response<FoodCategoryResponse> {
         return restoService.getFoodCategoryOnResto(id)
     }
@@ -126,12 +147,11 @@ class RemoteDataSource(
     }
 
     override suspend fun addFavoriteMasjid(masjidId: String): Response<AddFavMasjidResponse> {
-        return favoriteService.addFavoriteMasjid()
+        return favoriteService.addFavoriteMasjid(masjidId)
     }
 
     override suspend fun addFavoriteResto(restoId: String): Response<AddFavRestoResponse> {
         return favoriteService.addFavoriteResto(restoId)
     }
-
 
 }

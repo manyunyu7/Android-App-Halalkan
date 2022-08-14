@@ -3,19 +3,9 @@ package com.feylabs.halalkan.view.resto
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.feylabs.halalkan.data.repository.MasjidRepository
-import com.feylabs.halalkan.data.repository.QumparanRepository
 import com.feylabs.halalkan.data.remote.QumparanResource
 import com.feylabs.halalkan.data.remote.RemoteDataSource
-import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidDetailResponse
-import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidPhotosResponse
-import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidResponseWithoutPagination
-import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidReviewPaginationResponse
-import com.feylabs.halalkan.data.remote.reqres.masjid.pagination.AllMasjidPaginationResponse
-import com.feylabs.halalkan.data.remote.reqres.prayertime.PrayerTimeAladhanSingleDateResponse
 import com.feylabs.halalkan.data.remote.reqres.resto.*
-import com.feylabs.halalkan.data.remote.reqres.resto.food.RestoFoodByCommonCategoryResponse
-import com.feylabs.halalkan.data.repository.PrayerTimeRepository
 import kotlinx.coroutines.launch
 
 class RestoViewModel(

@@ -1,6 +1,5 @@
 package com.feylabs.halalkan.data.remote
 
-import com.feylabs.halalkan.data.remote.reqres.*
 import com.feylabs.halalkan.data.remote.reqres.auth.LoginBodyRequest
 import com.feylabs.halalkan.data.remote.reqres.auth.LoginResponse
 import com.feylabs.halalkan.data.remote.reqres.auth.RegisterBodyRequest
@@ -11,12 +10,11 @@ import com.feylabs.halalkan.data.remote.reqres.masjid.*
 import com.feylabs.halalkan.data.remote.reqres.masjid.pagination.AllMasjidPaginationResponse
 import com.feylabs.halalkan.data.remote.reqres.prayertime.PrayerTimeAladhanSingleDateResponse
 import com.feylabs.halalkan.data.remote.reqres.resto.*
-import com.feylabs.halalkan.data.remote.reqres.resto.food.RestoFoodByCommonCategoryResponse
 import com.feylabs.halalkan.data.remote.reqres.translator.TiktokTextToSpeechResponse
 import com.feylabs.halalkan.data.remote.reqres.translator.TranslateResponse
-import retrofit2.Call
+import okhttp3.RequestBody
+import okhttp3.ResponseBody
 import retrofit2.Response
-import retrofit2.http.*
 
 
 interface RemoteDataSourceInterface {
@@ -45,14 +43,14 @@ interface RemoteDataSourceInterface {
     suspend fun login(loginBodyRequest: LoginBodyRequest): Response<LoginResponse>
 
     suspend fun getMasjids(): Response<MasjidResponseWithoutPagination>
-
     suspend fun getMasjidsPagination(page:Int): Response<AllMasjidPaginationResponse>
-
     suspend fun getMasjidReviews(
         masjidId: String,
         perPage: Int,
         page: Int
     ): Response<MasjidReviewPaginationResponse>
+
+    suspend fun createMasjidReview(masjidId: String,body:RequestBody) : Response<ResponseBody?>?
 
 
 
@@ -61,6 +59,13 @@ interface RemoteDataSourceInterface {
     suspend fun getFoodType() : Response<FoodTypeResponse>
     suspend fun getRestoDetail(id:String) : Response<RestoDetailResponse>
     suspend fun getRestoFoodByCommonCategory(restoId:String,categoryId:String) : Response<AllFoodByRestoResponse>
+    suspend fun createRestoReview(restoId: String,body:RequestBody) : Response<ResponseBody?>?
+    suspend fun getRestoReviews(
+        restoId: String,
+        perPage: Int,
+        page: Int
+    ): Response<RestoReviewPaginationResponse>
+
 
     suspend fun getFoodCategoryOnResto(id:String) : Response<FoodCategoryResponse>
     suspend fun getFoodByCategory(id:String) : Response<AllFoodByRestoResponse>

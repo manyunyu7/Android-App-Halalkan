@@ -6,6 +6,8 @@ import com.feylabs.halalkan.view.direction.DirectionViewModel
 import com.feylabs.halalkan.view.home.HomeViewModel
 import com.feylabs.halalkan.view.postdetail.PostDetailViewModel
 import com.feylabs.halalkan.view.prayer.PrayerRoomViewModel
+import com.feylabs.halalkan.view.prayer.review.PrayerRoomReviewViewModel
+import com.feylabs.halalkan.view.prayer.review.RestoReviewViewModel
 import com.feylabs.halalkan.view.resto.RestoViewModel
 import com.feylabs.halalkan.view.translate.TranslateViewModel
 import org.koin.android.viewmodel.dsl.viewModel
@@ -22,8 +24,10 @@ val viewModelModule = module {
     viewModel { PostDetailViewModel(get()) }
 
     viewModel { RestoViewModel(get()) }
+    viewModel { RestoReviewViewModel(get()) }
 
     viewModel { PrayerRoomViewModel(get(),get(),get(),get()) }
+    viewModel { PrayerRoomReviewViewModel(get()) }
 
     viewModel { TranslateViewModel(get()) }
 

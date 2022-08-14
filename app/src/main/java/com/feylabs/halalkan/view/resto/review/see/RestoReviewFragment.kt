@@ -1,4 +1,4 @@
-package com.feylabs.halalkan.view.prayer.review.see
+package com.feylabs.halalkan.view.resto.review.see
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,15 +9,15 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.feylabs.halalkan.R
 import com.feylabs.halalkan.data.remote.QumparanResource
-import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidReviewPaginationResponse
+import com.feylabs.halalkan.data.remote.reqres.resto.RestoReviewPaginationResponse
 import com.feylabs.halalkan.databinding.FragmentReviewGeneralBinding
 import com.feylabs.halalkan.utils.base.BaseFragment
 import com.feylabs.halalkan.utils.snackbar.SnackbarType
-import com.feylabs.halalkan.view.prayer.PrayerRoomViewModel
+import com.feylabs.halalkan.view.prayer.review.RestoReviewViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
 
-class MasjidReviewNewFragment : BaseFragment() {
+class RestoReviewFragment : BaseFragment() {
 
 
     // This property is only valid between onCreateView and
@@ -25,9 +25,9 @@ class MasjidReviewNewFragment : BaseFragment() {
     private var _binding: FragmentReviewGeneralBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: PrayerRoomViewModel by viewModel()
+    private val viewModel: RestoReviewViewModel by viewModel()
 
-    private val mAdapter by lazy { MasjidReviewAdapter() }
+    private val mAdapter by lazy { RestoReviewAdapter() }
 
     var totalReviewPage = 0
 
@@ -46,8 +46,8 @@ class MasjidReviewNewFragment : BaseFragment() {
             setHasFixedSize(true)
         }
 
-        mAdapter.setupAdapterInterface(object : MasjidReviewAdapter.ItemInterface {
-            override fun onclick(model: MasjidReviewPaginationResponse.Reviews.Data) {
+        mAdapter.setupAdapterInterface(object : RestoReviewAdapter.ItemInterface {
+            override fun onclick(model: RestoReviewPaginationResponse.Reviews.Data) {
 
             }
 
@@ -56,7 +56,7 @@ class MasjidReviewNewFragment : BaseFragment() {
                 if (currentPage >= totalReviewPage)
                     showSnackbar("Anda Sudah Berada di Halaman Terakhir")
                 else
-                    viewModel.getMasjidReview(getMasjidId(), page = currentPage + 1)
+                    viewModel.getReview(getRestoId(), page = currentPage + 1)
             }
         })
     }
@@ -65,12 +65,12 @@ class MasjidReviewNewFragment : BaseFragment() {
         return arguments?.getString("type") ?: ""
     }
 
-    private fun getMasjidId(): String {
+    private fun getRestoId(): String {
         return arguments?.getString("id") ?: ""
     }
 
     override fun initObserver() {
-        viewModel.masjidReviewsLiveData.observe(viewLifecycleOwner) {
+        viewModel.restoReviewsLiveData.observe(viewLifecycleOwner) {
             if (it is QumparanResource.Loading) showLoading(true) else showLoading(false)
             when (it) {
                 is QumparanResource.Error -> {
@@ -95,7 +95,7 @@ class MasjidReviewNewFragment : BaseFragment() {
         }
     }
 
-    private fun setupReviewFromNetwork(response: MasjidReviewPaginationResponse) {
+    private fun setupReviewFromNetwork(response: RestoReviewPaginationResponse) {
         val reviewRes = response.reviews
         reviewRes.let {
             if (it.data == null) {
@@ -134,8 +134,8 @@ class MasjidReviewNewFragment : BaseFragment() {
 
     private fun goToWriteReview() {
         findNavController().navigate(
-            R.id.navigation_masjidCreateReviewFragment, bundleOf(
-                "id" to getMasjidId()
+            R.id.navigation_restoCreateReviewFragment, bundleOf(
+                "id" to getRestoId()
             )
         )
     }
@@ -155,7 +155,7 @@ class MasjidReviewNewFragment : BaseFragment() {
     }
 
     override fun initData() {
-        viewModel.getMasjidReview(getMasjidId(), page = 1)
+        viewModel.getReview(getRestoId(), page = 1)
     }
 
     override fun onCreateView(

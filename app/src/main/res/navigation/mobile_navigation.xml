@@ -184,5 +184,16 @@
         android:name="com.feylabs.halalkan.view.resto.detail.DetailRestoFragment"
         android:label="DetailRestoFragment" />
 
+    <fragment
+        android:id="@+id/navigation_restoCreateReviewFragment"
+        android:name="com.feylabs.halalkan.view.prayer.review.create.RestoCreateReviewFragment"
+        android:label="RestoCreateReviewFragment" />
+
+    <fragment
+        android:id="@+id/navigation_restoReviewFragment"
+        tools:layout="@layout/fragment_review_general"
+        android:name="com.feylabs.halalkan.view.resto.review.see.RestoReviewFragment"
+        android:label="RestoReviewFragment" />
+
 
 </navigation>
