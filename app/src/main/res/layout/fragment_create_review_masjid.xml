@@ -196,5 +196,9 @@
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
+    <include
+        android:id="@+id/loading_screen"
+        android:visibility="gone"
+        layout="@layout/layout_loading_screen_full"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -38,7 +38,7 @@ public class UtilSnackbar {
         }
 
         if (isError  == SnackbarType.INFO) {
-            sb.setBackgroundTint(Color.BLUE);
+            sb.setBackgroundTint(Color.CYAN);
         }
 
         sb.show();
