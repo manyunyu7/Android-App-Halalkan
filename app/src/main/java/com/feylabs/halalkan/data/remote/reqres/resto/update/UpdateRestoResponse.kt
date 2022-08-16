@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 import androidx.annotation.Keep
 
 @Keep
-data class UpdateCertificationResponse(
+data class UpdateRestoColumnResponse(
     @SerializedName("code")
     var code: Int = 0,
     @SerializedName("data")

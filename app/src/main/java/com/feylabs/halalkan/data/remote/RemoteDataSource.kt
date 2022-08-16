@@ -10,7 +10,7 @@ import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidReviewPaginationResp
 import com.feylabs.halalkan.data.remote.reqres.masjid.pagination.AllMasjidPaginationResponse
 import com.feylabs.halalkan.data.remote.reqres.prayertime.PrayerTimeAladhanSingleDateResponse
 import com.feylabs.halalkan.data.remote.reqres.resto.*
-import com.feylabs.halalkan.data.remote.reqres.resto.update.UpdateCertificationResponse
+import com.feylabs.halalkan.data.remote.reqres.resto.update.UpdateRestoColumnResponse
 import com.feylabs.halalkan.data.remote.service.*
 import com.feylabs.halalkan.utils.Network
 import okhttp3.RequestBody
@@ -140,11 +140,12 @@ class RemoteDataSource(
         return restoService.createRestoFoodCategory(body,id)
     }
 
-    override suspend fun updateCertication(
+    override suspend fun updateRestoColumn(
         id: String,
+        pathupdate: String,
         body: RequestBody
-    ): Response<UpdateCertificationResponse?>? {
-        return restoService.updateCertification(restoId = id, file = body)
+    ): Response<UpdateRestoColumnResponse?>? {
+        return restoService.updateRestoColumn(restoId = id,urlupdate = pathupdate, file = body)
     }
 
 

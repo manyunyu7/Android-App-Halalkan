@@ -16,6 +16,8 @@ data class RestoModelResponse(
     var certificationId: Int = 0,
     @SerializedName("certification_name")
     var certificationName: String = "",
+    @SerializedName("food_type_name")
+    var foodTypeName: String = "",
     @SerializedName("created_at")
     var createdAt: String = "",
     @SerializedName("description")

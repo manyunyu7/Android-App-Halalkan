@@ -1,4 +1,4 @@
-package com.feylabs.halalkan.view.admin_resto.edit_info.certification
+package com.feylabs.halalkan.view.admin_resto.edit_info.phone
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,7 +8,8 @@ import android.widget.ArrayAdapter
 import androidx.navigation.fragment.findNavController
 import com.feylabs.halalkan.data.remote.QumparanResource.*
 import com.feylabs.halalkan.data.remote.reqres.resto.RestoDetailResponse
-import com.feylabs.halalkan.databinding.FragmentXrestoEditCertificationBinding
+import com.feylabs.halalkan.databinding.FragmentXrestoEditPhoneBinding
+import com.feylabs.halalkan.databinding.FragmentXrestoEditRestoTypeBinding
 import com.feylabs.halalkan.utils.DialogUtils
 import com.feylabs.halalkan.utils.base.BaseFragment
 import com.feylabs.halalkan.utils.snackbar.SnackbarType
@@ -16,51 +17,21 @@ import com.feylabs.halalkan.view.admin_resto.AdminRestoViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
 
-class EditRestoCertificationFragment : BaseFragment() {
+class EditRestoPhoneFragment : BaseFragment() {
 
     // This property is only valid between onCreateView and
     // onDestroyView.
-    private var _binding: FragmentXrestoEditCertificationBinding? = null
+    private var _binding: FragmentXrestoEditPhoneBinding? = null
     private val binding get() = _binding!!
 
     val viewModel by viewModel<AdminRestoViewModel>()
 
-    private var mapCert = mutableMapOf<String, String>()
+    private var mapRestoType = mutableMapOf<String, String>()
 
     override fun initUI() {
     }
 
     override fun initObserver() {
-        viewModel.certLiveData.observe(viewLifecycleOwner) {
-            when (it) {
-                is Default -> {}
-                is Error -> {
-                    showLoading(false)
-                    showSnackbar(it.message.toString(), SnackbarType.ERROR)
-                }
-                is Loading -> {
-                    showLoading(true)
-                }
-                is Success -> {
-                    showLoading(false)
-                    val spinnerArray: MutableList<String> = mutableListOf()
-                    it.data?.forEachIndexed { index, restaurantCertificationItem ->
-                        spinnerArray.add(restaurantCertificationItem.name)
-                        mapCert.put(
-                            restaurantCertificationItem.name,
-                            restaurantCertificationItem.id.toString()
-                        )
-                    }
-
-                    val adapter: ArrayAdapter<String> = ArrayAdapter<String>(
-                        requireContext(), android.R.layout.simple_spinner_item, spinnerArray
-                    )
-                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                    binding.spinnerCert.adapter = adapter
-                }
-            }
-        }
-
         viewModel.updateRestoColumnLiveData.observe(viewLifecycleOwner) {
             when (it) {
                 is Default -> {}
@@ -76,9 +47,9 @@ class EditRestoCertificationFragment : BaseFragment() {
                     DialogUtils.showSuccessDialog(
                         context = requireContext(),
                         title = "Success",
-                        message = "Certification Data Updated Successfully",
+                        message = "Data Updated Successfully",
                         positiveAction = Pair("OK") {
-                          findNavController().popBackStack()
+                            findNavController().popBackStack()
                         },
                         autoDismiss = true,
                         buttonAllCaps = false
@@ -86,7 +57,6 @@ class EditRestoCertificationFragment : BaseFragment() {
                 }
             }
         }
-
         viewModel.detailRestoLiveData.observe(viewLifecycleOwner) {
             when (it) {
                 is Default -> {}
@@ -108,36 +78,40 @@ class EditRestoCertificationFragment : BaseFragment() {
     }
 
     private fun showLoading(b: Boolean) {
-        if(b){
+        if (b) {
             binding.includeLoading.root.makeVisible()
-        }else{
+        } else {
             binding.includeLoading.root.makeGone()
         }
     }
 
-    private fun setupUiFromNetwork(it: RestoDetailResponse) {
-        binding.tvCurrentCert.text = it.data.detailResto.certificationName
+    private fun setupUiFromNetwork(data: RestoDetailResponse) {
+        binding.etPhoneNumber.editText?.setText(data.data.detailResto.phoneNumber)
     }
 
     override fun initAction() {
         binding.btnSave.setOnClickListener {
-            val certification = mapCert[binding.spinnerCert.selectedItem]
-            DialogUtils.showConfirmationDialog(
-                context = requireContext(),
-                title = "Are You Sure",
-                message = "This action will updating your certification",
-                positiveAction = Pair("OK") {
-                    viewModel.updateRestoColumn(getChoosenResto(),
-                        updatepath = "cert",
-                        name = "certification_id",
-                        columnValue = certification.toString())
-                },
-                negativeAction = Pair(
-                    "No",
-                    { }),
-                autoDismiss = true,
-                buttonAllCaps = false
-            )
+            val phoneNumber = binding.etPhoneNumber.editText?.text.toString()
+            if (phoneNumber.isEmpty()) {
+                showSnackbar("Please Check Your Input")
+            } else
+                DialogUtils.showConfirmationDialog(
+                    context = requireContext(),
+                    title = "Are You Sure",
+                    message = "This action will updating your phone number",
+                    positiveAction = Pair("OK") {
+                        viewModel.updateRestoColumn(
+                            getChoosenResto(),
+                            updatepath = "phone",
+                            columnValue = phoneNumber, name = "phone"
+                        )
+                    },
+                    negativeAction = Pair(
+                        "No",
+                        { }),
+                    autoDismiss = true,
+                    buttonAllCaps = false
+                )
         }
 
         binding.btnBack.setOnClickListener {
@@ -146,15 +120,15 @@ class EditRestoCertificationFragment : BaseFragment() {
     }
 
     override fun initData() {
+        viewModel.getFoodType()
         viewModel.getDetailResto(getChoosenResto())
-        viewModel.getRestoCert()
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentXrestoEditCertificationBinding.inflate(inflater)
+        _binding = FragmentXrestoEditPhoneBinding.inflate(inflater)
         return binding.root
     }
 

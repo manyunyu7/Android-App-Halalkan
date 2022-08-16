@@ -244,5 +244,15 @@
         android:label="EditRestoCertificationFragment"
         tools:layout="@layout/fragment_xresto_edit_certification" />
 
+    <fragment
+        android:id="@+id/navigation_editRestoTypeFragment"
+        android:name="com.feylabs.halalkan.view.admin_resto.edit_info.type.EditRestoTypeFragment"
+        android:label="EditRestoTypeFragment" />
+    <fragment
+        android:id="@+id/navigation_editRestoPhoneFragment"
+        android:name="com.feylabs.halalkan.view.admin_resto.edit_info.phone.EditRestoPhoneFragment"
+        android:label="EditRestoPhoneFragment"
+        tools:layout="@layout/fragment_xresto_edit_phone" />
+
 
 </navigation>

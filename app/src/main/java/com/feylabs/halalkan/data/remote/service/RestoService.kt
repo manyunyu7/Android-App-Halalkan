@@ -2,7 +2,7 @@ package com.feylabs.halalkan.data.remote.service
 
 import com.feylabs.halalkan.data.remote.reqres.UserResponse
 import com.feylabs.halalkan.data.remote.reqres.resto.*
-import com.feylabs.halalkan.data.remote.reqres.resto.update.UpdateCertificationResponse
+import com.feylabs.halalkan.data.remote.reqres.resto.update.UpdateRestoColumnResponse
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
 import retrofit2.Response
@@ -74,11 +74,13 @@ interface RestoService {
         @Body file: RequestBody?,
     ): Response<ResponseBody?>?
 
-    @POST("fe/restoran/{idResto}/update/cert")
-    suspend fun updateCertification(
+    @POST("fe/restoran/{idResto}/update/{urlupdate}")
+    suspend fun updateRestoColumn(
         @Body file: RequestBody?,
         @Path("idResto") restoId: String,
-        ): Response<UpdateCertificationResponse?>?
+        @Path("urlupdate") urlupdate: String,
+        ): Response<UpdateRestoColumnResponse?>?
+
 
     @POST("foods/category/createCategory/{id}")
     suspend fun createRestoFoodCategory(

@@ -41,7 +41,7 @@
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@id/btn_back"
                     android:fontFamily="@font/poppins_medium"
-                    android:text="Type of Restaurant"
+                    android:text="Address"
                     android:textAlignment="textEnd"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
@@ -69,36 +69,27 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen_20dp"
-                android:fontFamily="@font/poppins_medium"
-                android:text="Your Current Certification : "
+                android:fontFamily="@font/poppins_regular"
+                android:text="Address : "
                 android:textColor="@color/black"
                 android:textSize="18sp" />
 
-            <TextView
-                android:id="@+id/tv_current_cert"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/et_phone_number"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/poppins_regular"
-                android:textColor="@color/black"
-                android:textSize="15sp"
-                tools:text="Sertifikasinya" />
+                android:layout_marginTop="8dp"
+                app:boxBackgroundColor="@android:color/transparent"
+                android:hint="Phone Number">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen_20dp"
-                android:fontFamily="@font/poppins_medium"
-                android:text="Choose "
-                android:textColor="@color/black"
-                android:textSize="16sp" />
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="top"
+                    android:inputType="textMultiLine" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <androidx.appcompat.widget.AppCompatSpinner
-                android:id="@+id/spinner_cert"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/dimen_10dp"
-                android:layout_marginTop="@dimen/dimen_10dp"
-                android:entries="@array/spinner_default" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_save"

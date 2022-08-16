@@ -53,7 +53,7 @@ class CurrentRestaurantFragment : BaseFragment() {
 
     override fun initUI() {
         arguments?.getString("name")?.let {
-            binding.labelPageDesc.text=it
+            binding.pageTitle.text=it
         }
     }
 
@@ -112,6 +112,14 @@ class CurrentRestaurantFragment : BaseFragment() {
             menuCertification.setOnClickListener {
                 findNavController().navigate(R.id.navigation_editRestoCertificationFragment)
             }
+
+            menuTypeResto.setOnClickListener {
+                findNavController().navigate(R.id.navigation_editRestoTypeFragment)
+            }
+
+            menuRestoPhone.setOnClickListener {
+                findNavController().navigate(R.id.navigation_editRestoPhoneFragment)
+            }
         }
     }
 
@@ -144,7 +152,6 @@ class CurrentRestaurantFragment : BaseFragment() {
     }
 
     private fun setupRestoData(data: AllRestoNoPagination?) {
-        binding.labelPageDesc
     }
 
 

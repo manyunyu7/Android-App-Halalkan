@@ -1,13 +1,12 @@
 package com.feylabs.halalkan.view.admin_resto
 
-import android.text.Editable
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.feylabs.halalkan.data.remote.QumparanResource
 import com.feylabs.halalkan.data.remote.RemoteDataSource
 import com.feylabs.halalkan.data.remote.reqres.resto.*
-import com.feylabs.halalkan.data.remote.reqres.resto.update.UpdateCertificationResponse
+import com.feylabs.halalkan.data.remote.reqres.resto.update.UpdateRestoColumnResponse
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -30,9 +29,9 @@ class AdminRestoViewModel(
         MutableLiveData<QumparanResource<RestaurantCertificationResponse?>>()
     val certLiveData get() = _certLiveData
 
-    private var _updateCertLiveData =
-        MutableLiveData<QumparanResource<UpdateCertificationResponse?>>()
-    val updateCertLiveData get() = _updateCertLiveData
+    private var _updateRestoColumn =
+        MutableLiveData<QumparanResource<UpdateRestoColumnResponse?>>()
+    val updateRestoColumnLiveData get() = _updateRestoColumn
 
     private var _foodCategoryLiveData =
         MutableLiveData<QumparanResource<FoodCategoryResponse?>>()
@@ -255,31 +254,33 @@ class AdminRestoViewModel(
         }
     }
 
-    fun updateCertification(restoId: String,certicationId:String) {
+    fun updateRestoColumn(restoId: String, name:String, updatepath:String, columnValue:String) {
         viewModelScope.launch {
-            _updateCertLiveData.postValue(QumparanResource.Loading())
+            _updateRestoColumn.postValue(QumparanResource.Loading())
             val builder = MultipartBody.Builder()
             builder.setType(MultipartBody.FORM)
-            builder.addFormDataPart("certification_id", certicationId)
+            builder.addFormDataPart(name, columnValue)
             val requestBody: MultipartBody = builder.build()
             try {
-                val req = ds.updateCertication(restoId,requestBody)
+                val req = ds.updateRestoColumn(
+                    id = restoId, pathupdate = updatepath, body = requestBody
+                )
                 req?.let {
                     if (req.isSuccessful) {
-                        _updateCertLiveData.postValue(QumparanResource.Success(req.body()))
+                        _updateRestoColumn.postValue(QumparanResource.Success(req.body()))
                     } else {
                         var message = req.message().toString()
                         req.errorBody()?.let {
                             val jsonObj = JSONObject(it.charStream().readText())
                             message = jsonObj.getString("message")
                         }
-                        _updateCertLiveData.postValue(QumparanResource.Error(message))
+                        _updateRestoColumn.postValue(QumparanResource.Error(message))
                     }
                 } ?: run {
-                    _updateCertLiveData.postValue(QumparanResource.Error("Null"))
+                    _updateRestoColumn.postValue(QumparanResource.Error("Null"))
                 }
             } catch (e: Exception) {
-                _updateCertLiveData.postValue(QumparanResource.Error(e.message.toString()))
+                _updateRestoColumn.postValue(QumparanResource.Error(e.message.toString()))
             }
         }
     }

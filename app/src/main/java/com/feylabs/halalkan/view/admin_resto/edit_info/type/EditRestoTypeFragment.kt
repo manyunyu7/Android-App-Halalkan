@@ -1,4 +1,4 @@
-package com.feylabs.halalkan.view.admin_resto.edit_info.certification
+package com.feylabs.halalkan.view.admin_resto.edit_info.type
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,7 +8,7 @@ import android.widget.ArrayAdapter
 import androidx.navigation.fragment.findNavController
 import com.feylabs.halalkan.data.remote.QumparanResource.*
 import com.feylabs.halalkan.data.remote.reqres.resto.RestoDetailResponse
-import com.feylabs.halalkan.databinding.FragmentXrestoEditCertificationBinding
+import com.feylabs.halalkan.databinding.FragmentXrestoEditRestoTypeBinding
 import com.feylabs.halalkan.utils.DialogUtils
 import com.feylabs.halalkan.utils.base.BaseFragment
 import com.feylabs.halalkan.utils.snackbar.SnackbarType
@@ -16,22 +16,22 @@ import com.feylabs.halalkan.view.admin_resto.AdminRestoViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
 
-class EditRestoCertificationFragment : BaseFragment() {
+class EditRestoTypeFragment : BaseFragment() {
 
     // This property is only valid between onCreateView and
     // onDestroyView.
-    private var _binding: FragmentXrestoEditCertificationBinding? = null
+    private var _binding: FragmentXrestoEditRestoTypeBinding? = null
     private val binding get() = _binding!!
 
     val viewModel by viewModel<AdminRestoViewModel>()
 
-    private var mapCert = mutableMapOf<String, String>()
+    private var mapRestoType = mutableMapOf<String, String>()
 
     override fun initUI() {
     }
 
     override fun initObserver() {
-        viewModel.certLiveData.observe(viewLifecycleOwner) {
+        viewModel.foodTypeLiveData.observe(viewLifecycleOwner) {
             when (it) {
                 is Default -> {}
                 is Error -> {
@@ -46,7 +46,7 @@ class EditRestoCertificationFragment : BaseFragment() {
                     val spinnerArray: MutableList<String> = mutableListOf()
                     it.data?.forEachIndexed { index, restaurantCertificationItem ->
                         spinnerArray.add(restaurantCertificationItem.name)
-                        mapCert.put(
+                        mapRestoType.put(
                             restaurantCertificationItem.name,
                             restaurantCertificationItem.id.toString()
                         )
@@ -76,7 +76,7 @@ class EditRestoCertificationFragment : BaseFragment() {
                     DialogUtils.showSuccessDialog(
                         context = requireContext(),
                         title = "Success",
-                        message = "Certification Data Updated Successfully",
+                        message = "Data Updated Successfully",
                         positiveAction = Pair("OK") {
                           findNavController().popBackStack()
                         },
@@ -116,21 +116,20 @@ class EditRestoCertificationFragment : BaseFragment() {
     }
 
     private fun setupUiFromNetwork(it: RestoDetailResponse) {
-        binding.tvCurrentCert.text = it.data.detailResto.certificationName
+        binding.tvCurrentCert.text = it.data.detailResto.foodTypeName
     }
 
     override fun initAction() {
         binding.btnSave.setOnClickListener {
-            val certification = mapCert[binding.spinnerCert.selectedItem]
+            val certification = mapRestoType[binding.spinnerCert.selectedItem]
             DialogUtils.showConfirmationDialog(
                 context = requireContext(),
                 title = "Are You Sure",
-                message = "This action will updating your certification",
+                message = "This action will updating your restaurant type",
                 positiveAction = Pair("OK") {
                     viewModel.updateRestoColumn(getChoosenResto(),
-                        updatepath = "cert",
-                        name = "certification_id",
-                        columnValue = certification.toString())
+                        updatepath = "resto-type",
+                        columnValue = certification.toString(),name="type_food_id")
                 },
                 negativeAction = Pair(
                     "No",
@@ -146,15 +145,15 @@ class EditRestoCertificationFragment : BaseFragment() {
     }
 
     override fun initData() {
+        viewModel.getFoodType()
         viewModel.getDetailResto(getChoosenResto())
-        viewModel.getRestoCert()
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentXrestoEditCertificationBinding.inflate(inflater)
+        _binding = FragmentXrestoEditRestoTypeBinding.inflate(inflater)
         return binding.root
     }
 
