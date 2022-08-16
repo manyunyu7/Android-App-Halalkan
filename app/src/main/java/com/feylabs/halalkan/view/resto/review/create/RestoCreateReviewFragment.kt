@@ -185,7 +185,6 @@ class RestoCreateReviewFragment : BaseFragment() {
         super.onActivityResult(requestCode, resultCode, data)
         //list of photos of seleced
         if (data != null) {
-            showToast(data.toString())
             if (requestCode == 120) {
                 val photos = data.getSerializableExtra(GalleryActivity.PHOTOS) as List<String>
                 if (photos != null) {

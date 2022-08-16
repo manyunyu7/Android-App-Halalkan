@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingHorizontal="@dimen/dimen_24dp"
+    android:paddingTop="@dimen/dimen_16dp"
+    android:paddingBottom="@dimen/dimen_24dp">
+
+    <TextView
+        android:id="@+id/tvOpenWith"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="25dp"
+        android:text="Ambil Gambar Dengan"
+        app:layout_constraintBottom_toTopOf="@id/containerOpenWith"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        style="@style/Montserrat.Black3.14sp"/>
+
+    <LinearLayout
+        android:id="@+id/containerOpenWith"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvOpenWith">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/containerCamera"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/imgCamera"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:visibility="gone"
+                android:src="@drawable/ic_camera_green"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:contentDescription="Kamera"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Kamera"
+                android:visibility="gone"
+                style="@style/Montserrat.Black1.16sp"
+                app:layout_constraintStart_toEndOf="@+id/imgCamera"
+                app:layout_constraintTop_toTopOf="@+id/imgCamera"
+                app:layout_constraintBottom_toBottomOf="@id/imgCamera"
+                android:layout_marginStart="@dimen/dimen_24dp"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/containerGallery"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_20dp">
+
+            <ImageView
+                android:id="@+id/imgGallery"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:src="@drawable/ic_gallery"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:contentDescription="Gallery"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Gallery"
+                style="@style/Montserrat.Black1.16sp"
+                app:layout_constraintStart_toEndOf="@+id/imgGallery"
+                android:layout_marginStart="@dimen/dimen_24dp"
+                app:layout_constraintTop_toTopOf="@+id/imgGallery"
+                app:layout_constraintBottom_toBottomOf="@id/imgGallery"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/imgBtnBatal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:src="@drawable/ic_baseline_edit_24"
+        app:layout_constraintTop_toTopOf="parent"
+      />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

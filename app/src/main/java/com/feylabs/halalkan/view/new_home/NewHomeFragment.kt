@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.feylabs.halalkan.MainViewModel
 import com.feylabs.halalkan.R
 import com.feylabs.halalkan.customview.AskPermissionDialog
+import com.feylabs.halalkan.data.local.MyPreference
 import com.feylabs.halalkan.data.remote.QumparanResource
 import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidModelResponse
 import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidResponseWithoutPagination
@@ -106,10 +107,19 @@ class NewHomeFragment : BaseFragment() {
     }
 
     override fun initUI() {
+        checkRole()
         setupPermission()
         initRecyclerView()
         initAdapter()
         loadData()
+    }
+
+    private fun checkRole() {
+        val user = MyPreference(requireContext()).getUserData()
+        showToast(user.toString())
+        if (user.rolesId==3){
+            findNavController().navigate(R.id.action_navigation_newHomeFragment_to_navigation_initAdminRestoFragment)
+        }
     }
 
     private fun initAdapter() {

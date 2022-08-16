@@ -10,6 +10,7 @@ import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidReviewPaginationResp
 import com.feylabs.halalkan.data.remote.reqres.masjid.pagination.AllMasjidPaginationResponse
 import com.feylabs.halalkan.data.remote.reqres.prayertime.PrayerTimeAladhanSingleDateResponse
 import com.feylabs.halalkan.data.remote.reqres.resto.*
+import com.feylabs.halalkan.data.remote.reqres.resto.update.UpdateCertificationResponse
 import com.feylabs.halalkan.data.remote.service.*
 import com.feylabs.halalkan.utils.Network
 import okhttp3.RequestBody
@@ -130,8 +131,21 @@ class RemoteDataSource(
         restoId: String,
         perPage: Int,
         page: Int
-    ): Response<RestoReviewPaginationResponse> =
-        restoService.getReviews(restoId, page = page, perPage = perPage)
+    ): Response<RestoReviewPaginationResponse> = restoService.getReviews(restoId, page = page, perPage = perPage)
+    override suspend fun createResto(body: RequestBody): Response<ResponseBody?>? = restoService.createResto(body)
+    override suspend fun createRestoFoodCategory(
+        id: String,
+        body: RequestBody
+    ): Response<ResponseBody?>? {
+        return restoService.createRestoFoodCategory(body,id)
+    }
+
+    override suspend fun updateCertication(
+        id: String,
+        body: RequestBody
+    ): Response<UpdateCertificationResponse?>? {
+        return restoService.updateCertification(restoId = id, file = body)
+    }
 
 
     override suspend fun getFoodCategoryOnResto(id: String): Response<FoodCategoryResponse> {
@@ -144,6 +158,10 @@ class RemoteDataSource(
 
     override suspend fun getAllFoodByResto(id: String): Response<AllFoodByRestoResponse> {
         return restoService.getAllFoodOnResto(id)
+    }
+
+    override suspend fun getMyResto(): Response<AllRestoNoPagination> {
+        return restoService.getMyRestaurant()
     }
 
     override suspend fun addFavoriteMasjid(masjidId: String): Response<AddFavMasjidResponse> {

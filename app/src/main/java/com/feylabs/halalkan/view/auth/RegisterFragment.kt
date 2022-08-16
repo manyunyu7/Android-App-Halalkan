@@ -125,12 +125,20 @@ class RegisterFragment : BaseFragment() {
                 binding.etPassword.setError("Password Tidak Boleh Kosong")
             }
 
+            var roles = 2
+            val spinnerValue = binding.spinnerJenisPemohon.selectedItemPosition
+            if (spinnerValue==0)
+                roles = 2
+            if (spinnerValue==1){
+                roles=3
+            }
+
             if (isError.not()) {
                 viewModel.register(
                     RegisterBodyRequest(
                         password = password,
                         confirmPassword = password,
-                        rolesId = 2,
+                        rolesId = roles,
                         email = username,
                         phoneNumber = phone,
                         name = name

@@ -61,7 +61,7 @@
                 android:layout_marginTop="@dimen/dimen_20dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/montserrat_bold"
+                android:fontFamily="@font/poppins_medium"
                 android:text="Nama Lengkap"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
@@ -119,7 +119,6 @@
                 android:fontFamily="@font/montserrat_bold"
                 android:text="Kata Sandi"
                 android:textColor="@color/black"
-
                 android:textSize="16sp" />
 
             <EditText
@@ -132,6 +131,22 @@
                 android:text="password"
                 android:textColor="@color/black"
                 />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat_bold"
+                android:text="Mendaftar Sebagai"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/spinnerJenisPemohon"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/dimen_10dp"
+                android:layout_marginTop="@dimen/dimen_10dp"
+                android:entries="@array/array_type_registrant" />
 
             <TextView
                 android:id="@+id/btn_reset_form"

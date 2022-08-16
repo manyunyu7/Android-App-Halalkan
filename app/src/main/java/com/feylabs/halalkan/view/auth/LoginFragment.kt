@@ -38,7 +38,7 @@ class LoginFragment : BaseFragment() {
                     showLoading(false)
                 }
                 is QumparanResource.Error -> {
-                    showSnackbar(it.message.toString(),SnackbarType.ERROR)
+                    showSnackbar(it.message.toString(), SnackbarType.ERROR)
                     viewModel.resetLogin()
                     showLoading(false)
                 }
@@ -49,11 +49,11 @@ class LoginFragment : BaseFragment() {
                     viewModel.resetLogin()
                     val token = it.data?.accessToken.orEmpty()
                     it.data?.user?.let { userData ->
-                        showSnackbar(it.message.toString(),SnackbarType.SUCCESS)
+                        showSnackbar(it.message.toString(), SnackbarType.SUCCESS)
                         showLoading(false)
                         proceedLogin(userData, token)
                     } ?: run {
-                        showSnackbar("Data User Tidak Ditemukan",SnackbarType.ERROR)
+                        showSnackbar("Data User Tidak Ditemukan", SnackbarType.ERROR)
                     }
                 }
             }
@@ -61,15 +61,22 @@ class LoginFragment : BaseFragment() {
     }
 
     private fun proceedLogin(userData: UserModel, token: String) {
+        val role = userData.rolesId
         muskoPref().saveLoginData(
             userId = userData.id.toString(),
             token = token,
             name = userData.name,
             email = userData.email,
             photo = userData.getPhotoPath(),
-            role = userData.rolesId.toString()
+            role = role.toString()
         )
-        findNavController().navigate(R.id.action_navigation_loginFragment_to_navigation_newHomeFragment)
+
+        if (role == 3) {
+            findNavController().navigate(R.id.action_navigation_loginFragment_to_navigation_initAdminRestoFragment)
+            showToast("Anda Login Sebagai Restoran")
+        } else {
+            findNavController().navigate(R.id.action_navigation_loginFragment_to_navigation_newHomeFragment)
+        }
     }
 
     private fun showLoading(b: Boolean) {
@@ -85,11 +92,13 @@ class LoginFragment : BaseFragment() {
         val username = arguments?.getString("username").orEmpty()
         val password = arguments?.getString("password").orEmpty()
 
-        if(username.isNotEmpty() && password.isNotEmpty()){
-            viewModel.login(LoginBodyRequest(
-                email = username,
-                password = password
-            ))
+        if (username.isNotEmpty() && password.isNotEmpty()) {
+            viewModel.login(
+                LoginBodyRequest(
+                    email = username,
+                    password = password
+                )
+            )
         }
 
         binding.btnRegister.setOnClickListener {

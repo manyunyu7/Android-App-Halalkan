@@ -10,6 +10,7 @@ import com.feylabs.halalkan.data.remote.reqres.masjid.*
 import com.feylabs.halalkan.data.remote.reqres.masjid.pagination.AllMasjidPaginationResponse
 import com.feylabs.halalkan.data.remote.reqres.prayertime.PrayerTimeAladhanSingleDateResponse
 import com.feylabs.halalkan.data.remote.reqres.resto.*
+import com.feylabs.halalkan.data.remote.reqres.resto.update.UpdateCertificationResponse
 import com.feylabs.halalkan.data.remote.reqres.translator.TiktokTextToSpeechResponse
 import com.feylabs.halalkan.data.remote.reqres.translator.TranslateResponse
 import okhttp3.RequestBody
@@ -66,10 +67,17 @@ interface RemoteDataSourceInterface {
         page: Int
     ): Response<RestoReviewPaginationResponse>
 
+    suspend fun createResto(body:RequestBody) : Response<ResponseBody?>?
+    suspend fun createRestoFoodCategory(id:String,body:RequestBody) : Response<ResponseBody?>?
+    suspend fun updateCertication(id:String,body:RequestBody) : Response<UpdateCertificationResponse?>?
+
+
 
     suspend fun getFoodCategoryOnResto(id:String) : Response<FoodCategoryResponse>
     suspend fun getFoodByCategory(id:String) : Response<AllFoodByRestoResponse>
     suspend fun getAllFoodByResto(id:String) : Response<AllFoodByRestoResponse>
+
+    suspend fun getMyResto() : Response<AllRestoNoPagination>
 
     suspend fun addFavoriteMasjid(masjidId:String) : Response<AddFavMasjidResponse>
     suspend fun addFavoriteResto(restoId:String) : Response<AddFavRestoResponse>

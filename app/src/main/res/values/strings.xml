@@ -37,7 +37,17 @@
     <string name="detail_masjid_kategori">Kategori</string>
     <string name="label_hubungi">Hubungi</string>
 
+    <string-array name="array_type_registrant">
+        <item value="2">Wisatawan</item>
+        <item value="3">Restaurant</item>
+    </string-array>
+
+    <string-array name="spinner_default">
+        <item value="-99">Choose Item</item>
+    </string-array>
+
     <string name="lorem_ipsum_short">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam blandit risus vel ante ornare</string>
+    <string name="required_column">Kolom ini dibutuhkan</string>
 
 
 </resources>

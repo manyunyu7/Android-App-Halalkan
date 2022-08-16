@@ -22,11 +22,11 @@ data class RestoDetailResponse(
         @SerializedName("photos")
         var photos: List<String> = listOf(),
         @SerializedName("rating")
-        var rating: Int = 0,
+        var rating: Double = 0.0,
         @SerializedName("totalRating")
         var totalRating: Double = 0.0,
         @SerializedName("totalReview")
-        var totalReview: Int = 0
+        var totalReview: Double = 0.0
     ) {
 
     }

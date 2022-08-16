@@ -7,6 +7,7 @@ import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.feylabs.halalkan.R
+import com.feylabs.halalkan.data.local.MyPreference
 import com.feylabs.halalkan.databinding.ItemFoodBinding as AdapterBinding
 import com.feylabs.halalkan.data.remote.reqres.resto.food.FoodModelResponse as AdapterModel
 import com.feylabs.halalkan.utils.ImageViewUtils.loadImageFromURL
@@ -33,6 +34,10 @@ class RestoFoodAdapter :
 
         fun onBInd(model: AdapterModel) {
             val mContext = binding.root.context
+
+            if(MyPreference(mContext).getUserRole().toString()!="2"){
+                binding.btnOrder.visibility=View.GONE
+            }
 
             binding.root.animation = AnimationUtils.loadAnimation(
                 mContext,
