@@ -35,7 +35,8 @@ class MyPreference(context: Context) {
             id = getUserID()?.toIntOrNull() ?: 0,
             photo_path = "",
             rolesId = getUserRole()?.toIntOrNull() ?: 0,
-            updatedAt = ""
+            updatedAt = "",
+            imgFullPath = ""
         )
     }
 

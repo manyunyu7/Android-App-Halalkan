@@ -83,6 +83,36 @@
     <color name="blue10">#E4F3FC</color>
     <color name="black90">#424242</color>
     <color name="orange10">#FFF3E1</color>
+    <color name="gray7575">#757575</color>
+
+
+    <color name="uikit_gray">#CCCCCC</color>
+    <color name="uikit_white">#FFFFFF</color>
+    <color name="uikit_gray_20">#F7F7F7</color>
+    <color name="uikit_gray_30">#EEEEEE</color>
+    <color name="uikit_gray_40">#DDDDDD</color>
+    <color name="uikit_gray_60">#999999</color>
+    <color name="uikit_gray_70">#767676</color>
+    <color name="uikit_gray80">#333333</color>
+
+    <color name="uikit_color_line">#EEEEEE</color>
+
+    <color name="uikit_black">#000000</color>
+    <color name="uikit_black_transparent">#80000000</color>
+
+    <color name="uikit_red">#CF1322</color>
+    <color name="uikit_red_light">#B01134</color>
+    <color name="uikit_red90">#F9D2D5</color>
+
+    <color name="uikit_blue">#1F8DD6</color>
+    <color name="uikit_blue48">#05AFF2</color>
+    <color name="uikit_blue90">#CDF0FE</color>
+
+    <color name="uikit_green_light">#6DB96D</color>
+    <color name="uikit_green90">#DDF2D9</color>
+    <color name="uikit_yellow">#FADB14</color>
+    <color name="uikit_pink">#EC2A7B</color>
+    <color name="uikit_red_space">#CF1322</color>
 
 
 </resources>

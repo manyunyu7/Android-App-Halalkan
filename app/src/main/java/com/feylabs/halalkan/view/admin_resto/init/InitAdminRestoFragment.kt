@@ -77,6 +77,11 @@ class InitAdminRestoFragment : BaseFragment() {
         binding.btnAdd.setOnClickListener {
             findNavController().navigate(R.id.navigation_addEditRestoFragment)
         }
+
+        binding.labelRestoAroundYou.setOnClickListener {
+            muskoPref().clearPreferences()
+            findNavController().popBackStack(R.id.navigation_newHomeFragment,true)
+        }
     }
 
     override fun initData() {

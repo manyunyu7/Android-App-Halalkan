@@ -41,7 +41,7 @@ class RestoCreateReviewFragment : BaseFragment() {
     private val PERMISSION_CODE_STORAGE = 1001
 
     override fun initUI() {
-        binding.labelPageTitleTopbar.text="Review Restoran"
+        binding.pageTitle.text="Review Restoran"
         binding.ratingBar.rating = 5f
         binding.photoContainer.registerChange(
             object : CustomViewImageContainerPreviewSmall.ListenPhotoChange {

@@ -6,6 +6,9 @@ import com.feylabs.halalkan.data.remote.reqres.auth.RegisterBodyRequest
 import com.feylabs.halalkan.data.remote.reqres.auth.RegisterResponse
 import com.feylabs.halalkan.data.remote.reqres.favorite.AddFavMasjidResponse
 import com.feylabs.halalkan.data.remote.reqres.favorite.AddFavRestoResponse
+import com.feylabs.halalkan.data.remote.reqres.forum.AllForumPaginationResponse
+import com.feylabs.halalkan.data.remote.reqres.forum.CreateForumResponse
+import com.feylabs.halalkan.data.remote.reqres.forum.ForumCategoryResponse
 import com.feylabs.halalkan.data.remote.reqres.masjid.*
 import com.feylabs.halalkan.data.remote.reqres.masjid.pagination.AllMasjidPaginationResponse
 import com.feylabs.halalkan.data.remote.reqres.prayertime.PrayerTimeAladhanSingleDateResponse
@@ -85,5 +88,11 @@ interface RemoteDataSourceInterface {
 
     suspend fun addFavoriteMasjid(masjidId:String) : Response<AddFavMasjidResponse>
     suspend fun addFavoriteResto(restoId:String) : Response<AddFavRestoResponse>
+
+
+    suspend fun createForum(body:RequestBody) : Response<CreateForumResponse?>?
+    suspend fun getForumCategory() : Response<ForumCategoryResponse>
+    suspend fun getAllForumPaginate(page:Int,perPage:Int) : Response<AllForumPaginationResponse>
+
 
 }

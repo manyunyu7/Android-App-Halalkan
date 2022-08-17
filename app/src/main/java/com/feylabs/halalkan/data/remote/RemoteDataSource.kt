@@ -4,6 +4,9 @@ import com.feylabs.halalkan.data.remote.reqres.auth.LoginBodyRequest
 import com.feylabs.halalkan.data.remote.reqres.auth.RegisterBodyRequest
 import com.feylabs.halalkan.data.remote.reqres.favorite.AddFavMasjidResponse
 import com.feylabs.halalkan.data.remote.reqres.favorite.AddFavRestoResponse
+import com.feylabs.halalkan.data.remote.reqres.forum.AllForumPaginationResponse
+import com.feylabs.halalkan.data.remote.reqres.forum.CreateForumResponse
+import com.feylabs.halalkan.data.remote.reqres.forum.ForumCategoryResponse
 import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidDetailResponse
 import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidPhotosResponse
 import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidReviewPaginationResponse
@@ -24,6 +27,7 @@ class RemoteDataSource(
     private val prayerTimeService: PrayerTimeAladhanService,
     private val restoService: RestoService,
     private val favoriteService: FavoriteService,
+    private val forumService: ForumService,
 ) : RemoteDataSourceInterface {
 
     /**
@@ -171,6 +175,21 @@ class RemoteDataSource(
 
     override suspend fun addFavoriteResto(restoId: String): Response<AddFavRestoResponse> {
         return favoriteService.addFavoriteResto(restoId)
+    }
+
+    override suspend fun createForum(body: RequestBody): Response<CreateForumResponse?>? {
+        return forumService.createForum(body)
+    }
+
+    override suspend fun getForumCategory(): Response<ForumCategoryResponse> {
+        return forumService.getForumsCategory()
+    }
+
+    override suspend fun getAllForumPaginate(
+        page: Int,
+        perPage: Int
+    ): Response<AllForumPaginationResponse> {
+        return forumService.getAllForum(perPage=perPage,page = page)
     }
 
 }

@@ -84,6 +84,11 @@ class NewHomeFragment : BaseFragment() {
         binding.menuTranslate.setOnClickListener {
             findNavController().navigate(R.id.action_navigation_newHomeFragment_to_navigation_translateFragment)
         }
+
+        binding.menuForum.setOnClickListener {
+            findNavController().navigate(R.id.action_navigation_newHomeFragment_to_forumHomeFragment)
+        }
+
         binding.menuScan.setOnClickListener {}
     }
 

@@ -33,7 +33,7 @@
                     android:layout_centerInParent="true"
                     android:layout_marginEnd="20dp"
                     android:background="@android:color/transparent"
-                    android:src="@drawable/ic_baseline_arrow_back_24"
+                    android:src="@drawable/ic_cross_exit"
                     app:tint="@color/blue_auth" />
 
                 <TextView
@@ -42,29 +42,30 @@
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@id/btn_back"
                     android:fontFamily="@font/poppins_medium"
-                    android:text="Tambah Review"
+                    android:text="Create Forum"
                     android:textAlignment="textEnd"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:visibility="gone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_marginEnd="20dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:visibility="gone">
+
                     <ImageButton
                         android:id="@+id/img_notification"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
                         android:layout_centerInParent="true"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
                         android:background="@android:color/transparent"
                         android:src="@drawable/ic_baseline_notifications_none_24"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
                         app:tint="@color/blue_auth" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </RelativeLayout>
@@ -72,6 +73,7 @@
         </androidx.appcompat.widget.Toolbar>
 
     </com.google.android.material.appbar.AppBarLayout>
+
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/scrollView"
@@ -86,43 +88,106 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="3dp"
-                android:layout_marginVertical="@dimen/dimen_20dp"
-                android:background="@color/color_separator" />
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/dimen_20dp"
+                android:layout_marginTop="@dimen/dimen_20dp"
                 android:background="@android:color/transparent"
                 android:fontFamily="@font/poppins_regular"
                 android:gravity="top"
-                android:hint="Skor"
+                android:text="Category"
                 android:textSize="15sp" />
 
-            <RatingBar
-                android:id="@+id/rating_bar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginHorizontal="20dp"
+            <com.google.android.material.chip.ChipGroup
+                app:singleSelection="true"
+                app:selectionRequired="true"
                 android:layout_marginTop="@dimen/dimen_10dp"
-                android:numStars="5"
-                android:stepSize="1" />
+                android:layout_marginHorizontal="@dimen/dimen_20dp"
+                android:id="@+id/chip_group_category"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+
+            </com.google.android.material.chip.ChipGroup>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="3dp"
-                android:layout_marginVertical="@dimen/dimen_20dp"
-                android:background="@color/color_separator" />
+                android:layout_marginVertical="@dimen/dimen_5dp"
+                android:background="@color/color_separator"/>
+
+
+            <TextView
+                android:id="@+id/tv_desc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/poppins_regular"
+                android:text="Title"
+                android:textAlignment="viewStart"
+                android:textColor="@color/gray7575"
+                android:textSize="15sp" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/et_title"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/dimen_20dp"
+                android:layout_marginTop="8dp"
+                android:hint="Add Title">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="top"
+                    android:inputType="textMultiLine" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <TextView
+                android:id="@+id/body_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/poppins_regular"
+                android:text="Body Text"
+                android:textAlignment="viewStart"
+                android:textColor="@color/gray7575"
+                android:textSize="15sp" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/et_desc"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/dimen_20dp"
+                android:layout_marginTop="8dp"
+                android:hint="Enter Text Here"
+                app:boxCornerRadiusBottomEnd="10dp"
+                app:boxCornerRadiusBottomStart="@dimen/dimen_10dp"
+                app:boxCornerRadiusTopEnd="10dp"
+                app:boxCornerRadiusTopStart="@dimen/dimen_10dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="top"
+                    android:inputType="textMultiLine"
+                    android:lines="6" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
 
             <TextView
                 android:id="@+id/et_translate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/dimen_20dp"
+                android:layout_marginTop="@dimen/dimen_20dp"
                 android:background="@android:color/transparent"
                 android:fontFamily="@font/poppins_regular"
                 android:gravity="top"
@@ -165,71 +230,37 @@
                         android:hint="Photo"
                         android:textSize="15sp" />
 
+                    <com.feylabs.halalkan.customview.imagepreviewcontainer.small.CustomViewImageContainerPreviewSmall
+                        android:id="@+id/photo_container"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone" />
+
                 </LinearLayout>
+
+
 
             </LinearLayout>
 
-            <com.feylabs.halalkan.customview.imagepreviewcontainer.small.CustomViewImageContainerPreviewSmall
-                android:id="@+id/photo_container"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="gone" />
-
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/dimen_20dp"
-                android:layout_marginTop="@dimen/dimen_20dp"
-                android:background="@android:color/transparent"
-                android:fontFamily="@font/poppins_regular"
-                android:gravity="top"
-                android:hint="Deskripsi"
-                android:textSize="15sp" />
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/et_deskripsi"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/dimen_20dp"
-                android:layout_marginTop="8dp"
-                android:hint="Tambahkan Deskripsi"
-                android:minHeight="@dimen/dimen_50dp"
-                app:boxCornerRadiusBottomEnd="@dimen/dimen_10dp"
-                app:boxCornerRadiusBottomStart="@dimen/dimen_10dp"
-                app:boxCornerRadiusTopEnd="@dimen/dimen_10dp"
-                app:boxCornerRadiusTopStart="@dimen/dimen_10dp"
-                app:boxStrokeColor="@color/black30">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/poppins_regular"
-                    android:gravity="top"
-                    android:inputType="textMultiLine"
-                    android:lines="5"
-                    android:minHeight="@dimen/dimen_50dp" />
-            </com.google.android.material.textfield.TextInputLayout>
-
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_publish_review"
+                android:id="@+id/btn_save"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Publish Review"
-                android:backgroundTint="@color/halalkan_primary"
-                app:cornerRadius="@dimen/dimen_10dp"
                 android:layout_marginHorizontal="@dimen/dimen_20dp"
-                android:fontFamily="@font/poppins_regular"
                 android:layout_marginTop="20dp"
-                />
+                android:backgroundTint="@color/halalkan_primary"
+                android:fontFamily="@font/poppins_regular"
+                android:text="AsK Question"
+                app:cornerRadius="@dimen/dimen_10dp" />
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
     <include
-        android:id="@+id/loading_screen"
+        android:id="@+id/include_loading"
         android:visibility="gone"
-        layout="@layout/layout_loading_screen_full"/>
+        layout="@layout/layout_loading_food_nf"/>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

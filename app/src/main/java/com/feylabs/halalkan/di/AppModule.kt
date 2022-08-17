@@ -4,6 +4,7 @@ import com.feylabs.halalkan.MainViewModel
 import com.feylabs.halalkan.view.admin_resto.AdminRestoViewModel
 import com.feylabs.halalkan.view.auth.AuthViewModel
 import com.feylabs.halalkan.view.direction.DirectionViewModel
+import com.feylabs.halalkan.view.forum.ForumViewModel
 import com.feylabs.halalkan.view.home.HomeViewModel
 import com.feylabs.halalkan.view.postdetail.PostDetailViewModel
 import com.feylabs.halalkan.view.prayer.PrayerRoomViewModel
@@ -34,5 +35,6 @@ val viewModelModule = module {
     viewModel { TranslateViewModel(get()) }
 
     viewModel { DirectionViewModel(get()) }
+    viewModel { ForumViewModel(get()) }
 }
 

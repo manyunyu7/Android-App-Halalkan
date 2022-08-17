@@ -1,5 +1,6 @@
 package com.feylabs.halalkan.utils
 
+import com.feylabs.halalkan.data.remote.reqres.forum.ForumModelResponse
 import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidModelResponse
 import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidReviewPaginationResponse
 import com.feylabs.halalkan.data.remote.reqres.resto.RestoReviewPaginationResponse
@@ -28,7 +29,7 @@ class PaginationPlaceholder {
             id = 0,
             createdAt = "",
             updatedAt = "",
-            address ="",
+            address = "",
             categoryName = "",
             distanceKm = "",
             distanceKmDouble = 0.0,
@@ -44,6 +45,23 @@ class PaginationPlaceholder {
             review_avg = "",
             typeId = 0,
             review_count = "",
+            img_full_path = "",
+            ViewType = VFooter
+        )
+
+        fun getForumPlaceholder() = ForumModelResponse(
+            id = 0,
+            createdAt = "",
+            updatedAt = "",
+            user = null,
+            category = null,
+            title = "",
+            userId = 0,
+            body = "",
+            img = "",
+            likes = null,
+            categoryId =0,
+            comments = null,
             img_full_path = "",
             ViewType = VFooter
         )

@@ -29,5 +29,13 @@
         <item name="android:background">@android:color/transparent</item>
     </style>
 
+    <style name="ChipSelectionStyle">
+        <item name="chipStrokeWidth">2dp</item>
+        <item name="fontFamily">@font/poppins_regular</item>
+        <item name="android:textColor">@color/uikit_gray_60</item>
+        <item name="selectableItemBackground">@color/uikit_blue90</item>
+        <item name="chipBackgroundColor">@color/chip_filter_selection_color</item>
+    </style>
+
 
 </resources>

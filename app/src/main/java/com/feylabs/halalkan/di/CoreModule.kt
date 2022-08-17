@@ -56,6 +56,15 @@ val networkModule = module {
         retrofit.create(RestoService::class.java)
     }
 
+    single<ForumService>(named("forumService")) {
+        val retrofit = Retrofit.Builder()
+            .baseUrl(Network.BASE_URL_V1)
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(get())
+            .build()
+        retrofit.create(ForumService::class.java)
+    }
+
     single<MasjidService>(named("masjidService")) {
         val retrofit = Retrofit.Builder()
             .baseUrl(Network.BASE_URL_V1)
@@ -103,7 +112,8 @@ val repositoryModule = module {
             get(named("translatorService")),
             get(named("prayerTimeAladhanService")),
             get(named("restoService")),
-            get(named("favService"))
+            get(named("favService")),
+            get(named("forumService")),
         )
     }
     single { MasjidRepository(get()) }
