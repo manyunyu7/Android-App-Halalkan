@@ -117,4 +117,10 @@ dependencies {
     //rating bar
     implementation 'com.github.shallcheek:RatingBar:v1.0'
 
+    //location picker
+    implementation ('com.adevinta.android:leku:9.1.4') {
+        exclude group: 'com.google.android.gms'
+        exclude group: 'androidx.appcompat'
+    }
+
 }

@@ -255,6 +255,7 @@
                 android:background="@color/color_separator" />
 
             <TextView
+                android:id="@+id/label_info_resto"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
