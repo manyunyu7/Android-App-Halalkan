@@ -103,7 +103,7 @@ class ForumAdapter :
 
                 binding.btnActionForum.setOnClickListener {
                     if (::adapterInterface.isInitialized)
-                        adapterInterface.onAction(model)
+                        adapterInterface.onAction(model,adapterPosition)
                 }
 
                 binding.cardForum.setOnClickListener{
@@ -186,8 +186,10 @@ class ForumAdapter :
         fun onUnLike(model: Data)
         fun onShare(model: Data)
         fun onclick(model: Data)
-        fun onAction(model: Data)
         fun loadMore(page: Int)
+        fun onAction(model: Data, adapterPosition: Int) {
+
+        }
     }
 
 }

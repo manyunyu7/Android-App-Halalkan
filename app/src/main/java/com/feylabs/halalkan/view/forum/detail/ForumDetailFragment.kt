@@ -4,13 +4,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.core.widget.doOnTextChanged
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.feylabs.halalkan.R
+import com.feylabs.halalkan.customview.bottomsheet.BottomSheetGeneralAction
+import com.feylabs.halalkan.customview.bottomsheet.MyBottomSheetAction
 import com.feylabs.halalkan.data.remote.QumparanResource.*
 import com.feylabs.halalkan.data.remote.reqres.forum.CreateCommentPayload
 import com.feylabs.halalkan.data.remote.reqres.forum.ForumCommentResponse
 import com.feylabs.halalkan.data.remote.reqres.forum.ForumDetailResponse
+import com.feylabs.halalkan.data.remote.reqres.forum.ForumModelResponse
 import com.feylabs.halalkan.databinding.FragmentForumDetailBinding
 import com.feylabs.halalkan.utils.CommonUtil
 import com.feylabs.halalkan.utils.DialogUtils
@@ -20,7 +25,6 @@ import com.feylabs.halalkan.utils.snackbar.SnackbarType
 import com.feylabs.halalkan.view.forum.ForumViewModel
 import com.like.LikeButton
 import com.like.OnLikeListener
-import org.koin.android.ext.android.bind
 import org.koin.android.viewmodel.ext.android.viewModel
 
 
@@ -34,6 +38,8 @@ class ForumDetailFragment : BaseFragment() {
     private val viewModel: ForumViewModel by viewModel()
 
     private val mAdapter by lazy { ForumCommentAdapter() }
+
+    var commentPosition = 0
 
 
     override fun initUI() {
@@ -50,7 +56,13 @@ class ForumDetailFragment : BaseFragment() {
         }
 
         mAdapter.setupAdapterInterface(object : ForumCommentAdapter.ItemInterface {
-            override fun onclick(model: ForumCommentResponse.ForumCommentResponseItem) {
+
+            override fun onclick(
+                model: ForumCommentResponse.ForumCommentResponseItem,
+                position: Int
+            ) {
+                showBottomSheetComment(model)
+                commentPosition = position
             }
 
             override fun onLiked(model: ForumCommentResponse.ForumCommentResponseItem) {
@@ -81,7 +93,7 @@ class ForumDetailFragment : BaseFragment() {
                     showLoading(false)
                     binding.etComment.editText?.setText("")
                     viewModel.getCommentOnForum(getForumId())
-                    viewModel.getForumDetail(getForumId())
+                    hideSoftKeyboard()
                     showSnackbar("Your Comment Was Posted Successfully")
                 }
             }
@@ -105,6 +117,34 @@ class ForumDetailFragment : BaseFragment() {
                 }
             }
         }
+
+        viewModel.deleteForumLiveData.observe(viewLifecycleOwner){
+            if (it is Loading) showLoading(true) else showLoading(false)
+            when(it){
+                is Default -> {}
+                is Error -> {}
+                is Loading -> {
+                }
+                is Success ->  {
+                    findNavController().popBackStack()
+                    showSnackbar("Forum Deleted Successfully")
+                }
+            }
+        }
+        viewModel.deleteCommentLiveData.observe(viewLifecycleOwner){
+            if (it is Loading) showLoading(true) else showLoading(false)
+            when(it){
+                is Default -> {}
+                is Error -> {}
+                is Loading -> {}
+                is Success ->  {
+                    mAdapter.notifyItemRemoved(commentPosition)
+                    mAdapter.data.removeAt(commentPosition)
+                    showSnackbar("Comment Deleted Successfully")
+                }
+            }
+        }
+
         viewModel.detailForumLiveData.observe(viewLifecycleOwner) {
             if (it is Loading) showLoading(true) else showLoading(false)
             when (it) {
@@ -133,6 +173,12 @@ class ForumDetailFragment : BaseFragment() {
 
     private fun setupDataFromNetwork(forum: ForumDetailResponse) {
         val data = forum.forum
+
+
+        binding.includeForum.btnActionForum.setOnClickListener {
+            showBottomSheetAction(forum.forum)
+        }
+
         binding.includeForum.apply {
 
             if (data.img != null) {
@@ -163,6 +209,91 @@ class ForumDetailFragment : BaseFragment() {
         }
     }
 
+    private fun showBottomSheetComment(model: ForumCommentResponse.ForumCommentResponseItem) {
+        val olz: (selectedId: String, action: MyBottomSheetAction) -> Unit = { selectedId, action ->
+            when (action) {
+                MyBottomSheetAction.EDIT -> {}
+                MyBottomSheetAction.SEE -> {}
+                MyBottomSheetAction.CREATE -> {}
+                MyBottomSheetAction.DELETE -> { deleteComment(id) }
+                MyBottomSheetAction.OTHER -> {}
+            }
+        }
+        BottomSheetGeneralAction.instance(
+            description = "Choose Action",
+            title = "Choose Action",
+            selectedAction = olz,
+            objectId = model.id.toString(),
+            ownerId = model.userId.toString(),
+            type = "comment"
+        ).show(getMFragmentManager(), BottomSheetGeneralAction().tag)
+    }
+
+    private fun deleteComment(id: Int) {
+        DialogUtils.showConfirmationDialog(
+            context = requireContext(),
+            title = "Are You Sure",
+            message = "This action will delete this comment",
+            positiveAction = Pair("OK") {
+                viewModel.deleteComment(id)
+            },
+            negativeAction = Pair(
+                "No",
+                { showToast("Canceled") }),
+            autoDismiss = true,
+            buttonAllCaps = false
+        )
+    }
+
+    private fun showBottomSheetAction(model: ForumModelResponse) {
+        val olz: (selectedId: String, action: MyBottomSheetAction) -> Unit = { selectedId, action ->
+            when (action) {
+                MyBottomSheetAction.EDIT -> {
+                    findNavController().navigate(
+                        R.id.navigation_forumCreateThreadFragment,
+                        bundleOf("forumId" to model.id.toString())
+                    )
+                }
+                MyBottomSheetAction.SEE -> {
+                    findNavController().navigate(
+                        R.id.navigation_forumDetailFragment,
+                        bundleOf("id" to model.id.toString())
+                    )
+                }
+                MyBottomSheetAction.CREATE -> {}
+                MyBottomSheetAction.DELETE -> {
+                    deleteForum(model.id)
+                }
+                MyBottomSheetAction.OTHER -> {}
+            }
+        }
+        BottomSheetGeneralAction.instance(
+            description = "Choose Action",
+            title = "Choose Action",
+            selectedAction = olz,
+            objectId = model.id.toString(),
+            ownerId = model.userId.toString()
+        ).show(getMFragmentManager(), BottomSheetGeneralAction().tag)
+    }
+
+    private fun deleteForum(id: Int) {
+        DialogUtils.showConfirmationDialog(
+            context = requireContext(),
+            title = "Are You Sure",
+            message = "This action will delete this post",
+            positiveAction = Pair("OK") {
+                viewModel.deleteForum(id)
+            },
+            negativeAction = Pair(
+                "No",
+                { showToast("Canceled") }),
+            autoDismiss = true,
+            buttonAllCaps = false
+        )
+    }
+
+
+
     private fun setupCommentFromNetwork(comments: ForumCommentResponse?) {
         comments?.let {
             mAdapter.setWithNewData(it)
@@ -180,6 +311,8 @@ class ForumDetailFragment : BaseFragment() {
     }
 
     override fun initAction() {
+
+
         binding.etComment.editText?.doOnTextChanged { text, start, before, count ->
             if(text.isNullOrEmpty().not()){
                 binding.etComment.error=null

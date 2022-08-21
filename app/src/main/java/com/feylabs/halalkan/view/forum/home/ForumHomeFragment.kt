@@ -34,6 +34,7 @@ class ForumHomeFragment : BaseFragment() {
     private val viewModel: ForumViewModel by viewModel()
 
     private val mAdapter by lazy { ForumAdapter() }
+    var currentPosition = 0
 
     override fun onResume() {
         super.onResume()
@@ -92,7 +93,8 @@ class ForumHomeFragment : BaseFragment() {
                 )
             }
 
-            override fun onAction(model: ForumModelResponse) {
+            override fun onAction(model: ForumModelResponse, adapterPosition:Int) {
+                currentPosition = adapterPosition
                 showBottomSheetAction(model)
             }
 
@@ -139,7 +141,9 @@ class ForumHomeFragment : BaseFragment() {
             title = "Are You Sure",
             message = "This action will delete this post",
             positiveAction = Pair("OK") {
-                showToast("Deleted")
+                mAdapter.data.removeAt(currentPosition)
+                mAdapter.notifyItemRemoved(currentPosition)
+               viewModel.deleteForum(id)
             },
             negativeAction = Pair(
                 "No",

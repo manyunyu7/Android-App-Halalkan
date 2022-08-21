@@ -24,6 +24,14 @@ class ForumViewModel(
         MutableLiveData<QumparanResource<ForumCategoryResponse?>>()
     val forumCategoryLiveData get() = _forumCategoryLiveData
 
+    private var _deleteForumLiveData =
+        MutableLiveData<QumparanResource<GeneralApiResponse?>>()
+    val deleteForumLiveData get() = _deleteForumLiveData
+
+    private var _deleteCommentLiveData =
+        MutableLiveData<QumparanResource<GeneralApiResponse?>>()
+    val deleteCommentLiveData get() = _deleteCommentLiveData
+
     private var _detailForumLiveData =
         MutableLiveData<QumparanResource<ForumDetailResponse?>>()
     val detailForumLiveData get() = _detailForumLiveData
@@ -199,6 +207,48 @@ class ForumViewModel(
                 }
             } catch (e: Exception) {
                 _detailForumLiveData.postValue(QumparanResource.Error(e.message.toString()))
+            }
+        }
+    }
+
+    fun deleteForum(id: Int) {
+        _deleteForumLiveData.postValue(QumparanResource.Loading())
+        viewModelScope.launch {
+            try {
+                val res = ds.deleteForum(id)
+                if (res.isSuccessful) {
+                    _deleteForumLiveData.postValue(QumparanResource.Success(res.body()))
+                } else {
+                    var message = res.message().toString()
+                    res.errorBody()?.let {
+                        val jsonObj = JSONObject(it.charStream().readText())
+                        message = jsonObj.getString("message")
+                    }
+                    _deleteForumLiveData.postValue(QumparanResource.Error(message))
+                }
+            } catch (e: Exception) {
+                _deleteForumLiveData.postValue(QumparanResource.Error(e.message.toString()))
+            }
+        }
+    }
+
+    fun deleteComment(id: Int) {
+        _deleteCommentLiveData.postValue(QumparanResource.Loading())
+        viewModelScope.launch {
+            try {
+                val res = ds.deleteComment(id)
+                if (res.isSuccessful) {
+                    _deleteCommentLiveData.postValue(QumparanResource.Success(res.body()))
+                } else {
+                    var message = res.message().toString()
+                    res.errorBody()?.let {
+                        val jsonObj = JSONObject(it.charStream().readText())
+                        message = jsonObj.getString("message")
+                    }
+                    _deleteCommentLiveData.postValue(QumparanResource.Error(message))
+                }
+            } catch (e: Exception) {
+                _deleteCommentLiveData.postValue(QumparanResource.Error(e.message.toString()))
             }
         }
     }

@@ -100,4 +100,6 @@ interface RemoteDataSourceInterface {
     suspend fun likeComment(forumId: Int): Response<GeneralApiResponse>
     suspend fun unlikeComment(forumId: Int): Response<GeneralApiResponse>
     suspend fun createComment(body: CreateCommentPayload): Response<AddCommentResponse>
+    suspend fun deleteForum(forumId: Int): Response<GeneralApiResponse>
+    suspend fun deleteComment(commentId: Int): Response<GeneralApiResponse>
 }

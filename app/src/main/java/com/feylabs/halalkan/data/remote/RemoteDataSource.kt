@@ -223,6 +223,14 @@ class RemoteDataSource(
         return forumService.unlikeComment(forumId)
     }
 
+    override suspend fun deleteForum(forumId: Int): Response<GeneralApiResponse> {
+        return forumService.deleteForum(forumId)
+    }
+
+    override suspend fun deleteComment(commentId: Int): Response<GeneralApiResponse> {
+        return forumService.deleteComment(commentId)
+    }
+
     override suspend fun createComment(body: CreateCommentPayload): Response<AddCommentResponse> {
         return forumService.createComment(body)
     }

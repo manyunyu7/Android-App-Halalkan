@@ -22,6 +22,8 @@ class BottomSheetGeneralAction : BottomSheetDialogFragment() {
     private var objectId: String = ""
     private var ownerId: String = ""
 
+    private var type = ""
+
     lateinit private var bsGeneralActionInterface: BottomSheetGeneralInterface
 
     companion object {
@@ -31,14 +33,16 @@ class BottomSheetGeneralAction : BottomSheetDialogFragment() {
             title: String,
             objectId: String,
             ownerId: String,
-            selectedAction: (selectedId: String, action: MyBottomSheetAction) -> Unit
-        ): BottomSheetGeneralAction {
+            selectedAction: (selectedId: String, action: MyBottomSheetAction) -> Unit,
+            type : String = "",
+            ): BottomSheetGeneralAction {
             BottomSheetGeneralAction().apply {
                 this.description = description
                 this.title = title
                 this.selectedAction = selectedAction
                 this.objectId = objectId
                 this.ownerId = ownerId
+                this.type = type
                 return this
             }
         }
@@ -64,6 +68,7 @@ class BottomSheetGeneralAction : BottomSheetDialogFragment() {
     }
 
     private fun initUI() {
+
         binding.containerDelete.setOnClickListener {
             dismiss()
             selectedAction.invoke(objectId, MyBottomSheetAction.DELETE)
@@ -96,6 +101,13 @@ class BottomSheetGeneralAction : BottomSheetDialogFragment() {
         }
 
         binding.tvTitleFilter.text = description
+
+
+        if (this.type=="comment"){
+            binding.containerEdit.makeGone()
+            binding.containerSee.makeGone()
+        }
+
     }
 
     private fun initUiUnauthorized() {

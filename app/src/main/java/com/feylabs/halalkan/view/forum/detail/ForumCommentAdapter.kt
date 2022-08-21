@@ -42,7 +42,7 @@ class ForumCommentAdapter : RecyclerView.Adapter<ForumCommentAdapter.AdapterView
 
             if (::adapterInterface.isInitialized) {
                 binding.root.setOnClickListener {
-                    adapterInterface.onclick(model)
+                    adapterInterface.onclick(model,adapterPosition)
                 }
             }
 
@@ -117,7 +117,7 @@ class ForumCommentAdapter : RecyclerView.Adapter<ForumCommentAdapter.AdapterView
     }
 
     interface ItemInterface {
-        fun onclick(model: AdapterModel)
+        fun onclick(model: AdapterModel,position: Int)
         fun onLiked(model: AdapterModel)
         fun onUnliked(model: AdapterModel)
     }

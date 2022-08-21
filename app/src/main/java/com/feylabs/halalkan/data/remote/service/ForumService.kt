@@ -31,22 +31,22 @@ interface ForumService {
         @Query("is_deleting_image") isDeletingImage: Boolean = false
     ): Response<CreateForumResponse?>?
 
-    @POST("forums/like/{forumId}")
+    @POST("fe/forums/like/{forumId}")
     suspend fun likeForum(
         @Path("forumId") forumId: Int,
     ): Response<GeneralApiResponse>
 
-    @POST("forums/unlike/{forumId}")
+    @POST("fe/forums/unlike/{forumId}")
     suspend fun unlikeForum(
         @Path("forumId") forumId: Int,
     ): Response<GeneralApiResponse>
 
-    @POST("comments/like/{Id}")
+    @POST("fe/comments/like/{Id}")
     suspend fun likeCommentForum(
         @Path("Id") commentId: Int,
     ): Response<GeneralApiResponse>
 
-    @POST("comments/unlike/{Id}")
+    @POST("fe/comments/unlike/{Id}")
     suspend fun unlikeComment(
         @Path("Id") commentId: Int,
     ): Response<GeneralApiResponse>
@@ -56,7 +56,7 @@ interface ForumService {
         @Path("forumId") forumId: Int,
     ): Response<ForumDetailResponse>
 
-   @GET("forums/comment/{forumId}")
+   @GET("fe/forums/comment/{forumId}")
     suspend fun commentOnForum(
         @Path("forumId") forumId: Int,
     ): Response<ForumCommentResponse>
@@ -65,5 +65,15 @@ interface ForumService {
     suspend fun createComment(
         @Body body: CreateCommentPayload
     ): Response<AddCommentResponse>
+
+    @DELETE("forums/delete/{forumId}")
+    suspend fun deleteForum(
+        @Path("forumId") forumId: Int,
+    ): Response<GeneralApiResponse>
+
+    @DELETE("comments/delete/{commentId}")
+    suspend fun deleteComment(
+        @Path("commentId") commentId: Int,
+    ): Response<GeneralApiResponse>
 
 }
