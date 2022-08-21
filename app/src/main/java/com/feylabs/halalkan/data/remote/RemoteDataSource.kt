@@ -1,12 +1,11 @@
 package com.feylabs.halalkan.data.remote
 
+import com.feylabs.halalkan.data.remote.reqres.GeneralApiResponse
 import com.feylabs.halalkan.data.remote.reqres.auth.LoginBodyRequest
 import com.feylabs.halalkan.data.remote.reqres.auth.RegisterBodyRequest
 import com.feylabs.halalkan.data.remote.reqres.favorite.AddFavMasjidResponse
 import com.feylabs.halalkan.data.remote.reqres.favorite.AddFavRestoResponse
-import com.feylabs.halalkan.data.remote.reqres.forum.AllForumPaginationResponse
-import com.feylabs.halalkan.data.remote.reqres.forum.CreateForumResponse
-import com.feylabs.halalkan.data.remote.reqres.forum.ForumCategoryResponse
+import com.feylabs.halalkan.data.remote.reqres.forum.*
 import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidDetailResponse
 import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidPhotosResponse
 import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidReviewPaginationResponse
@@ -135,13 +134,17 @@ class RemoteDataSource(
         restoId: String,
         perPage: Int,
         page: Int
-    ): Response<RestoReviewPaginationResponse> = restoService.getReviews(restoId, page = page, perPage = perPage)
-    override suspend fun createResto(body: RequestBody): Response<ResponseBody?>? = restoService.createResto(body)
+    ): Response<RestoReviewPaginationResponse> =
+        restoService.getReviews(restoId, page = page, perPage = perPage)
+
+    override suspend fun createResto(body: RequestBody): Response<ResponseBody?>? =
+        restoService.createResto(body)
+
     override suspend fun createRestoFoodCategory(
         id: String,
         body: RequestBody
     ): Response<ResponseBody?>? {
-        return restoService.createRestoFoodCategory(body,id)
+        return restoService.createRestoFoodCategory(body, id)
     }
 
     override suspend fun updateRestoColumn(
@@ -149,7 +152,7 @@ class RemoteDataSource(
         pathupdate: String,
         body: RequestBody
     ): Response<UpdateRestoColumnResponse?>? {
-        return restoService.updateRestoColumn(restoId = id,urlupdate = pathupdate, file = body)
+        return restoService.updateRestoColumn(restoId = id, urlupdate = pathupdate, file = body)
     }
 
 
@@ -181,6 +184,18 @@ class RemoteDataSource(
         return forumService.createForum(body)
     }
 
+    override suspend fun updateForum(
+        forumId: String,
+        body: RequestBody,
+        isDeletingImage: Boolean
+    ): Response<CreateForumResponse?>? {
+        return forumService.updateForum(
+            forumId.toIntOrNull() ?: 0,
+            body,
+            isDeletingImage = isDeletingImage
+        )
+    }
+
     override suspend fun getForumCategory(): Response<ForumCategoryResponse> {
         return forumService.getForumsCategory()
     }
@@ -189,7 +204,34 @@ class RemoteDataSource(
         page: Int,
         perPage: Int
     ): Response<AllForumPaginationResponse> {
-        return forumService.getAllForum(perPage=perPage,page = page)
+        return forumService.getAllForum(perPage = perPage, page = page)
     }
 
+    override suspend fun likeForum(forumId: Int): Response<GeneralApiResponse> {
+        return forumService.likeForum(forumId)
+    }
+
+    override suspend fun unlikeForum(forumId: Int): Response<GeneralApiResponse> {
+        return forumService.unlikeForum(forumId)
+    }
+
+    override suspend fun likeComment(forumId: Int): Response<GeneralApiResponse> {
+        return forumService.likeCommentForum(forumId)
+    }
+
+    override suspend fun unlikeComment(forumId: Int): Response<GeneralApiResponse> {
+        return forumService.unlikeComment(forumId)
+    }
+
+    override suspend fun createComment(body: CreateCommentPayload): Response<AddCommentResponse> {
+        return forumService.createComment(body)
+    }
+
+    override suspend fun getDetailForum(forumId: Int): Response<ForumDetailResponse> {
+        return forumService.detailForum(forumId)
+    }
+
+    override suspend fun getCommentForum(forumId: Int): Response<ForumCommentResponse> {
+        return forumService.commentOnForum(forumId)
+    }
 }

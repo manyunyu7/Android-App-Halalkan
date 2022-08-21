@@ -38,6 +38,23 @@ data class ForumModelResponse(
     val ViewType: Int = PaginationPlaceholder.VNormal,
     var isFooterVisible: Boolean = true,
 ) {
+
+    fun getLikeCount() : Int{
+        likes?.let {
+          return it.size
+        } ?: kotlin.run {
+            return 0
+        }
+    }
+
+    fun getCommentCount() : Int{
+        comments?.let {
+          return it.size
+        } ?: kotlin.run {
+            return 0
+        }
+    }
+
     @Keep
     data class Category(
         @SerializedName("id")

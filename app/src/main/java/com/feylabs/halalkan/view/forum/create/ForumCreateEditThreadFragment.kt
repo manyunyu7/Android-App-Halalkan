@@ -18,8 +18,10 @@ import com.feylabs.halalkan.customview.imagepreviewcontainer.CustomViewPhotoMode
 import com.feylabs.halalkan.customview.imagepreviewcontainer.TypePhotoModel
 import com.feylabs.halalkan.data.remote.QumparanResource.*
 import com.feylabs.halalkan.data.remote.reqres.forum.ForumCategoryResponse
+import com.feylabs.halalkan.data.remote.reqres.forum.ForumDetailResponse
 import com.feylabs.halalkan.data.remote.reqres.resto.RestoDetailResponse
 import com.feylabs.halalkan.databinding.FragmentForumCreateThreadBinding
+import com.feylabs.halalkan.utils.CommonUtil.makeVisible
 import com.feylabs.halalkan.utils.DialogUtils
 import com.feylabs.halalkan.utils.PermissionUtil
 import com.feylabs.halalkan.utils.PermissionUtil.Companion.isGranted
@@ -34,7 +36,7 @@ import timber.log.Timber
 import java.io.File
 
 
-class ForumCreateThreadFragment : BaseFragment() {
+class ForumCreateEditThreadFragment : BaseFragment() {
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -44,11 +46,30 @@ class ForumCreateThreadFragment : BaseFragment() {
     val viewModel by viewModel<ForumViewModel>()
 
     private val PERMISSION_CODE_STORAGE = 1001
+    var currentCategory = ""
 
     override fun initUI() {
     }
 
     override fun initObserver() {
+        viewModel.detailForumLiveData.observe(viewLifecycleOwner) {
+            when (it) {
+                is Default -> {}
+                is Error -> {
+                    showSnackbar(it.message.toString(), SnackbarType.ERROR)
+                }
+                is Loading -> {
+                    showLoading(true)
+                }
+                is Success -> {
+                    it.data?.let {
+                        setupForumData(it)
+                        viewModel.getForumCategory()
+                    }
+                }
+            }
+        }
+
         viewModel.forumCategoryLiveData.observe(viewLifecycleOwner) {
             when (it) {
                 is Default -> {}
@@ -63,6 +84,26 @@ class ForumCreateThreadFragment : BaseFragment() {
                     showLoading(false)
                     it.data?.let {
                         setupCategoryChip(it)
+                    }
+                }
+            }
+        }
+
+        viewModel.updateForumLiveData.observe(viewLifecycleOwner) {
+            when (it) {
+                is Default -> {}
+                is Error -> {
+                    showLoading(false)
+                    showSnackbar(it.message.toString(), SnackbarType.ERROR)
+                }
+                is Loading -> {
+                    showLoading(true)
+                }
+                is Success -> {
+                    showLoading(false)
+                    it.data?.let {
+                        findNavController().navigateUp()
+                        showSnackbar("Forum Updated Successfully")
                     }
                 }
             }
@@ -88,6 +129,29 @@ class ForumCreateThreadFragment : BaseFragment() {
         }
     }
 
+    private fun setupForumData(it: ForumDetailResponse) {
+        binding.etDesc.editText?.setText(it.forum.body)
+        binding.etTitle.editText?.setText(it.forum.title)
+
+        currentCategory = it.forum.categoryId.toString()
+
+        binding.photoContainer.makeVisible()
+
+        if (it.forum.img == null) {
+            binding.photoContainer.makeGone()
+        }
+
+        binding.photoContainer.replaceAllImage(
+            mutableListOf(
+                CustomViewPhotoModel(
+                    url = it.forum.img_full_path,
+                    type = TypePhotoModel.URL,
+                    isDeletable = true
+                )
+            )
+        )
+    }
+
     private fun getSelectedCategoryId(): String {
         val ids: List<Int> = binding.chipGroupCategory.getCheckedChipIds()
         var selected = "-99"
@@ -95,7 +159,7 @@ class ForumCreateThreadFragment : BaseFragment() {
             val chip = view?.findViewById<Chip>(i)
             selected = chip?.tag.toString()
         }
-        return selected.toString()
+        return selected
     }
 
     private fun setupCategoryChip(data: ForumCategoryResponse) {
@@ -104,6 +168,12 @@ class ForumCreateThreadFragment : BaseFragment() {
             chip.text = forumCategoryResponseItem.name
             chip.tag = forumCategoryResponseItem.id
             chip.isCheckable = true
+
+
+            if (forumCategoryResponseItem.id.toString() == currentCategory) {
+                chip.isChecked = true
+            }
+
             chip.setTextColor(resources.getColor(R.color.white))
             chip.chipStrokeColor =
                 ColorStateList.valueOf(
@@ -162,21 +232,40 @@ class ForumCreateThreadFragment : BaseFragment() {
 
             if (getSelectedCategoryId() == "-99") {
                 showError = true
-                showSnackbar ("Choose Category")
+                showSnackbar("Choose Category")
             }
 
             if (showError.not()) {
+
+                var message = "Your Question will be posted to the forum"
+                if (isEdit()) message = "Your question will be updated"
+
+                var isDeletingImage = binding.photoContainer.itemCount() == 0
+
                 DialogUtils.showConfirmationDialog(
                     context = requireContext(),
                     title = "Are You Sure",
-                    message = "Your Question will be posted to the forum",
+                    message = message,
                     positiveAction = Pair("OK") {
-                        viewModel.createThread(
-                            title = title.toString(),
-                            desc = desc.toString(),
-                            file = uploadedFile,
-                            category = getSelectedCategoryId()
-                        )
+                        if (isEdit()) {
+                            viewModel.updateThread(
+                                id = getForumId().toString(),
+                                title = title.toString(),
+                                desc = desc.toString(),
+                                file = uploadedFile,
+                                category = getSelectedCategoryId(),
+                                isDeletingImage = isDeletingImage
+                            )
+                        } else {
+                            viewModel.createThread(
+                                title = title.toString(),
+                                desc = desc.toString(),
+                                file = uploadedFile,
+                                category = getSelectedCategoryId()
+                            )
+
+                        }
+
                     },
                     negativeAction = Pair(
                         "No",
@@ -193,8 +282,21 @@ class ForumCreateThreadFragment : BaseFragment() {
         }
     }
 
+    fun getForumId(): Int {
+        val obj = arguments?.getString("forumId") ?: ""
+        return obj.toIntOrNull() ?: -99
+    }
+
+    fun isEdit(): Boolean {
+        return getForumId() != -99
+    }
+
     override fun initData() {
-        viewModel.getForumCategory()
+        if (isEdit()) {
+            viewModel.getForumDetail(getForumId())
+        } else {
+            viewModel.getForumCategory()
+        }
     }
 
     override fun onCreateView(
@@ -279,7 +381,15 @@ class ForumCreateThreadFragment : BaseFragment() {
                         )
                     }
                     binding.photoContainer.visibility = View.VISIBLE
-                    binding.photoContainer.replaceAllImage(tempList)
+
+                    //if there is photo exist, then remove first
+                    if (binding.photoContainer.itemCount() > 0) {
+                        binding.photoContainer.clearData()
+                    }
+
+                    tempList.forEachIndexed { index, customViewPhotoModel ->
+                        binding.photoContainer.addNewImage(customViewPhotoModel)
+                    }
                 }
             }
         }

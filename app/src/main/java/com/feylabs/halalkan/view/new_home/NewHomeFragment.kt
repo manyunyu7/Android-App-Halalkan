@@ -98,7 +98,8 @@ class NewHomeFragment : BaseFragment() {
     }
 
     private fun fetchAllMasjid() {
-        viewModel.fetchAllMasjid()
+        if (mMosqueAdapter.itemCount == 0)
+            viewModel.fetchAllMasjid()
     }
 
     private fun fetchPrayerTime() {
@@ -122,7 +123,7 @@ class NewHomeFragment : BaseFragment() {
     private fun checkRole() {
         val user = MyPreference(requireContext()).getUserData()
         showToast(user.toString())
-        if (user.rolesId==3){
+        if (user.rolesId == 3) {
             findNavController().navigate(R.id.action_navigation_newHomeFragment_to_navigation_initAdminRestoFragment)
         }
     }

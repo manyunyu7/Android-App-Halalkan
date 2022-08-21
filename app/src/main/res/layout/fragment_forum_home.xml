@@ -71,7 +71,7 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:fillViewport="true"
@@ -93,14 +93,26 @@
                 android:id="@+id/rv_forum"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                tools:itemCount="1"
                 tools:listitem="@layout/item_forum"/>
 
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_load_more"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textAllCaps="false"
+                app:cornerRadius="@dimen/dimen_20dp"
+                android:layout_marginTop="@dimen/dimen_10dp"
+                android:text="Load More"
+                android:fontFamily="@font/poppins_regular"
+                />
 
 
         </LinearLayout>
 
-    </ScrollView>
-
+    </androidx.core.widget.NestedScrollView>
 
     <include
         android:id="@+id/include_loading"
@@ -113,7 +125,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:backgroundTint="@color/blue_auth"
+        android:background="@color/blue_auth"
         android:contentDescription="Button Add Report"
+        android:outlineSpotShadowColor="@color/blue_auth"
         android:src="@drawable/ic_baseline_add_24"
         app:fabSize="normal"
         android:layout_marginEnd="@dimen/dimen_20dp"
@@ -144,7 +158,6 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:visibility="gone"
-        tools:visibility="visible"
         android:orientation="vertical"
         android:layout_marginHorizontal="@dimen/dimen_20dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -167,7 +180,7 @@
             app:lottie_loop="true" />
 
         <TextView
-            android:id="@+id/tv_question"
+            android:id="@+id/tv_empty_desc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dimen_10dp"
@@ -181,7 +194,7 @@
 
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_new_review"
+            android:id="@+id/btn_empty_action"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"

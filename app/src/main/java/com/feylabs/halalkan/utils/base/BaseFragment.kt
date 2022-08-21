@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.View
+import android.view.WindowManager
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -111,13 +112,18 @@ abstract class BaseFragment : Fragment() {
         return ContextCompat.getDrawable(requireActivity(), source)!!
     }
 
-    fun setBottomMenuActive(view:View){
-        if(view is TextView){
+    fun setBottomMenuActive(view: View) {
+        if (view is TextView) {
             view.setTextColor(Color.parseColor(colorActive()))
         }
 
-        if(view is ImageView){
-            view.setColorFilter(ContextCompat.getColor(requireContext(), R.color.menu_bottom_active));
+        if (view is ImageView) {
+            view.setColorFilter(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.menu_bottom_active
+                )
+            );
         }
     }
 
@@ -131,18 +137,28 @@ abstract class BaseFragment : Fragment() {
         )
     }
 
-    fun getChoosenResto() =  MyPreference(requireContext()).getPrefString("CHOSEN_RESTO").toString()
+    fun getChoosenResto() = MyPreference(requireContext()).getPrefString("CHOSEN_RESTO").toString()
 
     fun colorActive() = "#156DBE"
 
-    fun setLayoutManagerGridVertical(spanCount:Int=2) = GridLayoutManager(requireContext(),spanCount,
-        GridLayoutManager.VERTICAL,false)
+    fun setLayoutManagerGridVertical(spanCount: Int = 2) = GridLayoutManager(
+        requireContext(), spanCount,
+        GridLayoutManager.VERTICAL, false
+    )
 
-    fun setLayoutManagerGridHorizontal(spanCount:Int=2) = GridLayoutManager(requireContext(),spanCount,
-        GridLayoutManager.HORIZONTAL,false)
+    fun setLayoutManagerGridHorizontal(spanCount: Int = 2) = GridLayoutManager(
+        requireContext(), spanCount,
+        GridLayoutManager.HORIZONTAL, false
+    )
 
     fun setLayoutManagerLinear() = LinearLayoutManager(requireContext())
-    fun setLayoutManagerHorizontal() = LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false)
+    fun setLayoutManagerHorizontal() =
+        LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
 
+    fun hideSoftKeyboard() {
+        getActivity()?.getWindow()?.setSoftInputMode(
+            WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN
+        );
+    }
 
 }

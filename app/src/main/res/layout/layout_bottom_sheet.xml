@@ -28,12 +28,12 @@
         app:layout_constraintTop_toBottomOf="@id/tvOpenWith">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/containerCamera"
+            android:id="@+id/containerEdit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <ImageView
-                android:id="@+id/imgCamera"
+                android:id="@+id/zfreq3r"
                 android:layout_width="28dp"
                 android:layout_height="28dp"
                 android:visibility="gone"
@@ -48,9 +48,9 @@
                 android:text="Kamera"
                 android:visibility="gone"
                 style="@style/Montserrat.Black1.16sp"
-                app:layout_constraintStart_toEndOf="@+id/imgCamera"
-                app:layout_constraintTop_toTopOf="@+id/imgCamera"
-                app:layout_constraintBottom_toBottomOf="@id/imgCamera"
+                app:layout_constraintStart_toEndOf="@+id/zfreq3r"
+                app:layout_constraintTop_toTopOf="@+id/zfreq3r"
+                app:layout_constraintBottom_toBottomOf="@id/zfreq3r"
                 android:layout_marginStart="@dimen/dimen_24dp"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>

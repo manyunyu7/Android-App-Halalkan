@@ -1,14 +1,13 @@
 package com.feylabs.halalkan.data.remote
 
+import com.feylabs.halalkan.data.remote.reqres.GeneralApiResponse
 import com.feylabs.halalkan.data.remote.reqres.auth.LoginBodyRequest
 import com.feylabs.halalkan.data.remote.reqres.auth.LoginResponse
 import com.feylabs.halalkan.data.remote.reqres.auth.RegisterBodyRequest
 import com.feylabs.halalkan.data.remote.reqres.auth.RegisterResponse
 import com.feylabs.halalkan.data.remote.reqres.favorite.AddFavMasjidResponse
 import com.feylabs.halalkan.data.remote.reqres.favorite.AddFavRestoResponse
-import com.feylabs.halalkan.data.remote.reqres.forum.AllForumPaginationResponse
-import com.feylabs.halalkan.data.remote.reqres.forum.CreateForumResponse
-import com.feylabs.halalkan.data.remote.reqres.forum.ForumCategoryResponse
+import com.feylabs.halalkan.data.remote.reqres.forum.*
 import com.feylabs.halalkan.data.remote.reqres.masjid.*
 import com.feylabs.halalkan.data.remote.reqres.masjid.pagination.AllMasjidPaginationResponse
 import com.feylabs.halalkan.data.remote.reqres.prayertime.PrayerTimeAladhanSingleDateResponse
@@ -91,8 +90,14 @@ interface RemoteDataSourceInterface {
 
 
     suspend fun createForum(body:RequestBody) : Response<CreateForumResponse?>?
+    suspend fun updateForum(forumId:String,body:RequestBody,isDeletingImage:Boolean) : Response<CreateForumResponse?>?
     suspend fun getForumCategory() : Response<ForumCategoryResponse>
     suspend fun getAllForumPaginate(page:Int,perPage:Int) : Response<AllForumPaginationResponse>
-
-
+    suspend fun likeForum(forumId:Int) : Response<GeneralApiResponse>
+    suspend fun unlikeForum(forumId:Int) : Response<GeneralApiResponse>
+    suspend fun getDetailForum(forumId: Int): Response<ForumDetailResponse>
+    suspend fun getCommentForum(forumId: Int): Response<ForumCommentResponse>
+    suspend fun likeComment(forumId: Int): Response<GeneralApiResponse>
+    suspend fun unlikeComment(forumId: Int): Response<GeneralApiResponse>
+    suspend fun createComment(body: CreateCommentPayload): Response<AddCommentResponse>
 }

@@ -119,6 +119,11 @@ class CustomViewImageContainerPreviewSmall : FrameLayout {
         typedArray.recycle()
     }
 
+    fun clearData() {
+        adapter.data.clear()
+        adapter.notifyDataSetChanged()
+    }
+
     interface ListenPhotoChange {
         fun listen()
     }

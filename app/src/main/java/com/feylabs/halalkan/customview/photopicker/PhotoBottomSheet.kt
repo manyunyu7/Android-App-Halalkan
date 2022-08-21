@@ -44,7 +44,7 @@ class PhotoBottomSheet(private val callback: UploadCallback) : BottomSheetDialog
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.containerCamera.setOnClickListener {
+        binding.containerGallery.setOnClickListener {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 if (ContextCompat.checkSelfPermission(
                         requireContext(),

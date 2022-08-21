@@ -61,11 +61,13 @@
 
     <TextView
         android:id="@+id/label_time"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dimen_10dp"
+        android:layout_marginEnd="@dimen/dimen_10dp"
         android:fontFamily="@font/poppins_light"
         android:text="12h"
+        app:layout_constraintEnd_toEndOf="parent"
         android:textColor="#757575"
         android:textSize="12sp"
         app:layout_constraintStart_toEndOf="@id/dot_separator"

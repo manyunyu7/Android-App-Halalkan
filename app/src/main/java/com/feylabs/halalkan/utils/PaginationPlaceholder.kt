@@ -63,7 +63,8 @@ class PaginationPlaceholder {
             categoryId =0,
             comments = null,
             img_full_path = "",
-            ViewType = VFooter
+            ViewType = VFooter,
+            isFooterVisible = true
         )
 
         fun getRestoReviewPaginationResponsePlaceHolder(): RestoReviewPaginationResponse.Reviews.Data {

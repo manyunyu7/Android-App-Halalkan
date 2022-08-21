@@ -1,14 +1,8 @@
 package com.feylabs.halalkan.data.remote.service
 
-import com.feylabs.halalkan.data.remote.reqres.UserResponse
-import com.feylabs.halalkan.data.remote.reqres.forum.AllForumPaginationResponse
-import com.feylabs.halalkan.data.remote.reqres.forum.CreateForumResponse
-import com.feylabs.halalkan.data.remote.reqres.forum.ForumCategoryResponse
-import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidResponseWithoutPagination
-import com.feylabs.halalkan.data.remote.reqres.resto.*
-import com.feylabs.halalkan.data.remote.reqres.resto.update.UpdateRestoColumnResponse
+import com.feylabs.halalkan.data.remote.reqres.GeneralApiResponse
+import com.feylabs.halalkan.data.remote.reqres.forum.*
 import okhttp3.RequestBody
-import okhttp3.ResponseBody
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -28,7 +22,48 @@ interface ForumService {
     @POST("forums/store")
     suspend fun createForum(
         @Body file: RequestBody?,
-        ): Response<CreateForumResponse?>?
+    ): Response<CreateForumResponse?>?
 
+    @POST("forums/update/{forumId}")
+    suspend fun updateForum(
+        @Path("forumId") forumId: Int,
+        @Body file: RequestBody?,
+        @Query("is_deleting_image") isDeletingImage: Boolean = false
+    ): Response<CreateForumResponse?>?
+
+    @POST("forums/like/{forumId}")
+    suspend fun likeForum(
+        @Path("forumId") forumId: Int,
+    ): Response<GeneralApiResponse>
+
+    @POST("forums/unlike/{forumId}")
+    suspend fun unlikeForum(
+        @Path("forumId") forumId: Int,
+    ): Response<GeneralApiResponse>
+
+    @POST("comments/like/{Id}")
+    suspend fun likeCommentForum(
+        @Path("Id") commentId: Int,
+    ): Response<GeneralApiResponse>
+
+    @POST("comments/unlike/{Id}")
+    suspend fun unlikeComment(
+        @Path("Id") commentId: Int,
+    ): Response<GeneralApiResponse>
+
+   @GET("forums/detailForum/{forumId}")
+    suspend fun detailForum(
+        @Path("forumId") forumId: Int,
+    ): Response<ForumDetailResponse>
+
+   @GET("forums/comment/{forumId}")
+    suspend fun commentOnForum(
+        @Path("forumId") forumId: Int,
+    ): Response<ForumCommentResponse>
+
+    @POST("comments/store")
+    suspend fun createComment(
+        @Body body: CreateCommentPayload
+    ): Response<AddCommentResponse>
 
 }

@@ -68,6 +68,7 @@ dependencies {
     def retrofit2_version = "2.9.0"
     implementation "com.squareup.retrofit2:retrofit:$retrofit2_version"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit2_version"
+    implementation 'com.squareup.retrofit2:converter-scalars:2.1.0'
 
     //FAST ANDROID NETWORKIN
     implementation 'com.amitshekhar.android:android-networking:1.0.2'
@@ -113,6 +114,8 @@ dependencies {
             }
 
     implementation 'com.github.markomilos:paginate:1.0.0'
+
+    implementation 'com.github.jd-alexander:LikeButton:0.2.3'
 
     //rating bar
     implementation 'com.github.shallcheek:RatingBar:v1.0'

@@ -261,7 +261,7 @@
         tools:layout="@layout/fragment_xresto_edit_phone" />
     <fragment
         android:id="@+id/navigation_forumCreateThreadFragment"
-        android:name="com.feylabs.halalkan.view.forum.create.ForumCreateThreadFragment"
+        android:name="com.feylabs.halalkan.view.forum.create.ForumCreateEditThreadFragment"
         android:label="ForumCreateThreadFragment" />
     <fragment
         android:id="@+id/navigation_forumHomeFragment"
@@ -269,6 +269,10 @@
         android:label="ForumHomeFragment"
         tools:layout="@layout/fragment_forum_home"
         />
+    <fragment
+        android:id="@+id/navigation_forumDetailFragment"
+        android:name="com.feylabs.halalkan.view.forum.detail.ForumDetailFragment"
+        android:label="ForumDetailFragment" />
 
 
 </navigation>

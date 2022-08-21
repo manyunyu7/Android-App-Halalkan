@@ -66,6 +66,10 @@ class MyPreference(context: Context) {
         return sharedPref.getString("TOKEN", "").orEmpty()
     }
 
+    fun isLoggedIn(): Boolean {
+        return getToken().isEmpty().not()
+    }
+
     fun getUserRole(): String? {
         return sharedPref.getString("ROLE", "")
     }

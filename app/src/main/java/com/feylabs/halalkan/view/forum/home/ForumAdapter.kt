@@ -6,13 +6,19 @@ import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.RecyclerView
 import com.feylabs.halalkan.R
-import com.feylabs.halalkan.data.remote.reqres.forum.ForumModelResponse as Data
+import com.feylabs.halalkan.data.local.MyPreference
+import com.feylabs.halalkan.data.remote.reqres.resto.RestoReviewPaginationResponse
 import com.feylabs.halalkan.databinding.ItemRvLoadMoreBinding
+import com.feylabs.halalkan.utils.CommonUtil
+import com.feylabs.halalkan.utils.CommonUtil.showSnackbar
 import com.feylabs.halalkan.utils.ImageViewUtils.loadImageFromURL
+import com.feylabs.halalkan.utils.PaginationPlaceholder
 import com.feylabs.halalkan.utils.PaginationPlaceholder.Companion.VFooter
 import com.feylabs.halalkan.utils.PaginationPlaceholder.Companion.VNormal
-import com.feylabs.halalkan.utils.PaginationPlaceholder
 import com.feylabs.halalkan.utils.PaginationPlaceholder.Companion.getForumPlaceholder
+import com.like.LikeButton
+import com.like.OnLikeListener
+import com.feylabs.halalkan.data.remote.reqres.forum.ForumModelResponse as Data
 import com.feylabs.halalkan.databinding.ItemForumBinding as Binding
 
 
@@ -29,7 +35,6 @@ class ForumAdapter :
     fun setWithNewData(data: MutableList<Data>) {
         this.data.clear()
         this.data.addAll(data)
-        this.data.add(getLastPlaceholder())
         notifyDataSetChanged()
     }
 
@@ -39,20 +44,10 @@ class ForumAdapter :
     }
 
     fun addNewData(newData: MutableList<Data>, newPage: Int = this.page) {
-        this.data.forEachIndexed { index, mData ->
-            mData?.let {
-                if (mData.ViewType == VFooter) {
-                    this.data[index]?.isFooterVisible = false
-                }
-                notifyItemChanged(index)
-            }
-        }
         newData.forEachIndexed { index, data ->
             this.data.add(data)
             notifyItemInserted(itemCount - 1)
         }
-        this.data.add(getLastPlaceholder())
-        notifyItemInserted(itemCount - 1)
         this.page = newPage
     }
 
@@ -61,37 +56,10 @@ class ForumAdapter :
     }
 
     inner class ManyunyuViewHolder(v: View, val viewType: Int) : RecyclerView.ViewHolder(v) {
-        fun onBind(model: Data?) {
-            when (viewType) {
-                VFooter -> {
-                    renderFooter(model)
-                }
-                VNormal -> {
-                    renderNormal(model)
-                }
-                else -> {
-                    renderNormal(model)
-                }
-            }
+        fun onBind(model: Data) {
+            renderNormal(model)
         }
 
-        private fun renderFooter(model: Data?) {
-            val binding: ItemRvLoadMoreBinding = ItemRvLoadMoreBinding.bind(itemView)
-
-            model?.let {
-                if (!model.isFooterVisible) {
-                    itemView.layoutParams = RecyclerView.LayoutParams(0, 0)
-                }
-            } ?: run {
-                itemView.layoutParams = RecyclerView.LayoutParams(0, 0)
-            }
-
-            binding.btnLoadMore.setOnClickListener {
-                adapterInterface.loadMore(page)
-                val context = binding.root.context
-                binding.btnLoadMore.text = "Halaman $page"
-            }
-        }
 
         private fun renderNormal(model: Data?) {
             val binding: Binding = Binding.bind(itemView)
@@ -103,19 +71,76 @@ class ForumAdapter :
                     R.anim.fade_transition_animation
                 )
 
+                if (CommonUtil.isLoggedIn(mContext)) {
+                    binding.btnLike.isEnabled = true
+                    binding.btnLike.setOnLikeListener(object : OnLikeListener {
+                        override fun liked(likeButton: LikeButton) {
+                            if (::adapterInterface.isInitialized) {
+                                adapterInterface.onLike(model)
+                                binding.tvLikeCount.text = (model.getLikeCount() + 1).toString()
+                            }
+                        }
+
+                        override fun unLiked(likeButton: LikeButton) {
+                            if (::adapterInterface.isInitialized) {
+                                adapterInterface.onUnLike(model)
+                                val currentLikeCount =
+                                    binding.tvLikeCount.text.toString().toIntOrNull() ?: 0
+                                if (currentLikeCount != 0) {
+                                    binding.tvLikeCount.text =
+                                        (currentLikeCount - 1).toString()
+                                }
+                            }
+
+                        }
+                    })
+                } else binding.btnLike.isEnabled = false
+
+
+                if (model.getLikeCount() == 0) {
+                    binding.btnLike.isLiked = false
+                }
+
+                binding.btnActionForum.setOnClickListener {
+                    if (::adapterInterface.isInitialized)
+                        adapterInterface.onAction(model)
+                }
+
+                binding.cardForum.setOnClickListener{
+                    if (::adapterInterface.isInitialized)
+                        adapterInterface.onclick(model)
+                }
+
+
                 binding.tvQuestion.text = model.body.toString()
                 binding.includeUserProfile.labelCategory.text = model.category?.name
                 binding.tvTitle.text = model.title.toString()
 
                 if (model.img == null) {
                     binding.containerCover.visibility = View.GONE
-                } else
+                } else {
+                    binding.containerCover.visibility = View.VISIBLE
                     binding.photo.loadImageFromURL(mContext, model.img_full_path)
-
-
-                model.likes?.size?.let {
-                    binding.tvLikeCount.text = it.toString()
                 }
+
+
+                model.likes?.let {
+                    var isUserLiked = false
+                    it.size.let {
+                        binding.tvLikeCount.text = it.toString()
+                    }
+
+                    it.forEachIndexed { index, like ->
+                        if (like.userId.toString() == MyPreference(mContext).getUserID()) {
+                            isUserLiked = true
+                        }
+                    }
+
+                    if (isUserLiked) {
+                        binding.btnLike.isLiked = true
+                    }
+                }
+
 
                 model.comments?.size?.let {
                     binding.tvCommentCount.text = it.toString()
@@ -133,10 +158,6 @@ class ForumAdapter :
                 }
 
 
-                binding.root.setOnClickListener {
-                    if (adapterInterface != null)
-                        adapterInterface.onclick(model)
-                }
             }
 
         }
@@ -147,20 +168,12 @@ class ForumAdapter :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ManyunyuViewHolder {
-        val rowView: View = when (viewType) {
-            VNormal -> LayoutInflater.from(parent.context)
-                .inflate(R.layout.item_forum, parent, false)
-            VFooter -> LayoutInflater.from(parent.context)
-                .inflate(R.layout.item_rv_load_more, parent, false)
-            else -> LayoutInflater.from(parent.context)
-                .inflate(R.layout.item_forum, parent, false)
-        }
-
+        val rowView = LayoutInflater.from(parent.context)
+            .inflate(R.layout.item_forum, parent, false)
         return ManyunyuViewHolder(rowView, viewType)
     }
 
     override fun onBindViewHolder(holder: ManyunyuViewHolder, position: Int) {
-        holder.setIsRecyclable(false);
         holder.onBind(data[position])
     }
 
@@ -169,11 +182,12 @@ class ForumAdapter :
     }
 
     interface ItemInterface {
+        fun onLike(model: Data)
+        fun onUnLike(model: Data)
+        fun onShare(model: Data)
         fun onclick(model: Data)
+        fun onAction(model: Data)
         fun loadMore(page: Int)
     }
 
-    private fun getLastPlaceholder(): Data {
-        return getForumPlaceholder()
-    }
 }
