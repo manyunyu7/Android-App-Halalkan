@@ -11,21 +11,20 @@ import androidx.navigation.fragment.findNavController
 import com.feylabs.halalkan.MainViewModel
 import com.feylabs.halalkan.R
 import com.feylabs.halalkan.customview.imagepreviewcontainer.CustomViewPhotoModel
-import com.feylabs.halalkan.data.remote.QumparanResource
 import com.feylabs.halalkan.data.remote.QumparanResource.*
-import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidPhotosResponse
 import com.feylabs.halalkan.data.remote.reqres.resto.FoodCategoryResponse
 import com.feylabs.halalkan.data.remote.reqres.resto.FoodCategoryResponse.FoodCategoryResponseItem
 import com.feylabs.halalkan.data.remote.reqres.resto.RestoDetailResponse
 import com.feylabs.halalkan.data.remote.reqres.resto.RestoModelResponse
-import com.feylabs.halalkan.databinding.FragmentDetailPrayerBinding
 import com.feylabs.halalkan.databinding.FragmentDetailRestoBinding
+import com.feylabs.halalkan.utils.CommonUtil.makeGone
 import com.feylabs.halalkan.utils.NumberUtil.Companion.roundOffDecimal
 import com.feylabs.halalkan.utils.base.BaseFragment
 import com.feylabs.halalkan.utils.location.LocationUtils
 import com.feylabs.halalkan.utils.location.MyLatLong
+import com.feylabs.halalkan.utils.resto.OrderLocalModel
+import com.feylabs.halalkan.utils.resto.OrderUtility
 import com.feylabs.halalkan.view.direction.TurnByTurnExperienceActivity
-import com.feylabs.halalkan.view.prayer.PrayerRoomViewModel
 import com.feylabs.halalkan.view.resto.RestoViewModel
 import com.feylabs.halalkan.view.resto.main.RestoFoodAdapter
 import org.koin.android.viewmodel.ext.android.sharedViewModel
@@ -57,7 +56,6 @@ class DetailRestoFragment : BaseFragment() {
     private fun setupFoodAdapter() {
         binding.rvList.apply {
             adapter = foodAdapter
-            setHasFixedSize(true)
             layoutManager = setLayoutManagerLinear()
         }
 
@@ -66,12 +64,30 @@ class DetailRestoFragment : BaseFragment() {
             layoutManager = setLayoutManagerHorizontal()
         }
 
+        foodAdapter.setupAdapterInterface(object : RestoFoodAdapter.OrderInterface {
+            override fun onchange() {
+                setupOrderCard()
+            }
+        })
+
         categoryAdapter.setupAdapterInterface(object : FoodCategoryAdapter.ItemInterface {
             override fun onclick(model: FoodCategoryResponseItem) {
                 //set current active menu
                 viewModel.currentMenuTab.postValue(Pair(model.id, model.name))
             }
         })
+    }
+
+    private fun setupOrderCard() {
+        val obj = OrderUtility(requireContext()).getSummary()
+        obj?.let {
+            binding.containerSummary.makeVisible()
+            binding.labelTotalItems.text = "Total " + it.quantity.toString() + " item"
+            binding.labelTotalPrice.text =
+                it.getFormattedTotalPrice()
+        } ?: run {
+            binding.containerSummary.makeGone()
+        }
     }
 
 

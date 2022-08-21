@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -120,36 +119,69 @@
                 app:barrierDirection="bottom"
                 app:constraint_referenced_ids="container_image,container_right" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+
+            <LinearLayout
                 app:layout_constraintTop_toBottomOf="@id/barrier"
+                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btn_order"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dimen_10dp"
-                    android:layout_marginTop="@dimen/dimen_10dp"
-                    android:text="Tambah Pesan"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:cornerRadius="@dimen/dimen_20dp"/>
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btn_edit"
+                    android:id="@+id/btn_notes"
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    app:strokeColor="@color/halalkan_primary"
                     android:layout_marginStart="@dimen/dimen_10dp"
                     android:layout_marginTop="@dimen/dimen_10dp"
-                    android:text="Ubah Pesanan"
-                    app:layout_constraintStart_toStartOf="parent"
+                    android:text="Notes"
+                    app:icon="@drawable/ic_order_notes"
+                    app:iconPadding="@dimen/dimen_10dp"
                     app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:cornerRadius="@dimen/dimen_20dp"/>
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
 
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_order"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dimen_10dp"
+                        android:layout_marginTop="@dimen/dimen_10dp"
+                        android:text="Add to Cart"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:cornerRadius="@dimen/dimen_20dp"/>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_edit"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dimen_10dp"
+                        android:layout_marginTop="@dimen/dimen_10dp"
+                        android:visibility="gone"
+                        android:text="Ubah Pesanan"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:cornerRadius="@dimen/dimen_20dp"/>
+
+                    <com.feylabs.halalkan.customview.CustomPlusMinus
+                        android:id="@+id/custom_plus_minus"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:layout_margin="@dimen/dimen_20dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintEnd_toEndOf="parent"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
