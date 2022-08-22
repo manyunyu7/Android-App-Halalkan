@@ -4,8 +4,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.feylabs.halalkan.R
 import com.feylabs.halalkan.customview.CustomPlusMinus
 import com.feylabs.halalkan.data.local.MyPreference
@@ -16,15 +16,20 @@ import com.feylabs.halalkan.data.remote.reqres.resto.food.FoodModelResponse as A
 import com.feylabs.halalkan.utils.ImageViewUtils.loadImageFromURL
 import com.feylabs.halalkan.utils.resto.OrderLocalModel
 import com.feylabs.halalkan.utils.resto.OrderUtility
-import com.feylabs.halalkan.utils.snackbar.UtilSnackbar.showSnackbar
 import com.tangxiaolv.telegramgallery.Utils.AndroidUtilities.showToast
 
+enum class FoodAdapterType{
+    ADMIN,USER_ORDER,USER_REVIEW
+}
 
-class RestoFoodAdapter : RecyclerView.Adapter<RestoFoodAdapter.RestaurantHomeViewHolder>() {
+class RestoFoodAdapter(
+    val foodAdapterType: FoodAdapterType = FoodAdapterType.USER_ORDER
+) : RecyclerView.Adapter<RestoFoodAdapter.RestaurantHomeViewHolder>() {
 
     val data = mutableListOf<AdapterModel>()
     lateinit var adapterInterface: ItemInterface
     lateinit var orderInterface: OrderInterface
+    lateinit var noteInterface: NoteInterface
 
     fun setWithNewData(data: MutableList<AdapterModel>) {
         this.data.clear()
@@ -33,6 +38,10 @@ class RestoFoodAdapter : RecyclerView.Adapter<RestoFoodAdapter.RestaurantHomeVie
 
     fun setupAdapterInterface(obj: ItemInterface) {
         this.adapterInterface = obj
+    }
+
+    fun setupAdapterInterface(obj: NoteInterface) {
+        this.noteInterface = obj
     }
 
     fun setupAdapterInterface(obj: OrderInterface) {
@@ -55,9 +64,8 @@ class RestoFoodAdapter : RecyclerView.Adapter<RestoFoodAdapter.RestaurantHomeVie
             }
 
             binding.btnNotes.setOnClickListener {
-                showSnackbar(binding.root, orderUtility.getListOrder().toString())
+                noteInterface.onclick(model,adapterPosition)
             }
-
 
             // check if menu is already inserted
             if (orderUtility.isItemAlreadyInserted(model.id.toString())) {
@@ -67,14 +75,14 @@ class RestoFoodAdapter : RecyclerView.Adapter<RestoFoodAdapter.RestaurantHomeVie
                     model.notes = it.notes
                     model.orderedQuantity = it.quantity
                 }
-            }else{
-                model.isOrdered=false
+            } else {
+                model.isOrdered = false
             }
 
             //handle view for ordered items to distinguish order status
-            if (model.isOrdered.not()){
+            if (model.isOrdered.not()) {
                 setToOrdered(false)
-            }else{
+            } else {
                 setToOrdered(true)
             }
 
@@ -83,7 +91,6 @@ class RestoFoodAdapter : RecyclerView.Adapter<RestoFoodAdapter.RestaurantHomeVie
                 setToOrdered(true)
                 orderInterface.onchange()
             }
-
 
             binding.customPlusMinus.customPlusMinusInterface =
                 object : CustomPlusMinus.OnQuantityChangeListener {
@@ -98,7 +105,9 @@ class RestoFoodAdapter : RecyclerView.Adapter<RestoFoodAdapter.RestaurantHomeVie
                                     menuId = model.id.toString(),
                                     quantity = quantity,
                                     notes = model.notes.toString(),
-                                    price = model.price.toDouble()
+                                    price = model.price.toDouble(),
+                                    restoId = model.restoranId,
+                                    food = model
                                 )
                             )
                         }
@@ -106,6 +115,11 @@ class RestoFoodAdapter : RecyclerView.Adapter<RestoFoodAdapter.RestaurantHomeVie
                         if (quantity == 0) {
                             setToOrdered(false)
                             orderUtility.removeItem(model.id.toString())
+
+                            if(foodAdapterType == FoodAdapterType.USER_REVIEW){
+                                data.removeAt(adapterPosition)
+                                notifyItemRemoved(adapterPosition)
+                            }
                         }
                         orderInterface.onchange()
                     }
@@ -130,11 +144,19 @@ class RestoFoodAdapter : RecyclerView.Adapter<RestoFoodAdapter.RestaurantHomeVie
             binding.tvFoodDesc.text = model.description
             binding.ivMainImage.loadImageFromURL(mContext, model.imgFullPath)
 
-
+            val existing = orderUtility.getItem(model.id.toString())
+            existing?.let {
+                if (it.notes.isNotEmpty()){
+                    binding.containerNotes.makeVisible()
+                    binding.tvNotes.text=it.notes
+                }else{
+                    binding.containerNotes.makeGone()
+                }
+            }
         }
 
         private fun setToOrdered(b: Boolean) {
-            if (b){
+            if (b) {
                 binding.btnNotes.makeGone()
                 binding.customPlusMinus.makeVisible()
                 binding.btnNotes.makeVisible()
@@ -150,7 +172,7 @@ class RestoFoodAdapter : RecyclerView.Adapter<RestoFoodAdapter.RestaurantHomeVie
 //                    R.anim.fade_transition_animation
 //                )
 
-            }else{
+            } else {
                 binding.customPlusMinus.makeGone()
                 binding.btnNotes.makeGone()
                 binding.btnOrder.makeVisible()
@@ -165,9 +187,8 @@ class RestoFoodAdapter : RecyclerView.Adapter<RestoFoodAdapter.RestaurantHomeVie
 //                    R.anim.translate_right
 //                )
             }
-         }
+        }
     }
-
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RestaurantHomeViewHolder {
@@ -186,6 +207,13 @@ class RestoFoodAdapter : RecyclerView.Adapter<RestoFoodAdapter.RestaurantHomeVie
 
     interface ItemInterface {
         fun onclick(model: AdapterModel)
+    }
+
+    interface NoteInterface {
+        fun onclick(
+            model: com.feylabs.halalkan.data.remote.reqres.resto.food.FoodModelResponse,
+            position: Int
+        )
     }
 
     interface OrderInterface {

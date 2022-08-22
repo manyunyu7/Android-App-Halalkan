@@ -10,14 +10,23 @@ class OrderUtility(private val mContext: Context) {
 
 
     companion object {
-        const val PREF_ORDER_KEY = "YUHUU"
+        const val PREF_ORDER_KEY = "YzzzzUHUU"
+    }
+
+    fun checkResto(restoId: Int): Boolean {
+        var isError=false
+        getListOrder().forEachIndexed { index, orderLocalModel ->
+            if (restoId!=orderLocalModel.restoId){
+                isError=true
+            }
+        }
+        return isError
     }
 
     fun addItem(order: OrderLocalModel) {
         if (isOrderExist().not()) {
             saveNewOrder(listOf(order))
         } else {
-
             if (isItemAlreadyInserted(order.menuId)) {
                 changeItem(order)
             } else {
@@ -51,6 +60,15 @@ class OrderUtility(private val mContext: Context) {
         }
     }
 
+    fun changeNotes(menuId: String, notes: String) {
+        val item = getItem(menuId)
+        removeItem(menuId)
+        item?.let {
+            it.notes = notes
+            addItem(item)
+        }
+    }
+
     fun getItem(menuId: String): OrderLocalModel? {
         var searchedItem: OrderLocalModel? = null
 
@@ -69,10 +87,7 @@ class OrderUtility(private val mContext: Context) {
 
     fun removeItem(menuId: String) {
         if (isOrderExist()) {
-            val tempList = mutableListOf<OrderLocalModel>()
-
             val currentOrder = getListOrder()
-
             with(currentOrder.iterator()) {
                 forEach {
                     if (menuId == it.menuId) {
@@ -99,7 +114,7 @@ class OrderUtility(private val mContext: Context) {
 
                 rawQuantity += quantity
 
-                totalInWon+=total
+                totalInWon += total
             }
 
             return OrderSummaryModel(

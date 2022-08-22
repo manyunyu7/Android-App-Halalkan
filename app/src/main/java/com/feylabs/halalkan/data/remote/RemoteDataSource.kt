@@ -2,6 +2,7 @@ package com.feylabs.halalkan.data.remote
 
 import com.feylabs.halalkan.data.remote.reqres.GeneralApiResponse
 import com.feylabs.halalkan.data.remote.reqres.auth.LoginBodyRequest
+import com.feylabs.halalkan.data.remote.reqres.auth.LoginResponse
 import com.feylabs.halalkan.data.remote.reqres.auth.RegisterBodyRequest
 import com.feylabs.halalkan.data.remote.reqres.favorite.AddFavMasjidResponse
 import com.feylabs.halalkan.data.remote.reqres.favorite.AddFavRestoResponse
@@ -10,6 +11,8 @@ import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidDetailResponse
 import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidPhotosResponse
 import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidReviewPaginationResponse
 import com.feylabs.halalkan.data.remote.reqres.masjid.pagination.AllMasjidPaginationResponse
+import com.feylabs.halalkan.data.remote.reqres.order.CreateCartPayload
+import com.feylabs.halalkan.data.remote.reqres.order.CreateCartResponse
 import com.feylabs.halalkan.data.remote.reqres.prayertime.PrayerTimeAladhanSingleDateResponse
 import com.feylabs.halalkan.data.remote.reqres.resto.*
 import com.feylabs.halalkan.data.remote.reqres.resto.update.UpdateRestoColumnResponse
@@ -34,6 +37,7 @@ class RemoteDataSource(
      * @param body,callback
      */
     suspend fun getUsers() = commonService.getUsers()
+    suspend fun getMyProfile() = commonService.userProfile()
 
 
     suspend fun getPosts() = commonService.getPosts()
@@ -242,4 +246,12 @@ class RemoteDataSource(
     override suspend fun getCommentForum(forumId: Int): Response<ForumCommentResponse> {
         return forumService.commentOnForum(forumId)
     }
+
+
+    //    ORDER
+    override suspend fun checkout(body: CreateCartPayload): Response<CreateCartResponse> {
+        return restoService.createCart(body = body, restoId = body.restoId)
+    }
+
+
 }

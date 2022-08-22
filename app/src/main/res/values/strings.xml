@@ -48,6 +48,24 @@
 
     <string name="lorem_ipsum_short">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam blandit risus vel ante ornare</string>
     <string name="required_column">Kolom ini dibutuhkan</string>
+    <string name="example_notes_order_hint">Example : Without Sambal</string>
+    <string name="save_change">Save Change</string>
+    <string name="notes_for_your_dish">Notes for your dish</string>
+    <string name="add_note_to_dish">Add note to your dish</string>
+    <string name="clear">Clear</string>
+    <string name="label_order_review_customer_detail">Customer Detail :</string>
+    <string name="order_review_hint_customer_name">Name</string>
+    <string name="title_customer_details">Customer Details</string>
+    <string name="order_review_hint_phone_number">Phone Number</string>
+    <string name="order_review_hint_address">Address</string>
+    <string name="title_order_food">Order Food</string>
+    <string name="label_no_order_yet">Your food cart is empty</string>
+    <string name="title_additional_information">Additional Information</string>
+    <string name="title_choose_location">Choose Location</string>
+    <string name="order_review_hint_additional_address">Room Number, Street, Additional Address. etc</string>
+    <string name="orders_cant_be_canceled">Orders that have been accepted by the restaurant cannot be canceled</string>
+    <string name="please_double_check_your_order">Please double check your order</string>
+    <string name="order_submitted_to_restaurant">Your Order has been submitted to the restaurant</string>
 
 
 </resources>

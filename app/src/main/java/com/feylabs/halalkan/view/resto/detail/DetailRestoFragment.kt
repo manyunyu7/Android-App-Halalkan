@@ -6,16 +6,21 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import com.feylabs.halalkan.MainViewModel
 import com.feylabs.halalkan.R
+import com.feylabs.halalkan.customview.bottomsheet.BottomSheetGeneralAction
+import com.feylabs.halalkan.customview.bottomsheet.BottomSheetOrderNotes
 import com.feylabs.halalkan.customview.imagepreviewcontainer.CustomViewPhotoModel
 import com.feylabs.halalkan.data.remote.QumparanResource.*
+import com.feylabs.halalkan.data.remote.reqres.auth.UserModel
 import com.feylabs.halalkan.data.remote.reqres.resto.FoodCategoryResponse
 import com.feylabs.halalkan.data.remote.reqres.resto.FoodCategoryResponse.FoodCategoryResponseItem
 import com.feylabs.halalkan.data.remote.reqres.resto.RestoDetailResponse
 import com.feylabs.halalkan.data.remote.reqres.resto.RestoModelResponse
+import com.feylabs.halalkan.data.remote.reqres.resto.food.FoodModelResponse
 import com.feylabs.halalkan.databinding.FragmentDetailRestoBinding
 import com.feylabs.halalkan.utils.CommonUtil.makeGone
 import com.feylabs.halalkan.utils.NumberUtil.Companion.roundOffDecimal
@@ -24,6 +29,7 @@ import com.feylabs.halalkan.utils.location.LocationUtils
 import com.feylabs.halalkan.utils.location.MyLatLong
 import com.feylabs.halalkan.utils.resto.OrderLocalModel
 import com.feylabs.halalkan.utils.resto.OrderUtility
+import com.feylabs.halalkan.view.auth.AuthViewModel
 import com.feylabs.halalkan.view.direction.TurnByTurnExperienceActivity
 import com.feylabs.halalkan.view.resto.RestoViewModel
 import com.feylabs.halalkan.view.resto.main.RestoFoodAdapter
@@ -40,6 +46,7 @@ class DetailRestoFragment : BaseFragment() {
     private val binding get() = _binding!!
 
     val viewModel: RestoViewModel by viewModel()
+    val authViewModel: AuthViewModel by viewModel()
 
     val mainViewModel: MainViewModel by sharedViewModel()
 
@@ -51,6 +58,9 @@ class DetailRestoFragment : BaseFragment() {
     override fun initUI() {
         setupInitialUi()
         setupFoodAdapter()
+        setupOrderCard()
+        saveChoosenResto(getRestoId())
+        showToast("restoId" + getChoosenResto().toString())
     }
 
     private fun setupFoodAdapter() {
@@ -67,6 +77,11 @@ class DetailRestoFragment : BaseFragment() {
         foodAdapter.setupAdapterInterface(object : RestoFoodAdapter.OrderInterface {
             override fun onchange() {
                 setupOrderCard()
+            }
+        })
+        foodAdapter.setupAdapterInterface(object : RestoFoodAdapter.NoteInterface {
+            override fun onclick(model: FoodModelResponse, position: Int) {
+                showBottomSheetNotes(position, model)
             }
         })
 
@@ -88,6 +103,7 @@ class DetailRestoFragment : BaseFragment() {
         } ?: run {
             binding.containerSummary.makeGone()
         }
+
     }
 
 
@@ -231,6 +247,7 @@ class DetailRestoFragment : BaseFragment() {
 
     }
 
+
     private fun checkFoodAdapter() {
         if (foodAdapter.itemCount == 0) {
             binding.stateNoFood.makeVisible()
@@ -300,6 +317,10 @@ class DetailRestoFragment : BaseFragment() {
             findNavController().navigateUp()
         }
 
+        binding.btnNext.setOnClickListener {
+            findNavController().navigate(R.id.action_navigation_detailRestoFragment_to_navigation_orderPreviewFragment)
+        }
+
         binding.etActionCall.setOnClickListener {
             val number = binding.labelPhone.text.toString()
             val callIntent = Intent(Intent.ACTION_CALL)
@@ -335,6 +356,7 @@ class DetailRestoFragment : BaseFragment() {
         viewModel.getDetailResto(getRestoId())
         viewModel.getFoodCategoryOnResto(getRestoId())
         viewModel.getAllFoodByResto(getRestoId())
+        authViewModel.getUserProfile()
     }
 
     override fun onCreateView(
@@ -377,6 +399,22 @@ class DetailRestoFragment : BaseFragment() {
         else
             binding.loadingCenterProgressBar.makeGone()
     }
+
+    private fun showBottomSheetNotes(position: Int, model: FoodModelResponse) {
+        val olz: (notes: String) -> Unit = { note ->
+            foodAdapter.data[position].notes = note
+            foodAdapter.notifyItemChanged(position)
+            OrderUtility(requireContext()).changeNotes(model.id.toString(), note)
+        }
+
+        BottomSheetOrderNotes.instance(
+            title = getString(R.string.add_note_to_dish),
+            selectedAction = olz,
+            objectId = model.id.toString(),
+            existingNotes = model.notes
+        ).show(getMFragmentManager(), BottomSheetOrderNotes().tag)
+    }
+
 
     private fun getRestoId(): String {
         initModel?.let {

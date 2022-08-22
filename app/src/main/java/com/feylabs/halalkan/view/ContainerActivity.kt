@@ -120,6 +120,8 @@ class ContainerActivity : BaseActivity(), LocationListener {
         /*------- To get city name from coordinates -------- */
         val gcd = Geocoder(baseContext, Locale.getDefault())
         val addresses: List<Address>
+        mainViewModel.liveLatitude.postValue(loc.latitude)
+        mainViewModel.liveLongitude.postValue(loc.longitude)
         mainViewModel.liveLatLng.postValue(MyLatLong(loc.latitude,loc.longitude))
         try {
             addresses = gcd.getFromLocation(

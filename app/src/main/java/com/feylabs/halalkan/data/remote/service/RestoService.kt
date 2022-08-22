@@ -1,6 +1,10 @@
 package com.feylabs.halalkan.data.remote.service
 
 import com.feylabs.halalkan.data.remote.reqres.UserResponse
+import com.feylabs.halalkan.data.remote.reqres.auth.LoginBodyRequest
+import com.feylabs.halalkan.data.remote.reqres.auth.LoginResponse
+import com.feylabs.halalkan.data.remote.reqres.order.CreateCartPayload
+import com.feylabs.halalkan.data.remote.reqres.order.CreateCartResponse
 import com.feylabs.halalkan.data.remote.reqres.resto.*
 import com.feylabs.halalkan.data.remote.reqres.resto.update.UpdateRestoColumnResponse
 import okhttp3.RequestBody
@@ -24,7 +28,7 @@ interface RestoService {
     //get food per resto category
     @GET("fe/restoran/food/category/{categoryId}")
     suspend fun getFoodByResto(
-        @Path("categoryId") categoryId:String,
+        @Path("categoryId") categoryId: String,
     ): Response<AllFoodByRestoResponse>
 
     @GET("fe/restoran/{id}/detail")
@@ -79,14 +83,21 @@ interface RestoService {
         @Body file: RequestBody?,
         @Path("idResto") restoId: String,
         @Path("urlupdate") urlupdate: String,
-        ): Response<UpdateRestoColumnResponse?>?
+    ): Response<UpdateRestoColumnResponse?>?
 
 
     @POST("foods/category/createCategory/{id}")
     suspend fun createRestoFoodCategory(
         @Body file: RequestBody?,
         @Path("id") restoId: String,
-        ): Response<ResponseBody?>?
+    ): Response<ResponseBody?>?
+
+    ///user order
+    @POST("fe/orders/carts/createCart/{restoId}")
+    suspend fun createCart(
+        @Body body: CreateCartPayload,
+        @Path("restoId") restoId: String,
+    ): Response<CreateCartResponse>
 
 
     ///admin section

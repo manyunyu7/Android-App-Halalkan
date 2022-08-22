@@ -197,7 +197,11 @@
         android:id="@+id/navigation_detailRestoFragment"
         android:name="com.feylabs.halalkan.view.resto.detail.DetailRestoFragment"
         android:label="DetailRestoFragment"
-        tools:layout="@layout/fragment_detail_resto" />
+        tools:layout="@layout/fragment_detail_resto" >
+        <action
+            android:id="@+id/action_navigation_detailRestoFragment_to_navigation_orderPreviewFragment"
+            app:destination="@id/navigation_orderPreviewFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_restoCreateReviewFragment"
@@ -273,6 +277,11 @@
         android:id="@+id/navigation_forumDetailFragment"
         android:name="com.feylabs.halalkan.view.forum.detail.ForumDetailFragment"
         android:label="ForumDetailFragment" />
+
+    <fragment
+        android:id="@+id/navigation_orderPreviewFragment"
+        android:name="com.feylabs.halalkan.view.resto.order.preview.OrderPreviewFragment"
+        android:label="OrderPreviewFragment" />
 
 
 </navigation>

@@ -1,10 +1,7 @@
 package com.feylabs.halalkan.data.remote.service
 
 import com.feylabs.halalkan.data.remote.reqres.*
-import com.feylabs.halalkan.data.remote.reqres.auth.LoginBodyRequest
-import com.feylabs.halalkan.data.remote.reqres.auth.LoginResponse
-import com.feylabs.halalkan.data.remote.reqres.auth.RegisterBodyRequest
-import com.feylabs.halalkan.data.remote.reqres.auth.RegisterResponse
+import com.feylabs.halalkan.data.remote.reqres.auth.*
 import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidResponseWithoutPagination
 import retrofit2.Response
 import retrofit2.http.*
@@ -42,6 +39,10 @@ interface ApiService {
     fun getPostDetail(
         @Path("postId") postId: String,
     ): Response<PostDetailResponse>
+
+    @GET("users/me/profile")
+    suspend fun userProfile(
+    ): Response<MyProfileResponse>
 
     @GET("users/{userId}/")
     suspend fun getUserDetail(

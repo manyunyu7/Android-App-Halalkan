@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cstToolbar">
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -237,7 +237,7 @@
                 android:layout_marginTop="@dimen/dimen_10dp">
 
                 <TextView
-                    android:id="@+id/label_category"
+                    android:id="@+id/label_info_profile_contact"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/dimen_20dp"
@@ -268,7 +268,7 @@
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/img_type"
-                    app:layout_constraintTop_toBottomOf="@id/label_category" />
+                    app:layout_constraintTop_toBottomOf="@id/label_info_profile_contact" />
 
                 <ImageView
                     android:id="@+id/img_type"
@@ -534,7 +534,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/dimen_10dp"
                 android:layout_marginTop="@dimen/dimen_10dp"
-                tools:itemCount="2"
+                tools:itemCount="1"
                 tools:listitem="@layout/item_food" />
 
             <com.airbnb.lottie.LottieAnimationView
@@ -677,7 +677,7 @@
                 app:layout_constraintGuide_percent="0.55" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_order"
+                android:id="@+id/btn_next"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -688,9 +688,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/guideline5"
                 app:cornerRadius="@dimen/dimen_20dp"/>
-
         </androidx.constraintlayout.widget.ConstraintLayout>
-
 
     </androidx.cardview.widget.CardView>
 

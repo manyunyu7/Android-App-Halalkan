@@ -66,7 +66,7 @@ class UserProfileFragment : BaseFragment() {
 
         val userData  = muskoPref().getUserData()
         binding.ivMainImage.loadImageFromURL(requireContext(),userData.getPhotoPath())
-        binding.labelUserName.text=userData.name.orMuskoEmpty("-")
+        binding.labelInfoProfileUserName.text=userData.name.orMuskoEmpty("-")
         binding.labelEmail.text=userData.email.orMuskoEmpty("-")
         binding.labelPhone.text = userData.phoneNumber.orMuskoEmpty("-")
 

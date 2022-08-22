@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <ImageView
-        android:id="@+id/label_category"
+        android:id="@+id/label_info_profile_contact"
         android:layout_width="@dimen/dimen_14dp"
         android:layout_height="@dimen/dimen_14dp"
         android:layout_marginStart="@dimen/dimen_10dp"
@@ -30,7 +30,7 @@
         android:textColor="#757575"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/label_category"
+        app:layout_constraintStart_toEndOf="@id/label_info_profile_contact"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView

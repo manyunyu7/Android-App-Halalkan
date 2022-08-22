@@ -2,6 +2,8 @@ package com.feylabs.halalkan.data.remote.reqres.resto.food
 
 import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
+import java.text.DecimalFormat
+import java.text.NumberFormat
 
 @Keep
 data class FoodModelResponse(
@@ -38,4 +40,11 @@ data class FoodModelResponse(
     var isOrdered: Boolean = false,
     var orderedQuantity: Int = 0,
     var notes: String = "",
-)
+){
+    fun getFormattedPrice(): String {
+        val formatter: NumberFormat = DecimalFormat("#,###")
+        val myNumber = this.price
+        val formattedNumber: String = formatter.format(myNumber)
+        return formattedNumber + " won"
+    }
+}
