@@ -1,11 +1,13 @@
 package com.feylabs.halalkan.data.remote.service
 
+import com.feylabs.halalkan.data.remote.reqres.GeneralApiResponse
 import com.feylabs.halalkan.data.remote.reqres.UserResponse
 import com.feylabs.halalkan.data.remote.reqres.auth.LoginBodyRequest
 import com.feylabs.halalkan.data.remote.reqres.auth.LoginResponse
 import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidReviewPaginationResponse
 import com.feylabs.halalkan.data.remote.reqres.order.CreateCartPayload
 import com.feylabs.halalkan.data.remote.reqres.order.CreateCartResponse
+import com.feylabs.halalkan.data.remote.reqres.order.DetailOrderResponse
 import com.feylabs.halalkan.data.remote.reqres.order.history.OrderHistoryResponse
 import com.feylabs.halalkan.data.remote.reqres.order.resto.OrderByRestoPaginationResponse
 import com.feylabs.halalkan.data.remote.reqres.resto.*
@@ -113,12 +115,30 @@ interface RestoService {
     suspend fun getMyRestaurant(
     ): Response<AllRestoNoPagination>
 
+    @FormUrlEncoded
+    @POST("orders/carts/rejectOrder/{orderId}")
+    suspend fun orderReject(
+        @Field("rejected_reason") reason: String,
+        @Path("orderId") orderId: String,
+    ): Response<GeneralApiResponse>
+
+    @POST("orders/carts/approvedOrder/{orderId}")
+    suspend fun orderApprove(
+        @Path("orderId") orderId: String,
+    ): Response<GeneralApiResponse>
+
     @GET("fe/restoran/{id}/getAllOrders")
     suspend fun getRestoOrder(
         @Path("id") restoId: String,
         @Query("perPage") perPage: Int = 5,
         @Query("page") page: Int = 1
     ): Response<OrderByRestoPaginationResponse>
+
+
+    @GET("orders/carts/detailOrder/{orderId}")
+    suspend fun getOrderDetail(
+        @Path("orderId") orderId: String,
+    ): Response<DetailOrderResponse>
 
 
 }

@@ -12,18 +12,19 @@ import com.adevinta.leku.*
 import com.feylabs.halalkan.MainViewModel
 import com.feylabs.halalkan.R
 import com.feylabs.halalkan.customview.RazkyGalleryActivity
+import com.feylabs.halalkan.customview.bottomsheet.BottomSheetOrderRejection
 import com.feylabs.halalkan.data.remote.QumparanResource.*
 import com.feylabs.halalkan.data.remote.reqres.order.history.OrderHistoryModel
 import com.feylabs.halalkan.data.remote.reqres.order.resto.OrderByRestoPaginationResponse
-import com.feylabs.halalkan.data.remote.reqres.resto.AllRestoNoPagination
 import com.feylabs.halalkan.data.remote.reqres.resto.RestoDetailResponse
 import com.feylabs.halalkan.databinding.FragmentXrestoCurrentBinding
+import com.feylabs.halalkan.utils.DialogUtils
 import com.feylabs.halalkan.utils.ImageViewUtils.loadImageFromURL
 import com.feylabs.halalkan.utils.base.BaseFragment
 import com.feylabs.halalkan.utils.snackbar.SnackbarType
 import com.feylabs.halalkan.view.resto.OrderViewModel
 import com.feylabs.halalkan.view.resto.admin_resto.AdminRestoViewModel
-import com.feylabs.halalkan.view.resto.order.history.HistoryOrderAdapter
+import com.feylabs.halalkan.view.resto.admin_resto.RestoHistoryOrderAdapter
 import com.tangxiaolv.telegramgallery.GalleryConfig
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -44,12 +45,7 @@ class CurrentRestaurantFragment : BaseFragment() {
 
     private val PERMISSION_CODE_STORAGE = 1001
 
-    private var mapCert = mutableMapOf<String, String>()
-    private var mapFoodType = mutableMapOf<String, String>()
-
-    var coverPhoto: File? = null
-
-    private val mAdapter by lazy { HistoryOrderAdapter() }
+    private val mAdapter by lazy { RestoHistoryOrderAdapter() }
 
     override fun initUI() {
         arguments?.getString("name")?.let {
@@ -72,12 +68,54 @@ class CurrentRestaurantFragment : BaseFragment() {
             }
         })
 
-        mAdapter.setupAdapterInterface(object : HistoryOrderAdapter.ItemInterface {
-            override fun onclick(model: OrderHistoryModel) {
+        mAdapter.setupAdapterInterface(object : RestoHistoryOrderAdapter.OrderRejectAcceptListener {
+            override fun onAccept(model: OrderHistoryModel, adapterPosition: Int) {
+                showAcceptConfirmation(model, adapterPosition)
+            }
 
+            override fun onReject(model: OrderHistoryModel, adapterPosition: Int) {
+                showRejectConfirmation(model, adapterPosition)
             }
 
         })
+
+        mAdapter.setupAdapterInterface(object : RestoHistoryOrderAdapter.ItemInterface {
+            override fun onclick(model: OrderHistoryModel) {
+            }
+
+        })
+    }
+
+    private fun showRejectConfirmation(model: OrderHistoryModel, adapterPosition: Int) {
+        val olz: (notes: String) -> Unit = { note ->
+            mAdapter.data[adapterPosition].statusId = 5
+            mAdapter.notifyItemChanged(adapterPosition)
+            orderViewModel.rejectOrder(orderId = model.id, reason = note)
+        }
+
+        BottomSheetOrderRejection.instance(
+            selectedAction = olz,
+            objectId = model.id.toString(),
+            existingNotes = ""
+        ).show(getMFragmentManager(), BottomSheetOrderRejection().tag)
+    }
+
+    private fun showAcceptConfirmation(model: OrderHistoryModel, adapterPosition: Int) {
+        with(DialogUtils) {
+            showConfirmationDialog(
+                context = requireContext(),
+                title = getString(R.string.label_are_you_sure),
+                message = getString(R.string.message_order_changed_to_cooked),
+                positiveAction = Pair("OK") {
+                    orderViewModel.approveOrder(model.id)
+                },
+                negativeAction = Pair(
+                    getString(R.string.title_no),
+                    { showToast(getString(R.string.label_canceled)) }),
+                autoDismiss = true,
+                buttonAllCaps = false
+            )
+        }
     }
 
     override fun initObserver() {
@@ -97,6 +135,58 @@ class CurrentRestaurantFragment : BaseFragment() {
                 }
             }
         }
+
+        orderViewModel.approveOrderLiveData.observe(viewLifecycleOwner) {
+            when (it) {
+                is Default -> {}
+                is Error -> {
+                    showLoading(false)
+                    showSnackbar(it.message.toString(), SnackbarType.ERROR)
+                }
+                is Loading -> {
+                    showLoading(true)
+                }
+                is Success -> {
+                    DialogUtils.showSuccessDialog(
+                        context = requireContext(),
+                        title = getString(R.string.title_success),
+                        message = getString(R.string.message_data_updated_succesfully),
+                        positiveAction = Pair("OK") {
+                            orderViewModel.getRestoHistory(restoId = getRestoId())
+                        },
+                        autoDismiss = true,
+                        buttonAllCaps = false
+                    )
+                    showLoading(false)
+                }
+            }
+        }
+        orderViewModel.rejectOrderLiveData.observe(viewLifecycleOwner) {
+            when (it) {
+                is Default -> {}
+                is Error -> {
+                    showLoading(false)
+                    showSnackbar(it.message.toString(), SnackbarType.ERROR)
+                }
+                is Loading -> {
+                    showLoading(true)
+                }
+                is Success -> {
+                    DialogUtils.showSuccessDialog(
+                        context = requireContext(),
+                        title = getString(R.string.title_success),
+                        message = getString(R.string.message_data_updated_succesfully),
+                        positiveAction = Pair("OK") {
+                            orderViewModel.getRestoHistory(restoId = getRestoId())
+                        },
+                        autoDismiss = true,
+                        buttonAllCaps = false
+                    )
+                    showLoading(false)
+                }
+            }
+        }
+
 
         orderViewModel.restoHistoryLiveData.observe(viewLifecycleOwner) {
             when (it) {

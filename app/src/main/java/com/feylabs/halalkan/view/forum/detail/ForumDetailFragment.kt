@@ -277,19 +277,21 @@ class ForumDetailFragment : BaseFragment() {
     }
 
     private fun deleteForum(id: Int) {
-        DialogUtils.showConfirmationDialog(
-            context = requireContext(),
-            title = "Are You Sure",
-            message = "This action will delete this post",
-            positiveAction = Pair("OK") {
-                viewModel.deleteForum(id)
-            },
-            negativeAction = Pair(
-                "No",
-                { showToast("Canceled") }),
-            autoDismiss = true,
-            buttonAllCaps = false
-        )
+        with(DialogUtils) {
+            showConfirmationDialog(
+                context = requireContext(),
+                title = getString(R.string.label_are_you_sure),
+                message = getString(R.string.label_this_action_will_delete_post),
+                positiveAction = Pair("OK") {
+                    viewModel.deleteForum(id)
+                },
+                negativeAction = Pair(
+                    getString(R.string.title_no),
+                    { showToast(getString(R.string.label_canceled)) }),
+                autoDismiss = true,
+                buttonAllCaps = false
+            )
+        }
     }
 
 

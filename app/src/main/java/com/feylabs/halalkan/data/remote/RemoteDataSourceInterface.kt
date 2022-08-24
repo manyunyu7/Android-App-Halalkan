@@ -12,6 +12,7 @@ import com.feylabs.halalkan.data.remote.reqres.masjid.*
 import com.feylabs.halalkan.data.remote.reqres.masjid.pagination.AllMasjidPaginationResponse
 import com.feylabs.halalkan.data.remote.reqres.order.CreateCartPayload
 import com.feylabs.halalkan.data.remote.reqres.order.CreateCartResponse
+import com.feylabs.halalkan.data.remote.reqres.order.DetailOrderResponse
 import com.feylabs.halalkan.data.remote.reqres.order.history.OrderHistoryResponse
 import com.feylabs.halalkan.data.remote.reqres.order.resto.OrderByRestoPaginationResponse
 import com.feylabs.halalkan.data.remote.reqres.prayertime.PrayerTimeAladhanSingleDateResponse
@@ -113,4 +114,8 @@ interface RemoteDataSourceInterface {
         page: Int,
         perPage: Int
     ): Response<OrderByRestoPaginationResponse>
+
+    suspend fun orderReject(orderId: Int, reason: String): Response<GeneralApiResponse>
+    suspend fun orderApprove(orderId: Int): Response<GeneralApiResponse>
+    suspend fun orderDetail(orderId: Int): Response<DetailOrderResponse>
 }

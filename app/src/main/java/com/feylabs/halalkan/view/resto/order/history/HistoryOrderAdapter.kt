@@ -55,8 +55,6 @@ class HistoryOrderAdapter : RecyclerView.Adapter<HistoryOrderAdapter.RestaurantH
                 binding.photo.loadImageFromURL(mContext,it.imgFullPath)
             }
 
-            binding.containerResto.makeVisible()
-
             binding.orderDate.text=model.createdAt.toString()
 
             binding.orderStatus.setTextColor(model.statusId.getStatusColor());

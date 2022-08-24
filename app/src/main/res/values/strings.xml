@@ -71,8 +71,18 @@
     <string name="title_order_history">Order History</string>
     <string name="title_load_more">Load More</string>
     <string name="btn_title_ok">OK</string>
-    <string name="title_accept_order">Accept Order</string>
+    <string name="title_accept_order">Accept</string>
     <string name="title_reject">Reject</string>
+    <string name="label_reason_of_order_rejection">Reason Of Order Rejection</string>
+    <string name="label_reason_of_rejection">Reason of Rejection</string>
+    <string name="example_reason_reject">Example : Out of Stock, Driver Unavailable, or others.</string>
+    <string name="label_are_you_sure">Are You Sure</string>
+    <string name="label_this_action_will_delete_post">This action will delete this post</string>
+    <string name="label_canceled">Canceled</string>
+    <string name="title_no">No</string>
+    <string name="title_success">Success</string>
+    <string name="message_data_updated_succesfully">Data Updated Successfully</string>
+    <string name="message_order_changed_to_cooked">Order status will be changed to cooked</string>
 
 
 </resources>

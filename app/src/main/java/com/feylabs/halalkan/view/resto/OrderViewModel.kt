@@ -5,8 +5,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.feylabs.halalkan.data.remote.QumparanResource
 import com.feylabs.halalkan.data.remote.RemoteDataSource
+import com.feylabs.halalkan.data.remote.reqres.GeneralApiResponse
 import com.feylabs.halalkan.data.remote.reqres.order.CreateCartPayload
 import com.feylabs.halalkan.data.remote.reqres.order.CreateCartResponse
+import com.feylabs.halalkan.data.remote.reqres.order.DetailOrderResponse
 import com.feylabs.halalkan.data.remote.reqres.order.history.OrderHistoryResponse
 import com.feylabs.halalkan.data.remote.reqres.order.resto.OrderByRestoPaginationResponse
 import com.feylabs.halalkan.data.remote.reqres.resto.*
@@ -25,11 +27,28 @@ class OrderViewModel(
         MutableLiveData<QumparanResource<OrderHistoryResponse?>>()
     val orderHistoryLiveData get() = _orderHistoryLiveData
 
+    private var _rejectOrderLiveData =
+        MutableLiveData<QumparanResource<GeneralApiResponse?>>()
+    val rejectOrderLiveData get() = _rejectOrderLiveData
+
+    private var _successOrderLiveData =
+        MutableLiveData<QumparanResource<GeneralApiResponse?>>()
+    val successOrderLiveData get() = _successOrderLiveData
+
+    private var _approveOrderLiveData =
+        MutableLiveData<QumparanResource<GeneralApiResponse?>>()
+    val approveOrderLiveData get() = _approveOrderLiveData
+
+    private var _detailOrderLiveData =
+        MutableLiveData<QumparanResource<DetailOrderResponse?>>()
+    val detailOrderLiveData get() = _detailOrderLiveData
+
     private var _restoHistoryLiveData =
         MutableLiveData<QumparanResource<OrderByRestoPaginationResponse?>>()
     val restoHistoryLiveData get() = _restoHistoryLiveData
 
     fun checkout(payload: CreateCartPayload) {
+        _checkoutLiveData.postValue(QumparanResource.Loading())
         viewModelScope.launch {
             try {
                 val res = ds.checkout(payload)
@@ -48,10 +67,70 @@ class OrderViewModel(
         }
     }
 
+    fun getDetailOrder(orderId: Int) {
+        _detailOrderLiveData.postValue(QumparanResource.Loading())
+        viewModelScope.launch {
+            try {
+                val res = ds.orderDetail(orderId)
+                if (res.isSuccessful) {
+                    _detailOrderLiveData.postValue(QumparanResource.Success(res.body()))
+                } else {
+                    _detailOrderLiveData.postValue(
+                        QumparanResource.Error(
+                            res.errorBody().toString()
+                        )
+                    )
+                }
+            } catch (e: Exception) {
+                _detailOrderLiveData.postValue(QumparanResource.Error(e.message.toString()))
+            }
+        }
+    }
+
+    fun rejectOrder(orderId: Int, reason: String) {
+        _rejectOrderLiveData.postValue(QumparanResource.Loading())
+        viewModelScope.launch {
+            try {
+                val res = ds.orderReject(orderId, reason)
+                if (res.isSuccessful) {
+                    _rejectOrderLiveData.postValue(QumparanResource.Success(res.body()))
+                } else {
+                    _rejectOrderLiveData.postValue(
+                        QumparanResource.Error(
+                            res.errorBody().toString()
+                        )
+                    )
+                }
+            } catch (e: Exception) {
+                _rejectOrderLiveData.postValue(QumparanResource.Error(e.message.toString()))
+            }
+        }
+    }
+
+    fun approveOrder(orderId: Int) {
+        _approveOrderLiveData.postValue(QumparanResource.Loading())
+        viewModelScope.launch {
+            try {
+                val res = ds.orderApprove(orderId)
+                if (res.isSuccessful) {
+                    _approveOrderLiveData.postValue(QumparanResource.Success(res.body()))
+                } else {
+                    _approveOrderLiveData.postValue(
+                        QumparanResource.Error(
+                            res.errorBody().toString()
+                        )
+                    )
+                }
+            } catch (e: Exception) {
+                _approveOrderLiveData.postValue(QumparanResource.Error(e.message.toString()))
+            }
+        }
+    }
+
     fun getRestoHistory(
         restoId: String,
-        page: Int,
-        perPage: Int
+        page: Int = 1,
+        perPage: Int = 10
     ) {
         viewModelScope.launch {
             _restoHistoryLiveData.postValue(QumparanResource.Loading())

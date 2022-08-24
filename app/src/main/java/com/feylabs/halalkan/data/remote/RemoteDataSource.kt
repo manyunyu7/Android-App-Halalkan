@@ -13,6 +13,7 @@ import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidReviewPaginationResp
 import com.feylabs.halalkan.data.remote.reqres.masjid.pagination.AllMasjidPaginationResponse
 import com.feylabs.halalkan.data.remote.reqres.order.CreateCartPayload
 import com.feylabs.halalkan.data.remote.reqres.order.CreateCartResponse
+import com.feylabs.halalkan.data.remote.reqres.order.DetailOrderResponse
 import com.feylabs.halalkan.data.remote.reqres.order.history.OrderHistoryResponse
 import com.feylabs.halalkan.data.remote.reqres.order.resto.OrderByRestoPaginationResponse
 import com.feylabs.halalkan.data.remote.reqres.prayertime.PrayerTimeAladhanSingleDateResponse
@@ -254,6 +255,19 @@ class RemoteDataSource(
     override suspend fun checkout(body: CreateCartPayload): Response<CreateCartResponse> {
         return restoService.createCart(body = body, restoId = body.restoId)
     }
+
+    override suspend fun orderReject(orderId: Int,reason:String): Response<GeneralApiResponse> {
+        return restoService.orderReject(orderId = orderId.toString(), reason = reason)
+    }
+
+    override suspend fun orderApprove(orderId: Int): Response<GeneralApiResponse> {
+        return restoService.orderApprove(orderId = orderId.toString())
+    }
+
+    override suspend fun orderDetail(orderId: Int): Response<DetailOrderResponse> {
+        return restoService.getOrderDetail(orderId = orderId.toString())
+    }
+
 
     override suspend fun getHistoryOrder(): Response<OrderHistoryResponse> {
         return restoService.getUserOrderHistory()

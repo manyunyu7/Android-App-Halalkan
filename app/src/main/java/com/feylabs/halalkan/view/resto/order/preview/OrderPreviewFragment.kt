@@ -255,7 +255,6 @@ class OrderPreviewFragment : BaseFragment(), OnMapReadyCallback {
         }
 
         BottomSheetOrderNotes.instance(
-            title = getString(R.string.add_note_to_dish),
             selectedAction = olz,
             objectId = model.id.toString(),
             existingNotes = model.notes

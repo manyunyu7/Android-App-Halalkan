@@ -1,4 +1,4 @@
-package com.feylabs.halalkan.view.resto.admin_resto.signature
+package com.feylabs.halalkan.view.resto.admin_resto
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,6 +7,7 @@ import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.RecyclerView
 import com.feylabs.halalkan.R
 import com.feylabs.halalkan.utils.CommonUtil.makeGone
+import com.feylabs.halalkan.utils.CommonUtil.makeVisible
 import com.feylabs.halalkan.data.remote.reqres.order.history.OrderHistoryModel  as AdapterModel
 import com.feylabs.halalkan.databinding.ItemHistoryOrderBinding as AdapterBinding
 import com.feylabs.halalkan.utils.ImageViewUtils.loadImageFromURL
@@ -19,6 +20,7 @@ class RestoHistoryOrderAdapter :
 
     val data = mutableListOf<AdapterModel>()
     lateinit var adapterInterface: ItemInterface
+    lateinit var orderRejectAcceptListener: OrderRejectAcceptListener
 
     fun setWithNewData(data: MutableList<AdapterModel>) {
         this.data.clear()
@@ -27,6 +29,10 @@ class RestoHistoryOrderAdapter :
 
     fun setupAdapterInterface(obj: ItemInterface) {
         this.adapterInterface = obj
+    }
+
+    fun setupAdapterInterface(obj: OrderRejectAcceptListener) {
+        this.orderRejectAcceptListener = obj
     }
 
     inner class RestaurantHomeViewHolder(v: View) : RecyclerView.ViewHolder(v) {
@@ -48,13 +54,28 @@ class RestoHistoryOrderAdapter :
             }
 
             binding.tvMainName.text = model.userObj?.name
-            binding.tvSecondaryName.text=model.userObj?.phoneNumber
+            binding.tvSecondaryName.text = model.userObj?.phoneNumber
 
             binding.orderDate.text = model.createdAt.toString()
             binding.orderStatus.setTextColor(model.statusId.getStatusColor());
             binding.orderedItems.text = model.getOrdersString()
             binding.orderStatus.text = model.statusDesc
             binding.totalPrice.text = model.getFormattedTotalPrice().toString()
+
+            if (model.statusId == 1) {
+                binding.containerAcceptReject.makeVisible()
+                binding.btnPositive.setOnClickListener {
+                    if (::orderRejectAcceptListener.isInitialized)
+                        orderRejectAcceptListener.onAccept(model,adapterPosition)
+                }
+
+                binding.btnNegative.setOnClickListener {
+                    if (::orderRejectAcceptListener.isInitialized)
+                        orderRejectAcceptListener.onReject(model,adapterPosition)
+                }
+            }else{
+                binding.containerAcceptReject.makeGone()
+            }
 
 
             binding.photo.loadImageFromURL(mContext, model.userObj?.imgFullPath)
@@ -77,5 +98,16 @@ class RestoHistoryOrderAdapter :
 
     interface ItemInterface {
         fun onclick(model: AdapterModel)
+    }
+
+    interface OrderRejectAcceptListener {
+        fun onAccept(
+            model: com.feylabs.halalkan.data.remote.reqres.order.history.OrderHistoryModel,
+            adapterPosition: Int
+        )
+        fun onReject(
+            model: com.feylabs.halalkan.data.remote.reqres.order.history.OrderHistoryModel,
+            adapterPosition: Int
+        )
     }
 }

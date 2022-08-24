@@ -176,7 +176,7 @@
 
 
             <LinearLayout
-                android:id="@+id/container_resto"
+                android:id="@+id/container_accept_reject"
                 android:visibility="gone"
                 tool:visibility="visible"
                 android:layout_marginBottom="@dimen/dimen_15dp"
