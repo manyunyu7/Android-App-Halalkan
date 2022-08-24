@@ -256,7 +256,7 @@ class RemoteDataSource(
         return restoService.createCart(body = body, restoId = body.restoId)
     }
 
-    override suspend fun orderReject(orderId: Int,reason:String): Response<GeneralApiResponse> {
+    override suspend fun orderReject(orderId: Int, reason: String): Response<GeneralApiResponse> {
         return restoService.orderReject(orderId = orderId.toString(), reason = reason)
     }
 
@@ -268,15 +268,33 @@ class RemoteDataSource(
         return restoService.getOrderDetail(orderId = orderId.toString())
     }
 
-
     override suspend fun getHistoryOrder(): Response<OrderHistoryResponse> {
         return restoService.getUserOrderHistory()
     }
 
-    override suspend fun getRestoHistoryOrder(restoId: String,page: Int,perPage: Int): Response<OrderByRestoPaginationResponse> {
-        return restoService.getRestoOrder(restoId = restoId,page=1, perPage = 10)
-    }
+    override suspend fun getOrderStatus() = restoService.getAllOrderStatus()
+    override suspend fun getRestoHistoryOrder(
+        restoId: String,
+        page: Int, perPage: Int,
+        mStatus: String?
+    ): Response<OrderByRestoPaginationResponse> {
+        mStatus?.let{
+            return restoService.getRestoOrder(
+                restoId = restoId,
+                page = 1,
+                perPage = 10,
+                status = mStatus
+            )
+        }?:run{
+            return restoService.getRestoOrder(
+                restoId = restoId,
+                page = 1,
+                perPage = 10,
+                status = null
+            )
+        }
 
+    }
 
 
 }

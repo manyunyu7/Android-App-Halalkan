@@ -2,10 +2,13 @@ package com.feylabs.halalkan.view.resto.admin_resto.signature
 
 import android.app.Activity
 import android.content.Intent
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.adevinta.leku.*
@@ -14,17 +17,20 @@ import com.feylabs.halalkan.R
 import com.feylabs.halalkan.customview.RazkyGalleryActivity
 import com.feylabs.halalkan.customview.bottomsheet.BottomSheetOrderRejection
 import com.feylabs.halalkan.data.remote.QumparanResource.*
+import com.feylabs.halalkan.data.remote.reqres.order.OrderStatusResponse
 import com.feylabs.halalkan.data.remote.reqres.order.history.OrderHistoryModel
 import com.feylabs.halalkan.data.remote.reqres.order.resto.OrderByRestoPaginationResponse
 import com.feylabs.halalkan.data.remote.reqres.resto.RestoDetailResponse
 import com.feylabs.halalkan.databinding.FragmentXrestoCurrentBinding
 import com.feylabs.halalkan.utils.DialogUtils
 import com.feylabs.halalkan.utils.ImageViewUtils.loadImageFromURL
+import com.feylabs.halalkan.utils.ViewUtil.dpToPixels
 import com.feylabs.halalkan.utils.base.BaseFragment
 import com.feylabs.halalkan.utils.snackbar.SnackbarType
 import com.feylabs.halalkan.view.resto.OrderViewModel
 import com.feylabs.halalkan.view.resto.admin_resto.AdminRestoViewModel
 import com.feylabs.halalkan.view.resto.admin_resto.RestoHistoryOrderAdapter
+import com.google.android.material.chip.Chip
 import com.tangxiaolv.telegramgallery.GalleryConfig
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -136,7 +142,7 @@ class CurrentRestaurantFragment : BaseFragment() {
             }
         }
 
-        orderViewModel.approveOrderLiveData.observe(viewLifecycleOwner) {
+        orderViewModel.statusOrderLiveData.observe(viewLifecycleOwner) {
             when (it) {
                 is Default -> {}
                 is Error -> {
@@ -147,6 +153,27 @@ class CurrentRestaurantFragment : BaseFragment() {
                     showLoading(true)
                 }
                 is Success -> {
+                    showLoading(false)
+                    it.data?.let {
+                        setupCategoryChip(it)
+                    }
+                }
+            }
+        }
+
+        orderViewModel.approveOrderLiveData.observe(viewLifecycleOwner) {
+            when (it) {
+                is Default -> {}
+                is Error -> {
+                    orderViewModel.resetAcceptOrderState()
+                    showLoading(false)
+                    showSnackbar(it.message.toString(), SnackbarType.ERROR)
+                }
+                is Loading -> {
+                    showLoading(true)
+                }
+                is Success -> {
+                    orderViewModel.resetAcceptOrderState()
                     DialogUtils.showSuccessDialog(
                         context = requireContext(),
                         title = getString(R.string.title_success),
@@ -165,6 +192,7 @@ class CurrentRestaurantFragment : BaseFragment() {
             when (it) {
                 is Default -> {}
                 is Error -> {
+                    orderViewModel.resetRejectOrderState()
                     showLoading(false)
                     showSnackbar(it.message.toString(), SnackbarType.ERROR)
                 }
@@ -172,6 +200,7 @@ class CurrentRestaurantFragment : BaseFragment() {
                     showLoading(true)
                 }
                 is Success -> {
+                    orderViewModel.resetRejectOrderState()
                     DialogUtils.showSuccessDialog(
                         context = requireContext(),
                         title = getString(R.string.title_success),
@@ -206,6 +235,65 @@ class CurrentRestaurantFragment : BaseFragment() {
         }
 
 
+    }
+
+    private fun setupCategoryChip(data: OrderStatusResponse) {
+        val mdata = data.toMutableList()
+
+        mdata.add(
+            0,
+            OrderStatusResponse.OrderStatusResponseItem(
+                0, "All"
+            )
+        )
+        mdata.forEachIndexed { index, statusOrder ->
+            val chip = Chip(requireContext())
+            chip.text = statusOrder.name
+            chip.tag = statusOrder.id
+            chip.isCheckable = true
+            if (statusOrder.id.toString() == orderViewModel.getCurrentFilterStatus()) {
+                chip.isChecked = true
+            }
+
+            chip.setTextColor(Color.parseColor("#000000"))
+            chip.chipStrokeColor =
+                ColorStateList.valueOf(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.chip_filter_selection_stroke_color
+                    )
+                )
+            chip.chipStrokeWidth = 1.dpToPixels(requireContext())
+            chip.setTextColor(
+                ColorStateList.valueOf(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.chip_filter_selection_text_color
+                    )
+                )
+            )
+            chip.chipBackgroundColor =
+                ColorStateList.valueOf(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.chip_filter_selection_color
+                    )
+                )
+            binding.chipGroupCategory.addView(chip)
+        }
+    }
+
+    private fun getSelectedCategoryId(): String? {
+        val ids: List<Int> = binding.chipGroupCategory.getCheckedChipIds()
+        var selected: String? = null
+        ids.forEachIndexed { index, i ->
+            val chip = view?.findViewById<Chip>(i)
+            if (chip?.tag.toString() == "0") {
+                selected = null
+            } else
+                selected = chip?.tag.toString()
+        }
+        return selected
     }
 
     private fun setupOrderData(data: OrderByRestoPaginationResponse?) {
@@ -267,25 +355,10 @@ class CurrentRestaurantFragment : BaseFragment() {
             findNavController().navigate(R.id.navigation_manageFoodFragment)
         }
 
-        binding.labelInfoResto.setOnClickListener {
-            val lat = mainViewModel.liveLatitude.value ?: -99
-            val long = mainViewModel.liveLongitude.value ?: -99
-
-            val locationPickerIntent = LocationPickerActivity.Builder()
-                .withLocation(lat.toDouble(), long.toDouble())
-                .withDefaultLocaleSearchZone()
-                .shouldReturnOkOnBackPressed()
-                .withStreetHidden()
-                .withCityHidden()
-                .withZipCodeHidden()
-                .withSatelliteViewHidden()
-                .withGoogleTimeZoneEnabled()
-                .withVoiceSearchHidden()
-                .withUnnamedRoadHidden()
-                .build(requireContext())
-
-            startActivityForResult(locationPickerIntent, 212)
+        binding.chipGroupCategory.setOnCheckedChangeListener { group, checkedId ->
+            orderViewModel.getRestoHistory(restoId = getRestoId(), status = getSelectedCategoryId())
         }
+
 
         setupMenuAction()
     }
@@ -322,6 +395,7 @@ class CurrentRestaurantFragment : BaseFragment() {
     }
 
     override fun initData() {
+        orderViewModel.getAllOrderStatusLiveData()
         viewModel.getDetailResto(getRestoId())
         viewModel.getRestoCert()
         viewModel.getFoodType()
@@ -361,14 +435,14 @@ class CurrentRestaurantFragment : BaseFragment() {
                 val latitude = data.getDoubleExtra(LATITUDE, 0.0)
                 val longitude = data.getDoubleExtra(LONGITUDE, 0.0)
                 val address = data.getStringExtra(LOCATION_ADDRESS)
-                val lekuPoi = data.getParcelableExtra<LekuPoi>(LEKU_POI)
-
                 showSnackbar("$latitude $longitude $address")
             }
         }
         if (resultCode == Activity.RESULT_CANCELED) {
+
         }
     }
 
 
 }
+

@@ -83,6 +83,7 @@
     <string name="title_success">Success</string>
     <string name="message_data_updated_succesfully">Data Updated Successfully</string>
     <string name="message_order_changed_to_cooked">Order status will be changed to cooked</string>
+    <string name="title_all">All</string>
 
 
 </resources>

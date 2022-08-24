@@ -8,6 +8,7 @@ import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidReviewPaginationResp
 import com.feylabs.halalkan.data.remote.reqres.order.CreateCartPayload
 import com.feylabs.halalkan.data.remote.reqres.order.CreateCartResponse
 import com.feylabs.halalkan.data.remote.reqres.order.DetailOrderResponse
+import com.feylabs.halalkan.data.remote.reqres.order.OrderStatusResponse
 import com.feylabs.halalkan.data.remote.reqres.order.history.OrderHistoryResponse
 import com.feylabs.halalkan.data.remote.reqres.order.resto.OrderByRestoPaginationResponse
 import com.feylabs.halalkan.data.remote.reqres.resto.*
@@ -115,6 +116,10 @@ interface RestoService {
     suspend fun getMyRestaurant(
     ): Response<AllRestoNoPagination>
 
+    @GET("fe/orders/carts/status")
+    suspend fun getAllOrderStatus(
+    ): Response<OrderStatusResponse>
+
     @FormUrlEncoded
     @POST("orders/carts/rejectOrder/{orderId}")
     suspend fun orderReject(
@@ -131,7 +136,8 @@ interface RestoService {
     suspend fun getRestoOrder(
         @Path("id") restoId: String,
         @Query("perPage") perPage: Int = 5,
-        @Query("page") page: Int = 1
+        @Query("page") page: Int = 1,
+        @Query("status") status: String? = null
     ): Response<OrderByRestoPaginationResponse>
 
 
