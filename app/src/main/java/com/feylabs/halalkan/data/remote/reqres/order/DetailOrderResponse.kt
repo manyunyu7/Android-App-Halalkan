@@ -5,6 +5,8 @@ import com.google.gson.annotations.SerializedName
 import androidx.annotation.Keep
 import com.feylabs.halalkan.data.remote.reqres.auth.UserModel
 import com.feylabs.halalkan.data.remote.reqres.resto.RestoModelResponse
+import java.text.DecimalFormat
+import java.text.NumberFormat
 
 @Keep
 data class DetailOrderResponse(
@@ -17,6 +19,8 @@ data class DetailOrderResponse(
     @SerializedName("success")
     var success: Boolean = false
 ) {
+
+
     @Keep
     data class Data(
         @SerializedName("address")
@@ -54,7 +58,16 @@ data class DetailOrderResponse(
         @SerializedName("user_sign")
         var userSign: Any? = Any()
     ) {
+        fun getTotalItem() : Int{
+            return orders?.size ?: 0
+        }
 
+        fun getFormattedTotalPrice(): String {
+            val formatter: NumberFormat = DecimalFormat("#,###")
+            val myNumber = this.totalPrice
+            val formattedNumber: String = formatter.format(myNumber)
+            return "$formattedNumber won"
+        }
 
     }
 }

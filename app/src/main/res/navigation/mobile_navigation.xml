@@ -258,21 +258,25 @@
         android:id="@+id/navigation_editRestoTypeFragment"
         android:name="com.feylabs.halalkan.view.resto.admin_resto.edit_info.type.EditRestoTypeFragment"
         android:label="EditRestoTypeFragment" />
+
     <fragment
         android:id="@+id/navigation_editRestoPhoneFragment"
         android:name="com.feylabs.halalkan.view.resto.admin_resto.edit_info.phone.EditRestoPhoneFragment"
         android:label="EditRestoPhoneFragment"
         tools:layout="@layout/fragment_xresto_edit_phone" />
+
     <fragment
         android:id="@+id/navigation_forumCreateThreadFragment"
         android:name="com.feylabs.halalkan.view.forum.create.ForumCreateEditThreadFragment"
         android:label="ForumCreateThreadFragment" />
+
     <fragment
         android:id="@+id/navigation_forumHomeFragment"
         android:name="com.feylabs.halalkan.view.forum.home.ForumHomeFragment"
         android:label="ForumHomeFragment"
         tools:layout="@layout/fragment_forum_home"
         />
+
     <fragment
         android:id="@+id/navigation_forumDetailFragment"
         android:name="com.feylabs.halalkan.view.forum.detail.ForumDetailFragment"
@@ -287,6 +291,10 @@
         android:id="@+id/navigation_historyOrderFragment"
         android:name="com.feylabs.halalkan.view.resto.order.history.HistoryOrderFragment"
         android:label="HistoryOrderFragment" />
+    <fragment
+        android:id="@+id/navigation_detailOrderRestoFragment"
+        android:name="com.feylabs.halalkan.view.resto.order.detail.DetailOrderRestoFragment"
+        android:label="DetailOrderRestoFragment" />
 
 
 </navigation>

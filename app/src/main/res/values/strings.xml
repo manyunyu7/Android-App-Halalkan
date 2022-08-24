@@ -84,6 +84,9 @@
     <string name="message_data_updated_succesfully">Data Updated Successfully</string>
     <string name="message_order_changed_to_cooked">Order status will be changed to cooked</string>
     <string name="title_all">All</string>
+    <string name="label_see_location_on_map">Direction</string>
+    <string name="title_item">Items</string>
+    <string name="label_item">items</string>
 
 
 </resources>

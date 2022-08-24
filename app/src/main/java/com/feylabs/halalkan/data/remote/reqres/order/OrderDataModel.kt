@@ -21,4 +21,4 @@ data class OrderDataModel(
     var notes: String? = "",
     @SerializedName("quantity")
     var quantity: Int = 0
-)
+){}

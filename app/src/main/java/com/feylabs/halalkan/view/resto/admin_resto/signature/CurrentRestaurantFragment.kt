@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.adevinta.leku.*
@@ -87,6 +88,10 @@ class CurrentRestaurantFragment : BaseFragment() {
 
         mAdapter.setupAdapterInterface(object : RestoHistoryOrderAdapter.ItemInterface {
             override fun onclick(model: OrderHistoryModel) {
+                findNavController().navigate(
+                    R.id.navigation_detailOrderRestoFragment,
+                    bundleOf("orderId" to model.id)
+                )
             }
 
         })
