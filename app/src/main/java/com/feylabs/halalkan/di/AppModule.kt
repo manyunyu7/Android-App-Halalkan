@@ -1,7 +1,7 @@
 package com.feylabs.halalkan.di
 
 import com.feylabs.halalkan.MainViewModel
-import com.feylabs.halalkan.view.admin_resto.AdminRestoViewModel
+import com.feylabs.halalkan.view.resto.admin_resto.AdminRestoViewModel
 import com.feylabs.halalkan.view.auth.AuthViewModel
 import com.feylabs.halalkan.view.direction.DirectionViewModel
 import com.feylabs.halalkan.view.forum.ForumViewModel

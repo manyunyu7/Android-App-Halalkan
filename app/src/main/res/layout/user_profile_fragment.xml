@@ -49,7 +49,7 @@
                     tools:text="Henry Augusta Harsono" />
 
                 <TextView
-                    android:id="@+id/tv_company"
+                    android:id="@+id/tv_driver_name"
                     style="@style/Montserrat.White.14sp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

@@ -46,11 +46,11 @@ class RestoMainFragment : BaseFragment() {
         }
 
         binding.rvRestoNearby.apply {
-            layoutManager =setLayoutManagerHorizontal()
+            layoutManager = setLayoutManagerHorizontal()
             adapter = nearbyRestoAdapter
         }
 
-        nearbyRestoAdapter.setupAdapterInterface(object :RestoMainAdapter.ItemInterface{
+        nearbyRestoAdapter.setupAdapterInterface(object : RestoMainAdapter.ItemInterface {
             override fun onclick(model: RestoModelResponse) {
                 findNavController().navigate(
                     R.id.navigation_detailRestoFragment,
@@ -63,6 +63,20 @@ class RestoMainFragment : BaseFragment() {
         binding.rvTypeOfFood.apply {
             layoutManager = setLayoutManagerGridHorizontal(1)
             adapter = foodTypeAdapter
+        }
+
+        setupBottomNav()
+    }
+
+    private fun setupBottomNav() {
+        binding.bottomNav.apply {
+            setBottomMenuActive(tvHome)
+            setBottomMenuActive(ivHome)
+            btnMenuRestoHome.setOnClickListener {
+            }
+            btnMenuOrderHistory.setOnClickListener {
+                findNavController().navigate(R.id.navigation_historyOrderFragment)
+            }
         }
     }
 
@@ -160,5 +174,6 @@ class RestoMainFragment : BaseFragment() {
         super.onDestroyView()
         _binding = null
     }
+
 
 }

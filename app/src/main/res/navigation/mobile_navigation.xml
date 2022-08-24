@@ -215,52 +215,52 @@
         tools:layout="@layout/fragment_review_general" />
     <fragment
         android:id="@+id/navigation_initAdminRestoFragment"
-        android:name="com.feylabs.halalkan.view.admin_resto.init.InitAdminRestoFragment"
+        android:name="com.feylabs.halalkan.view.resto.admin_resto.init.InitAdminRestoFragment"
         android:label="InitAdminRestoFragment"
         tools:layout="@layout/fragment_xresto_init" />
     <fragment
         android:id="@+id/navigation_addEditRestoFragment"
-        android:name="com.feylabs.halalkan.view.admin_resto.signature.AddEditRestoFragment"
+        android:name="com.feylabs.halalkan.view.resto.admin_resto.signature.AddEditRestoFragment"
         android:label="AddEditRestoFragment" />
     <fragment
         android:id="@+id/navigation_addEditCategoryFragment"
-        android:name="com.feylabs.halalkan.view.admin_resto.menu_category.AddEditCategoryFragment"
+        android:name="com.feylabs.halalkan.view.resto.admin_resto.menu_category.AddEditCategoryFragment"
         android:label="AddEditCategoryFragment"
         tools:layout="@layout/fragment_add_edit_category" />
     <fragment
         android:id="@+id/navigation_currentRestaurantFragment"
-        android:name="com.feylabs.halalkan.view.admin_resto.signature.CurrentRestaurantFragment"
+        android:name="com.feylabs.halalkan.view.resto.admin_resto.signature.CurrentRestaurantFragment"
         android:label="CurrentRestaurantFragment"
         tools:layout="@layout/fragment_xresto_current" />
 
     <fragment
         android:id="@+id/navigation_menuCategoryFragment"
-        android:name="com.feylabs.halalkan.view.admin_resto.menu_category.MenuCategoryFragment"
+        android:name="com.feylabs.halalkan.view.resto.admin_resto.menu_category.MenuCategoryFragment"
         android:label="MenuCategoryFragment" />
 
     <fragment
         android:id="@+id/navigation_manageFoodFragment"
-        android:name="com.feylabs.halalkan.view.admin_resto.food.ManageFoodFragment"
+        android:name="com.feylabs.halalkan.view.resto.admin_resto.food.ManageFoodFragment"
         android:label="ManageFoodFragment" />
 
     <fragment
         android:id="@+id/navigation_addEditFoodFragment"
-        android:name="com.feylabs.halalkan.view.admin_resto.food.AddEditFoodFragment"
+        android:name="com.feylabs.halalkan.view.resto.admin_resto.food.AddEditFoodFragment"
         android:label="AddEditFoodFragment" />
 
     <fragment
         android:id="@+id/navigation_editRestoCertificationFragment"
-        android:name="com.feylabs.halalkan.view.admin_resto.edit_info.certification.EditRestoCertificationFragment"
+        android:name="com.feylabs.halalkan.view.resto.admin_resto.edit_info.certification.EditRestoCertificationFragment"
         android:label="EditRestoCertificationFragment"
         tools:layout="@layout/fragment_xresto_edit_certification" />
 
     <fragment
         android:id="@+id/navigation_editRestoTypeFragment"
-        android:name="com.feylabs.halalkan.view.admin_resto.edit_info.type.EditRestoTypeFragment"
+        android:name="com.feylabs.halalkan.view.resto.admin_resto.edit_info.type.EditRestoTypeFragment"
         android:label="EditRestoTypeFragment" />
     <fragment
         android:id="@+id/navigation_editRestoPhoneFragment"
-        android:name="com.feylabs.halalkan.view.admin_resto.edit_info.phone.EditRestoPhoneFragment"
+        android:name="com.feylabs.halalkan.view.resto.admin_resto.edit_info.phone.EditRestoPhoneFragment"
         android:label="EditRestoPhoneFragment"
         tools:layout="@layout/fragment_xresto_edit_phone" />
     <fragment
@@ -282,6 +282,11 @@
         android:id="@+id/navigation_orderPreviewFragment"
         android:name="com.feylabs.halalkan.view.resto.order.preview.OrderPreviewFragment"
         android:label="OrderPreviewFragment" />
+
+    <fragment
+        android:id="@+id/navigation_historyOrderFragment"
+        android:name="com.feylabs.halalkan.view.resto.order.history.HistoryOrderFragment"
+        android:label="HistoryOrderFragment" />
 
 
 </navigation>

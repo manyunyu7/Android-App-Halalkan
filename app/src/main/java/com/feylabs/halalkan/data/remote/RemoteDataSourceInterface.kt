@@ -12,6 +12,8 @@ import com.feylabs.halalkan.data.remote.reqres.masjid.*
 import com.feylabs.halalkan.data.remote.reqres.masjid.pagination.AllMasjidPaginationResponse
 import com.feylabs.halalkan.data.remote.reqres.order.CreateCartPayload
 import com.feylabs.halalkan.data.remote.reqres.order.CreateCartResponse
+import com.feylabs.halalkan.data.remote.reqres.order.history.OrderHistoryResponse
+import com.feylabs.halalkan.data.remote.reqres.order.resto.OrderByRestoPaginationResponse
 import com.feylabs.halalkan.data.remote.reqres.prayertime.PrayerTimeAladhanSingleDateResponse
 import com.feylabs.halalkan.data.remote.reqres.resto.*
 import com.feylabs.halalkan.data.remote.reqres.resto.update.UpdateRestoColumnResponse
@@ -105,4 +107,10 @@ interface RemoteDataSourceInterface {
     suspend fun deleteForum(forumId: Int): Response<GeneralApiResponse>
     suspend fun deleteComment(commentId: Int): Response<GeneralApiResponse>
     suspend fun checkout(body: CreateCartPayload): Response<CreateCartResponse>
+    suspend fun getHistoryOrder(): Response<OrderHistoryResponse>
+    suspend fun getRestoHistoryOrder(
+        restoId: String,
+        page: Int,
+        perPage: Int
+    ): Response<OrderByRestoPaginationResponse>
 }

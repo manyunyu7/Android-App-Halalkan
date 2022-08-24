@@ -13,6 +13,8 @@ import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidReviewPaginationResp
 import com.feylabs.halalkan.data.remote.reqres.masjid.pagination.AllMasjidPaginationResponse
 import com.feylabs.halalkan.data.remote.reqres.order.CreateCartPayload
 import com.feylabs.halalkan.data.remote.reqres.order.CreateCartResponse
+import com.feylabs.halalkan.data.remote.reqres.order.history.OrderHistoryResponse
+import com.feylabs.halalkan.data.remote.reqres.order.resto.OrderByRestoPaginationResponse
 import com.feylabs.halalkan.data.remote.reqres.prayertime.PrayerTimeAladhanSingleDateResponse
 import com.feylabs.halalkan.data.remote.reqres.resto.*
 import com.feylabs.halalkan.data.remote.reqres.resto.update.UpdateRestoColumnResponse
@@ -252,6 +254,15 @@ class RemoteDataSource(
     override suspend fun checkout(body: CreateCartPayload): Response<CreateCartResponse> {
         return restoService.createCart(body = body, restoId = body.restoId)
     }
+
+    override suspend fun getHistoryOrder(): Response<OrderHistoryResponse> {
+        return restoService.getUserOrderHistory()
+    }
+
+    override suspend fun getRestoHistoryOrder(restoId: String,page: Int,perPage: Int): Response<OrderByRestoPaginationResponse> {
+        return restoService.getRestoOrder(restoId = restoId,page=1, perPage = 10)
+    }
+
 
 
 }

@@ -1,5 +1,6 @@
 package com.feylabs.halalkan.utils.resto
 
+import android.graphics.Color
 import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidModelResponse
 import com.feylabs.halalkan.data.remote.reqres.resto.RestoModelResponse
 import com.feylabs.halalkan.utils.NumberUtil.Companion.roundOffDecimal
@@ -36,7 +37,7 @@ object RestoUtility {
         // add limitation
         tempResult = tempResult.take(limit).toMutableList()
 
-        tempResult = tempResult.filter {dataMasjid->
+        tempResult = tempResult.filter { dataMasjid ->
             dataMasjid.distanceKmDouble?.let {
                 it < limitDistance.toDouble()
             } == true
@@ -47,10 +48,37 @@ object RestoUtility {
         return tempResult
     }
 
+    fun Int.getStatusColor(): Int {
+
+        var color = "#F59F00"
+
+        if (this == 1) {
+            color = "#F59F00"
+        }
+
+        if (this == 2) {
+            color = "#156DBE"
+        }
+        if (this == 3) {
+            color = "#000000"
+        }
+
+        if (this == 4) {
+            color = "#008D36"
+        }
+
+        if (this == 5) {
+            color = "#DC0202"
+        }
+
+        return Color.parseColor(color)
+
+    }
+
     private fun Double?.orZero(): Double {
-        if(this==null){
+        if (this == null) {
             return 0.0
-        }else
+        } else
             return this
     }
 

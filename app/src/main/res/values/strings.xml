@@ -66,6 +66,13 @@
     <string name="orders_cant_be_canceled">Orders that have been accepted by the restaurant cannot be canceled</string>
     <string name="please_double_check_your_order">Please double check your order</string>
     <string name="order_submitted_to_restaurant">Your Order has been submitted to the restaurant</string>
+    <string name="menu_home">Home</string>
+    <string name="menu_order_history">Order History</string>
+    <string name="title_order_history">Order History</string>
+    <string name="title_load_more">Load More</string>
+    <string name="btn_title_ok">OK</string>
+    <string name="title_accept_order">Accept Order</string>
+    <string name="title_reject">Reject</string>
 
 
 </resources>

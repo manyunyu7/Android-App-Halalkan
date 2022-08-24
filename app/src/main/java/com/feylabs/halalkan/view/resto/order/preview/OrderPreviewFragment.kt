@@ -75,6 +75,13 @@ class OrderPreviewFragment : BaseFragment(), OnMapReadyCallback {
             layoutManager = setLayoutManagerLinear()
         }
 
+        foodAdapter.setupAdapterInterface(object : RestoFoodAdapter.OrderInterface {
+            override fun onchange() {
+                checkItem()
+                setupOrderCard()
+            }
+        })
+
         val lat = mainViewModel.liveLatLng.value?.lat
         val long = mainViewModel.liveLatLng.value?.long
 
@@ -91,12 +98,7 @@ class OrderPreviewFragment : BaseFragment(), OnMapReadyCallback {
             startActivityForResult(locationPickerIntent, 212)
         }
 
-        foodAdapter.setupAdapterInterface(object : RestoFoodAdapter.OrderInterface {
-            override fun onchange() {
-                checkItem()
-                setupOrderCard()
-            }
-        })
+
 
         foodAdapter.setupAdapterInterface(object : RestoFoodAdapter.NoteInterface {
             override fun onclick(model: FoodModelResponse, position: Int) {
@@ -242,7 +244,6 @@ class OrderPreviewFragment : BaseFragment(), OnMapReadyCallback {
         }
 
         binding.tvOrderedItems.text = text
-
 
     }
 

@@ -3,8 +3,11 @@ package com.feylabs.halalkan.data.remote.service
 import com.feylabs.halalkan.data.remote.reqres.UserResponse
 import com.feylabs.halalkan.data.remote.reqres.auth.LoginBodyRequest
 import com.feylabs.halalkan.data.remote.reqres.auth.LoginResponse
+import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidReviewPaginationResponse
 import com.feylabs.halalkan.data.remote.reqres.order.CreateCartPayload
 import com.feylabs.halalkan.data.remote.reqres.order.CreateCartResponse
+import com.feylabs.halalkan.data.remote.reqres.order.history.OrderHistoryResponse
+import com.feylabs.halalkan.data.remote.reqres.order.resto.OrderByRestoPaginationResponse
 import com.feylabs.halalkan.data.remote.reqres.resto.*
 import com.feylabs.halalkan.data.remote.reqres.resto.update.UpdateRestoColumnResponse
 import okhttp3.RequestBody
@@ -100,10 +103,22 @@ interface RestoService {
     ): Response<CreateCartResponse>
 
 
+    @GET("orders/carts/myCarts")
+    suspend fun getUserOrderHistory(
+    ): Response<OrderHistoryResponse>
+
+
     ///admin section
     @GET("fe/restoran/me")
     suspend fun getMyRestaurant(
     ): Response<AllRestoNoPagination>
+
+    @GET("fe/restoran/{id}/getAllOrders")
+    suspend fun getRestoOrder(
+        @Path("id") restoId: String,
+        @Query("perPage") perPage: Int = 5,
+        @Query("page") page: Int = 1
+    ): Response<OrderByRestoPaginationResponse>
 
 
 }
