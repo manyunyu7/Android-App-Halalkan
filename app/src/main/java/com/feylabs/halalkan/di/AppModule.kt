@@ -10,6 +10,7 @@ import com.feylabs.halalkan.view.postdetail.PostDetailViewModel
 import com.feylabs.halalkan.view.prayer.PrayerRoomViewModel
 import com.feylabs.halalkan.view.prayer.review.PrayerRoomReviewViewModel
 import com.feylabs.halalkan.view.prayer.review.RestoReviewViewModel
+import com.feylabs.halalkan.view.resto.DriverViewModel
 import com.feylabs.halalkan.view.resto.OrderViewModel
 import com.feylabs.halalkan.view.resto.RestoViewModel
 import com.feylabs.halalkan.view.translate.TranslateViewModel
@@ -23,6 +24,7 @@ val viewModelModule = module {
     viewModel { HomeViewModel(get(),get(),get()) }
 
     viewModel { AuthViewModel(get(),get()) }
+    viewModel { DriverViewModel(get()) }
 
     viewModel { PostDetailViewModel(get()) }
 

@@ -7,15 +7,26 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import androidx.core.widget.addTextChangedListener
+import androidx.core.widget.doOnTextChanged
 import androidx.navigation.fragment.findNavController
 import com.feylabs.halalkan.R
 import com.feylabs.halalkan.customview.RazkyGalleryActivity
+import com.feylabs.halalkan.data.remote.QumparanResource
 import com.feylabs.halalkan.data.remote.QumparanResource.*
+import com.feylabs.halalkan.data.remote.reqres.auth.RegisterBodyRequest
+import com.feylabs.halalkan.data.remote.reqres.auth.UserModel
 import com.feylabs.halalkan.databinding.FragmentAddEditCategoryBinding
+import com.feylabs.halalkan.databinding.FragmentRegisterBinding
+import com.feylabs.halalkan.databinding.FragmentXrestoAddDriverBinding
+import com.feylabs.halalkan.utils.DialogUtils
 import com.feylabs.halalkan.utils.base.BaseFragment
 import com.feylabs.halalkan.utils.snackbar.SnackbarType
+import com.feylabs.halalkan.view.auth.AuthViewModel
+import com.feylabs.halalkan.view.resto.DriverViewModel
 import com.feylabs.halalkan.view.resto.admin_resto.AdminRestoViewModel
 import com.tangxiaolv.telegramgallery.GalleryConfig
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -23,132 +34,54 @@ import org.koin.android.viewmodel.ext.android.viewModel
 
 class AddEditDriverFragment : BaseFragment() {
 
-
     // This property is only valid between onCreateView and
     // onDestroyView.
-    private var _binding: FragmentAddEditCategoryBinding? = null
+    private var _binding: FragmentXrestoAddDriverBinding? = null
     private val binding get() = _binding!!
 
-    val viewModel by viewModel<AdminRestoViewModel>()
-    private val PERMISSION_CODE_STORAGE = 1001
+    private val viewModel: DriverViewModel by viewModel()
 
-
-    override fun initUI() {
-    }
+    override fun initUI() {}
 
     override fun initObserver() {
-        viewModel.createRestoFoodCategoryLiveData.observe(viewLifecycleOwner) {
+        viewModel.addNewDriverLiveData.observe(viewLifecycleOwner) {
             when (it) {
-                is Default -> {}
-                is Error -> {
+                is QumparanResource.Default -> {
                     showLoading(false)
-                    showSnackbar("Berhasil Menyimpan Kategori", SnackbarType.ERROR)
                 }
-                is Loading -> {
+                is QumparanResource.Error -> {
+                    showSnackbar(it.message.toString(), SnackbarType.ERROR)
+                    showLoading(false)
+                }
+                is QumparanResource.Loading -> {
                     showLoading(true)
                 }
-                is Success -> {
-                    showLoading(false)
-                    showSnackbar("Berhasil Menyimpan Kategori", SnackbarType.SUCCESS)
-                    findNavController().navigateUp()
-                }
-            }
-        }
-    }
-
-    private fun getScreenType(): String {
-        val type = arguments?.getString("type") ?: ""
-        return type
-    }
-
-    private fun getRestoId(): String {
-        return getChoosenResto()
-    }
-
-    override fun initAction() {
-        binding.apply {
-            listOf(etName).forEachIndexed { index, editText ->
-                editText.addTextChangedListener {
-                    if (it.toString().isNotEmpty()) {
-                        editText.error = null
+                is QumparanResource.Success -> {
+                    it.data
+                    val token = it.data?.accessToken.orEmpty()
+                    it.data?.user?.let { userData ->
+                        showSnackbar(it.message.toString(), SnackbarType.SUCCESS)
+                        showLoading(false)
+                        proceedRegister(userData, token)
+                    } ?: run {
+                        showSnackbar("Data User Tidak Ditemukan", SnackbarType.ERROR)
                     }
                 }
             }
         }
-
-        binding.btnBack.setOnClickListener {
-            findNavController().navigateUp()
-        }
-
-        binding.btnSave.setOnClickListener {
-            var isError = false
-            showToast("Menyimpan Perubahan")
-            val name = binding.etName.text.toString()
-
-            if (name.isNotEmpty().not()) {
-                isError = true
-                binding.etName.error = getString(R.string.required_column)
-            }
-
-            if (isError.not()) {
-                viewModel.addFoodCategoryForResto(
-                    name = name, getRestoId()
-                )
-            }
-
-        }
-
-
     }
 
-    override fun initData() {
-    }
-
-    private fun askPhotoPermission() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (ContextCompat.checkSelfPermission(
-                    requireContext(),
-                    Manifest.permission.READ_EXTERNAL_STORAGE
-                ) ==
-                PackageManager.PERMISSION_DENIED ||
-                ContextCompat.checkSelfPermission(
-                    requireContext(),
-                    Manifest.permission.READ_EXTERNAL_STORAGE
-                ) ==
-                PackageManager.PERMISSION_DENIED
-            ) {
-                val permission = arrayOf(
-                    Manifest.permission.READ_EXTERNAL_STORAGE
-                )
-                requestPermissions(permission, PERMISSION_CODE_STORAGE)
-            } else {
-                pickPhoto()
-            }
-        } else {
-            pickPhoto()
-        }
-    }
-
-    private fun pickPhoto() {
-        val config = GalleryConfig.Build()
-            .limitPickPhoto(5)
-            .singlePhoto(false)
-            .build()
-
-        RazkyGalleryActivity.openActivityFromFragment(this, 120, config)
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        _binding = FragmentAddEditCategoryBinding.inflate(inflater)
-        return binding.root
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+    private fun proceedRegister(userData: UserModel, token: String) {
+        DialogUtils.showSuccessDialog(
+            context = requireContext(),
+            title = getString(R.string.title_success),
+            message = getString(R.string.message_data_created_succesfully),
+            positiveAction = Pair("OK") {
+                findNavController().popBackStack()
+            },
+            autoDismiss = true,
+            buttonAllCaps = false
+        )
     }
 
     private fun showLoading(b: Boolean) {
@@ -159,5 +92,79 @@ class AddEditDriverFragment : BaseFragment() {
         }
     }
 
+    override fun initAction() {
+
+        binding.btnBack.setOnClickListener {
+            findNavController().navigateUp()
+        }
+
+        binding.apply {
+            val view = arrayListOf(etName, etPhone, etPassword, etUsername)
+            view.forEachIndexed { index, editText ->
+                editText.doOnTextChanged { text, start, before, count ->
+                    if (text?.isNotEmpty() == true) {
+                        editText.error = null
+                    }
+                }
+            }
+        }
+    }
+
+    override fun initData() {
+        binding.btnRegister.setOnClickListener {
+            var isError = false;
+            val username = binding.etUsername.text.toString()
+            val password = binding.etPassword.text.toString()
+            val phone = binding.etPhone.text.toString()
+            val name = binding.etName.text.toString()
+
+            if (username.isEmpty()) {
+                isError = true
+                binding.etUsername.setError("Username tidak boleh kosong")
+            }
+
+            if (phone.isEmpty()) {
+                isError = true
+                binding.etPhone.setError("Nomor Telepon Diperlukan")
+            }
+
+            if (name.isEmpty()) {
+                isError = true
+                binding.etName.setError("Nomor Telepon Diperlukan")
+            }
+
+            if (password.isEmpty()) {
+                isError = true
+                binding.etPassword.setError("Password Tidak Boleh Kosong")
+            }
+
+
+            if (isError.not()) {
+                viewModel.addNewDriver(
+                    RegisterBodyRequest(
+                        password = password,
+                        confirmPassword = password,
+                        rolesId = 4,
+                        email = username,
+                        phoneNumber = phone,
+                        name = name
+                    )
+                )
+            }
+        }
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        _binding = FragmentXrestoAddDriverBinding.inflate(inflater)
+        return binding.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 
 }

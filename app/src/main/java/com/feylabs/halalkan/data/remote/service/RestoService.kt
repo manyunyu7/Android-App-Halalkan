@@ -4,6 +4,9 @@ import com.feylabs.halalkan.data.remote.reqres.GeneralApiResponse
 import com.feylabs.halalkan.data.remote.reqres.UserResponse
 import com.feylabs.halalkan.data.remote.reqres.auth.LoginBodyRequest
 import com.feylabs.halalkan.data.remote.reqres.auth.LoginResponse
+import com.feylabs.halalkan.data.remote.reqres.auth.RegisterBodyRequest
+import com.feylabs.halalkan.data.remote.reqres.auth.RegisterResponse
+import com.feylabs.halalkan.data.remote.reqres.driver.GetAllDriverResponse
 import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidReviewPaginationResponse
 import com.feylabs.halalkan.data.remote.reqres.order.CreateCartPayload
 import com.feylabs.halalkan.data.remote.reqres.order.CreateCartResponse
@@ -145,6 +148,16 @@ interface RestoService {
     suspend fun getOrderDetail(
         @Path("orderId") orderId: String,
     ): Response<DetailOrderResponse>
+
+    @GET("driver/getByResto/{restoId}")
+    suspend fun getAllDriverOnResto(
+        @Path("restoId") orderId: String,
+    ): Response<GetAllDriverResponse>
+
+    @POST("driver/register")
+    suspend fun addNewDriver(
+        @Body body: RegisterBodyRequest
+    ): Response<RegisterResponse>
 
 
 }

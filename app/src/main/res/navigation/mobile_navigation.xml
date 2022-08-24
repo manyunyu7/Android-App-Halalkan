@@ -295,6 +295,14 @@
         android:id="@+id/navigation_detailOrderRestoFragment"
         android:name="com.feylabs.halalkan.view.resto.order.detail.DetailOrderRestoFragment"
         android:label="DetailOrderRestoFragment" />
+    <fragment
+        android:id="@+id/navigation_addEditDriverFragment"
+        android:name="com.feylabs.halalkan.view.resto.admin_resto.driver.AddEditDriverFragment"
+        android:label="AddEditDriverFragment" />
+    <fragment
+        android:id="@+id/navigation_manageDriverFragment"
+        android:name="com.feylabs.halalkan.view.resto.admin_resto.driver.ManageDriverFragment"
+        android:label="ManageDriverFragment" />
 
 
 </navigation>

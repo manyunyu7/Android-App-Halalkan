@@ -6,8 +6,9 @@ import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.RecyclerView
 import com.feylabs.halalkan.R
-import com.feylabs.halalkan.databinding.ItemCategoryBinding  as AdapterBinding
-import com.feylabs.halalkan.data.remote.reqres.resto.FoodCategoryResponse.FoodCategoryResponseItem as AdapterModel
+import com.feylabs.halalkan.utils.ImageViewUtils.loadImageFromURL
+import com.feylabs.halalkan.databinding.ItemDriverBinding  as AdapterBinding
+import com.feylabs.halalkan.data.remote.reqres.auth.UserModel as AdapterModel
 
 class ManageDriverAdapter : RecyclerView.Adapter<ManageDriverAdapter.AdapterViewHolder>() {
 
@@ -23,13 +24,6 @@ class ManageDriverAdapter : RecyclerView.Adapter<ManageDriverAdapter.AdapterView
         this.adapterInterface = obj
     }
 
-    fun setActiveMenu(menuId: Int) {
-        var activeIndex = 0
-        data.forEachIndexed { index, foodCategoryResponseItem ->
-            foodCategoryResponseItem.isActive = menuId == foodCategoryResponseItem.id
-            notifyItemChanged(index)
-        }
-    }
 
     inner class AdapterViewHolder(v: View) : RecyclerView.ViewHolder(v) {
 
@@ -43,20 +37,23 @@ class ManageDriverAdapter : RecyclerView.Adapter<ManageDriverAdapter.AdapterView
                 R.anim.fade_transition_animation
             )
 
-            if (model.isActive)
 
             if (::adapterInterface.isInitialized) {
                 binding.root.setOnClickListener {
                     adapterInterface.onclick(model)
                 }
             }
-            binding.tvTitle.text = model.name
+            binding.tvDriverName.text = model.name
+            binding.tvDriverEmail.text=model.email
+            binding.tvDriverContact.text=model.phoneNumber
+
+            binding.photo.loadImageFromURL(mContext, model.imgFullPath)
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AdapterViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_category, parent, false)
+            .inflate(R.layout.item_driver, parent, false)
         return AdapterViewHolder(view)
     }
 

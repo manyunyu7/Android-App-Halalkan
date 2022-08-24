@@ -5,6 +5,7 @@ import com.feylabs.halalkan.data.remote.reqres.auth.LoginBodyRequest
 import com.feylabs.halalkan.data.remote.reqres.auth.LoginResponse
 import com.feylabs.halalkan.data.remote.reqres.auth.RegisterBodyRequest
 import com.feylabs.halalkan.data.remote.reqres.auth.RegisterResponse
+import com.feylabs.halalkan.data.remote.reqres.driver.GetAllDriverResponse
 import com.feylabs.halalkan.data.remote.reqres.favorite.AddFavMasjidResponse
 import com.feylabs.halalkan.data.remote.reqres.favorite.AddFavRestoResponse
 import com.feylabs.halalkan.data.remote.reqres.forum.*
@@ -121,4 +122,6 @@ interface RemoteDataSourceInterface {
     suspend fun orderDetail(orderId: Int): Response<DetailOrderResponse>
 
     suspend fun getOrderStatus(): Response<OrderStatusResponse>
+    suspend fun geDriverOnResto(restoId: String): Response<GetAllDriverResponse>
+    suspend fun addNewDriverByResto(bodyRequest: RegisterBodyRequest): Response<RegisterResponse>
 }

@@ -356,6 +356,10 @@ class CurrentRestaurantFragment : BaseFragment() {
             findNavController().navigate(R.id.navigation_menuCategoryFragment)
         }
 
+        binding.menuDriver.setOnClickListener {
+            findNavController().navigate(R.id.navigation_manageDriverFragment)
+        }
+
         binding.menuFood.setOnClickListener {
             findNavController().navigate(R.id.navigation_manageFoodFragment)
         }

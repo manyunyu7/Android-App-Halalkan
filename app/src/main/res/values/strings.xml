@@ -82,11 +82,19 @@
     <string name="title_no">No</string>
     <string name="title_success">Success</string>
     <string name="message_data_updated_succesfully">Data Updated Successfully</string>
+    <string name="message_data_created_succesfully">Data Created Successfully</string>
     <string name="message_order_changed_to_cooked">Order status will be changed to cooked</string>
     <string name="title_all">All</string>
     <string name="label_see_location_on_map">Direction</string>
     <string name="title_item">Items</string>
     <string name="label_item">items</string>
+
+    <string name="title_driver">Driver</string>
+    <string name="title_add_driver">Add New Driver</string>
+    <string name="please_input_your_driver_data">Please input your driver data</string>
+    <string name="title_fullname">Fullname</string>
+    <string name="hint_input_your_email">Masukkan Email</string>
+    <string name="please_input_your_driver_fullname">Please Input Your Driver Fullname</string>
 
 
 </resources>

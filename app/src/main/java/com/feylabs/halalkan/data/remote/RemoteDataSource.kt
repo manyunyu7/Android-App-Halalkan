@@ -4,6 +4,7 @@ import com.feylabs.halalkan.data.remote.reqres.GeneralApiResponse
 import com.feylabs.halalkan.data.remote.reqres.auth.LoginBodyRequest
 import com.feylabs.halalkan.data.remote.reqres.auth.LoginResponse
 import com.feylabs.halalkan.data.remote.reqres.auth.RegisterBodyRequest
+import com.feylabs.halalkan.data.remote.reqres.driver.GetAllDriverResponse
 import com.feylabs.halalkan.data.remote.reqres.favorite.AddFavMasjidResponse
 import com.feylabs.halalkan.data.remote.reqres.favorite.AddFavRestoResponse
 import com.feylabs.halalkan.data.remote.reqres.forum.*
@@ -295,6 +296,14 @@ class RemoteDataSource(
         }
 
     }
+
+    override suspend fun geDriverOnResto(restoId: String): Response<GetAllDriverResponse> {
+        return restoService.getAllDriverOnResto(restoId)
+    }
+
+    override suspend fun addNewDriverByResto(bodyRequest: RegisterBodyRequest) =
+        restoService.addNewDriver(bodyRequest)
+
 
 
 }

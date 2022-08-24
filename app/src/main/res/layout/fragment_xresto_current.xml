@@ -196,7 +196,7 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/menu_prayer"
+                    android:id="@+id/menu_driver"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
