@@ -103,7 +103,6 @@ class DetailRestoFragment : BaseFragment() {
         } ?: run {
             binding.containerSummary.makeGone()
         }
-
     }
 
 

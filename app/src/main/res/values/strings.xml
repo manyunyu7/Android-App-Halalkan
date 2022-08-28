@@ -95,6 +95,7 @@
     <string name="title_fullname">Fullname</string>
     <string name="hint_input_your_email">Masukkan Email</string>
     <string name="please_input_your_driver_fullname">Please Input Your Driver Fullname</string>
+    <string name="choose_driver_to_deliver_order">Click Driver to deliver this Order</string>
 
 
 </resources>
