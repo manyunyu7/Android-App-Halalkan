@@ -90,7 +90,11 @@ class NewHomeFragment : BaseFragment() {
         }
 
         binding.menuScan.setOnClickListener {}
-    }
+
+        binding.menuProduct.setOnClickListener {
+            findNavController().navigate(R.id.navigation_CategoryProductsFragment)
+        }
+        }
 
     override fun initData() {
         fetchPrayerTime()
