@@ -28,6 +28,8 @@ class HistoryOrderFragment : BaseFragment() {
 
     val viewModel: OrderViewModel by viewModel()
 
+    private var currentPage = 1
+
     private val mAdapter by lazy { HistoryOrderAdapter() }
 
     override fun initUI() {
@@ -43,19 +45,27 @@ class HistoryOrderFragment : BaseFragment() {
 
         mAdapter.setupAdapterInterface(object : HistoryOrderAdapter.ItemInterface {
             override fun onclick(model: OrderHistoryModel) {
-
+                loadNextPage()
             }
-
         })
 
     }
+
+    private fun loadNextPage() {
+        val currentPage = mAdapter.page
+        if (currentPage >= currentPage)
+            showSnackbar("You are on the last page")
+        else
+            viewModel.getRestoHistory(page = currentPage + 1, restoId = getChoosenResto())
+    }
+
 
     private fun setupBottomNav() {
         binding.bottomNav.apply {
             setBottomMenuActive(tvMenuHistory)
             setBottomMenuActive(ivMenuHistory)
             btnMenuRestoHome.setOnClickListener {
-                findNavController().popBackStack(R.id.navigation_restoMainFragment,false)
+                findNavController().popBackStack(R.id.navigation_restoMainFragment, false)
             }
             btnMenuOrderHistory.setOnClickListener {
             }
@@ -89,9 +99,9 @@ class HistoryOrderFragment : BaseFragment() {
     }
 
     private fun showLoading(b: Boolean) {
-        if (b){
+        if (b) {
             binding.loadingAnim.makeVisible()
-        }else{
+        } else {
             binding.loadingAnim.makeGone()
         }
     }

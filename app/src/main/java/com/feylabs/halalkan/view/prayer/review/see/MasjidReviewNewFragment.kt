@@ -61,7 +61,7 @@ class MasjidReviewNewFragment : BaseFragment() {
         })
     }
 
-    private fun getType():String{
+    private fun getType(): String {
         return arguments?.getString("type") ?: ""
     }
 
@@ -98,13 +98,16 @@ class MasjidReviewNewFragment : BaseFragment() {
     private fun setupReviewFromNetwork(response: MasjidReviewPaginationResponse) {
         val reviewRes = response.reviews
         reviewRes.let {
-            if (it.data == null) {
+            if (it.data.isEmpty()) {
                 if (it.currentPage == 1) {
                     showEmptyLayout(true)
                 }
+                binding.btnLoadMore.makeGone()
             } else {
-                showEmptyLayout(false)
                 totalReviewPage = it.lastPage
+                binding.btnLoadMore.makeVisible()
+                showEmptyLayout(false)
+
                 if (it.currentPage == 1) {
                     mAdapter.page = it.currentPage
                     mAdapter.setWithNewData(it.data.toMutableList())
@@ -142,6 +145,10 @@ class MasjidReviewNewFragment : BaseFragment() {
 
     override fun initAction() {
 
+        binding.btnLoadMore.setOnClickListener {
+            loadNextPage()
+        }
+
         binding.btnNewReview.setOnClickListener {
             goToWriteReview()
         }
@@ -152,6 +159,14 @@ class MasjidReviewNewFragment : BaseFragment() {
         binding.btnWriteReview.setOnClickListener {
             goToWriteReview()
         }
+    }
+
+    private fun loadNextPage() {
+        val currentPage = mAdapter.page
+        if (currentPage >= totalReviewPage)
+            showSnackbar(getString(R.string.you_are_on_the_last_page))
+        else
+            viewModel.getMasjidReview(getMasjidId(), currentPage + 1)
     }
 
     override fun initData() {

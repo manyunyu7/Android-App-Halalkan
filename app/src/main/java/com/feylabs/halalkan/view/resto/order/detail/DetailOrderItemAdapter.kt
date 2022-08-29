@@ -71,7 +71,7 @@ class DetailOrderItemAdapter(
                     adapterInterface.onclick(model)
                 }
 
-            binding.tvTitle.text = model.food
+            binding.tvTitle.text = model.food +"\n(x${model.quantity} pcs )"
             binding.tvPrice.text = model.foodPrice.toString()
             binding.tvNotes.text= model.notes.orMuskoEmpty("-")
             binding.tvFoodDesc.makeGone()

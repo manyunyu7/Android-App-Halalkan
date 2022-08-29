@@ -20,7 +20,9 @@ data class UserModel(
     @SerializedName("updated_at")
     val updatedAt: String,
     @SerializedName("img_full_path")
-    val imgFullPath: String
+    val imgFullPath: String,
+    @SerializedName("is_available")
+    val isAvailable: Boolean = false,
 ) {
     fun getPhotoPath(): String {
         if (photo_path != null) {

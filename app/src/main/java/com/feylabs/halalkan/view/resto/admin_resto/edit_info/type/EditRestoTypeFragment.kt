@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.navigation.fragment.findNavController
+import com.feylabs.halalkan.R
 import com.feylabs.halalkan.data.remote.QumparanResource.*
 import com.feylabs.halalkan.data.remote.reqres.resto.RestoDetailResponse
 import com.feylabs.halalkan.databinding.FragmentXrestoEditRestoTypeBinding
@@ -124,8 +125,8 @@ class EditRestoTypeFragment : BaseFragment() {
             val certification = mapRestoType[binding.spinnerCert.selectedItem]
             DialogUtils.showConfirmationDialog(
                 context = requireContext(),
-                title = "Are You Sure",
-                message = "This action will updating your restaurant type",
+                title = getString(R.string.label_are_you_sure),
+                message = getString(R.string.message_update_restaurant_type),
                 positiveAction = Pair("OK") {
                     viewModel.updateRestoColumn(getChoosenResto(),
                         updatepath = "resto-type",

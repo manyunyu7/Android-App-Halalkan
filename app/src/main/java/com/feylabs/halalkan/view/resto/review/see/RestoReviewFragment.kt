@@ -9,6 +9,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.feylabs.halalkan.R
 import com.feylabs.halalkan.data.remote.QumparanResource
+import com.feylabs.halalkan.data.remote.reqres.forum.AllForumPaginationResponse
 import com.feylabs.halalkan.data.remote.reqres.resto.RestoReviewPaginationResponse
 import com.feylabs.halalkan.databinding.FragmentReviewGeneralBinding
 import com.feylabs.halalkan.utils.base.BaseFragment
@@ -61,7 +62,7 @@ class RestoReviewFragment : BaseFragment() {
         })
     }
 
-    private fun getType():String{
+    private fun getType(): String {
         return arguments?.getString("type") ?: ""
     }
 
@@ -71,17 +72,22 @@ class RestoReviewFragment : BaseFragment() {
 
     override fun initObserver() {
         viewModel.restoReviewsLiveData.observe(viewLifecycleOwner) {
-            if (it is QumparanResource.Loading) showLoading(true) else showLoading(false)
             when (it) {
                 is QumparanResource.Error -> {
+                    showLoading(false)
                     showToast("Error")
                 }
                 is QumparanResource.Loading -> {
+                    showLoading(true)
                 }
                 is QumparanResource.Success -> {
+                    showLoading(false)
                     it.data?.let { response ->
                         setupReviewFromNetwork(response)
                     }
+                }
+                else -> {
+                    showLoading(false)
                 }
             }
         }
@@ -98,31 +104,41 @@ class RestoReviewFragment : BaseFragment() {
     private fun setupReviewFromNetwork(response: RestoReviewPaginationResponse) {
         val reviewRes = response.reviews
         reviewRes.let {
-            if (it.data == null) {
+            if (it.data.isEmpty()) {
                 if (it.currentPage == 1) {
                     showEmptyLayout(true)
                 }
+                binding.btnLoadMore.makeGone()
             } else {
-                showEmptyLayout(false)
                 totalReviewPage = it.lastPage
+                binding.btnLoadMore.makeVisible()
+                showEmptyLayout(false)
+
                 if (it.currentPage == 1) {
+                    // if this is a first page
                     mAdapter.page = it.currentPage
                     mAdapter.setWithNewData(it.data.toMutableList())
-                    showToast("Menambahkan data halaman pertama /${reviewRes.currentPage}")
+
                 } else {
-                    if (it.lastPage == mAdapter.page) {
-                        showSnackbar("Anda Berada di Halaman Terakhir", SnackbarType.INFO)
-                    } else {
-                        mAdapter.page = it.currentPage
-                        mAdapter.addNewData(it.data.toMutableList())
-                    }
+                    mAdapter.page = it.currentPage
+                    mAdapter.addNewData(it.data.toMutableList())
+                    binding.rv.scrollToPosition(mAdapter.data.size)
+                }
+
+                // check if this is last page....
+                // if so hide the load more button
+                if (it.currentPage == it.total) {
+                    binding.btnLoadMore.makeGone()
+                } else {
+                    binding.btnLoadMore.makeVisible()
                 }
             }
-        }
 
-        binding.startStats.setStarCount(response.reviewCount.avg)
-        binding.startStats.setStartBarUi(response.reviewCount)
+            binding.startStats.setStarCount(response.reviewCount.avg)
+            binding.startStats.setStartBarUi(response.reviewCount)
+        }
     }
+
 
     private fun showEmptyLayout(b: Boolean) {
         if (b) {
@@ -140,7 +156,19 @@ class RestoReviewFragment : BaseFragment() {
         )
     }
 
+    private fun loadNextPage() {
+        val currentPage = mAdapter.page
+        if (currentPage >= totalReviewPage)
+            showSnackbar(getString(R.string.you_are_on_the_last_page))
+        else
+            viewModel.getReview(getRestoId(), currentPage + 1)
+    }
+
     override fun initAction() {
+
+        binding.btnLoadMore.setOnClickListener {
+            loadNextPage()
+        }
 
         binding.btnNewReview.setOnClickListener {
             goToWriteReview()

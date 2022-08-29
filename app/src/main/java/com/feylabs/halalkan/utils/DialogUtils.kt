@@ -3,6 +3,7 @@ package com.feylabs.halalkan.utils
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.text.SpannableStringBuilder
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,8 +20,9 @@ object DialogUtils {
 
     fun showConfirmationDialog(
         context: Context,
-        title: String="",
-        message: String="",
+        title: String = "",
+        message: String = "",
+        messageSpannable: SpannableStringBuilder? = null,
         negativeAction: Pair<String, (() -> Unit)?>? = null,
         positiveAction: Pair<String, (() -> Unit)?>,
         autoDismiss: Boolean = false,
@@ -31,7 +33,10 @@ object DialogUtils {
             .inflate(R.layout.layout_dialog_conf, null as ViewGroup?, false)
         val binding = LayoutDialogConfBinding.bind(view)
         binding.tvTitle.text = title
-        binding.tvMessage.text = message
+        if (messageSpannable != null)
+            binding.tvMessage.text = messageSpannable
+        else
+            binding.tvMessage.text = message
         binding.btnPositive.let {
 //            it.text = positiveAction.first
             it.setOnClickListener {
@@ -57,12 +62,13 @@ object DialogUtils {
         builder.setView(view)
         builder.setCancelable(autoDismiss)
 
-        if(dialog==null){
+        if (dialog == null) {
             dialog = builder.create()
             dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
             dialog?.show()
         }
     }
+
 
     private fun dismissDialog() {
         dialog?.dismiss()
@@ -96,15 +102,12 @@ object DialogUtils {
         builder.setView(view)
         builder.setCancelable(autoDismiss)
 
-        if(dialog==null){
+        if (dialog == null) {
             dialog = builder.create()
             dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
             dialog?.show()
         }
     }
-
-
-
 
 
 }

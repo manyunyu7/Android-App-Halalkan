@@ -1,9 +1,11 @@
 package com.feylabs.halalkan.view.resto.admin_resto.driver
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.feylabs.halalkan.R
 import com.feylabs.halalkan.utils.ImageViewUtils.loadImageFromURL
@@ -46,6 +48,14 @@ class ManageDriverAdapter : RecyclerView.Adapter<ManageDriverAdapter.AdapterView
             binding.tvDriverName.text = model.name
             binding.tvDriverEmail.text=model.email
             binding.tvDriverContact.text=model.phoneNumber
+
+            if (model.isAvailable){
+                binding.tvAvailability.setTextColor(ContextCompat.getColor(mContext,R.color.halalkan_primary))
+                binding.tvAvailability.text=mContext.getString(R.string.title_available)
+            }else{
+                binding.tvAvailability.setTextColor(ContextCompat.getColor(mContext,R.color.uikit_red_light))
+                binding.tvAvailability.text=mContext.getString(R.string.title_unavailable)
+            }
 
             binding.photo.loadImageFromURL(mContext, model.imgFullPath)
         }

@@ -308,6 +308,7 @@
                     android:layout_height="wrap_content">
 
                     <include
+                        android:id="@+id/loading_resto"
                         layout="@layout/layout_shimmer_home_resto"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

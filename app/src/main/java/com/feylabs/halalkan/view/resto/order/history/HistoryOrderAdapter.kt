@@ -19,6 +19,8 @@ class HistoryOrderAdapter : RecyclerView.Adapter<HistoryOrderAdapter.RestaurantH
     val data = mutableListOf<AdapterModel>()
     lateinit var adapterInterface: ItemInterface
 
+    var page = 1
+
     fun setWithNewData(data: MutableList<AdapterModel>) {
         this.data.clear()
         this.data.addAll(data)

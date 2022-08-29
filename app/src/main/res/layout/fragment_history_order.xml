@@ -77,21 +77,6 @@
                 tools:itemCount="1"
                 tools:listitem="@layout/item_history_order"/>
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_load_more"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:textAllCaps="false"
-                android:visibility="gone"
-                tools:visibility="visible"
-                app:cornerRadius="@dimen/dimen_20dp"
-                android:layout_marginTop="@dimen/dimen_10dp"
-                android:text="Load More"
-                android:fontFamily="@font/poppins_regular"
-                />
-
 
         </LinearLayout>
 

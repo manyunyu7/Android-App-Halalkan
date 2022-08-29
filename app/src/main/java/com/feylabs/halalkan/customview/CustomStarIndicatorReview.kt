@@ -47,7 +47,7 @@ class CustomStarIndicatorReview : FrameLayout {
     fun setupStarUi(count: Double) {
         when{
             count in 0.0..1.0 ->{
-                binding.star1.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.ic_star_grey))
+                binding.star1.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.ic_star_gold))
                 binding.star2.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.ic_star_grey))
                 binding.star3.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.ic_star_grey))
                 binding.star4.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.ic_star_grey))
@@ -67,7 +67,7 @@ class CustomStarIndicatorReview : FrameLayout {
                 binding.star4.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.ic_star_grey))
                 binding.star5.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.ic_star_grey))
             }
-            count>2.0 && count<=3.0->{
+            count in 2.0..3.0 ->{
                 binding.star1.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.ic_star_gold))
                 binding.star2.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.ic_star_gold))
                 binding.star3.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.ic_star_grey))

@@ -80,7 +80,6 @@ class DetailOrderRestoFragment : BaseFragment(), OnMapReadyCallback {
         }
 
 
-
     }
 
     private fun setUserData(userModel: UserModel) {
@@ -105,8 +104,17 @@ class DetailOrderRestoFragment : BaseFragment(), OnMapReadyCallback {
         }
     }
 
+    private fun showBottomSheetDriver() {
+        val olz: (driverId: String) -> Unit = { driverId -> }
+
+        BottomSheetChooseDriverFragment.instance(
+            selectedAction = olz,
+            restoId = getChoosenResto(),
+        ).show(getMFragmentManager(), BottomSheetChooseDriverFragment().tag)
+    }
+
     override fun initObserver() {
-        viewModel.detailOrderLiveData.observe(viewLifecycleOwner){
+        viewModel.detailOrderLiveData.observe(viewLifecycleOwner) {
             when (it) {
                 is QumparanResource.Default -> {
                     showLoading(false)
@@ -121,7 +129,7 @@ class DetailOrderRestoFragment : BaseFragment(), OnMapReadyCallback {
                 is QumparanResource.Success -> {
                     showLoading(false)
                     it.data?.let {
-                        it.data.userObj?.let { userModel->
+                        it.data.userObj?.let { userModel ->
                             setUserData(userModel)
                         }
                         setDetailOrderData(it)
@@ -139,22 +147,31 @@ class DetailOrderRestoFragment : BaseFragment(), OnMapReadyCallback {
             foodAdapter.setWithNewData(it.toMutableList())
             foodAdapter.notifyDataSetChanged()
         }
-        binding.labelStatus.text=rawData.statusDesc
+        binding.labelStatus.text = rawData.statusDesc
         binding.labelStatus.setTextColor(rawData.statusId.getStatusColor());
-        binding.labelTotalItems.text = "Total ${rawData.getTotalItem()} "+getString(R.string.label_item)
+        binding.labelTotalItems.text =
+            "Total ${rawData.getTotalItem()} " + getString(R.string.label_item)
         binding.labelTotalPrice.text = rawData.getFormattedTotalPrice()
 
         binding.etAddress.editText?.setText(rawData.address)
-        userData?.let {userModel->
+        userData?.let { userModel ->
             binding.etPhoneNumber.editText?.setText(userModel.phoneNumber)
             binding.etName.editText?.setText(userModel.name)
+        }
+
+        //if order is not canceled
+        if (rawData.statusId != 5) {
+            binding.btnNext.text = getString(R.string.title_change_driver)
+            binding.btnNext.setOnClickListener {
+                showBottomSheetDriver()
+            }
         }
     }
 
     private fun showLoading(b: Boolean) {
-        if (b){
+        if (b) {
             binding.includeLoading.root.makeVisible()
-        }else{
+        } else {
             binding.includeLoading.root.makeGone()
         }
     }

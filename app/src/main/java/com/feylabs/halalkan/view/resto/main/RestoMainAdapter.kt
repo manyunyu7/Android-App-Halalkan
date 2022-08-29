@@ -5,15 +5,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.feylabs.halalkan.R
 import com.feylabs.halalkan.utils.ImageViewUtils.loadImageFromURL
 import com.feylabs.halalkan.data.remote.reqres.resto.RestoModelResponse as AdapterModel
 import com.feylabs.halalkan.databinding.ItemCardRestoBinding as AdapterBinding
 
 
-class RestoMainAdapter :
-    RecyclerView.Adapter<RestoMainAdapter.RestaurantHomeViewHolder>() {
+class RestoMainAdapter : RecyclerView.Adapter<RestoMainAdapter.RestaurantHomeViewHolder>() {
 
     val data = mutableListOf<AdapterModel>()
     lateinit var adapterInterface: ItemInterface
@@ -44,13 +42,13 @@ class RestoMainAdapter :
                     adapterInterface.onclick(model)
                 }
 
-            binding.tvDistance.text = model.distanceKm.toString()
+            binding.tvDistance.text = model.distanceKm.toString() + " Km"
 
             binding.tvTitle.text = model.name.toString()
-            binding.tvTopCategory.text = "Apayo"
             binding.tvAddress.text = model.address
 
-            binding.imgCover.loadImageFromURL(mContext,model.image_full_path)
+            binding.tvTopCategory.text = model.certificationName.toString()
+            binding.imgCover.loadImageFromURL(mContext, model.image_full_path)
 
         }
     }

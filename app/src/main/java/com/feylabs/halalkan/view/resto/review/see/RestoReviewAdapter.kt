@@ -30,28 +30,19 @@ class RestoReviewAdapter :
     fun setWithNewData(data: MutableList<Data>) {
         this.data.clear()
         this.data.addAll(data)
-        this.data.add(getLastPlaceholder())
         notifyDataSetChanged()
     }
 
-    fun clearData(){
+    fun clearData() {
         this.data.clear()
         notifyDataSetChanged()
     }
 
     fun addNewData(newData: MutableList<Data>, newPage: Int = this.page) {
-        this.data.forEachIndexed { index, mData ->
-            if (mData.ViewType == VFooter) {
-                this.data[index].isFooterVisible = false
-            }
-            notifyItemChanged(index)
-        }
         newData.forEachIndexed { index, data ->
             this.data.add(data)
-            notifyItemInserted(itemCount-1)
+            notifyItemInserted(itemCount - 1)
         }
-        this.data.add(getLastPlaceholder())
-        notifyItemInserted(itemCount-1)
         this.page = newPage
     }
 
@@ -61,36 +52,14 @@ class RestoReviewAdapter :
 
     inner class ManyunyuViewHolder(v: View, val viewType: Int) : RecyclerView.ViewHolder(v) {
         fun onBind(model: Data) {
-            when (viewType) {
-                VFooter -> {
-                    renderFooter(model)
-                }
-                VNormal -> {
-                    renderNormal(model)
-                }
-                else -> {
-                    renderNormal(model)
-                }
-            }
+            renderNormal(model)
         }
 
-        private fun renderFooter(model: Data) {
-            val binding: ItemRvLoadMoreBinding = ItemRvLoadMoreBinding.bind(itemView)
-            if (!model.isFooterVisible) {
-                itemView.layoutParams = RecyclerView.LayoutParams(0, 0)
-            }
-            binding.btnLoadMore.setOnClickListener {
-                adapterInterface.loadMore(page)
-                val context = binding.root.context
-                binding.btnLoadMore.text = "Halaman $page"
-            }
-        }
 
         private fun renderNormal(model: Data) {
             val binding: ItemReviewBinding = ItemReviewBinding.bind(itemView)
             val mContext = binding.root.context
 
-//            /**
             binding.root.animation = AnimationUtils.loadAnimation(
                 mContext,
                 R.anim.fade_transition_animation
@@ -100,18 +69,21 @@ class RestoReviewAdapter :
 
             val listPhotos = mutableListOf<CustomViewPhotoModel>()
             model.reviewPhotos.forEachIndexed { index, any ->
-                if (any is String){
-                    listPhotos.add(CustomViewPhotoModel(
-                        url = any
-                    ))
+                if (any is String) {
+                    listPhotos.add(
+                        CustomViewPhotoModel(
+                            url = any
+                        )
+                    )
                 }
             }
 
             binding.imagePreview.replaceAllImage(listPhotos)
+            binding.starIndicator.setupStarUi(model.ratingId.toDouble())
 
-            model.userInfo?.let {user->
+            model.userInfo?.let { user ->
                 binding.includeUserProfile.apply {
-                   labelUserName.text = user.name
+                    labelUserName.text = user.name
                     labelCategory.text = model.ratingId.toString()
                     labelTime.text = model.createdAt
                     ivMainImage.loadImageFromURL(
@@ -133,15 +105,7 @@ class RestoReviewAdapter :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ManyunyuViewHolder {
-        val rowView: View = when (viewType) {
-            VNormal -> LayoutInflater.from(parent.context)
-                .inflate(R.layout.item_review, parent, false)
-            VFooter -> LayoutInflater.from(parent.context)
-                .inflate(R.layout.item_rv_load_more, parent, false)
-            else -> LayoutInflater.from(parent.context)
-                .inflate(R.layout.item_review, parent, false)
-        }
-
+        val rowView: View = LayoutInflater.from(parent.context).inflate(R.layout.item_review, parent, false)
         return ManyunyuViewHolder(rowView, viewType)
     }
 
@@ -157,9 +121,5 @@ class RestoReviewAdapter :
     interface ItemInterface {
         fun onclick(model: Data)
         fun loadMore(page: Int)
-    }
-
-    private fun getLastPlaceholder(): Data {
-        return PaginationPlaceholder.getRestoReviewPaginationResponsePlaceHolder()
     }
 }

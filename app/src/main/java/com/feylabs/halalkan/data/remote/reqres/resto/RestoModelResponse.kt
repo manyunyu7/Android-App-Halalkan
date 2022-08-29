@@ -52,6 +52,7 @@ data class RestoModelResponse(
     var isFooterVisible: Boolean = true,
 ) : Parcelable {
 
+
     fun getOperatingHours() : String = "-"
 
 }

@@ -96,6 +96,17 @@
     <string name="hint_input_your_email">Masukkan Email</string>
     <string name="please_input_your_driver_fullname">Please Input Your Driver Fullname</string>
     <string name="choose_driver_to_deliver_order">Click Driver to deliver this Order</string>
+    <string name="you_are_on_the_last_page">You are on the last page</string>
+    <string name="title_change_driver">Change Driver</string>
+    <string name="message_update_restaurant_type">This action will updating your restaurant type</string>
+    <string name="title_available">Available</string>
+    <string name="title_unavailable">Unavailable</string>
 
+
+    <string name="color_halalkan_primary">#156DBE</string>
+    <string name="color_red_light">#B01134</string>
+    <string name="message_change_driver">are you sure you want to change the driver of this order to</string>
+    <string name="status_on_delivery">On Delivery</string>
+    <string name="message_order_status_will_change_to">the order status will change to</string>
 
 </resources>
