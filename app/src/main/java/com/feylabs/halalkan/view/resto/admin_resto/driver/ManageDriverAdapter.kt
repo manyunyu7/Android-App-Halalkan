@@ -49,7 +49,7 @@ class ManageDriverAdapter : RecyclerView.Adapter<ManageDriverAdapter.AdapterView
             binding.tvDriverEmail.text=model.email
             binding.tvDriverContact.text=model.phoneNumber
 
-            if (model.isAvailable){
+            if (model.isDriverAvailable==0){
                 binding.tvAvailability.setTextColor(ContextCompat.getColor(mContext,R.color.halalkan_primary))
                 binding.tvAvailability.text=mContext.getString(R.string.title_available)
             }else{

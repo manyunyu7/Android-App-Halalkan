@@ -34,13 +34,13 @@ class OrderViewModel(
         MutableLiveData<QumparanResource<GeneralApiResponse?>>()
     val rejectOrderLiveData get() = _rejectOrderLiveData
 
-    private var _successOrderLiveData =
-        MutableLiveData<QumparanResource<GeneralApiResponse?>>()
-    val successOrderLiveData get() = _successOrderLiveData
-
     private var _approveOrderLiveData =
         MutableLiveData<QumparanResource<GeneralApiResponse?>>()
     val approveOrderLiveData get() = _approveOrderLiveData
+
+    private var _delivOrderLiveData =
+        MutableLiveData<QumparanResource<GeneralApiResponse?>>()
+    val delivOrderLiveData get() = _delivOrderLiveData
 
     private var _statusOrderLiveData =
         MutableLiveData<QumparanResource<OrderStatusResponse?>>()
@@ -134,6 +134,26 @@ class OrderViewModel(
                 }
             } catch (e: Exception) {
                 _approveOrderLiveData.postValue(QumparanResource.Error(e.message.toString()))
+            }
+        }
+    }
+
+    fun delivOrder(orderId: Int, driverId: Int) {
+        _delivOrderLiveData.postValue(QumparanResource.Loading())
+        viewModelScope.launch {
+            try {
+                val res = ds.orderDelivered(orderId = orderId, driverId = driverId)
+                if (res.isSuccessful) {
+                    _delivOrderLiveData.postValue(QumparanResource.Success(res.body()))
+                } else {
+                    _delivOrderLiveData.postValue(
+                        QumparanResource.Error(
+                            res.errorBody().toString()
+                        )
+                    )
+                }
+            } catch (e: Exception) {
+                _delivOrderLiveData.postValue(QumparanResource.Error(e.message.toString()))
             }
         }
     }

@@ -265,6 +265,10 @@ class RemoteDataSource(
         return restoService.orderApprove(orderId = orderId.toString())
     }
 
+    override suspend fun orderDelivered(orderId: Int,driverId:Int): Response<GeneralApiResponse> {
+        return restoService.orderDelivered(orderId = orderId.toString(),driverId)
+    }
+
     override suspend fun orderDetail(orderId: Int): Response<DetailOrderResponse> {
         return restoService.getOrderDetail(orderId = orderId.toString())
     }

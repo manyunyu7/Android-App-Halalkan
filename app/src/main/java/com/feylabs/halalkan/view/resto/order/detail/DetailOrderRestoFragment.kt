@@ -12,10 +12,11 @@ import com.feylabs.halalkan.R
 import com.feylabs.halalkan.customview.bottomsheet.BottomSheetOrderNotes
 import com.feylabs.halalkan.data.remote.QumparanResource
 import com.feylabs.halalkan.data.remote.reqres.auth.UserModel
+import com.feylabs.halalkan.data.remote.reqres.driver.DriverObj
 import com.feylabs.halalkan.data.remote.reqres.order.DetailOrderResponse
-import com.feylabs.halalkan.data.remote.reqres.order.OrderDataModel
 import com.feylabs.halalkan.data.remote.reqres.resto.food.FoodModelResponse
 import com.feylabs.halalkan.databinding.FragmentOrderDetailRestoBinding
+import com.feylabs.halalkan.utils.DialogUtils
 import com.feylabs.halalkan.utils.ImageViewUtils.loadImageFromURL
 import com.feylabs.halalkan.utils.base.BaseFragment
 import com.feylabs.halalkan.utils.resto.OrderUtility
@@ -96,6 +97,18 @@ class DetailOrderRestoFragment : BaseFragment(), OnMapReadyCallback {
         binding.includeInfoProfile.labelTime.text = userModel.email
     }
 
+    private fun setDriverData(driverObj: DriverObj) {
+        val userModel = driverObj.userDriver
+        binding.includeInfoDriver.labelInfoProfileUserName.text = userModel.name
+        binding.includeInfoDriver.ivMainImage.loadImageFromURL(
+            requireContext(),
+            userModel.imgFullPath
+        )
+        binding.includeInfoDriver.labelInfoProfileContact.text = userModel.phoneNumber
+        binding.includeInfoDriver.labelTime.text = userModel.email
+    }
+
+
     private fun checkItem() {
         if (foodAdapter.itemCount == 0) {
             binding.stateNoFood.makeVisible()
@@ -105,7 +118,9 @@ class DetailOrderRestoFragment : BaseFragment(), OnMapReadyCallback {
     }
 
     private fun showBottomSheetDriver() {
-        val olz: (driverId: String) -> Unit = { driverId -> }
+        val olz: (driverId: String) -> Unit = { driverId ->
+            viewModel.delivOrder(getOrderId(), driverId.toIntOrNull() ?: -99)
+        }
 
         BottomSheetChooseDriverFragment.instance(
             selectedAction = olz,
@@ -129,6 +144,18 @@ class DetailOrderRestoFragment : BaseFragment(), OnMapReadyCallback {
                 is QumparanResource.Success -> {
                     showLoading(false)
                     it.data?.let {
+
+                        it.data.driverObj?.let {
+                            binding.includeInfoDriver.root.makeVisible()
+                            binding.separatorDriver.makeVisible()
+                            binding.titleDriver.makeVisible()
+                            setDriverData(it)
+                        } ?: run {
+                            binding.includeInfoDriver.root.makeGone()
+                            binding.separatorDriver.makeGone()
+                            binding.titleDriver.makeGone()
+                        }
+
                         it.data.userObj?.let { userModel ->
                             setUserData(userModel)
                         }
@@ -137,7 +164,34 @@ class DetailOrderRestoFragment : BaseFragment(), OnMapReadyCallback {
                 }
             }
         }
+        viewModel.delivOrderLiveData.observe(viewLifecycleOwner) {
+            when (it) {
+                is QumparanResource.Default -> {
+                    showLoading(false)
+                }
+                is QumparanResource.Error -> {
+                    showLoading(false)
+                    showSnackbar(it.message.toString(), SnackbarType.ERROR)
+                }
+                is QumparanResource.Loading -> {
+                    showLoading(true)
+                }
+                is QumparanResource.Success -> {
+                    showLoading(false)
+                    viewModel.getDetailOrder(getOrderId())
+                    DialogUtils.showSuccessDialog(
+                        context = requireContext(),
+                        title = getString(R.string.title_success),
+                        message = getString(R.string.message_change_driver_success),
+                        positiveAction = Pair("OK") {
 
+                        },
+                        autoDismiss = true,
+                        buttonAllCaps = false
+                    )
+                }
+            }
+        }
     }
 
     private fun setDetailOrderData(orderResponse: DetailOrderResponse) {
@@ -161,9 +215,26 @@ class DetailOrderRestoFragment : BaseFragment(), OnMapReadyCallback {
 
         //if order is not canceled
         if (rawData.statusId != 5) {
-            binding.btnNext.text = getString(R.string.title_change_driver)
-            binding.btnNext.setOnClickListener {
-                showBottomSheetDriver()
+            when (rawData.statusId) {
+                2 -> { // on cooking
+                    binding.btnNext.text = getString(R.string.title_change_driver)
+                    binding.btnNext.setOnClickListener {
+                        showBottomSheetDriver()
+                    }
+                }
+                3 -> { //on the way
+                    binding.btnNext.text = getString(R.string.track_driver_position)
+                    binding.btnNext.setOnClickListener {
+                        showBottomSheetDriver()
+                    }
+                }
+
+                4 -> { //completed
+                    binding.btnNext.text = getString(R.string.see_invoice)
+                    binding.btnNext.setOnClickListener {
+                        showBottomSheetDriver()
+                    }
+                }
             }
         }
     }

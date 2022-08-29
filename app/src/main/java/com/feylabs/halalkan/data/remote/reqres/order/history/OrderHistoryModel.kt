@@ -2,6 +2,8 @@ package com.feylabs.halalkan.data.remote.reqres.order.history
 
 import androidx.annotation.Keep
 import com.feylabs.halalkan.data.remote.reqres.auth.UserModel
+import com.feylabs.halalkan.data.remote.reqres.driver.DriverObj
+import com.feylabs.halalkan.data.remote.reqres.order.DriverOrderPaginationResponse
 import com.feylabs.halalkan.data.remote.reqres.resto.RestoModelResponse
 import com.google.gson.annotations.SerializedName
 import java.text.DecimalFormat
@@ -40,7 +42,9 @@ data class OrderHistoryModel(
     @SerializedName("user_id")
     var userId: Int = 0,
     @SerializedName("user_sign")
-    var userSign: Any? = Any()
+    var userSign: Any? = Any(),
+    @SerializedName("driver_obj")
+    var driverObj: DriverObj = DriverObj(),
 ) {
 
     fun getFormattedTotalPrice(): String {

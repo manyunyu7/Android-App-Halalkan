@@ -124,4 +124,5 @@ interface RemoteDataSourceInterface {
     suspend fun getOrderStatus(): Response<OrderStatusResponse>
     suspend fun geDriverOnResto(restoId: String): Response<GetAllDriverResponse>
     suspend fun addNewDriverByResto(bodyRequest: RegisterBodyRequest): Response<RegisterResponse>
+    suspend fun orderDelivered(orderId: Int, driverId: Int): Response<GeneralApiResponse>
 }

@@ -21,9 +21,14 @@ data class UserModel(
     val updatedAt: String,
     @SerializedName("img_full_path")
     val imgFullPath: String,
-    @SerializedName("is_available")
-    val isAvailable: Boolean = false,
+    @SerializedName("driver_order_count")
+    val isDriverAvailable: Int = -99,
 ) {
+
+    fun isDriverAvailable(): Boolean {
+        return isDriverAvailable == 0
+    }
+
     fun getPhotoPath(): String {
         if (photo_path != null) {
             return photo_path

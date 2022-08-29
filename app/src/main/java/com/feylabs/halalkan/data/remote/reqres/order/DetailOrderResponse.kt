@@ -4,6 +4,7 @@ package com.feylabs.halalkan.data.remote.reqres.order
 import com.google.gson.annotations.SerializedName
 import androidx.annotation.Keep
 import com.feylabs.halalkan.data.remote.reqres.auth.UserModel
+import com.feylabs.halalkan.data.remote.reqres.driver.DriverObj
 import com.feylabs.halalkan.data.remote.reqres.resto.RestoModelResponse
 import java.text.DecimalFormat
 import java.text.NumberFormat
@@ -55,6 +56,8 @@ data class DetailOrderResponse(
         var userId: Int = 0,
         @SerializedName("user_obj")
         var userObj: UserModel? = null,
+        @SerializedName("driver_obj")
+        var driverObj: DriverObj? = null,
         @SerializedName("user_sign")
         var userSign: Any? = Any()
     ) {

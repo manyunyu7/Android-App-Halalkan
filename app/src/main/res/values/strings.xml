@@ -108,5 +108,10 @@
     <string name="message_change_driver">are you sure you want to change the driver of this order to</string>
     <string name="status_on_delivery">On Delivery</string>
     <string name="message_order_status_will_change_to">the order status will change to</string>
+    <string name="message_change_driver_success">Driver and order status changed</string>
+    <string name="title_driver_details">Driver Details</string>
+    <string name="track_driver_position">Track Driver Position</string>
+    <string name="see_invoice">See Invoice</string>
+    <string name="title_driver_unavailable">Driver Unavailable</string>
 
 </resources>

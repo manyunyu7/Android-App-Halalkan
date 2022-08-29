@@ -14,6 +14,7 @@ import com.feylabs.halalkan.data.remote.QumparanResource
 import com.feylabs.halalkan.data.remote.reqres.auth.UserModel
 import com.feylabs.halalkan.utils.CommonUtil.makeGone
 import com.feylabs.halalkan.utils.CommonUtil.makeVisible
+import com.feylabs.halalkan.utils.CommonUtil.showSnackbar
 import com.feylabs.halalkan.utils.DialogUtils
 import com.feylabs.halalkan.utils.snackbar.SnackbarType
 import com.feylabs.halalkan.view.resto.DriverViewModel
@@ -80,25 +81,19 @@ class BottomSheetChooseDriverFragment : BottomSheetDialogFragment() {
             layoutManager = LinearLayoutManager(requireContext())
         }
 
-        mAdapter.setWithNewData(mutableListOf(
-            UserModel(
-                name = "Shizi Manyunyu",
-                imgFullPath = "https://i.pinimg.com/564x/fc/62/80/fc6280f9d83167e4c71497230f326043.jpg",
-                phoneNumber = "",
-                email = "",
-                rolesId =2 ,
-                updatedAt = "",
-                photo_path = "",
-                id = 3,
-                createdAt = "sdada"
-            )
-        ))
         mAdapter.notifyDataSetChanged()
 
         viewModel.getDriverOnResto(this.restoId)
         mAdapter.setupAdapterInterface(object : ManageDriverAdapter.ItemInterface {
             override fun onclick(model: UserModel) {
-                showChooseDriverConfirmationDialog(model)
+                if (model.isDriverAvailable())
+                    showChooseDriverConfirmationDialog(model)
+                else {
+                    binding.root.showSnackbar(
+                        getString(R.string.title_driver_unavailable),
+                        SnackbarType.ERROR
+                    )
+                }
             }
         })
     }

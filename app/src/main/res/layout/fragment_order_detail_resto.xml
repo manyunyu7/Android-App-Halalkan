@@ -84,6 +84,36 @@
                 app:layout_constraintStart_toStartOf="parent" />
 
             <View
+                android:id="@+id/separator_driver"
+                android:layout_width="match_parent"
+                android:layout_height="9dp"
+                android:visibility="gone"
+                android:layout_marginTop="@dimen/dimen_20dp"
+                android:background="#EEEEEE" />
+
+            <TextView
+                android:id="@+id/title_driver"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginTop="@dimen/dimen_10dp"
+                android:visibility="gone"
+                android:fontFamily="@font/poppins_regular"
+                android:text="@string/title_driver_details"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
+            <include
+                android:id="@+id/include_info_driver"
+                layout="@layout/layout_info_profile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:layout_marginHorizontal="@dimen/dimen_10dp"
+                app:layout_constraintEnd_toStartOf="@id/btn_action_forum"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <View
                 android:layout_width="match_parent"
                 android:layout_height="9dp"
                 android:layout_marginTop="@dimen/dimen_20dp"
@@ -192,6 +222,7 @@
                                 app:boxCornerRadiusBottomEnd="@dimen/dimen_10dp"
                                 app:boxCornerRadiusBottomStart="@dimen/dimen_10dp"
                                 android:hint="@string/order_review_hint_customer_name"
+                                android:enabled="false"
                                 app:boxBackgroundColor="@android:color/transparent">
 
                                 <com.google.android.material.textfield.TextInputEditText
@@ -213,6 +244,7 @@
                                 android:layout_marginHorizontal="@dimen/dimen_10dp"
                                 android:layout_marginTop="8dp"
                                 android:hint="@string/order_review_hint_phone_number"
+                                android:enabled="false"
                                 app:boxBackgroundColor="@android:color/transparent">
 
                                 <com.google.android.material.textfield.TextInputEditText
@@ -234,6 +266,7 @@
                                 android:layout_marginHorizontal="@dimen/dimen_10dp"
                                 android:layout_marginTop="8dp"
                                 android:hint="@string/order_review_hint_address"
+                                android:enabled="false"
                                 app:boxBackgroundColor="@android:color/transparent">
 
                                 <com.google.android.material.textfield.TextInputEditText
@@ -396,7 +429,6 @@
             android:layout_height="wrap_content"
             android:visibility="visible"
             tools:visibility="visible"
-            android:layout_marginHorizontal="@dimen/dimen_20dp"
             android:layout_marginTop="@dimen/dimen_10dp">
 
             <TextView
@@ -463,8 +495,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dimen_10dp"
+                android:minWidth="@dimen/dimen_50dp"
+                tools:text="Test"
                 android:layout_marginTop="@dimen/dimen_10dp"
-                android:text="Checkout"
+                android:layout_marginEnd="@dimen/dimen_5dp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/guideline5"
