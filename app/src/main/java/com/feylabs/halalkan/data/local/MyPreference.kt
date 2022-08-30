@@ -139,6 +139,32 @@ class MyPreference(context: Context) {
         editor.commit()
     }
 
+    fun save(KEY_NAME: String, value: Double) {
+        editor.putLong(KEY_NAME, value.toLong())
+        editor.commit()
+    }
+
+
+    fun saveLat(KEY_NAME: String = "tempLat", value: Double) {
+        editor.putString(KEY_NAME, value.toString())
+        editor.commit()
+    }
+
+    fun saveLong(KEY_NAME: String = "tempLong", value: Double) {
+        editor.putString(KEY_NAME, value.toString())
+        editor.commit()
+    }
+
+    fun getLat() : Double{
+        return sharedPref.getString("tempLat", null)?.toDoubleOrNull() ?: -99.0
+    }
+
+    fun getLong() : Double{
+        return sharedPref.getString("tempLong", null)?.toDoubleOrNull() ?: -99.0
+    }
+
+
+
     fun saveFloat(KEY_NAME: String, value: Float) {
         editor.putFloat(KEY_NAME, value)
         editor.commit()

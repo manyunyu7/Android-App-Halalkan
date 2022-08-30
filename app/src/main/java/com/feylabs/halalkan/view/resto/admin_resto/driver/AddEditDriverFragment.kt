@@ -57,7 +57,6 @@ class AddEditDriverFragment : BaseFragment() {
                     showLoading(true)
                 }
                 is QumparanResource.Success -> {
-                    it.data
                     val token = it.data?.accessToken.orEmpty()
                     it.data?.user?.let { userData ->
                         showSnackbar(it.message.toString(), SnackbarType.SUCCESS)

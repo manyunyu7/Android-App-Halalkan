@@ -139,6 +139,9 @@ class NewHomeFragment : BaseFragment() {
         if (user.rolesId == 3) {
             findNavController().navigate(R.id.action_navigation_newHomeFragment_to_navigation_initAdminRestoFragment)
         }
+        else if (user.rolesId == 4) {
+            findNavController().navigate(R.id.action_navigation_newHomeFragment_to_navigation_driverOrderFragment)
+        }
     }
 
     private fun initAdapter() {

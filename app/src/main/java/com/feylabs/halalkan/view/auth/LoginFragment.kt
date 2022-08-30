@@ -71,11 +71,18 @@ class LoginFragment : BaseFragment() {
             role = role.toString()
         )
 
-        if (role == 3) {
-            findNavController().navigate(R.id.action_navigation_loginFragment_to_navigation_initAdminRestoFragment)
-            showToast("Anda Login Sebagai Restoran")
-        } else {
-            findNavController().navigate(R.id.action_navigation_loginFragment_to_navigation_newHomeFragment)
+        when (role) {
+            3 -> {
+                findNavController().navigate(R.id.action_navigation_loginFragment_to_navigation_initAdminRestoFragment)
+                showSnackbar(getString(R.string.logged_in_message_resto),SnackbarType.SUCCESS)
+            }
+            4 -> {
+                findNavController().navigate(R.id.action_navigation_loginFragment_to_navigation_driverOrderFragment)
+                showSnackbar(getString(R.string.logged_in_message_driver),SnackbarType.SUCCESS)
+            }
+            else -> {
+                findNavController().navigate(R.id.action_navigation_loginFragment_to_navigation_newHomeFragment)
+            }
         }
     }
 

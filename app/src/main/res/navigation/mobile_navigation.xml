@@ -71,6 +71,13 @@
             app:destination="@id/navigation_initAdminRestoFragment"
             app:popUpTo="@id/navigation_newHomeFragment"
             app:popUpToInclusive="true" />
+
+        <action
+            android:id="@+id/action_navigation_newHomeFragment_to_navigation_driverOrderFragment"
+            app:destination="@id/navigation_driverOrderFragment"
+            app:popUpTo="@id/navigation_newHomeFragment"
+            app:popUpToInclusive="true" />
+
         <action
             android:id="@+id/action_navigation_newHomeFragment_to_navigation_forumCreateThreadFragment"
             app:destination="@id/navigation_forumCreateThreadFragment" />
@@ -165,7 +172,12 @@
             app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_navigation_loginFragment_to_navigation_initAdminRestoFragment"
-            app:destination="@id/navigation_initAdminRestoFragment" />
+            app:destination="@id/navigation_initAdminRestoFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_navigation_loginFragment_to_navigation_driverOrderFragment"
+            app:destination="@id/navigation_driverOrderFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment
@@ -214,7 +226,7 @@
         android:id="@+id/navigation_detailRestoFragment"
         android:name="com.feylabs.halalkan.view.resto.detail.DetailRestoFragment"
         android:label="DetailRestoFragment"
-        tools:layout="@layout/fragment_detail_resto" >
+        tools:layout="@layout/fragment_detail_resto">
         <action
             android:id="@+id/action_navigation_detailRestoFragment_to_navigation_orderPreviewFragment"
             app:destination="@id/navigation_orderPreviewFragment" />
@@ -291,8 +303,7 @@
         android:id="@+id/navigation_forumHomeFragment"
         android:name="com.feylabs.halalkan.view.forum.home.ForumHomeFragment"
         android:label="ForumHomeFragment"
-        tools:layout="@layout/fragment_forum_home"
-        />
+        tools:layout="@layout/fragment_forum_home" />
 
     <fragment
         android:id="@+id/navigation_forumDetailFragment"
@@ -320,6 +331,10 @@
         android:id="@+id/navigation_manageDriverFragment"
         android:name="com.feylabs.halalkan.view.resto.admin_resto.driver.ManageDriverFragment"
         android:label="ManageDriverFragment" />
+    <fragment
+        android:id="@+id/navigation_driverOrderFragment"
+        android:name="com.feylabs.halalkan.view.resto.order.history.DriverOrderFragment"
+        android:label="DriverOrderFragment" />
 
 
 </navigation>

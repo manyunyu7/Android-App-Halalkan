@@ -11,10 +11,7 @@ import com.feylabs.halalkan.data.remote.reqres.favorite.AddFavRestoResponse
 import com.feylabs.halalkan.data.remote.reqres.forum.*
 import com.feylabs.halalkan.data.remote.reqres.masjid.*
 import com.feylabs.halalkan.data.remote.reqres.masjid.pagination.AllMasjidPaginationResponse
-import com.feylabs.halalkan.data.remote.reqres.order.CreateCartPayload
-import com.feylabs.halalkan.data.remote.reqres.order.CreateCartResponse
-import com.feylabs.halalkan.data.remote.reqres.order.DetailOrderResponse
-import com.feylabs.halalkan.data.remote.reqres.order.OrderStatusResponse
+import com.feylabs.halalkan.data.remote.reqres.order.*
 import com.feylabs.halalkan.data.remote.reqres.order.history.OrderHistoryResponse
 import com.feylabs.halalkan.data.remote.reqres.order.resto.OrderByRestoPaginationResponse
 import com.feylabs.halalkan.data.remote.reqres.prayertime.PrayerTimeAladhanSingleDateResponse
@@ -125,4 +122,5 @@ interface RemoteDataSourceInterface {
     suspend fun geDriverOnResto(restoId: String): Response<GetAllDriverResponse>
     suspend fun addNewDriverByResto(bodyRequest: RegisterBodyRequest): Response<RegisterResponse>
     suspend fun orderDelivered(orderId: Int, driverId: Int): Response<GeneralApiResponse>
+    suspend fun getDriverOrder(page: Int, perPage: Int): Response<DriverOrderPaginationResponse>
 }

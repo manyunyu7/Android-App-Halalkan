@@ -113,5 +113,13 @@
     <string name="track_driver_position">Track Driver Position</string>
     <string name="see_invoice">See Invoice</string>
     <string name="title_driver_unavailable">Driver Unavailable</string>
+    <string name="title_order_details">Order Details</string>
+    <string name="title_food_delivery">Food Delivery</string>
+    <string name="location_detail">Location Detail</string>
+    <string name="title_your_location">Your Location</string>
+
+    <string name="logged_in_message_resto">You are logged in as a restaurant</string>
+    <string name="logged_in_message_driver">You are logged in as a driver</string>
+    <string name="message_logged_out">Your Account will be logged out and Your data will be cleared</string>
 
 </resources>

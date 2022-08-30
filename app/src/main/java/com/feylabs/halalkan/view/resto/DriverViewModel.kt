@@ -8,6 +8,7 @@ import com.feylabs.halalkan.data.remote.RemoteDataSource
 import com.feylabs.halalkan.data.remote.reqres.auth.RegisterBodyRequest
 import com.feylabs.halalkan.data.remote.reqres.auth.RegisterResponse
 import com.feylabs.halalkan.data.remote.reqres.driver.GetAllDriverResponse
+import com.feylabs.halalkan.data.remote.reqres.order.DriverOrderPaginationResponse
 import com.feylabs.halalkan.data.remote.reqres.resto.*
 import com.feylabs.halalkan.data.remote.reqres.resto.update.UpdateRestoColumnResponse
 import kotlinx.coroutines.launch
@@ -45,6 +46,32 @@ class DriverViewModel(
     private var _driverOnRestoLiveData =
         MutableLiveData<QumparanResource<GetAllDriverResponse?>>()
     val driverOnRestoLiveData get() = _driverOnRestoLiveData
+
+    private var _driverOrderLiveData =
+        MutableLiveData<QumparanResource<DriverOrderPaginationResponse?>>()
+    val driverOrderLiveData get() = _driverOrderLiveData
+
+    fun getDriverOrder(page: Int = 1, perPage: Int = 6) {
+        _driverOrderLiveData.postValue(QumparanResource.Loading())
+        viewModelScope.launch {
+            try {
+                val res = ds.getDriverOrder(page = page, perPage = perPage)
+                if (res.isSuccessful) {
+                    _driverOrderLiveData.postValue(QumparanResource.Success(res.body()))
+                } else {
+                    _driverOrderLiveData.postValue(
+                        QumparanResource.Error(
+                            res.errorBody().toString()
+                        )
+                    )
+                }
+            } catch (e: Exception) {
+                _driverOrderLiveData.postValue(QumparanResource.Error(e.message.toString()))
+            }
+        }
+    }
+
+
 
     fun getDriverOnResto(restoId: String) {
         _driverOnRestoLiveData.postValue(QumparanResource.Loading())

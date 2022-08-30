@@ -1,7 +1,10 @@
 package com.feylabs.halalkan.data.remote.reqres.auth
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class UserModel(
     @SerializedName("created_at")
     val createdAt: String,
@@ -23,7 +26,7 @@ data class UserModel(
     val imgFullPath: String,
     @SerializedName("driver_order_count")
     val isDriverAvailable: Int = -99,
-) {
+) : Parcelable {
 
     fun isDriverAvailable(): Boolean {
         return isDriverAvailable == 0

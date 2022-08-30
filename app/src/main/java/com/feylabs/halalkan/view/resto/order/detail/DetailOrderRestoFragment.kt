@@ -10,6 +10,7 @@ import com.adevinta.leku.*
 import com.feylabs.halalkan.MainViewModel
 import com.feylabs.halalkan.R
 import com.feylabs.halalkan.customview.bottomsheet.BottomSheetOrderNotes
+import com.feylabs.halalkan.data.local.MyPreference
 import com.feylabs.halalkan.data.remote.QumparanResource
 import com.feylabs.halalkan.data.remote.reqres.auth.UserModel
 import com.feylabs.halalkan.data.remote.reqres.driver.DriverObj
@@ -23,6 +24,8 @@ import com.feylabs.halalkan.utils.resto.OrderUtility
 import com.feylabs.halalkan.utils.resto.RestoUtility.getStatusColor
 import com.feylabs.halalkan.utils.snackbar.SnackbarType
 import com.feylabs.halalkan.view.auth.AuthViewModel
+import com.feylabs.halalkan.view.direction.TurnByTurnExperienceActivity
+import com.feylabs.halalkan.view.direction.TurnByTurnExperienceForDriver
 import com.feylabs.halalkan.view.resto.OrderViewModel
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -67,18 +70,7 @@ class DetailOrderRestoFragment : BaseFragment(), OnMapReadyCallback {
         val lat = mainViewModel.liveLatLng.value?.lat
         val long = mainViewModel.liveLatLng.value?.long
 
-        binding.btnPickLocation.setOnClickListener {
-            val locationPickerIntent = LocationPickerActivity.Builder()
-                .withLocation(lat ?: -99.0, long ?: -99.0)
-                .withDefaultLocaleSearchZone()
-                .shouldReturnOkOnBackPressed()
-                .withGoogleTimeZoneEnabled()
-                .withVoiceSearchHidden()
-                .withUnnamedRoadHidden()
-                .build(requireContext())
 
-            startActivityForResult(locationPickerIntent, 212)
-        }
 
 
     }
@@ -197,6 +189,30 @@ class DetailOrderRestoFragment : BaseFragment(), OnMapReadyCallback {
     private fun setDetailOrderData(orderResponse: DetailOrderResponse) {
         val rawData = orderResponse.data
         val userData = orderResponse.data.userObj
+
+        binding.includeOrderStatus.apply {
+            labelOrderStatus.text = rawData.statusDesc
+            labelOrderDate.text = rawData.createdAt
+        }
+
+        val location  = LatLng(rawData.lat.toDoubleOrNull()?:-18.0,rawData.long.toDoubleOrNull()?:-9.0)
+        mMap.addMarker(MarkerOptions().position(location).title("Lokasi Laporan"))
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(location))
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(17.0f))
+
+        binding.btnDirection.setOnClickListener {
+            MyPreference(requireContext()).saveLat(value = mainViewModel.getLat())
+            MyPreference(requireContext()).saveLong(value = mainViewModel.getLong())
+
+            startActivity(Intent(requireActivity(), TurnByTurnExperienceForDriver::class.java)
+                .putExtra(TurnByTurnExperienceForDriver.DESTINATION_LONG,rawData.long.toDoubleOrNull())
+                .putExtra(TurnByTurnExperienceForDriver.DESTINATION_LAT,rawData.lat.toDoubleOrNull())
+                .putExtra("userData",rawData.userObj)
+            )
+        }
+
+        binding.tvUserLocation.text = rawData.address
+
         rawData.orders?.let {
             foodAdapter.setWithNewData(it.toMutableList())
             foodAdapter.notifyDataSetChanged()

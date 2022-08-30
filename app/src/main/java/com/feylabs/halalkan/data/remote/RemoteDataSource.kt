@@ -15,6 +15,7 @@ import com.feylabs.halalkan.data.remote.reqres.masjid.pagination.AllMasjidPagina
 import com.feylabs.halalkan.data.remote.reqres.order.CreateCartPayload
 import com.feylabs.halalkan.data.remote.reqres.order.CreateCartResponse
 import com.feylabs.halalkan.data.remote.reqres.order.DetailOrderResponse
+import com.feylabs.halalkan.data.remote.reqres.order.DriverOrderPaginationResponse
 import com.feylabs.halalkan.data.remote.reqres.order.history.OrderHistoryResponse
 import com.feylabs.halalkan.data.remote.reqres.order.resto.OrderByRestoPaginationResponse
 import com.feylabs.halalkan.data.remote.reqres.prayertime.PrayerTimeAladhanSingleDateResponse
@@ -34,6 +35,7 @@ class RemoteDataSource(
     private val restoService: RestoService,
     private val favoriteService: FavoriteService,
     private val forumService: ForumService,
+    private val driverService: DriverService,
 ) : RemoteDataSourceInterface {
 
     /**
@@ -265,8 +267,8 @@ class RemoteDataSource(
         return restoService.orderApprove(orderId = orderId.toString())
     }
 
-    override suspend fun orderDelivered(orderId: Int,driverId:Int): Response<GeneralApiResponse> {
-        return restoService.orderDelivered(orderId = orderId.toString(),driverId)
+    override suspend fun orderDelivered(orderId: Int, driverId: Int): Response<GeneralApiResponse> {
+        return restoService.orderDelivered(orderId = orderId.toString(), driverId)
     }
 
     override suspend fun orderDetail(orderId: Int): Response<DetailOrderResponse> {
@@ -283,14 +285,14 @@ class RemoteDataSource(
         page: Int, perPage: Int,
         mStatus: String?
     ): Response<OrderByRestoPaginationResponse> {
-        mStatus?.let{
+        mStatus?.let {
             return restoService.getRestoOrder(
                 restoId = restoId,
                 page = 1,
                 perPage = 10,
                 status = mStatus
             )
-        }?:run{
+        } ?: run {
             return restoService.getRestoOrder(
                 restoId = restoId,
                 page = 1,
@@ -309,5 +311,11 @@ class RemoteDataSource(
         restoService.addNewDriver(bodyRequest)
 
 
-
+    //driver section
+    override suspend fun getDriverOrder(
+        page: Int,
+        perPage: Int,
+    ): Response<DriverOrderPaginationResponse> {
+        return driverService.getOrderByDriver(page = page, perPage = perPage)
+    }
 }
