@@ -18,6 +18,7 @@ import com.feylabs.halalkan.data.remote.reqres.PostResponse
 import com.feylabs.halalkan.data.remote.reqres.UserResponse
 import com.feylabs.halalkan.databinding.FragmentHomeBinding
 import com.feylabs.halalkan.databinding.FragmentUserProfileBinding
+import com.feylabs.halalkan.utils.DialogUtils
 import com.feylabs.halalkan.utils.ImageViewUtils.loadImageFromURL
 import com.feylabs.halalkan.utils.StringUtil.orMuskoEmpty
 import com.feylabs.halalkan.utils.base.BaseFragment
@@ -40,8 +41,20 @@ class UserProfileFragment : BaseFragment() {
 
     override fun initAction() {
         binding.btnLogout.setOnClickListener {
-            muskoPref().clearPreferences()
-            findNavController().navigate(R.id.navigation_newHomeFragment)
+            DialogUtils.showConfirmationDialog(
+                context = requireContext(),
+                title = getString(R.string.label_are_you_sure),
+                message = getString(R.string.message_logged_out),
+                positiveAction = Pair("OK") {
+                    muskoPref().clearPreferences()
+                    findNavController().navigate(R.id.navigation_newHomeFragment)
+                },
+                negativeAction = Pair(
+                    getString(R.string.title_no),
+                    { showToast(getString(R.string.label_canceled)) }),
+                autoDismiss = true,
+                buttonAllCaps = false
+            )
         }
     }
 

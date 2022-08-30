@@ -12,6 +12,7 @@ import com.feylabs.halalkan.data.remote.QumparanResource
 import com.feylabs.halalkan.data.remote.reqres.resto.AllRestoNoPagination
 import com.feylabs.halalkan.data.remote.reqres.resto.RestoModelResponse
 import com.feylabs.halalkan.databinding.FragmentXrestoInitBinding
+import com.feylabs.halalkan.utils.DialogUtils
 import com.feylabs.halalkan.utils.base.BaseFragment
 import com.feylabs.halalkan.utils.snackbar.SnackbarType
 import com.feylabs.halalkan.view.resto.admin_resto.AdminRestoViewModel
@@ -68,6 +69,23 @@ class InitAdminRestoFragment : BaseFragment() {
     }
 
     override fun initAction() {
+        binding.btnLogout.setOnClickListener {
+            DialogUtils.showConfirmationDialog(
+                context = requireContext(),
+                title = getString(R.string.label_are_you_sure),
+                message = getString(R.string.message_logged_out),
+                positiveAction = Pair("OK") {
+                    muskoPref().clearPreferences()
+                    findNavController().navigate(R.id.navigation_newHomeFragment)
+                },
+                negativeAction = Pair(
+                    getString(R.string.title_no),
+                    { showToast(getString(R.string.label_canceled)) }),
+                autoDismiss = true,
+                buttonAllCaps = false
+            )
+        }
+
         binding.btnAdd.setOnClickListener {
             findNavController().navigate(R.id.navigation_addEditRestoFragment)
         }
