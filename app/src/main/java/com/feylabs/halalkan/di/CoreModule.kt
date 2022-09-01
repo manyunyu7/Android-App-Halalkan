@@ -17,6 +17,7 @@ import org.koin.core.qualifier.named
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.util.concurrent.TimeUnit
 
 
@@ -39,8 +40,9 @@ val networkModule = module {
     }
 
     single<ApiService>(named("mainService")) {
-        val retrofit = Retrofit.Builder()
+        val retrofit =  Retrofit.Builder()
             .baseUrl(Network.BASE_URL_V1)
+            .addConverterFactory(ScalarsConverterFactory.create())
             .addConverterFactory(GsonConverterFactory.create())
             .client(get())
             .build()
@@ -50,6 +52,7 @@ val networkModule = module {
     single<RestoService>(named("restoService")) {
         val retrofit = Retrofit.Builder()
             .baseUrl(Network.BASE_URL_V1)
+            .addConverterFactory(ScalarsConverterFactory.create())
             .addConverterFactory(GsonConverterFactory.create())
             .client(get())
             .build()
@@ -59,6 +62,7 @@ val networkModule = module {
     single<ForumService>(named("forumService")) {
         val retrofit = Retrofit.Builder()
             .baseUrl(Network.BASE_URL_V1)
+            .addConverterFactory(ScalarsConverterFactory.create())
             .addConverterFactory(GsonConverterFactory.create())
             .client(get())
             .build()
@@ -68,6 +72,7 @@ val networkModule = module {
     single<MasjidService>(named("masjidService")) {
         val retrofit = Retrofit.Builder()
             .baseUrl(Network.BASE_URL_V1)
+            .addConverterFactory(ScalarsConverterFactory.create())
             .addConverterFactory(GsonConverterFactory.create())
             .client(get())
             .build()
@@ -77,6 +82,7 @@ val networkModule = module {
     single<TranslatorService>(named("translatorService")) {
         val retrofit = Retrofit.Builder()
             .baseUrl(Network.BASE_URL_TRANSLATOR)
+            .addConverterFactory(ScalarsConverterFactory.create())
             .addConverterFactory(GsonConverterFactory.create())
             .client(get())
             .build()
@@ -86,6 +92,7 @@ val networkModule = module {
     single<PrayerTimeAladhanService>(named("prayerTimeAladhanService")) {
         val retrofit = Retrofit.Builder()
             .baseUrl(Network.BASE_URL_ALADHAN_V1)
+            .addConverterFactory(ScalarsConverterFactory.create())
             .addConverterFactory(GsonConverterFactory.create())
             .client(get())
             .build()
@@ -95,6 +102,7 @@ val networkModule = module {
     single<DriverService>(named("driverService")) {
         val retrofit = Retrofit.Builder()
             .baseUrl(Network.BASE_URL_V1)
+            .addConverterFactory(ScalarsConverterFactory.create())
             .addConverterFactory(GsonConverterFactory.create())
             .client(get())
             .build()
@@ -104,6 +112,7 @@ val networkModule = module {
     single<FavoriteService>(named("favService")) {
         val retrofit = Retrofit.Builder()
             .baseUrl(Network.BASE_URL_ALADHAN_V1)
+            .addConverterFactory(ScalarsConverterFactory.create())
             .addConverterFactory(GsonConverterFactory.create())
             .client(get())
             .build()

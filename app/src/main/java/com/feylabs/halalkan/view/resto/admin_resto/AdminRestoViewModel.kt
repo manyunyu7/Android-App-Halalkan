@@ -123,8 +123,6 @@ class AdminRestoViewModel(
             builder.addFormDataPart("long", body.long)
             builder.addFormDataPart("is_visible", "1")
             builder.addFormDataPart("address", body.address)
-
-
             builder.addFormDataPart(
                 "image",
                 file.name,
