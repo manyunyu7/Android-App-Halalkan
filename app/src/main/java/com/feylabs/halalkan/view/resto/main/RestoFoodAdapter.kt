@@ -153,6 +153,14 @@ class RestoFoodAdapter(
                     binding.containerNotes.makeGone()
                 }
             }
+
+
+            val userRole = (MyPreference(mContext).getUserRole()?.toIntOrNull() ?: -99)
+            if ( userRole==1 || userRole ==3){
+                binding.btnOrder.makeGone()
+                binding.labelNotes.makeGone()
+                binding.tvNotes.text = model.categoryName.toString()
+            }
         }
 
         private fun setToOrdered(b: Boolean) {

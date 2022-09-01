@@ -47,7 +47,7 @@
     </string-array>
 
     <string name="lorem_ipsum_short">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam blandit risus vel ante ornare</string>
-    <string name="required_column">Kolom ini dibutuhkan</string>
+    <string name="required_column">This column is required</string>
     <string name="example_notes_order_hint">Example : Without Sambal</string>
     <string name="save_change">Save Change</string>
     <string name="notes_for_your_dish">Notes for your dish</string>
@@ -135,5 +135,17 @@
     <string name="message_please_fill_the_signature_first">Please fill the signature first</string>
     <string name="title_deliver_order">Deliver Order</string>
     <!--    <string name="message_make_sure_confirmation">Pastikan pesanan sudah sesuai dan uang yang diterima sesuai dengan tagihan</string>-->
+
+    <string name="title_add_new_food">Add New Food</string>
+    <string name="title_food_photo">Food Photo</string>
+    <string name="form_title_food_name">Food Name</string>
+    <string name="form_hint_food_name">Food Name</string>
+    <string name="form_title_food_description">Food Description</string>
+    <string name="form_hint_food_desc">Food Description</string>
+    <string name="form_title_food_price">Food Price</string>
+    <string name="form_hint_food_price">Price in Korean WON</string>
+    <string name="form_title_food_type">Food Type</string>
+    <string name="form_title_food_category">Food Category</string>
+    <string name="message_photo_is_require">Please Add Photo</string>
 
 </resources>

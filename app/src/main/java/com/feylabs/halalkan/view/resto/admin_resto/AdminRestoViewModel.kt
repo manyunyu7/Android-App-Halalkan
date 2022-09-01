@@ -5,15 +5,18 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.feylabs.halalkan.data.remote.QumparanResource
 import com.feylabs.halalkan.data.remote.RemoteDataSource
+import com.feylabs.halalkan.data.remote.reqres.GeneralApiResponse
 import com.feylabs.halalkan.data.remote.reqres.resto.*
 import com.feylabs.halalkan.data.remote.reqres.resto.update.UpdateRestoColumnResponse
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.ResponseBody
 import org.json.JSONObject
 import java.io.File
+
 
 class AdminRestoViewModel(
     val ds: RemoteDataSource
@@ -70,6 +73,10 @@ class AdminRestoViewModel(
         MutableLiveData<QumparanResource<ResponseBody?>>()
     val createRestoLiveData get() = _createRestoLiveData
 
+    private var _createFoodLiveData =
+        MutableLiveData<QumparanResource<GeneralApiResponse?>>()
+    val createFoodLiveData get() = _createFoodLiveData
+
     private var _createRestoFoodCategoryLiveData =
         MutableLiveData<QumparanResource<ResponseBody?>>()
     val createRestoFoodCategoryLiveData get() = _createRestoFoodCategoryLiveData
@@ -85,7 +92,7 @@ class AdminRestoViewModel(
             builder.addFormDataPart("name", name)
             val requestBody: MultipartBody = builder.build()
             try {
-                val req = ds.createRestoFoodCategory(restoId,requestBody)
+                val req = ds.createRestoFoodCategory(restoId, requestBody)
                 req?.let {
                     if (req.isSuccessful) {
                         _createRestoFoodCategoryLiveData.postValue(QumparanResource.Success(req.body()))
@@ -108,7 +115,7 @@ class AdminRestoViewModel(
 
     fun addRestaurant(
         body: SaveRestoPayload,
-        file:File
+        file: File
     ) {
         viewModelScope.launch {
             _createRestoLiveData.postValue(QumparanResource.Loading())
@@ -148,6 +155,48 @@ class AdminRestoViewModel(
                 }
             } catch (e: Exception) {
                 _createRestoLiveData.postValue(QumparanResource.Error(e.message.toString()))
+            }
+        }
+    }
+
+    fun createFood(
+        typeFoodId: Int?,
+        categoryId: Int?,
+        restoran_id: Int?,
+        description: String?,
+        name: String?,
+        price: Int?,
+        file: File
+    ) {
+        viewModelScope.launch {
+            _createFoodLiveData.postValue(QumparanResource.Loading())
+            val fBody: RequestBody = file.asRequestBody("image/jpeg".toMediaTypeOrNull())
+            try {
+                val req = ds.createRestoFood(
+                    typeFoodId = typeFoodId,
+                    categoryId = categoryId,
+                    restoran_id = restoran_id,
+                    description = description,
+                    name = name,
+                    price = price,
+                    image = fBody
+                )
+                req?.let {
+                    if (req.isSuccessful) {
+                        _createFoodLiveData.postValue(QumparanResource.Success(req.body()))
+                    } else {
+                        var message = req.message().toString()
+                        req.errorBody()?.let {
+                            val jsonObj = JSONObject(it.charStream().readText())
+                            message = jsonObj.getString("message")
+                        }
+                        _createFoodLiveData.postValue(QumparanResource.Error(message))
+                    }
+                } ?: run {
+                    _createFoodLiveData.postValue(QumparanResource.Error("Null"))
+                }
+            } catch (e: Exception) {
+                _createFoodLiveData.postValue(QumparanResource.Error(e.message.toString()))
             }
         }
     }
@@ -252,7 +301,7 @@ class AdminRestoViewModel(
         }
     }
 
-    fun updateRestoColumn(restoId: String, name:String, updatepath:String, columnValue:String) {
+    fun updateRestoColumn(restoId: String, name: String, updatepath: String, columnValue: String) {
         viewModelScope.launch {
             _updateRestoColumn.postValue(QumparanResource.Loading())
             val builder = MultipartBody.Builder()
@@ -303,7 +352,7 @@ class AdminRestoViewModel(
         }
     }
 
-    fun getFoodCategoryOnResto(restoId:String){
+    fun getFoodCategoryOnResto(restoId: String) {
         _foodCategoryLiveData.postValue(QumparanResource.Loading())
         viewModelScope.launch {
             try {
@@ -323,7 +372,7 @@ class AdminRestoViewModel(
         }
     }
 
-    fun getAllFoodByResto(restoId: String){
+    fun getAllFoodByResto(restoId: String) {
         viewModelScope.launch {
             try {
                 val res = ds.getAllFoodByResto(restoId)

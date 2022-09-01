@@ -124,4 +124,13 @@ interface RemoteDataSourceInterface {
     suspend fun orderDelivered(orderId: Int, driverId: Int): Response<GeneralApiResponse>
     suspend fun getDriverOrder(page: Int, perPage: Int): Response<DriverOrderPaginationResponse>
     suspend fun orderFinished(orderId: String, body: RequestBody): Response<DetailOrderResponse?>?
+    suspend fun createRestoFood(
+        typeFoodId: Int?,
+        categoryId: Int?,
+        restoran_id: Int?,
+        description: String?,
+        name: String?,
+        price: Int?,
+        image: RequestBody
+    ): Response<GeneralApiResponse?>?
 }

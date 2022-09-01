@@ -26,6 +26,7 @@ import com.feylabs.halalkan.utils.Network
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
 import retrofit2.Response
+import retrofit2.http.Part
 
 class RemoteDataSource(
     private val commonService: ApiService,
@@ -155,6 +156,21 @@ class RemoteDataSource(
         body: RequestBody
     ): Response<ResponseBody?>? {
         return restoService.createRestoFoodCategory(body, id)
+    }
+
+    override suspend fun createRestoFood(
+        typeFoodId: Int?,
+        categoryId: Int?,
+        restoran_id: Int?,
+        description: String?,
+        name: String?,
+        price: Int?,
+        image: RequestBody
+    ): Response<GeneralApiResponse?>? {
+        return restoService.createFood(
+            file = image,
+            typeFoodId, categoryId, restoran_id, description, name, price
+        )
     }
 
     override suspend fun updateRestoColumn(

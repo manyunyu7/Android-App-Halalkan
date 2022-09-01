@@ -2,12 +2,9 @@ package com.feylabs.halalkan.data.remote.service
 
 import com.feylabs.halalkan.data.remote.reqres.GeneralApiResponse
 import com.feylabs.halalkan.data.remote.reqres.UserResponse
-import com.feylabs.halalkan.data.remote.reqres.auth.LoginBodyRequest
-import com.feylabs.halalkan.data.remote.reqres.auth.LoginResponse
 import com.feylabs.halalkan.data.remote.reqres.auth.RegisterBodyRequest
 import com.feylabs.halalkan.data.remote.reqres.auth.RegisterResponse
 import com.feylabs.halalkan.data.remote.reqres.driver.GetAllDriverResponse
-import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidReviewPaginationResponse
 import com.feylabs.halalkan.data.remote.reqres.order.CreateCartPayload
 import com.feylabs.halalkan.data.remote.reqres.order.CreateCartResponse
 import com.feylabs.halalkan.data.remote.reqres.order.DetailOrderResponse
@@ -18,6 +15,7 @@ import com.feylabs.halalkan.data.remote.reqres.resto.*
 import com.feylabs.halalkan.data.remote.reqres.resto.update.UpdateRestoColumnResponse
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
+import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -100,6 +98,18 @@ interface RestoService {
         @Body file: RequestBody?,
         @Path("id") restoId: String,
     ): Response<ResponseBody?>?
+
+    @Multipart
+    @POST("foods/store")
+    suspend fun createFood(
+        @Part("image\"; filename=\"image") file: RequestBody?,
+        @Part("type_food_id") typeFoodId: Int?,
+        @Part("category_id") categoryId: Int?,
+        @Part("restoran_id") restoran_id: Int?,
+        @Part("description") description: String?,
+        @Part("name") name: String?,
+        @Part("price") price: Int?,
+    ): Response<GeneralApiResponse?>?
 
     ///user order
     @POST("fe/orders/carts/createCart/{restoId}")

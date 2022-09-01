@@ -65,7 +65,7 @@ class AddEditFoodFragment : BaseFragment() {
             }
         }
 
-        viewModel.foodTypeLiveData.observe(viewLifecycleOwner) {
+        viewModel.foodCategoryLiveData.observe(viewLifecycleOwner) {
             when (it) {
                 is Default -> {}
                 is Error -> {
@@ -116,7 +116,7 @@ class AddEditFoodFragment : BaseFragment() {
             }
         }
 
-        viewModel.detailRestoLiveData.observe(viewLifecycleOwner) {
+        viewModel.createFoodLiveData.observe(viewLifecycleOwner) {
             when (it) {
                 is Default -> {}
                 is Error -> {
@@ -125,16 +125,13 @@ class AddEditFoodFragment : BaseFragment() {
                 is Loading -> {}
                 is Success -> {
                     it.data?.let {
-                        setupUiFromNetwork(it)
                     }
                 }
             }
         }
     }
 
-    private fun setupUiFromNetwork(it: RestoDetailResponse) {
 
-    }
 
     private fun getScreenType(): String {
         val type = arguments?.getString("type") ?: ""
@@ -162,8 +159,9 @@ class AddEditFoodFragment : BaseFragment() {
 
             val name = binding.etName.text.toString()
             val desc = binding.etDesc.text.toString()
-            val category = mapCert[binding.spinnerGeneralCategory.selectedItem]
-            val foodType = mapFoodType[binding.spinnerTypeFood.selectedItem]
+            val price = binding.etPrice.text.toString()
+            val category = mapCert[binding.spinnerGeneralCategory.selectedItem]?.toIntOrNull() ?: -99
+            val foodType = mapFoodType[binding.spinnerTypeFood.selectedItem]?.toIntOrNull() ?: -99
 
             if (name.isEmpty()){
                 isError=true
@@ -177,11 +175,19 @@ class AddEditFoodFragment : BaseFragment() {
 
             if (coverPhoto==null){
                 isError=true
-                showSnackbar("Foto Diperlukan",SnackbarType.ERROR)
+                showSnackbar(getString(R.string.message_photo_is_require),SnackbarType.ERROR)
             }
 
             if (isError.not() && coverPhoto!=null){
-
+                viewModel.createFood(
+                    typeFoodId = foodType,
+                    categoryId = category,
+                    restoran_id = getChoosenResto().toIntOrNull(),
+                    description = desc,
+                    name = name,
+                    price =  price.toIntOrNull()?:0,
+                    coverPhoto!!
+                )
             }
 
         }
@@ -208,7 +214,7 @@ class AddEditFoodFragment : BaseFragment() {
 
     override fun initData() {
         viewModel.getRestoCert()
-        viewModel.getFoodType()
+        viewModel.getFoodCategoryOnResto(getChoosenResto())
     }
 
     private fun askPhotoPermission() {
