@@ -27,39 +27,39 @@
             android:id="@+id/info_profile"
             layout="@layout/layout_info_profile" />
 
+        <androidx.cardview.widget.CardView
+            android:id="@+id/tripProgressCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            app:cardElevation="0dp"
+            app:cardUseCompatPadding="false">
+
+            <com.mapbox.navigation.ui.tripprogress.view.MapboxTripProgressView
+                android:id="@+id/tripProgressView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:id="@+id/stop"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="end|center_vertical"
+                android:layout_marginEnd="12dp"
+                app:srcCompat="@android:drawable/ic_delete" />
+        </androidx.cardview.widget.CardView>
+
+
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_complete_delivery"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/dimen_10dp"
-            android:text="Delivery Complete"
+            android:text="@string/title_delivery_completed"
             app:cornerRadius="@dimen/dimen_10dp" />
 
     </LinearLayout>
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/tripProgressCard"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:visibility="invisible"
-        app:cardElevation="8dp"
-        app:cardUseCompatPadding="false"
-        app:layout_constraintBottom_toTopOf="@id/container_info_user"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <com.mapbox.navigation.ui.tripprogress.view.MapboxTripProgressView
-            android:id="@+id/tripProgressView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <ImageView
-            android:id="@+id/stop"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_gravity="end|center_vertical"
-            android:layout_marginEnd="12dp"
-            app:srcCompat="@android:drawable/ic_delete" />
-    </androidx.cardview.widget.CardView>
 
     <com.mapbox.navigation.ui.maneuver.view.MapboxManeuverView
         android:id="@+id/maneuverView"

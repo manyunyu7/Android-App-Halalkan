@@ -53,7 +53,7 @@ abstract class BaseFragment : Fragment() {
         var duration = Toast.LENGTH_LONG
         if (!isLong)
             duration = Toast.LENGTH_SHORT
-        Toast.makeText(requireContext(), text, Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireActivity().baseContext, text, Toast.LENGTH_SHORT).show()
     }
 
     fun showSnackbar(text: String, type: SnackbarType = SnackbarType.INFO) {

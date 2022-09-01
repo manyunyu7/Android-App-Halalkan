@@ -14,7 +14,11 @@ import com.feylabs.halalkan.data.remote.reqres.order.history.OrderHistoryRespons
 import com.feylabs.halalkan.data.remote.reqres.order.resto.OrderByRestoPaginationResponse
 import com.feylabs.halalkan.data.remote.reqres.resto.*
 import kotlinx.coroutines.launch
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import org.json.JSONObject
+import java.io.File
 
 class OrderViewModel(
     val ds: RemoteDataSource
@@ -41,6 +45,10 @@ class OrderViewModel(
     private var _delivOrderLiveData =
         MutableLiveData<QumparanResource<GeneralApiResponse?>>()
     val delivOrderLiveData get() = _delivOrderLiveData
+
+    private var _finishOrderLiveData =
+        MutableLiveData<QumparanResource<DetailOrderResponse?>>()
+    val finishOrderLiveData get() = _finishOrderLiveData
 
     private var _statusOrderLiveData =
         MutableLiveData<QumparanResource<OrderStatusResponse?>>()
@@ -232,8 +240,57 @@ class OrderViewModel(
         }
     }
 
+    fun finishOrder(
+        orderId: String,
+        recipientName: String,
+        file: File?
+    ) {
+        viewModelScope.launch {
+            _finishOrderLiveData.postValue(QumparanResource.Loading())
+
+            val builder = MultipartBody.Builder()
+            builder.setType(MultipartBody.FORM)
+            builder.addFormDataPart("recipient_name", recipientName)
+
+            file?.let {
+                builder.addFormDataPart(
+                    "sign",
+                    file.name,
+                    RequestBody.create(("multipart/form-data").toMediaTypeOrNull(), file)
+                )
+            }
+
+            val requestBody: MultipartBody = builder.build()
+
+            try {
+                val req = ds.orderFinished(orderId = orderId,requestBody)
+                req?.let {
+                    if (req.isSuccessful) {
+                        _finishOrderLiveData.postValue(QumparanResource.Success(req.body()))
+                    } else {
+                        var message = req.message().toString()
+                        req.errorBody()?.let {
+                            val jsonObj = JSONObject(it.charStream().readText())
+                            message = jsonObj.getString("message")
+                        }
+                        _finishOrderLiveData.postValue(QumparanResource.Error(message))
+                    }
+                } ?: run {
+                    _finishOrderLiveData.postValue(QumparanResource.Error("Unknown Error"))
+                }
+            } catch (e: Exception) {
+                _finishOrderLiveData.postValue(QumparanResource.Error(e.message.toString()))
+            }
+        }
+    }
+
+
     fun resetAcceptOrderState() {
         _approveOrderLiveData.postValue(QumparanResource.Default())
+    }
+
+    fun resetFinishOrderState() {
+        _finishOrderLiveData.postValue(QumparanResource.Default())
     }
 
     fun resetRejectOrderState() {

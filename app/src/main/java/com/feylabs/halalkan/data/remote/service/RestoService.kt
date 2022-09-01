@@ -141,6 +141,12 @@ interface RestoService {
         @Query("driver_id") driverId: Int
     ): Response<GeneralApiResponse>
 
+    @POST("orders/carts/finishOrder/{orderId}")
+    suspend fun orderFinish(
+        @Body body: RequestBody?,
+        @Path("orderId") orderId: String,
+    ): Response<DetailOrderResponse?>?
+
     @GET("fe/restoran/{id}/getAllOrders")
     suspend fun getRestoOrder(
         @Path("id") restoId: String,

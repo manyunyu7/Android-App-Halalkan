@@ -331,10 +331,22 @@
         android:id="@+id/navigation_manageDriverFragment"
         android:name="com.feylabs.halalkan.view.resto.admin_resto.driver.ManageDriverFragment"
         android:label="ManageDriverFragment" />
+
     <fragment
         android:id="@+id/navigation_driverOrderFragment"
         android:name="com.feylabs.halalkan.view.resto.order.history.DriverOrderFragment"
         android:label="DriverOrderFragment" />
+
+    <fragment
+        android:id="@+id/navigation_completeOrderFragment"
+        android:name="com.feylabs.halalkan.view.driver.task.CompleteOrderFragment"
+        android:label="CompleteOrderFragment" />
+
+    <fragment
+        android:id="@+id/navigation_turnByTurnExperienceForDriver"
+        tools:layout="@layout/activity_turn_by_turn_experience_driver"
+        android:name="com.feylabs.halalkan.view.direction.TurnByTurnExperienceForDriver"
+        android:label="TurnByTurnExperienceForDriver" />
 
 
 </navigation>

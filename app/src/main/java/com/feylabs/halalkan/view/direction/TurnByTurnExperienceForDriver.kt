@@ -7,16 +7,22 @@ import android.annotation.SuppressLint
 import android.content.res.Configuration
 import android.content.res.Resources
 import android.location.Location
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
+import androidx.navigation.fragment.findNavController
 import com.feylabs.halalkan.data.local.MyPreference
 import com.feylabs.halalkan.data.remote.reqres.auth.UserModel
 import com.feylabs.halalkan.databinding.ActivityTurnByTurnExperienceBinding
 import com.feylabs.halalkan.databinding.ActivityTurnByTurnExperienceDriverBinding
 import com.feylabs.halalkan.utils.ImageViewUtils.loadImageFromURL
+import com.feylabs.halalkan.utils.StringUtil.orMuskoEmpty
 import com.feylabs.halalkan.utils.base.BaseActivity
+import com.feylabs.halalkan.utils.base.BaseFragment
 import com.mapbox.api.directions.v5.models.Bearing
 import com.mapbox.api.directions.v5.models.DirectionsRoute
 import com.mapbox.api.directions.v5.models.RouteOptions
@@ -106,7 +112,7 @@ import java.util.Locale
  * - At any point in time you can finish guidance or select a new destination.
  * - You can use buttons to mute/unmute voice instructions, recenter the camera, or show the route overview.
  */
-class TurnByTurnExperienceForDriver : BaseActivity() {
+class TurnByTurnExperienceForDriver : BaseFragment() {
 
     companion object {
         const val DESTINATION_LAT = "DES"
@@ -323,23 +329,23 @@ class TurnByTurnExperienceForDriver : BaseActivity() {
         var firstLocationUpdateReceived = false
 
         override fun onNewRawLocation(rawLocation: Location) {
-// not handled
+        // not handled
         }
 
         override fun onNewLocationMatcherResult(locationMatcherResult: LocationMatcherResult) {
             val enhancedLocation = locationMatcherResult.enhancedLocation
-// update location puck's position on the map
+            // update location puck's position on the map
             navigationLocationProvider.changePosition(
                 location = enhancedLocation,
                 keyPoints = locationMatcherResult.keyPoints,
             )
 
-// update camera position to account for new location
+            // update camera position to account for new location
             viewportDataSource.onLocationChanged(enhancedLocation)
             viewportDataSource.evaluate()
 
-// if this is the first location update the activity has received,
-// it's best to immediately move the camera to the current user location
+            // if this is the first location update the activity has received,
+            // it's best to immediately move the camera to the current user location
             if (!firstLocationUpdateReceived) {
                 firstLocationUpdateReceived = true
                 navigationCamera.requestNavigationCameraToOverview(
@@ -370,11 +376,7 @@ class TurnByTurnExperienceForDriver : BaseActivity() {
         val maneuvers = maneuverApi.getManeuvers(routeProgress)
         maneuvers.fold(
             { error ->
-                Toast.makeText(
-                    this@TurnByTurnExperienceForDriver,
-                    error.errorMessage,
-                    Toast.LENGTH_SHORT
-                ).show()
+                showToast(error.errorMessage.orMuskoEmpty("-"))
             },
             {
                 binding.maneuverView.visibility = View.VISIBLE
@@ -382,7 +384,7 @@ class TurnByTurnExperienceForDriver : BaseActivity() {
             }
         )
 
-// update bottom trip progress summary
+        // update bottom trip progress summary
         binding.tripProgressView.render(
             tripProgressApi.getTripProgress(routeProgress)
         )
@@ -431,19 +433,39 @@ class TurnByTurnExperienceForDriver : BaseActivity() {
         }
     }
 
-    @SuppressLint("MissingPermission")
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun initUI() {
+
+    }
+
+    override fun initObserver() {
+    }
+
+    override fun initAction() {
+    }
+
+    override fun initData() {
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         binding = ActivityTurnByTurnExperienceDriverBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        return binding.root
+    }
+
+    @SuppressLint("MissingPermission")
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         mapboxMap = binding.mapView.getMapboxMap()
 
-        val userData = intent.getParcelableExtra<UserModel>("userData")
+        val userData = arguments?.getParcelable<UserModel>("userData")
 
         userData?.let {
             binding.infoProfile.apply {
                 this.ivMainImage.loadImageFromURL(
-                    this@TurnByTurnExperienceForDriver,
+                    requireContext(),
                     userData.imgFullPath
                 )
                 this.labelInfoProfileContact.text = userData.phoneNumber
@@ -451,12 +473,17 @@ class TurnByTurnExperienceForDriver : BaseActivity() {
             }
         }
 
+        binding.btnCompleteDelivery.setOnClickListener {
+            findNavController().navigate(R.id.navigation_completeOrderFragment,
+            bundleOf("orderId" to getOrderId()))
+        }
+
 
         // initialize the location puck
         binding.mapView.location.apply {
             this.locationPuck = LocationPuck2D(
                 bearingImage = ContextCompat.getDrawable(
-                    this@TurnByTurnExperienceForDriver,
+                    requireContext(),
                     R.drawable.mapbox_navigation_puck_icon
                 )
             )
@@ -464,11 +491,11 @@ class TurnByTurnExperienceForDriver : BaseActivity() {
             enabled = true
         }
 
-// initialize Mapbox Navigation
+        // initialize Mapbox Navigation
         mapboxNavigation = getMapBoxNavigation()
 
 
-// initialize Navigation Camera
+        // initialize Navigation Camera
         viewportDataSource = MapboxNavigationViewportDataSource(mapboxMap)
         navigationCamera = NavigationCamera(
             mapboxMap,
@@ -514,30 +541,30 @@ class TurnByTurnExperienceForDriver : BaseActivity() {
 
         // initialize bottom progress view
         tripProgressApi = MapboxTripProgressApi(
-            TripProgressUpdateFormatter.Builder(this)
+            TripProgressUpdateFormatter.Builder(requireContext())
                 .distanceRemainingFormatter(
                     DistanceRemainingFormatter(distanceFormatterOptions)
                 )
                 .timeRemainingFormatter(
-                    TimeRemainingFormatter(this)
+                    TimeRemainingFormatter(requireContext())
                 )
                 .percentRouteTraveledFormatter(
                     PercentDistanceTraveledFormatter()
                 )
                 .estimatedTimeToArrivalFormatter(
-                    EstimatedTimeToArrivalFormatter(this, TimeFormat.NONE_SPECIFIED)
+                    EstimatedTimeToArrivalFormatter(requireContext(), TimeFormat.NONE_SPECIFIED)
                 )
                 .build()
         )
 
         // initialize voice instructions api and the voice instruction player
         speechApi = MapboxSpeechApi(
-            this,
+            requireContext(),
             getString(R.string.mapbox_access_token),
             Locale.getDefault().language
         )
         voiceInstructionsPlayer = MapboxVoiceInstructionsPlayer(
-            this,
+            requireContext(),
             getString(R.string.mapbox_access_token),
             Locale.getDefault().language
         )
@@ -546,14 +573,14 @@ class TurnByTurnExperienceForDriver : BaseActivity() {
         // the route line below road labels layer on the map
         // the value of this option will depend on the style that you are using
         // and under which layer the route line should be placed on the map layers stack
-        val mapboxRouteLineOptions = MapboxRouteLineOptions.Builder(this)
+        val mapboxRouteLineOptions = MapboxRouteLineOptions.Builder(requireContext())
             .withRouteLineBelowLayerId("road-label")
             .build()
         routeLineApi = MapboxRouteLineApi(mapboxRouteLineOptions)
         routeLineView = MapboxRouteLineView(mapboxRouteLineOptions)
 
         // initialize maneuver arrow view to draw arrows on the map
-        val routeArrowOptions = RouteArrowOptions.Builder(this).build()
+        val routeArrowOptions = RouteArrowOptions.Builder(requireContext()).build()
         routeArrowView = MapboxRouteArrowView(routeArrowOptions)
 
         // load map style
@@ -593,10 +620,14 @@ class TurnByTurnExperienceForDriver : BaseActivity() {
         mapboxNavigation.startTripSession()
 
         //nry
-        val navFromIntentLat = intent.getDoubleExtra(DESTINATION_LAT, -99.0) ?: -99.0
-        val navFromIntentLong = intent.getDoubleExtra(DESTINATION_LONG, -99.0) ?: -99.0
+        val navFromIntentLat = arguments?.getDouble(DESTINATION_LAT, -99.0) ?: -99.0
+        val navFromIntentLong = arguments?.getDouble(DESTINATION_LONG, -99.0) ?: -99.0
         showToast("$navFromIntentLat - $navFromIntentLong")
         startNavigation(lat = navFromIntentLat, long = navFromIntentLong)
+    }
+
+    private fun getOrderId(): String {
+        return arguments?.getString("orderId").orMuskoEmpty("")
     }
 
     private fun getMapBoxNavigation(): MapboxNavigation {
@@ -605,7 +636,7 @@ class TurnByTurnExperienceForDriver : BaseActivity() {
         } else {
             if (IS_SIMULATION) {
                 return MapboxNavigationProvider.create(
-                    NavigationOptions.Builder(this.applicationContext)
+                    NavigationOptions.Builder(requireContext())
                         .accessToken(getString(R.string.mapbox_access_token))
                         // comment out the location engine setting block to disable simulation
                         .locationEngine(replayLocationEngine)
@@ -613,7 +644,7 @@ class TurnByTurnExperienceForDriver : BaseActivity() {
                 )
             } else {
                 return MapboxNavigationProvider.create(
-                    NavigationOptions.Builder(this.applicationContext)
+                    NavigationOptions.Builder(requireContext())
 //                        .locationEngine(replayLocationEngine)
                         .accessToken(getString(R.string.mapbox_access_token))
                         .build()
@@ -649,11 +680,11 @@ class TurnByTurnExperienceForDriver : BaseActivity() {
     }
 
     private fun getDriverLat(): Double {
-        return MyPreference(this).getLong()
+        return MyPreference(requireContext()).getLong()
     }
 
     private fun getDriverLong(): Double {
-        return MyPreference(this).getLat()
+        return MyPreference(requireContext()).getLat()
     }
 
     override fun onStop() {
@@ -700,7 +731,7 @@ class TurnByTurnExperienceForDriver : BaseActivity() {
         mapboxNavigation.requestRoutes(
             RouteOptions.builder()
                 .applyDefaultNavigationOptions()
-                .applyLanguageAndVoiceUnitOptions(this)
+                .applyLanguageAndVoiceUnitOptions(requireContext())
                 .coordinatesList(listOf(originPoint, destination))
                 // provide the bearing for the origin of the request to ensure
                 // that the returned route faces in the direction of the current user movement

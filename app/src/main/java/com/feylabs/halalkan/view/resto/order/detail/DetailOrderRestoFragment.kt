@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
+import androidx.navigation.fragment.findNavController
 import com.adevinta.leku.*
 import com.feylabs.halalkan.MainViewModel
 import com.feylabs.halalkan.R
@@ -69,8 +71,6 @@ class DetailOrderRestoFragment : BaseFragment(), OnMapReadyCallback {
 
         val lat = mainViewModel.liveLatLng.value?.lat
         val long = mainViewModel.liveLatLng.value?.long
-
-
 
 
     }
@@ -195,20 +195,14 @@ class DetailOrderRestoFragment : BaseFragment(), OnMapReadyCallback {
             labelOrderDate.text = rawData.createdAt
         }
 
-        val location  = LatLng(rawData.lat.toDoubleOrNull()?:-18.0,rawData.long.toDoubleOrNull()?:-9.0)
+        val location =
+            LatLng(rawData.lat.toDoubleOrNull() ?: -18.0, rawData.long.toDoubleOrNull() ?: -9.0)
         mMap.addMarker(MarkerOptions().position(location).title("Lokasi Laporan"))
         mMap.moveCamera(CameraUpdateFactory.newLatLng(location))
         mMap.animateCamera(CameraUpdateFactory.zoomTo(17.0f))
 
         binding.btnDirection.setOnClickListener {
-            MyPreference(requireContext()).saveLat(value = mainViewModel.getLat())
-            MyPreference(requireContext()).saveLong(value = mainViewModel.getLong())
-
-            startActivity(Intent(requireActivity(), TurnByTurnExperienceForDriver::class.java)
-                .putExtra(TurnByTurnExperienceForDriver.DESTINATION_LONG,rawData.long.toDoubleOrNull())
-                .putExtra(TurnByTurnExperienceForDriver.DESTINATION_LAT,rawData.lat.toDoubleOrNull())
-                .putExtra("userData",rawData.userObj)
-            )
+            goToDelivery(rawData)
         }
 
         binding.tvUserLocation.text = rawData.address
@@ -243,6 +237,13 @@ class DetailOrderRestoFragment : BaseFragment(), OnMapReadyCallback {
                     binding.btnNext.setOnClickListener {
                         showBottomSheetDriver()
                     }
+
+                    if (muskoPref().getUserRole() == "4") {
+                        binding.btnNext.text = getString(R.string.title_deliver_order)
+                        binding.btnNext.setOnClickListener {
+
+                        }
+                    }
                 }
 
                 4 -> { //completed
@@ -253,6 +254,21 @@ class DetailOrderRestoFragment : BaseFragment(), OnMapReadyCallback {
                 }
             }
         }
+    }
+
+    private fun goToDelivery(rawData: DetailOrderResponse.Data) {
+        MyPreference(requireContext()).saveLat(value = mainViewModel.getLat())
+        MyPreference(requireContext()).saveLong(value = mainViewModel.getLong())
+
+        findNavController().navigate(
+            R.id.navigation_turnByTurnExperienceForDriver,
+            bundleOf(
+                "userData" to rawData.userObj,
+                "orderId" to rawData.id.toString(),
+                TurnByTurnExperienceForDriver.DESTINATION_LONG to rawData.long.toDoubleOrNull(),
+                TurnByTurnExperienceForDriver.DESTINATION_LAT to rawData.lat.toDoubleOrNull(),
+            )
+        )
     }
 
     private fun showLoading(b: Boolean) {

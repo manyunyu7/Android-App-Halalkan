@@ -121,5 +121,19 @@
     <string name="logged_in_message_resto">You are logged in as a restaurant</string>
     <string name="logged_in_message_driver">You are logged in as a driver</string>
     <string name="message_logged_out">Your Account will be logged out and Your data will be cleared</string>
+    <string name="title_delivery_confirmation">Delivery Confirmation</string>
+    <string name="form_title_recipient_name">Recipient Name :</string>
+    <string name="hint_recipient_name">Recipient Name</string>
+    <string name="title_form_recipient_signature">Recipient Hand Signature :</string>
+    <string name="title_draw_signature_here">Draw Signature Here</string>
+    <string name="title_reset_drawing">Reset Drawing</string>
+    <string name="message_make_sure_confirmation">Make sure the order is correct and the money received is in accordance with the bill</string>
+    <string name="title_submit">Submit</string>
+    <string name="message_order_will_finish">Order will be finished</string>
+    <string name="message_order_completed_successfully">Order Completed Successfully</string>
+    <string name="title_delivery_completed">Delivery Complete</string>
+    <string name="message_please_fill_the_signature_first">Please fill the signature first</string>
+    <string name="title_deliver_order">Deliver Order</string>
+    <!--    <string name="message_make_sure_confirmation">Pastikan pesanan sudah sesuai dan uang yang diterima sesuai dengan tagihan</string>-->
 
 </resources>
