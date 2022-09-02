@@ -363,7 +363,6 @@
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
-
             <View
                 android:id="@+id/separator"
                 android:layout_width="match_parent"

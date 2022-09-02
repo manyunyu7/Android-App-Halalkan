@@ -78,6 +78,10 @@ class AdminRestoViewModel(
         MutableLiveData<QumparanResource<GeneralApiResponse?>>()
     val createUpdateFoodLiveData get() = _createUpdateFoodLiveData
 
+    private var _updateAddressLiveData =
+        MutableLiveData<QumparanResource<GeneralApiResponse?>>()
+    val updateAddressLiveData get() = _updateAddressLiveData
+
     private var _foodDetailLiveData =
         MutableLiveData<QumparanResource<FoodModelResponse?>>()
     val foodDetailLiveData get() = _foodDetailLiveData
@@ -270,6 +274,26 @@ class AdminRestoViewModel(
         }
     }
 
+    fun updateRestoAddress(restoId: String, lat: Double, long: Double, address: String) {
+        _updateAddressLiveData.postValue(QumparanResource.Loading())
+        viewModelScope.launch {
+            try {
+                val res = ds.updateRestoAddress(restoId, lat = lat, long = long, address)
+                if (res.isSuccessful) {
+                    _updateAddressLiveData.postValue(QumparanResource.Success(res.body()))
+                } else {
+                    _updateAddressLiveData.postValue(
+                        QumparanResource.Error(
+                            res.errorBody().toString()
+                        )
+                    )
+                }
+            } catch (e: Exception) {
+                _updateAddressLiveData.postValue(QumparanResource.Error(e.message.toString()))
+            }
+        }
+    }
+
     fun getAllRestoRaw() {
         _allRestoRawLiveData.postValue(QumparanResource.Loading())
         viewModelScope.launch {
@@ -401,7 +425,7 @@ class AdminRestoViewModel(
         }
     }
 
-    fun getFoodDetail(foodId:String) {
+    fun getFoodDetail(foodId: String) {
         _foodDetailLiveData.postValue(QumparanResource.Loading())
         viewModelScope.launch {
             try {
@@ -421,7 +445,7 @@ class AdminRestoViewModel(
         }
     }
 
-    fun deleteFood(foodId:String) {
+    fun deleteFood(foodId: String) {
         _createUpdateFoodLiveData.postValue(QumparanResource.Loading())
         viewModelScope.launch {
             try {

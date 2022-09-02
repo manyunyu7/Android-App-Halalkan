@@ -75,13 +75,13 @@
                 android:textSize="18sp" />
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/et_phone_number"
+                android:id="@+id/et_address"
                 style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 app:boxBackgroundColor="@android:color/transparent"
-                android:hint="Phone Number">
+                android:hint="@string/form_hint_address">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
@@ -90,13 +90,81 @@
                     android:inputType="textMultiLine" />
             </com.google.android.material.textfield.TextInputLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="9dp"
+                android:layout_marginTop="@dimen/dimen_20dp"
+                android:background="#EEEEEE" />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="1dp"
+                android:layout_marginVertical="10dp"
+                android:elevation="5dp"
+                app:cardCornerRadius="10dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="10dp">
+
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="20dp"
+                        android:layout_marginTop="10dp"
+                        app:cardCornerRadius="20dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <fragment
+                                android:id="@+id/map"
+                                android:name="com.google.android.gms.maps.SupportMapFragment"
+                                android:layout_width="match_parent"
+                                android:layout_height="275dp"
+                                tools:context=".view.ExampleMapActivity" />
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_direction"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dimen_10dp"
+                        android:layout_marginTop="@dimen/dimen_10dp"
+                        android:text="@string/title_change_location"
+                        app:cornerRadius="@dimen/dimen_20dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/guideline5"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <View
+                android:id="@+id/separator"
+                android:layout_width="match_parent"
+                android:layout_height="9dp"
+                android:layout_marginTop="@dimen/dimen_20dp"
+                android:background="#EEEEEE" />
+
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_save"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen_10dp"
-                android:text="Save Changes"
+                android:text="@string/save_changes"
                 app:cornerRadius="@dimen/dimen_20dp" />
 
 

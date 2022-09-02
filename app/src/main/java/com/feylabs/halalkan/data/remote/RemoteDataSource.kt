@@ -205,6 +205,20 @@ class RemoteDataSource(
         return restoService.updateRestoColumn(restoId = id, urlupdate = pathupdate, file = body)
     }
 
+    override suspend fun updateRestoAddress(
+        id: String,
+        lat: Double,
+        long: Double,
+        address: String
+    ): Response<GeneralApiResponse> {
+        return restoService.updateRestoAddress(
+            latitude = lat,
+            longitude = long,
+            address = address,
+            restoId = id
+        )
+    }
+
 
     override suspend fun getFoodCategoryOnResto(id: String): Response<FoodCategoryResponse> {
         return restoService.getFoodCategoryOnResto(id)

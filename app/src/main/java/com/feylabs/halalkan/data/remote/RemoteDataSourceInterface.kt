@@ -147,4 +147,11 @@ interface RemoteDataSourceInterface {
         price: Int?,
         image: RequestBody?
     ): Response<GeneralApiResponse?>?
+
+    suspend fun updateRestoAddress(
+        id: String,
+        lat: Double,
+        long: Double,
+        address: String
+    ): Response<GeneralApiResponse>
 }

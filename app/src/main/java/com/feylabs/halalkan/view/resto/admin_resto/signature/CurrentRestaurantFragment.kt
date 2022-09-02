@@ -364,6 +364,10 @@ class CurrentRestaurantFragment : BaseFragment() {
             findNavController().navigate(R.id.navigation_manageFoodFragment)
         }
 
+        binding.menuAddress.setOnClickListener {
+            findNavController().navigate(R.id.navigation_editRestoAddressFragment)
+        }
+
         binding.chipGroupCategory.setOnCheckedChangeListener { group, checkedId ->
             orderViewModel.getRestoHistory(restoId = getRestoId(), status = getSelectedCategoryId())
         }

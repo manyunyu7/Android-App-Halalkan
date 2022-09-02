@@ -348,5 +348,10 @@
         android:name="com.feylabs.halalkan.view.direction.TurnByTurnExperienceForDriver"
         android:label="TurnByTurnExperienceForDriver" />
 
+    <fragment
+        android:id="@+id/navigation_editRestoAddressFragment"
+        android:name="com.feylabs.halalkan.view.resto.admin_resto.edit_info.address.EditRestoAddressFragment"
+        android:label="EditRestoAddressFragment" />
+
 
 </navigation>

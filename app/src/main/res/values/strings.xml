@@ -50,6 +50,7 @@
     <string name="required_column">This column is required</string>
     <string name="example_notes_order_hint">Example : Without Sambal</string>
     <string name="save_change">Save Change</string>
+    <string name="save_changes">Save Changes</string>
     <string name="notes_for_your_dish">Notes for your dish</string>
     <string name="add_note_to_dish">Add note to your dish</string>
     <string name="clear">Clear</string>
@@ -154,5 +155,9 @@
     <string name="title_food_type">Food Type</string>
     <string name="title_delete_food">Delete Food</string>
     <string name="title_manage_food">Manage Food</string>
+    <string name="form_hint_address">Address</string>
+    <string name="title_change_location">Change Location</string>
+    <string name="message_resto_update_address">This action will updating your address</string>
+    <string name="message_please_check_your_input">Please Check Your Input</string>
 
 </resources>

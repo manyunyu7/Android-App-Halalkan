@@ -93,6 +93,15 @@ interface RestoService {
         @Path("urlupdate") urlupdate: String,
     ): Response<UpdateRestoColumnResponse?>?
 
+    @FormUrlEncoded
+    @POST("restoran/editAddress/{restoId}")
+    suspend fun updateRestoAddress(
+        @Field("lat") latitude: Double,
+        @Field("long") longitude: Double,
+        @Field("address") address: String,
+        @Path("restoId") restoId: String,
+    ): Response<GeneralApiResponse>
+
 
     @POST("foods/category/createCategory/{id}")
     suspend fun createRestoFoodCategory(
