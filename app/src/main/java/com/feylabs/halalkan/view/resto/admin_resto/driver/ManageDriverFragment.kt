@@ -4,9 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import com.feylabs.halalkan.R
 import com.feylabs.halalkan.data.remote.QumparanResource.*
+import com.feylabs.halalkan.data.remote.reqres.auth.UserModel
 import com.feylabs.halalkan.data.remote.reqres.resto.FoodCategoryResponse
 import com.feylabs.halalkan.databinding.FragmentXrestoCategoryBinding
 import com.feylabs.halalkan.databinding.FragmentXrestoManageDriverBinding
@@ -38,6 +40,16 @@ class ManageDriverFragment : BaseFragment() {
             layoutManager = setLayoutManagerLinear()
         }
 
+        mAdapter.setupAdapterInterface(object : ManageDriverAdapter.ItemInterface {
+            override fun onclick(model: UserModel) {
+                findNavController().navigate(
+                    R.id.navigation_addEditDriverFragment,
+                    bundleOf("driverId" to model.id.toString())
+                )
+            }
+
+        })
+
 
     }
 
@@ -63,9 +75,9 @@ class ManageDriverFragment : BaseFragment() {
     }
 
     private fun showLoading(b: Boolean) {
-        if(b){
+        if (b) {
             binding.loadingAnim.makeVisible()
-        }else{
+        } else {
             binding.loadingAnim.makeGone()
         }
     }

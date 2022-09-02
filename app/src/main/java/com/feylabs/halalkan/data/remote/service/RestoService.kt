@@ -116,7 +116,7 @@ interface RestoService {
     ): Response<GeneralApiResponse>
 
     @FormUrlEncoded
-    @POST("/api/v1/restoran/operatingHour/edit/{restoId}/{hourId}")
+    @POST("restoran/operatingHour/edit/{restoId}/{hourId}")
     suspend fun updateOperatingHour(
         @Field("hour_start") hourStart: String,
         @Field("hour_end") hourEnd: String,
@@ -245,10 +245,23 @@ interface RestoService {
         @Path("restoId") orderId: String,
     ): Response<GetAllDriverResponse>
 
+    @DELETE("driver/deleteDriver/{driverId}")
+    suspend fun deleteDriver(
+        @Path("driverId") driverId: String,
+    ): Response<GeneralApiResponse>
+
+
+
+    @Multipart
     @POST("driver/register")
     suspend fun addNewDriver(
-        @Body body: RegisterBodyRequest
-    ): Response<RegisterResponse>
+        @Part("img\"; filename=\"img") file: RequestBody?,
+        @Part("name") name: String,
+        @Part("email") email: String,
+        @Part("phone_number") phone_number: String,
+        @Part("password") password: String,
+        @Part("confirm_password") confirm_password: String,
+    ): Response<RegisterResponse?>?
 
 
 }

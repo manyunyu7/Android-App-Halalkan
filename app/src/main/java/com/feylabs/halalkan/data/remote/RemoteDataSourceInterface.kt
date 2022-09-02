@@ -122,7 +122,6 @@ interface RemoteDataSourceInterface {
 
     suspend fun getOrderStatus(): Response<OrderStatusResponse>
     suspend fun geDriverOnResto(restoId: String): Response<GetAllDriverResponse>
-    suspend fun addNewDriverByResto(bodyRequest: RegisterBodyRequest): Response<RegisterResponse>
     suspend fun orderDelivered(orderId: Int, driverId: Int): Response<GeneralApiResponse>
     suspend fun getDriverOrder(page: Int, perPage: Int): Response<DriverOrderPaginationResponse>
     suspend fun orderFinished(orderId: String, body: RequestBody): Response<DetailOrderResponse?>?
@@ -176,4 +175,22 @@ interface RemoteDataSourceInterface {
         hourId: String,
         restoId: String
     ): Response<GeneralApiResponse>
+
+    suspend fun editDriver(
+        image: RequestBody?,
+        driverId: String,
+        phoneNumber: String,
+        email: String,
+        name: String
+    ): Response<GeneralApiResponse?>?
+
+    suspend fun addNewDriverByResto(
+        image: RequestBody?,
+        phoneNumber: String,
+        email: String,
+        name: String,
+        password: String
+    ): Response<RegisterResponse?>?
+
+    suspend fun deleteDriver(driverId: String): Response<GeneralApiResponse>
 }

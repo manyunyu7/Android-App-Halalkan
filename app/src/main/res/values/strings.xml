@@ -95,7 +95,9 @@
     <string name="title_success">Success</string>
     <string name="message_data_updated_succesfully">Data Updated Successfully</string>
     <string name="message_data_created_succesfully">Data Created Successfully</string>
+    <string name="message_data_deleted_succesfully">Data Deleted Successfully</string>
     <string name="message_order_changed_to_cooked">Order status will be changed to cooked</string>
+
     <string name="title_all">All</string>
     <string name="label_see_location_on_map">Direction</string>
     <string name="title_item">Items</string>
@@ -189,7 +191,20 @@
     <string name="day_tuesday">Tuesday</string>
     <string name="day_thursday">Thursday</string>
     <string name="day_wednesday">Wednesday</string>
+
     <string name="title_change_operating_hour">Change Operating Hour</string>
     <string name="title_error">Error</string>
+    <string name="title_form_email">Email</string>
+    <string name="title_form_phone">Phone</string>
+    <string name="title_form_password">Password</string>
+    <string name="form_title_password">Password</string>
+    <string name="form_hint_phone">Example 628966xxxx</string>
+
+    <string name="register_message_tos">By registering, you agree to the terms of use of the Musko app</string>
+    <string name="title_reset_password">Reset Password</string>
+    <string name="title_delete">Delete</string>
+    <string name="message_please_check_input">Please check your input</string>
+    <string name="form_hint_input_new_password">Input New Password</string>
+    <string name="message_password_min_6">Password minimum length is 6</string>
 
 </resources>

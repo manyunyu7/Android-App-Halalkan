@@ -46,7 +46,10 @@ class RemoteDataSource(
      */
     suspend fun getUsers() = commonService.getUsers()
     suspend fun getMyProfile() = commonService.userProfile()
-
+    suspend fun getUserProfile(id: String) = commonService.getUserProfile(id)
+    suspend fun resetUserPassword(id: String,newPassword:String) = commonService.resetPassword(
+        userId = id, newPassword = newPassword
+    )
 
     suspend fun getPosts() = commonService.getPosts()
 
@@ -406,8 +409,33 @@ class RemoteDataSource(
         return restoService.getAllDriverOnResto(restoId)
     }
 
-    override suspend fun addNewDriverByResto(bodyRequest: RegisterBodyRequest) =
-        restoService.addNewDriver(bodyRequest)
+    override suspend fun deleteDriver(driverId: String): Response<GeneralApiResponse> {
+        return restoService.deleteDriver(driverId)
+    }
+
+    override suspend fun addNewDriverByResto(
+        image: RequestBody?,
+        phoneNumber: String,
+        email: String,
+        name: String,
+        password : String
+    ) = restoService.addNewDriver(
+        password = password,
+        confirm_password = password,
+        name = name, email = email, phone_number = phoneNumber,
+        file = image
+    )
+
+    override suspend fun editDriver(
+        image: RequestBody?,
+        driverId: String,
+        phoneNumber: String,
+        email: String,
+        name: String
+    ) = commonService.editDriver(
+        driverId = driverId.toString(),
+        file = image, phone_number = phoneNumber, email = email, name = name
+    )
 
 
     //driver section
