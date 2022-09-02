@@ -197,6 +197,44 @@ class RemoteDataSource(
         )
     }
 
+    override suspend fun createRestoOperatingHour(
+        restoId: String,
+        dayCode: Int,
+        startHour: String,
+        endHour: String,
+    ) = restoService.createOperatingHour(
+        hourStart = startHour,
+        hourEnd = endHour,
+        dayCode = dayCode,
+        restoId = restoId
+    )
+
+    override suspend fun updateRestoOperatingHour(
+        hourId: String,
+        restoId: String,
+        dayCode: Int,
+        startHour: String,
+        endHour: String,
+    ) = restoService.updateOperatingHour(
+        hourId = hourId,
+        hourStart = startHour,
+        hourEnd = endHour,
+        dayCode = dayCode,
+        restoId = restoId
+    )
+
+    override suspend fun deleteRestoOperatingHour(
+        hourId: String,
+        restoId: String,
+    ) = restoService.deleteOperatingHour(
+        hourId = hourId,
+        restoId = restoId
+    )
+
+    override suspend fun getRestoOperatingHour(
+        restoId: String,
+    ) = restoService.getRestoOperatingHour(restoId)
+
     override suspend fun updateRestoColumn(
         id: String,
         pathupdate: String,

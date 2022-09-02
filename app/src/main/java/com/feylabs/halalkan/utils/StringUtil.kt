@@ -1,12 +1,13 @@
 package com.feylabs.halalkan.utils
 
-import android.net.Uri
 import com.feylabs.halalkan.utils.ImageViewUtils.imgFullPath
+import java.util.regex.Matcher
+import java.util.regex.Pattern
 
 object StringUtil {
 
 
-    fun String.loadMuskoImage() : String{
+    fun String.loadMuskoImage(): String {
         return this.decodeMuskoUrl().imgFullPath()
     }
 
@@ -42,12 +43,18 @@ object StringUtil {
         return initialString
     }
 
-    fun String?.orMuskoEmpty(replacable:String): String {
-        return if(this.isNullOrEmpty()){
+    fun String?.orMuskoEmpty(replacable: String): String {
+        return if (this.isNullOrEmpty()) {
             replacable
-        }else{
+        } else {
             this
         }
+    }
+
+    fun String.checkHourFormat(): Boolean {
+        val p: Pattern = Pattern.compile("^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]\$")
+        val m: Matcher = p.matcher(this)
+        return m.matches()
     }
 
     fun Any.prettyPrint(): String {

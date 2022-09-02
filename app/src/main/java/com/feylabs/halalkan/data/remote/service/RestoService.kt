@@ -13,6 +13,7 @@ import com.feylabs.halalkan.data.remote.reqres.order.history.OrderHistoryRespons
 import com.feylabs.halalkan.data.remote.reqres.order.resto.OrderByRestoPaginationResponse
 import com.feylabs.halalkan.data.remote.reqres.resto.*
 import com.feylabs.halalkan.data.remote.reqres.resto.food.FoodModelResponse
+import com.feylabs.halalkan.data.remote.reqres.resto.operating_hour.RestoOperatingHourResponse
 import com.feylabs.halalkan.data.remote.reqres.resto.update.UpdateRestoColumnResponse
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
@@ -101,6 +102,41 @@ interface RestoService {
         @Field("address") address: String,
         @Path("restoId") restoId: String,
     ): Response<GeneralApiResponse>
+
+
+    @FormUrlEncoded
+    @POST("restoran/operatingHour/create/{restoId}")
+    suspend fun createOperatingHour(
+        @Field("hour_start") hourStart: String,
+        @Field("hour_end") hourEnd: String,
+        @Field("day_code") dayCode: Int,
+        @Field("day") day: String = "-",
+        @Field("hour") hour: String = "-",
+        @Path("restoId") restoId: String,
+    ): Response<GeneralApiResponse>
+
+    @FormUrlEncoded
+    @POST("/api/v1/restoran/operatingHour/edit/{restoId}/{hourId}")
+    suspend fun updateOperatingHour(
+        @Field("hour_start") hourStart: String,
+        @Field("hour_end") hourEnd: String,
+        @Field("day_code") dayCode: Int,
+        @Field("day") day: String = "-",
+        @Field("hour") hour: String = "-",
+        @Path("restoId") restoId: String,
+        @Path("hourId") hourId: String,
+    ): Response<GeneralApiResponse>
+
+    @DELETE("/api/v1/restoran/operatingHour/delete/{restoId}/{hourId}")
+    suspend fun deleteOperatingHour(
+        @Path("restoId") restoId: String,
+        @Path("hourId") hourId: String,
+    ): Response<GeneralApiResponse>
+
+    @GET("restoran/operatingHour/getByResto/{restoId}")
+    suspend fun getRestoOperatingHour(
+        @Path("restoId") restoId: String,
+    ): Response<RestoOperatingHourResponse>
 
 
     @POST("foods/category/createCategory/{id}")

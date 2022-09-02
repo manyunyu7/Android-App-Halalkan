@@ -123,6 +123,7 @@ dependencies {
     //expansion panel
     implementation 'com.github.florent37:expansionpanel:1.2.4'
 
+    implementation 'com.github.qandeelabbassi:Dropsy:1.1'
 
     //location picker
     implementation ('com.adevinta.android:leku:9.1.4') {

@@ -8,6 +8,7 @@ import com.feylabs.halalkan.data.remote.RemoteDataSource
 import com.feylabs.halalkan.data.remote.reqres.GeneralApiResponse
 import com.feylabs.halalkan.data.remote.reqres.resto.*
 import com.feylabs.halalkan.data.remote.reqres.resto.food.FoodModelResponse
+import com.feylabs.halalkan.data.remote.reqres.resto.operating_hour.RestoOperatingHourResponse
 import com.feylabs.halalkan.data.remote.reqres.resto.update.UpdateRestoColumnResponse
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -44,6 +45,14 @@ class AdminRestoViewModel(
     private var _foodByCategoryLiveData =
         MutableLiveData<QumparanResource<AllFoodByRestoResponse?>>()
     val foodByCategoryLiveData get() = _foodByCategoryLiveData
+
+    private var _restoOperatingHourLiveData =
+        MutableLiveData<QumparanResource<RestoOperatingHourResponse?>>()
+    val restoOperatingHourLiveData get() = _restoOperatingHourLiveData
+
+    private var _createEditRestoOperatingHourLiveData =
+        MutableLiveData<QumparanResource<GeneralApiResponse?>>()
+    val createEditRestoOperatingHourLiveData get() = _createEditRestoOperatingHourLiveData
 
     //saved
     private var _allFoodLiveData =
@@ -500,6 +509,102 @@ class AdminRestoViewModel(
                 }
             } catch (e: Exception) {
                 _allFoodLiveData.postValue(QumparanResource.Error(e.message.toString()))
+            }
+        }
+    }
+
+    fun getRestoOperatingHour(restoId: String) {
+        viewModelScope.launch {
+            try {
+                val res = ds.getRestoOperatingHour(restoId)
+                if (res.isSuccessful) {
+                    _restoOperatingHourLiveData.postValue(QumparanResource.Success(res.body()))
+                } else {
+                    _restoOperatingHourLiveData.postValue(
+                        QumparanResource.Error(
+                            res.errorBody().toString()
+                        )
+                    )
+                }
+            } catch (e: Exception) {
+                _restoOperatingHourLiveData.postValue(QumparanResource.Error(e.message.toString()))
+            }
+        }
+    }
+
+    fun createRestoOperatingHour(restoId: String, dayCode: Int, start: String, end: String) {
+        viewModelScope.launch {
+            _createEditRestoOperatingHourLiveData.postValue(QumparanResource.Loading())
+            try {
+                val res = ds.createRestoOperatingHour(
+                    restoId,
+                    startHour = start,
+                    endHour = end,
+                    dayCode = dayCode
+                )
+                if (res.isSuccessful) {
+                    _createEditRestoOperatingHourLiveData.postValue(QumparanResource.Success(res.body()))
+                } else {
+                    var message = res.message().toString()
+                    res.errorBody()?.let {
+                        val jsonObj = JSONObject(it.charStream().readText())
+                        message = jsonObj.getString("message")
+                    }
+                    _createEditRestoOperatingHourLiveData.postValue(QumparanResource.Error(message))
+                }
+            } catch (e: Exception) {
+                _createEditRestoOperatingHourLiveData.postValue(QumparanResource.Error(e.message.toString()))
+            }
+        }
+    }
+
+    fun updateRestoOperatingHour(hourId:String,restoId: String, dayCode: Int, start: String, end: String) {
+        viewModelScope.launch {
+            _createEditRestoOperatingHourLiveData.postValue(QumparanResource.Loading())
+            try {
+                val res = ds.updateRestoOperatingHour(
+                    hourId = hourId,
+                    restoId = restoId,
+                    startHour = start,
+                    endHour = end,
+                    dayCode = dayCode
+                )
+                if (res.isSuccessful) {
+                    _createEditRestoOperatingHourLiveData.postValue(QumparanResource.Success(res.body()))
+                } else {
+                    var message = res.message().toString()
+                    res.errorBody()?.let {
+                        val jsonObj = JSONObject(it.charStream().readText())
+                        message = jsonObj.getString("message")
+                    }
+                    _createEditRestoOperatingHourLiveData.postValue(QumparanResource.Error(message))
+                }
+            } catch (e: Exception) {
+                _createEditRestoOperatingHourLiveData.postValue(QumparanResource.Error(e.message.toString()))
+            }
+        }
+    }
+
+    fun deleteRestoOperatingHour(hourId:String,restoId: String) {
+        viewModelScope.launch {
+            _createEditRestoOperatingHourLiveData.postValue(QumparanResource.Loading())
+            try {
+                val res = ds.deleteRestoOperatingHour(
+                    hourId = hourId,
+                    restoId = restoId,
+                )
+                if (res.isSuccessful) {
+                    _createEditRestoOperatingHourLiveData.postValue(QumparanResource.Success(res.body()))
+                } else {
+                    var message = res.message().toString()
+                    res.errorBody()?.let {
+                        val jsonObj = JSONObject(it.charStream().readText())
+                        message = jsonObj.getString("message")
+                    }
+                    _createEditRestoOperatingHourLiveData.postValue(QumparanResource.Error(message))
+                }
+            } catch (e: Exception) {
+                _createEditRestoOperatingHourLiveData.postValue(QumparanResource.Error(e.message.toString()))
             }
         }
     }

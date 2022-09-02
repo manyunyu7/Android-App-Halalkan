@@ -352,6 +352,10 @@
         android:id="@+id/navigation_editRestoAddressFragment"
         android:name="com.feylabs.halalkan.view.resto.admin_resto.edit_info.address.EditRestoAddressFragment"
         android:label="EditRestoAddressFragment" />
+    <fragment
+        android:id="@+id/navigation_editOperatingHoursFragment"
+        android:name="com.feylabs.halalkan.view.resto.admin_resto.edit_info.operating_hours.EditOperatingHoursFragment"
+        android:label="EditOperatingHoursFragment" />
 
 
 </navigation>

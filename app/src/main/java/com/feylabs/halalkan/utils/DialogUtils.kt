@@ -109,5 +109,39 @@ object DialogUtils {
         }
     }
 
+    fun showErrorDialog(
+        context: Context,
+        title: String,
+        message: String,
+        positiveAction: Pair<String, (() -> Unit)?>,
+        autoDismiss: Boolean = false,
+        buttonAllCaps: Boolean = true,
+        img: Int = R.drawable.ic_baseline_error_outline_24
+    ) {
+        val view = LayoutInflater.from(context)
+            .inflate(R.layout.layout_dialog_single_button_image, null as ViewGroup?, false)
+        val binding = LayoutDialogSingleButtonImageBinding.bind(view)
+        binding.tvTitle.text = title
+        binding.tvMessage.text = message
+        binding.btnPositive.let {
+            it.text = positiveAction.first
+            it.setOnClickListener {
+                dismissDialog()
+                positiveAction.second?.invoke()
+            }
+            it.isAllCaps = buttonAllCaps
+        }
+        binding.imgLogo.loadImage(context, img)
+        builder = AlertDialog.Builder(context)
+        builder.setView(view)
+        builder.setCancelable(autoDismiss)
+
+        if (dialog == null) {
+            dialog = builder.create()
+            dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            dialog?.show()
+        }
+    }
+
 
 }

@@ -364,6 +364,10 @@ class CurrentRestaurantFragment : BaseFragment() {
             findNavController().navigate(R.id.navigation_manageFoodFragment)
         }
 
+        binding.menuOperatingHour.setOnClickListener {
+            findNavController().navigate(R.id.navigation_editOperatingHoursFragment)
+        }
+
         binding.menuAddress.setOnClickListener {
             findNavController().navigate(R.id.navigation_editRestoAddressFragment)
         }

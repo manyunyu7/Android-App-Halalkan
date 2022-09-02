@@ -42,6 +42,17 @@
         <item value="3">Restaurant</item>
     </string-array>
 
+    <string-array name="array_days">
+        <item value="0">Choose Day</item>
+        <item value="1">Monday</item>
+        <item value="2">Tuesday</item>
+        <item value="3">Wednesday</item>
+        <item value="4">Thursday</item>
+        <item value="5">Friday</item>
+        <item value="6">Saturday</item>
+        <item value="7">Sunday</item>
+    </string-array>
+
     <string-array name="spinner_default">
         <item value="-99">Choose Item</item>
     </string-array>
@@ -148,8 +159,11 @@
     <string name="form_title_food_type">Food Type</string>
     <string name="form_title_food_category">Food Category</string>
     <string name="message_photo_is_require">Please Add Photo</string>
+
+    <string name="message_data_will_uploaded">Data will be uploaded to database</string>
     <string name="message_data_will_updated">Data will be updated</string>
     <string name="message_data_will_deleted">Data will be deleted</string>
+
     <string name="message_please_check_your_data">Please make sure the data to be uploaded is correct</string>
     <string name="title_restaurant_food_category">Restaurant Food Category</string>
     <string name="title_food_type">Food Type</string>
@@ -159,5 +173,23 @@
     <string name="title_change_location">Change Location</string>
     <string name="message_resto_update_address">This action will updating your address</string>
     <string name="message_please_check_your_input">Please Check Your Input</string>
+    <string name="title_day">Day</string>
+    <string name="title_add_operating_hour">Add Operating Hour</string>
+    <string name="title_manage_operating_hour">Operating Hour</string>
+    <string name="hint_close_hour">Close Hour</string>
+    <string name="hint_start_hour">Start Hour</string>
+    <string name="message_error_time_format_24_hour">Please fill with 00:00 24 hour format</string>
+    <string name="message_time_close_must_greater_than_open">Close Time must be greater than opening time</string>
+    <string name="message_please_choose_day">Please choose day</string>
+
+    <string name="day_sunday">Sunday</string>
+    <string name="day_saturday">Saturday</string>
+    <string name="day_friday">Friday</string>
+    <string name="day_monday">Monday</string>
+    <string name="day_tuesday">Tuesday</string>
+    <string name="day_thursday">Thursday</string>
+    <string name="day_wednesday">Wednesday</string>
+    <string name="title_change_operating_hour">Change Operating Hour</string>
+    <string name="title_error">Error</string>
 
 </resources>

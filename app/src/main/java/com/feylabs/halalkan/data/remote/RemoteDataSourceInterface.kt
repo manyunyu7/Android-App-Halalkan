@@ -17,6 +17,7 @@ import com.feylabs.halalkan.data.remote.reqres.order.resto.OrderByRestoPaginatio
 import com.feylabs.halalkan.data.remote.reqres.prayertime.PrayerTimeAladhanSingleDateResponse
 import com.feylabs.halalkan.data.remote.reqres.resto.*
 import com.feylabs.halalkan.data.remote.reqres.resto.food.FoodModelResponse
+import com.feylabs.halalkan.data.remote.reqres.resto.operating_hour.RestoOperatingHourResponse
 import com.feylabs.halalkan.data.remote.reqres.resto.update.UpdateRestoColumnResponse
 import com.feylabs.halalkan.data.remote.reqres.translator.TiktokTextToSpeechResponse
 import com.feylabs.halalkan.data.remote.reqres.translator.TranslateResponse
@@ -153,5 +154,26 @@ interface RemoteDataSourceInterface {
         lat: Double,
         long: Double,
         address: String
+    ): Response<GeneralApiResponse>
+
+    suspend fun createRestoOperatingHour(
+        restoId: String,
+        dayCode: Int,
+        startHour: String,
+        endHour: String
+    ): Response<GeneralApiResponse>
+
+    suspend fun getRestoOperatingHour(restoId: String): Response<RestoOperatingHourResponse>
+    suspend fun updateRestoOperatingHour(
+        hourId: String,
+        restoId: String,
+        dayCode: Int,
+        startHour: String,
+        endHour: String
+    ): Response<GeneralApiResponse>
+
+    suspend fun deleteRestoOperatingHour(
+        hourId: String,
+        restoId: String
     ): Response<GeneralApiResponse>
 }
