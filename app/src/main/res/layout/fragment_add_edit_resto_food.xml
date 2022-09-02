@@ -42,7 +42,7 @@
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@id/btn_back"
                     android:fontFamily="@font/poppins_medium"
-                    android:text="@string/title_add_new_food"
+                    android:text="@string/title_manage_food"
                     android:textAlignment="textEnd"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
@@ -107,7 +107,6 @@
                 layout="@layout/customview_item_photo_container_preview"/>
 
 
-
             <TextView
                 android:layout_marginTop="@dimen/dimen_20dp"
                 android:layout_width="match_parent"
@@ -168,17 +167,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/open_sans_regular"
-                android:text="@string/form_title_food_type"
+                android:text="@string/title_restaurant_food_category"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
 
             <androidx.appcompat.widget.AppCompatSpinner
-                android:id="@+id/spinner_type_food"
+                android:id="@+id/spinner_restaurant_food_category"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/dimen_10dp"
                 android:layout_marginTop="@dimen/dimen_10dp"
-                android:entries="@array/array_type_registrant" />
+               />
 
             <TextView
                 android:layout_marginTop="@dimen/dimen_10dp"
@@ -186,7 +185,7 @@
                 android:layout_height="wrap_content"
                 android:paddingTop="@dimen/dimen_10dp"
                 android:fontFamily="@font/open_sans_regular"
-                android:text="@string/form_title_food_category"
+                android:text="@string/title_food_type"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
 
@@ -196,21 +195,35 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/dimen_10dp"
                 android:layout_marginTop="@dimen/dimen_10dp"
-                android:layout_marginBottom="@dimen/dimen_20dp"
-                android:entries="@array/array_type_registrant" />
+                android:layout_marginBottom="@dimen/dimen_20dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_delete_food"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/uikit_red"
+                app:strokeColor="@color/uikit_red"
+                android:visibility="gone"
+                tools:visibility="visible"
+                android:layout_marginBottom="@dimen/dimen_10dp"
+                android:layout_marginStart="@dimen/dimen_10dp"
+                android:layout_marginTop="@dimen/dimen_10dp"
+                android:text="@string/title_delete_food"
+                app:cornerRadius="@dimen/dimen_20dp"
+                />
 
         </LinearLayout>
 
     </ScrollView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/btn_register"
+        android:id="@+id/btn_save"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_margin="20dp"
         android:backgroundTint="@color/gray70"
-        android:contentDescription="Button Add Report"
         android:src="@drawable/ic_baseline_keyboard_arrow_right_24"
         app:fabSize="normal"
         app:layout_constraintBottom_toBottomOf="parent"

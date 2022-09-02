@@ -1,11 +1,14 @@
 package com.feylabs.halalkan.data.remote.reqres.resto.food
 
+import android.os.Parcelable
 import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 import java.text.DecimalFormat
 import java.text.NumberFormat
 
 @Keep
+@Parcelize
 data class FoodModelResponse(
     @SerializedName("category_id")
     var categoryId: Int = 0,
@@ -40,7 +43,7 @@ data class FoodModelResponse(
     var isOrdered: Boolean = false,
     var orderedQuantity: Int = 0,
     var notes: String = "",
-){
+) : Parcelable {
     fun getFormattedPrice(): String {
         val formatter: NumberFormat = DecimalFormat("#,###")
         val myNumber = this.price

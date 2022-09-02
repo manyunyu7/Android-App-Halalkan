@@ -4,10 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import com.feylabs.halalkan.R
 import com.feylabs.halalkan.data.remote.QumparanResource.*
 import com.feylabs.halalkan.data.remote.reqres.resto.FoodCategoryResponse
+import com.feylabs.halalkan.data.remote.reqres.resto.food.FoodModelResponse
 import com.feylabs.halalkan.databinding.FragmentXrestoFoodBinding
 import com.feylabs.halalkan.utils.base.BaseFragment
 import com.feylabs.halalkan.view.resto.admin_resto.AdminRestoViewModel
@@ -42,6 +44,16 @@ class ManageFoodFragment : BaseFragment() {
             adapter = categoryAdapter
             layoutManager = setLayoutManagerHorizontal()
         }
+
+
+        foodAdapter.setupAdapterInterface(object : RestoFoodAdapter.ItemInterface {
+            override fun onclick(model: FoodModelResponse) {
+                findNavController().navigate(
+                    R.id.navigation_addEditFoodFragment,
+                    bundleOf("food" to model, "foodId" to model.id.toString())
+                )
+            }
+        })
 
         categoryAdapter.setupAdapterInterface(object : FoodCategoryAdapter.ItemInterface {
             override fun onclick(model: FoodCategoryResponse.FoodCategoryResponseItem) {
@@ -233,7 +245,6 @@ class ManageFoodFragment : BaseFragment() {
             binding.loadingListFood.makeGone()
         }
     }
-
 
 
 }

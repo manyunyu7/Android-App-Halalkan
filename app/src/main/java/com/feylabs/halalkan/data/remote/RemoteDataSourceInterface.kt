@@ -16,6 +16,7 @@ import com.feylabs.halalkan.data.remote.reqres.order.history.OrderHistoryRespons
 import com.feylabs.halalkan.data.remote.reqres.order.resto.OrderByRestoPaginationResponse
 import com.feylabs.halalkan.data.remote.reqres.prayertime.PrayerTimeAladhanSingleDateResponse
 import com.feylabs.halalkan.data.remote.reqres.resto.*
+import com.feylabs.halalkan.data.remote.reqres.resto.food.FoodModelResponse
 import com.feylabs.halalkan.data.remote.reqres.resto.update.UpdateRestoColumnResponse
 import com.feylabs.halalkan.data.remote.reqres.translator.TiktokTextToSpeechResponse
 import com.feylabs.halalkan.data.remote.reqres.translator.TranslateResponse
@@ -132,5 +133,18 @@ interface RemoteDataSourceInterface {
         name: String?,
         price: Int?,
         image: RequestBody
+    ): Response<GeneralApiResponse?>?
+
+    suspend fun deleteFood(foodId: String): Response<GeneralApiResponse>
+    suspend fun getFoodDetail(foodId: String): Response<FoodModelResponse>
+    suspend fun editRestoFood(
+        foodId: String,
+        typeFoodId: Int?,
+        categoryId: Int?,
+        restoran_id: Int?,
+        description: String?,
+        name: String?,
+        price: Int?,
+        image: RequestBody?
     ): Response<GeneralApiResponse?>?
 }

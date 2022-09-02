@@ -12,14 +12,17 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
+import androidx.navigation.fragment.findNavController
 import com.feylabs.halalkan.R
 import com.feylabs.halalkan.customview.RazkyGalleryActivity
 import com.feylabs.halalkan.customview.imagepreviewcontainer.CustomViewPhotoModel
 import com.feylabs.halalkan.data.remote.QumparanResource.*
-import com.feylabs.halalkan.data.remote.reqres.resto.AllRestoNoPagination
-import com.feylabs.halalkan.data.remote.reqres.resto.RestoDetailResponse
+import com.feylabs.halalkan.data.remote.reqres.resto.food.FoodModelResponse
 import com.feylabs.halalkan.databinding.FragmentAddEditRestoFoodBinding
+import com.feylabs.halalkan.utils.DialogUtils
 import com.feylabs.halalkan.utils.ImageViewUtils.loadImage
+import com.feylabs.halalkan.utils.ImageViewUtils.loadImageFromURL
+import com.feylabs.halalkan.utils.StringUtil.orMuskoEmpty
 import com.feylabs.halalkan.utils.base.BaseFragment
 import com.feylabs.halalkan.utils.snackbar.SnackbarType
 import com.feylabs.halalkan.view.resto.admin_resto.AdminRestoViewModel
@@ -41,26 +44,36 @@ class AddEditFoodFragment : BaseFragment() {
     val viewModel by viewModel<AdminRestoViewModel>()
     private val PERMISSION_CODE_STORAGE = 1001
 
-    private var mapCert = mutableMapOf<String, String>()
-    private var mapFoodType = mutableMapOf<String, String>()
+    private var mapFoodGlobalType = mutableMapOf<String, Int>()
+    private var mapFoodCategory = mutableMapOf<String, Int>()
 
     var coverPhoto: File? = null
 
 
     override fun initUI() {
+        if (isEdit()){
+            binding.btnDeleteFood.makeVisible()
+        }
     }
 
     override fun initObserver() {
-        viewModel.getDetailResto(getRestoId())
-        viewModel.myRestoLiveData.observe(viewLifecycleOwner) {
+
+        viewModel.foodDetailLiveData.observe(viewLifecycleOwner) {
             when (it) {
-                is Default -> {}
-                is Error -> {
-                    showSnackbar(it.message.toString(), SnackbarType.ERROR)
+                is Default -> {
                 }
-                is Loading -> {}
+                is Error -> {
+                    showSnackbar(it.message.toString(),SnackbarType.ERROR)
+                    showLoading(false)
+                }
+                is Loading -> {
+                    showLoading(true)
+                }
                 is Success -> {
-                    setupRestoData(it.data)
+                    it.data?.let {
+                        setupFoodData(it)
+                    }
+                    showLoading(false)
                 }
             }
         }
@@ -69,26 +82,32 @@ class AddEditFoodFragment : BaseFragment() {
             when (it) {
                 is Default -> {}
                 is Error -> {
+                    showLoading(false)
                     showSnackbar(it.message.toString(), SnackbarType.ERROR)
                 }
                 is Loading -> {
+                    showLoading(true)
                 }
                 is Success -> {
+                    if (isEdit()) {
+                        viewModel.getFoodDetail(getFoodId())
+                    }
+                    showLoading(false)
                     val spinnerArray: MutableList<String> = mutableListOf()
                     it.data?.forEachIndexed { index, data ->
                         spinnerArray.add(data.name)
-                        mapFoodType.put(data.name, data.id.toString())
+                        mapFoodCategory.put(data.name, data.id)
                     }
                     val adapter: ArrayAdapter<String> = ArrayAdapter<String>(
                         requireContext(), android.R.layout.simple_spinner_item, spinnerArray
                     )
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                    binding.spinnerTypeFood.adapter = adapter
+                    binding.spinnerRestaurantFoodCategory.adapter = adapter
                 }
             }
         }
 
-        viewModel.certLiveData.observe(viewLifecycleOwner) {
+        viewModel.foodTypeLiveData.observe(viewLifecycleOwner) {
             when (it) {
                 is Default -> {}
                 is Error -> {
@@ -97,12 +116,16 @@ class AddEditFoodFragment : BaseFragment() {
                 is Loading -> {
                 }
                 is Success -> {
+                    //load next data
+                    viewModel.getFoodCategoryOnResto(getChoosenResto())
+
+
                     val spinnerArray: MutableList<String> = mutableListOf()
-                    it.data?.forEachIndexed { index, restaurantCertificationItem ->
-                        spinnerArray.add(restaurantCertificationItem.name)
-                        mapCert.put(
-                            restaurantCertificationItem.name,
-                            restaurantCertificationItem.id.toString()
+                    it.data?.forEachIndexed { index, foodType ->
+                        spinnerArray.add(foodType.name)
+                        mapFoodGlobalType.put(
+                            foodType.name,
+                            foodType.id
                         )
                     }
 
@@ -116,21 +139,87 @@ class AddEditFoodFragment : BaseFragment() {
             }
         }
 
-        viewModel.createFoodLiveData.observe(viewLifecycleOwner) {
+        viewModel.createUpdateFoodLiveData.observe(viewLifecycleOwner) {
             when (it) {
                 is Default -> {}
                 is Error -> {
+                    showLoading(false)
                     showSnackbar(it.message.toString(), SnackbarType.ERROR)
                 }
-                is Loading -> {}
+                is Loading -> {
+                    showLoading(true)
+                }
                 is Success -> {
-                    it.data?.let {
-                    }
+                    showLoading(false)
+                    DialogUtils.showSuccessDialog(
+                        context = requireContext(),
+                        title = getString(R.string.title_success),
+                        message = getSuccessMessage(),
+                        positiveAction = Pair("OK") {
+                            findNavController().navigateUp()
+                        },
+                        autoDismiss = true,
+                        buttonAllCaps = false
+                    )
                 }
             }
         }
     }
 
+    private fun getSuccessMessage(): String {
+        return if (isEdit()) {
+            getString(R.string.message_data_updated_succesfully)
+        } else {
+            getString(R.string.message_data_created_succesfully)
+        }
+    }
+
+    private fun setupFoodData(data: FoodModelResponse) {
+        binding.etName.setText(data.name)
+        binding.etDesc.setText(data.description)
+        binding.etPrice.setText(data.price.toInt().toString())
+
+        binding.includePhotoPreview.photo.loadImageFromURL(
+            requireContext(), data.imgFullPath
+        )
+
+
+        val adapterSpinnerGeneral = binding.spinnerGeneralCategory.adapter
+        for (i in 0 until adapterSpinnerGeneral.count) {
+            if (adapterSpinnerGeneral.getItem(i).toString()==data.typeFoodName){
+                binding.spinnerGeneralCategory.setSelection(i)
+            }
+        }
+
+
+        val adapterSpinnerFoodCategory = binding.spinnerRestaurantFoodCategory.adapter
+        for (i in 0 until adapterSpinnerFoodCategory.count) {
+            if (adapterSpinnerFoodCategory.getItem(i).toString()==data.categoryName){
+                binding.spinnerRestaurantFoodCategory.setSelection(i)
+            }
+        }
+
+
+
+
+    }
+
+    private fun showLoading(b: Boolean) {
+        if (b) {
+            binding.loadingAnim.makeVisible()
+        } else {
+            binding.loadingAnim.makeGone()
+        }
+    }
+
+    private fun isEdit(): Boolean {
+        return (getFoodId() == "").not()
+    }
+
+    private fun getFoodId(): String {
+        val foodId = arguments?.getString("foodId").orMuskoEmpty("")
+        return foodId
+    }
 
 
     private fun getScreenType(): String {
@@ -144,52 +233,22 @@ class AddEditFoodFragment : BaseFragment() {
     }
 
     override fun initAction() {
-        binding.apply {
-            listOf(etName,etDesc,).forEachIndexed { index, editText ->
-                editText.addTextChangedListener {
-                    if(it.toString().isNotEmpty()){
-                        editText.error=null
-                    }
-                }
-            }
-        }
-        binding.btnRegister.setOnClickListener {
-            var message = ""
-            var isError = false
-
-            val name = binding.etName.text.toString()
-            val desc = binding.etDesc.text.toString()
-            val price = binding.etPrice.text.toString()
-            val category = mapCert[binding.spinnerGeneralCategory.selectedItem]?.toIntOrNull() ?: -99
-            val foodType = mapFoodType[binding.spinnerTypeFood.selectedItem]?.toIntOrNull() ?: -99
-
-            if (name.isEmpty()){
-                isError=true
-                binding.etName.error=getString(R.string.required_column)
-            }
-
-            if (desc.isBlank()){
-                isError=true
-                binding.etDesc.error=getString(R.string.required_column)
-            }
-
-            if (coverPhoto==null){
-                isError=true
-                showSnackbar(getString(R.string.message_photo_is_require),SnackbarType.ERROR)
-            }
-
-            if (isError.not() && coverPhoto!=null){
-                viewModel.createFood(
-                    typeFoodId = foodType,
-                    categoryId = category,
-                    restoran_id = getChoosenResto().toIntOrNull(),
-                    description = desc,
-                    name = name,
-                    price =  price.toIntOrNull()?:0,
-                    coverPhoto!!
-                )
-            }
-
+        binding.btnDeleteFood.setOnClickListener {
+            DialogUtils.showConfirmationDialog(
+                context = requireContext(),
+                title = getString(R.string.label_are_you_sure),
+                message = getString(R.string.message_data_will_deleted),
+                positiveAction = Pair("OK") {
+                    viewModel.deleteFood(
+                        foodId = getFoodId(),
+                    )
+                },
+                negativeAction = Pair(
+                    getString(R.string.title_no),
+                    { showToast(getString(R.string.label_canceled)) }),
+                autoDismiss = true,
+                buttonAllCaps = false
+            )
         }
 
         binding.includePhotoPreview.apply {
@@ -201,7 +260,7 @@ class AddEditFoodFragment : BaseFragment() {
             }
 
             btnDelete.setOnClickListener {
-                coverPhoto=null
+                coverPhoto = null
                 binding.includePhotoPreview.photo.loadImage(
                     requireContext(), R.drawable.bg_header_daylight
                 )
@@ -210,11 +269,96 @@ class AddEditFoodFragment : BaseFragment() {
             }
         }
 
+        binding.apply {
+            listOf(etName, etDesc).forEachIndexed { index, editText ->
+                editText.addTextChangedListener {
+                    if (it.toString().isNotEmpty()) {
+                        editText.error = null
+                    }
+                }
+            }
+        }
+
+        binding.btnSave.setOnClickListener {
+            var isError = false
+
+            val name = binding.etName.text.toString()
+            val desc = binding.etDesc.text.toString()
+            val price = binding.etPrice.text.toString()
+            val category = mapFoodCategory[binding.spinnerRestaurantFoodCategory.selectedItem] ?: -99
+            val foodType = mapFoodGlobalType[binding.spinnerGeneralCategory.selectedItem] ?: -99
+
+            if (name.isEmpty()) {
+                isError = true
+                binding.etName.error = getString(R.string.required_column)
+            }
+
+            if (desc.isBlank()) {
+                isError = true
+                binding.etDesc.error = getString(R.string.required_column)
+            }
+
+            if (coverPhoto == null && isEdit().not()) {
+                isError = true
+                showSnackbar(getString(R.string.message_photo_is_require), SnackbarType.ERROR)
+            }
+
+
+            if (isError.not()) {
+                if (isEdit()) {
+                    DialogUtils.showConfirmationDialog(
+                        context = requireContext(),
+                        title = getString(R.string.label_are_you_sure),
+                        message = getString(R.string.message_data_will_updated),
+                        positiveAction = Pair("OK") {
+                            viewModel.updateFood(
+                                foodId = getFoodId(),
+                                typeFoodId = foodType,
+                                categoryId = category,
+                                restoran_id = getChoosenResto().toInt(),
+                                description = desc,
+                                name = name,
+                                price = price.toIntOrNull() ?: 0,
+                                coverPhoto
+                            )
+                        },
+                        negativeAction = Pair(
+                            getString(R.string.title_no),
+                            { showToast(getString(R.string.label_canceled)) }),
+                        autoDismiss = true,
+                        buttonAllCaps = false
+                    )
+                } else {
+                    DialogUtils.showConfirmationDialog(
+                        context = requireContext(),
+                        title = getString(R.string.label_are_you_sure),
+                        message = getString(R.string.message_please_check_your_data),
+                        positiveAction = Pair("OK") {
+                            viewModel.createFood(
+                                typeFoodId = foodType,
+                                categoryId = category,
+                                restoran_id = getChoosenResto().toIntOrNull(),
+                                description = desc,
+                                name = name,
+                                price = price.toIntOrNull() ?: 0,
+                                coverPhoto!!
+                            )
+                        },
+                        negativeAction = Pair(
+                            getString(R.string.title_no),
+                            { showToast(getString(R.string.label_canceled)) }),
+                        autoDismiss = true,
+                        buttonAllCaps = false
+                    )
+                }
+            }
+
+        }
+
     }
 
     override fun initData() {
-        viewModel.getRestoCert()
-        viewModel.getFoodCategoryOnResto(getChoosenResto())
+        viewModel.getFoodType()
     }
 
     private fun askPhotoPermission() {
@@ -262,10 +406,6 @@ class AddEditFoodFragment : BaseFragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    private fun setupRestoData(data: AllRestoNoPagination?) {
-
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

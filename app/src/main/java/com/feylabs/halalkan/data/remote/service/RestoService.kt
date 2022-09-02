@@ -12,6 +12,7 @@ import com.feylabs.halalkan.data.remote.reqres.order.OrderStatusResponse
 import com.feylabs.halalkan.data.remote.reqres.order.history.OrderHistoryResponse
 import com.feylabs.halalkan.data.remote.reqres.order.resto.OrderByRestoPaginationResponse
 import com.feylabs.halalkan.data.remote.reqres.resto.*
+import com.feylabs.halalkan.data.remote.reqres.resto.food.FoodModelResponse
 import com.feylabs.halalkan.data.remote.reqres.resto.update.UpdateRestoColumnResponse
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
@@ -110,6 +111,29 @@ interface RestoService {
         @Part("name") name: String?,
         @Part("price") price: Int?,
     ): Response<GeneralApiResponse?>?
+
+    @Multipart
+    @POST("foods/editFood/{foodId}")
+    suspend fun editFood(
+        @Path("foodId") foodId: String,
+        @Part("image\"; filename=\"image") file: RequestBody?,
+        @Part("type_food_id") typeFoodId: Int?,
+        @Part("category_id") categoryId: Int?,
+        @Part("restoran_id") restoran_id: Int?,
+        @Part("description") description: String?,
+        @Part("name") name: String?,
+        @Part("price") price: Int?,
+    ): Response<GeneralApiResponse?>?
+
+    @GET("foods/{id}/detail")
+    suspend fun getFoodDetail(
+        @Path("id") foodId: String,
+    ): Response<FoodModelResponse>
+
+    @DELETE("foods/deleteFood/{id}")
+    suspend fun deleteFood(
+        @Path("id") foodId: String,
+    ): Response<GeneralApiResponse>
 
     ///user order
     @POST("fe/orders/carts/createCart/{restoId}")

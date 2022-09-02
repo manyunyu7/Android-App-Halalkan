@@ -20,6 +20,7 @@ import com.feylabs.halalkan.data.remote.reqres.order.history.OrderHistoryRespons
 import com.feylabs.halalkan.data.remote.reqres.order.resto.OrderByRestoPaginationResponse
 import com.feylabs.halalkan.data.remote.reqres.prayertime.PrayerTimeAladhanSingleDateResponse
 import com.feylabs.halalkan.data.remote.reqres.resto.*
+import com.feylabs.halalkan.data.remote.reqres.resto.food.FoodModelResponse
 import com.feylabs.halalkan.data.remote.reqres.resto.update.UpdateRestoColumnResponse
 import com.feylabs.halalkan.data.remote.service.*
 import com.feylabs.halalkan.utils.Network
@@ -156,6 +157,29 @@ class RemoteDataSource(
         body: RequestBody
     ): Response<ResponseBody?>? {
         return restoService.createRestoFoodCategory(body, id)
+    }
+
+    override suspend fun deleteFood(foodId: String): Response<GeneralApiResponse> =
+        restoService.deleteFood(foodId)
+
+    override suspend fun getFoodDetail(foodId: String): Response<FoodModelResponse> =
+        restoService.getFoodDetail(foodId)
+
+    override suspend fun editRestoFood(
+        foodId: String,
+        typeFoodId: Int?,
+        categoryId: Int?,
+        restoran_id: Int?,
+        description: String?,
+        name: String?,
+        price: Int?,
+        image: RequestBody?
+    ): Response<GeneralApiResponse?>? {
+        return restoService.editFood(
+            foodId,
+            file = image,
+            typeFoodId, categoryId, restoran_id, description, name, price
+        )
     }
 
     override suspend fun createRestoFood(

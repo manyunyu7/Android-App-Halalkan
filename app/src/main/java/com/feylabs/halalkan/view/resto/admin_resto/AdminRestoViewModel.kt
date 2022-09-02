@@ -7,6 +7,7 @@ import com.feylabs.halalkan.data.remote.QumparanResource
 import com.feylabs.halalkan.data.remote.RemoteDataSource
 import com.feylabs.halalkan.data.remote.reqres.GeneralApiResponse
 import com.feylabs.halalkan.data.remote.reqres.resto.*
+import com.feylabs.halalkan.data.remote.reqres.resto.food.FoodModelResponse
 import com.feylabs.halalkan.data.remote.reqres.resto.update.UpdateRestoColumnResponse
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -73,9 +74,13 @@ class AdminRestoViewModel(
         MutableLiveData<QumparanResource<ResponseBody?>>()
     val createRestoLiveData get() = _createRestoLiveData
 
-    private var _createFoodLiveData =
+    private var _createUpdateFoodLiveData =
         MutableLiveData<QumparanResource<GeneralApiResponse?>>()
-    val createFoodLiveData get() = _createFoodLiveData
+    val createUpdateFoodLiveData get() = _createUpdateFoodLiveData
+
+    private var _foodDetailLiveData =
+        MutableLiveData<QumparanResource<FoodModelResponse?>>()
+    val foodDetailLiveData get() = _foodDetailLiveData
 
     private var _createRestoFoodCategoryLiveData =
         MutableLiveData<QumparanResource<ResponseBody?>>()
@@ -169,7 +174,7 @@ class AdminRestoViewModel(
         file: File
     ) {
         viewModelScope.launch {
-            _createFoodLiveData.postValue(QumparanResource.Loading())
+            _createUpdateFoodLiveData.postValue(QumparanResource.Loading())
             val fBody: RequestBody = file.asRequestBody("image/jpeg".toMediaTypeOrNull())
             try {
                 val req = ds.createRestoFood(
@@ -183,20 +188,64 @@ class AdminRestoViewModel(
                 )
                 req?.let {
                     if (req.isSuccessful) {
-                        _createFoodLiveData.postValue(QumparanResource.Success(req.body()))
+                        _createUpdateFoodLiveData.postValue(QumparanResource.Success(req.body()))
                     } else {
                         var message = req.message().toString()
                         req.errorBody()?.let {
                             val jsonObj = JSONObject(it.charStream().readText())
                             message = jsonObj.getString("message")
                         }
-                        _createFoodLiveData.postValue(QumparanResource.Error(message))
+                        _createUpdateFoodLiveData.postValue(QumparanResource.Error(message))
                     }
                 } ?: run {
-                    _createFoodLiveData.postValue(QumparanResource.Error("Null"))
+                    _createUpdateFoodLiveData.postValue(QumparanResource.Error("Null"))
                 }
             } catch (e: Exception) {
-                _createFoodLiveData.postValue(QumparanResource.Error(e.message.toString()))
+                _createUpdateFoodLiveData.postValue(QumparanResource.Error(e.message.toString()))
+            }
+        }
+    }
+
+    fun updateFood(
+        foodId: String,
+        typeFoodId: Int,
+        categoryId: Int,
+        restoran_id: Int,
+        description: String,
+        name: String,
+        price: Int,
+        file: File?
+    ) {
+        viewModelScope.launch {
+            _createUpdateFoodLiveData.postValue(QumparanResource.Loading())
+            val fBody: RequestBody? = file?.asRequestBody("image/jpeg".toMediaTypeOrNull())
+            try {
+                val req = ds.editRestoFood(
+                    foodId = foodId,
+                    typeFoodId = typeFoodId,
+                    categoryId = categoryId,
+                    restoran_id = restoran_id,
+                    description = description,
+                    name = name,
+                    price = price,
+                    image = fBody
+                )
+                req?.let {
+                    if (req.isSuccessful) {
+                        _createUpdateFoodLiveData.postValue(QumparanResource.Success(req.body()))
+                    } else {
+                        var message = req.message().toString()
+                        req.errorBody()?.let {
+                            val jsonObj = JSONObject(it.charStream().readText())
+                            message = jsonObj.getString("message")
+                        }
+                        _createUpdateFoodLiveData.postValue(QumparanResource.Error(message))
+                    }
+                } ?: run {
+                    _createUpdateFoodLiveData.postValue(QumparanResource.Error("Null"))
+                }
+            } catch (e: Exception) {
+                _createUpdateFoodLiveData.postValue(QumparanResource.Error(e.message.toString()))
             }
         }
     }
@@ -348,6 +397,46 @@ class AdminRestoViewModel(
                 }
             } catch (e: Exception) {
                 _foodTypeLiveData.postValue(QumparanResource.Error(e.message.toString()))
+            }
+        }
+    }
+
+    fun getFoodDetail(foodId:String) {
+        _foodDetailLiveData.postValue(QumparanResource.Loading())
+        viewModelScope.launch {
+            try {
+                val res = ds.getFoodDetail(foodId)
+                if (res.isSuccessful) {
+                    _foodDetailLiveData.postValue(QumparanResource.Success(res.body()))
+                } else {
+                    _foodDetailLiveData.postValue(
+                        QumparanResource.Error(
+                            res.errorBody().toString()
+                        )
+                    )
+                }
+            } catch (e: Exception) {
+                _foodDetailLiveData.postValue(QumparanResource.Error(e.message.toString()))
+            }
+        }
+    }
+
+    fun deleteFood(foodId:String) {
+        _createUpdateFoodLiveData.postValue(QumparanResource.Loading())
+        viewModelScope.launch {
+            try {
+                val res = ds.deleteFood(foodId)
+                if (res.isSuccessful) {
+                    _createUpdateFoodLiveData.postValue(QumparanResource.Success(res.body()))
+                } else {
+                    _createUpdateFoodLiveData.postValue(
+                        QumparanResource.Error(
+                            res.errorBody().toString()
+                        )
+                    )
+                }
+            } catch (e: Exception) {
+                _createUpdateFoodLiveData.postValue(QumparanResource.Error(e.message.toString()))
             }
         }
     }

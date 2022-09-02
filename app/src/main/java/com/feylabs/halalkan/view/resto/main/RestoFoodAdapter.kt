@@ -159,7 +159,7 @@ class RestoFoodAdapter(
             if ( userRole==1 || userRole ==3){
                 binding.btnOrder.makeGone()
                 binding.labelNotes.makeGone()
-                binding.tvNotes.text = model.categoryName.toString()
+                binding.tvNotes.text = model.categoryName.toString() + " - " + model.typeFoodName
             }
         }
 

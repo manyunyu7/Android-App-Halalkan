@@ -147,5 +147,12 @@
     <string name="form_title_food_type">Food Type</string>
     <string name="form_title_food_category">Food Category</string>
     <string name="message_photo_is_require">Please Add Photo</string>
+    <string name="message_data_will_updated">Data will be updated</string>
+    <string name="message_data_will_deleted">Data will be deleted</string>
+    <string name="message_please_check_your_data">Please make sure the data to be uploaded is correct</string>
+    <string name="title_restaurant_food_category">Restaurant Food Category</string>
+    <string name="title_food_type">Food Type</string>
+    <string name="title_delete_food">Delete Food</string>
+    <string name="title_manage_food">Manage Food</string>
 
 </resources>
