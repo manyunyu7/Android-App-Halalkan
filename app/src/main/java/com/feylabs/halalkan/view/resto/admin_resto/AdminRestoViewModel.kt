@@ -54,6 +54,10 @@ class AdminRestoViewModel(
         MutableLiveData<QumparanResource<GeneralApiResponse?>>()
     val createEditRestoOperatingHourLiveData get() = _createEditRestoOperatingHourLiveData
 
+    private var _editFoodAvailability =
+        MutableLiveData<QumparanResource<GeneralApiResponse?>>()
+    val editFoodAvailability get() = _editFoodAvailability
+
     //saved
     private var _allFoodLiveData =
         MutableLiveData<QumparanResource<AllFoodByRestoResponse?>>()
@@ -99,6 +103,10 @@ class AdminRestoViewModel(
         MutableLiveData<QumparanResource<ResponseBody?>>()
     val createRestoFoodCategoryLiveData get() = _createRestoFoodCategoryLiveData
 
+    private var _editRestoFoodCategoryLiveData =
+        MutableLiveData<QumparanResource<GeneralApiResponse?>>()
+    val editRestoFoodCategoryLiveData get() = _editRestoFoodCategoryLiveData
+
     fun addFoodCategoryForResto(
         name: String,
         restoId: String,
@@ -127,6 +135,91 @@ class AdminRestoViewModel(
                 }
             } catch (e: Exception) {
                 _createRestoFoodCategoryLiveData.postValue(QumparanResource.Error(e.message.toString()))
+            }
+        }
+    }
+
+    fun editFoodCategoryForResto(
+        name: String,
+        restoId: String,
+        categoryId: String,
+    ) {
+        viewModelScope.launch {
+            _editRestoFoodCategoryLiveData.postValue(QumparanResource.Loading())
+            try {
+                val req = ds.editRestoFoodCategory(
+                    id = categoryId, restoid = restoId, category_name = name
+                )
+                req?.let {
+                    if (req.isSuccessful) {
+                        _editRestoFoodCategoryLiveData.postValue(QumparanResource.Success(req.body()))
+                    } else {
+                        var message = req.message().toString()
+                        req.errorBody()?.let {
+                            val jsonObj = JSONObject(it.charStream().readText())
+                            message = jsonObj.getString("message")
+                        }
+                        _editRestoFoodCategoryLiveData.postValue(QumparanResource.Error(message))
+                    }
+                }
+            } catch (e: Exception) {
+                _editRestoFoodCategoryLiveData.postValue(QumparanResource.Error(e.message.toString()))
+            }
+        }
+    }
+
+    fun deleteFoodCategoryForResto(
+        categoryId: String,
+    ) {
+        viewModelScope.launch {
+            _editRestoFoodCategoryLiveData.postValue(QumparanResource.Loading())
+            try {
+                val req = ds.deleteRestoFoodCategory(
+                    id = categoryId
+                )
+                req?.let {
+                    if (req.isSuccessful) {
+                        _editRestoFoodCategoryLiveData.postValue(QumparanResource.Success(req.body()))
+                    } else {
+                        var message = req.message().toString()
+                        req.errorBody()?.let {
+                            val jsonObj = JSONObject(it.charStream().readText())
+                            message = jsonObj.getString("message")
+                        }
+                        _editRestoFoodCategoryLiveData.postValue(QumparanResource.Error(message))
+                    }
+                }
+            } catch (e: Exception) {
+                _editRestoFoodCategoryLiveData.postValue(QumparanResource.Error(e.message.toString()))
+            }
+        }
+    }
+
+    fun editFoodAvailability(
+        foodId: String,
+        isAvailable: Int,
+    ) {
+        viewModelScope.launch {
+            _editFoodAvailability.postValue(QumparanResource.Loading())
+            try {
+                val req = ds.updateFoodAvailability(
+                    id = foodId,
+                    isAvailable
+                )
+                req.let {
+                    if (req.isSuccessful) {
+                        _editFoodAvailability.postValue(QumparanResource.Success(req.body()))
+                    } else {
+                        var message = req.message().toString()
+                        req.errorBody()?.let {
+                            val jsonObj = JSONObject(it.charStream().readText())
+                            message = jsonObj.getString("message")
+                        }
+                        _editFoodAvailability.postValue(QumparanResource.Error(message))
+                    }
+                }
+            } catch (e: Exception) {
+                _editFoodAvailability.postValue(QumparanResource.Error(e.message.toString()))
             }
         }
     }
@@ -558,7 +651,13 @@ class AdminRestoViewModel(
         }
     }
 
-    fun updateRestoOperatingHour(hourId:String,restoId: String, dayCode: Int, start: String, end: String) {
+    fun updateRestoOperatingHour(
+        hourId: String,
+        restoId: String,
+        dayCode: Int,
+        start: String,
+        end: String
+    ) {
         viewModelScope.launch {
             _createEditRestoOperatingHourLiveData.postValue(QumparanResource.Loading())
             try {
@@ -585,7 +684,7 @@ class AdminRestoViewModel(
         }
     }
 
-    fun deleteRestoOperatingHour(hourId:String,restoId: String) {
+    fun deleteRestoOperatingHour(hourId: String, restoId: String) {
         viewModelScope.launch {
             _createEditRestoOperatingHourLiveData.postValue(QumparanResource.Loading())
             try {
@@ -607,6 +706,10 @@ class AdminRestoViewModel(
                 _createEditRestoOperatingHourLiveData.postValue(QumparanResource.Error(e.message.toString()))
             }
         }
+    }
+
+    fun fireEditRestoFoodCategory() {
+        _editRestoFoodCategoryLiveData.postValue(QumparanResource.Default())
     }
 
 

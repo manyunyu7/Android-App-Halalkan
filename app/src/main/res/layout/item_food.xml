@@ -84,6 +84,17 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <TextView
+                        android:id="@+id/tv_availability"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:drawablePadding="10dp"
+                        android:fontFamily="@font/poppins_regular"
+                        android:text=""
+                        android:textColor="@color/black"
+                        android:textSize="11sp" />
+
+                    <TextView
                         android:id="@+id/tv_price"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

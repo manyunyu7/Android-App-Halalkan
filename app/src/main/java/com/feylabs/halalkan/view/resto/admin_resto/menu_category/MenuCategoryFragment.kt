@@ -6,9 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.feylabs.halalkan.R
+import com.feylabs.halalkan.customview.bottomsheet.BottomSheetEditFoodCategory
+import com.feylabs.halalkan.customview.bottomsheet.BottomSheetOrderNotes
 import com.feylabs.halalkan.data.remote.QumparanResource.*
 import com.feylabs.halalkan.data.remote.reqres.resto.FoodCategoryResponse
 import com.feylabs.halalkan.databinding.FragmentXrestoCategoryBinding
+import com.feylabs.halalkan.utils.DialogUtils
 import com.feylabs.halalkan.utils.base.BaseFragment
 import com.feylabs.halalkan.utils.snackbar.SnackbarType
 import com.feylabs.halalkan.view.resto.admin_resto.AdminRestoViewModel
@@ -36,11 +39,78 @@ class MenuCategoryFragment : BaseFragment() {
 
         mAdapter.setupAdapterInterface(object : ManageFoodCategoryAdapter.ItemInterface {
             override fun onclick(model: FoodCategoryResponse.FoodCategoryResponseItem) {
+                showBottomSheetCategory(model.id.toString(), model.name.toString())
+            }
+
+            override fun onDelete(model: FoodCategoryResponse.FoodCategoryResponseItem) {
+                DialogUtils.showConfirmationDialog(
+                    context = requireContext(),
+                    title = getString(R.string.label_are_you_sure),
+                    message = getString(R.string.message_delete_food_category),
+                    positiveAction = Pair("OK") {
+                        viewModel.deleteFoodCategoryForResto(model.id.toString())
+                    },
+                    negativeAction = Pair(
+                        getString(R.string.title_no),
+                        { }),
+                    autoDismiss = true,
+                    buttonAllCaps = false
+                )
+            }
+
+            override fun onEdit(model: FoodCategoryResponse.FoodCategoryResponseItem) {
+                showBottomSheetCategory(model.id.toString(), model.name.toString())
             }
         })
     }
 
+    private fun showBottomSheetCategory(currentId: String, currentName: String) {
+        BottomSheetEditFoodCategory.instance(
+            onDismiss = {
+                viewModel.getFoodCategoryOnResto(getChoosenResto())
+            },
+            objectId = currentId,
+            restoId = getChoosenResto(),
+            currentName = currentName
+        ).show(getMFragmentManager(), BottomSheetOrderNotes().tag)
+    }
+
     override fun initObserver() {
+        viewModel.editRestoFoodCategoryLiveData.observe(viewLifecycleOwner) {
+            when (it) {
+                is Success -> {
+                    showLoading(false)
+                    DialogUtils.showSuccessDialog(
+                        context = requireContext(),
+                        title = getString(R.string.title_success),
+                        message = getString(R.string.message_data_will_deleted),
+                        positiveAction = Pair("OK") {
+                            viewModel.getFoodCategoryOnResto(getChoosenResto())
+                        },
+                        autoDismiss = true,
+                        buttonAllCaps = false
+                    )
+                    viewModel.fireEditRestoFoodCategory()
+                }
+                is Default -> {}
+                is Error -> {
+                    showLoading(false)
+                    DialogUtils.showErrorDialog(
+                        context = requireContext(),
+                        title = getString(R.string.title_error),
+                        message = it.message.toString(),
+                        positiveAction = Pair("OK") {
+                        },
+                        autoDismiss = true,
+                        buttonAllCaps = false
+                    )
+                    viewModel.fireEditRestoFoodCategory()
+                }
+                is Loading -> {
+                    showLoading(true)
+                }
+            }
+        }
         viewModel.foodCategoryLiveData.observe(viewLifecycleOwner) {
             when (it) {
                 is Success -> {
@@ -62,9 +132,9 @@ class MenuCategoryFragment : BaseFragment() {
     }
 
     private fun showLoading(b: Boolean) {
-        if(b){
+        if (b) {
             binding.loadingAnim.makeVisible()
-        }else{
+        } else {
             binding.loadingAnim.makeGone()
         }
     }

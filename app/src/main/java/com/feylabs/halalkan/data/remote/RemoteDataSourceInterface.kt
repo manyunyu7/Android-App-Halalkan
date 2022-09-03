@@ -193,4 +193,12 @@ interface RemoteDataSourceInterface {
     ): Response<RegisterResponse?>?
 
     suspend fun deleteDriver(driverId: String): Response<GeneralApiResponse>
+    suspend fun editRestoFoodCategory(
+        id: String,
+        restoid: String,
+        category_name: String
+    ): Response<GeneralApiResponse>
+
+    suspend fun deleteRestoFoodCategory(id: String): Response<GeneralApiResponse>
+    suspend fun updateFoodAvailability(id: String, isAvailable: Int): Response<GeneralApiResponse>
 }

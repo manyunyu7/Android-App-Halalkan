@@ -43,11 +43,18 @@ class ManageFoodCategoryAdapter : RecyclerView.Adapter<ManageFoodCategoryAdapter
                 R.anim.fade_transition_animation
             )
 
-            if (model.isActive)
 
             if (::adapterInterface.isInitialized) {
                 binding.root.setOnClickListener {
                     adapterInterface.onclick(model)
+                }
+
+                binding.btnDelete.setOnClickListener {
+                    adapterInterface.onDelete(model)
+                }
+
+                binding.btnEdit.setOnClickListener {
+                    adapterInterface.onEdit(model)
                 }
             }
             binding.tvTitle.text = model.name
@@ -70,5 +77,7 @@ class ManageFoodCategoryAdapter : RecyclerView.Adapter<ManageFoodCategoryAdapter
 
     interface ItemInterface {
         fun onclick(model: AdapterModel)
+        fun onDelete(model: AdapterModel)
+        fun onEdit(model: AdapterModel)
     }
 }

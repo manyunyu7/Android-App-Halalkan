@@ -47,7 +47,7 @@ class RemoteDataSource(
     suspend fun getUsers() = commonService.getUsers()
     suspend fun getMyProfile() = commonService.userProfile()
     suspend fun getUserProfile(id: String) = commonService.getUserProfile(id)
-    suspend fun resetUserPassword(id: String,newPassword:String) = commonService.resetPassword(
+    suspend fun resetUserPassword(id: String, newPassword: String) = commonService.resetPassword(
         userId = id, newPassword = newPassword
     )
 
@@ -161,6 +161,30 @@ class RemoteDataSource(
     ): Response<ResponseBody?>? {
         return restoService.createRestoFoodCategory(body, id)
     }
+
+    override suspend fun editRestoFoodCategory(
+        id: String,
+        restoid: String,
+        category_name: String
+    ) = restoService.editRestoFoodCategory(
+        restoId = restoid,
+        categoryName = category_name,
+        categoryId = id
+    )
+
+    override suspend fun deleteRestoFoodCategory(
+        id: String,
+    ) = restoService.deleteRestoFoodCategory(
+        categoryId = id
+    )
+
+    override suspend fun updateFoodAvailability(
+        id: String,
+        isAvailable: Int
+    ) = restoService.updateFoodAvailability(
+        id, isAvailable
+    )
+
 
     override suspend fun deleteFood(foodId: String): Response<GeneralApiResponse> =
         restoService.deleteFood(foodId)
@@ -418,7 +442,7 @@ class RemoteDataSource(
         phoneNumber: String,
         email: String,
         name: String,
-        password : String
+        password: String
     ) = restoService.addNewDriver(
         password = password,
         confirm_password = password,

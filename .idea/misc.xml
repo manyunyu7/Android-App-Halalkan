@@ -131,7 +131,7 @@
         <entry key="..\:/Users/Henry Augusta/Desktop/#PA/Android-App-Halalkan/app/src/main/res/layout/customview_item_photo_container_preview_small.xml" value="0.12083333333333333" />
         <entry key="..\:/Users/Henry Augusta/Desktop/#PA/Android-App-Halalkan/app/src/main/res/layout/customview_musko_menu_item.xml" value="0.33" />
         <entry key="..\:/Users/Henry Augusta/Desktop/#PA/Android-App-Halalkan/app/src/main/res/layout/customview_star_stats.xml" value="0.1375" />
-        <entry key="..\:/Users/Henry Augusta/Desktop/#PA/Android-App-Halalkan/app/src/main/res/layout/fragment_add_edit_category.xml" value="0.13405797101449277" />
+        <entry key="..\:/Users/Henry Augusta/Desktop/#PA/Android-App-Halalkan/app/src/main/res/layout/fragment_add_edit_category.xml" value="0.12" />
         <entry key="..\:/Users/Henry Augusta/Desktop/#PA/Android-App-Halalkan/app/src/main/res/layout/fragment_add_edit_food.xml" value="0.1" />
         <entry key="..\:/Users/Henry Augusta/Desktop/#PA/Android-App-Halalkan/app/src/main/res/layout/fragment_add_edit_resto.xml" value="0.14" />
         <entry key="..\:/Users/Henry Augusta/Desktop/#PA/Android-App-Halalkan/app/src/main/res/layout/fragment_add_edit_resto_food.xml" value="0.1" />
@@ -169,7 +169,7 @@
         <entry key="..\:/Users/Henry Augusta/Desktop/#PA/Android-App-Halalkan/app/src/main/res/layout/fragment_xresto_add_driver.xml" value="0.1" />
         <entry key="..\:/Users/Henry Augusta/Desktop/#PA/Android-App-Halalkan/app/src/main/res/layout/fragment_xresto_add_edit_driver.xml" value="0.1" />
         <entry key="..\:/Users/Henry Augusta/Desktop/#PA/Android-App-Halalkan/app/src/main/res/layout/fragment_xresto_add_menu.xml" value="0.12708333333333333" />
-        <entry key="..\:/Users/Henry Augusta/Desktop/#PA/Android-App-Halalkan/app/src/main/res/layout/fragment_xresto_category.xml" value="0.1" />
+        <entry key="..\:/Users/Henry Augusta/Desktop/#PA/Android-App-Halalkan/app/src/main/res/layout/fragment_xresto_category.xml" value="0.11" />
         <entry key="..\:/Users/Henry Augusta/Desktop/#PA/Android-App-Halalkan/app/src/main/res/layout/fragment_xresto_current.xml" value="0.1" />
         <entry key="..\:/Users/Henry Augusta/Desktop/#PA/Android-App-Halalkan/app/src/main/res/layout/fragment_xresto_edit_address.xml" value="0.12" />
         <entry key="..\:/Users/Henry Augusta/Desktop/#PA/Android-App-Halalkan/app/src/main/res/layout/fragment_xresto_edit_certification.xml" value="0.2" />
@@ -208,9 +208,12 @@
         <entry key="..\:/Users/Henry Augusta/Desktop/#PA/Android-App-Halalkan/app/src/main/res/layout/layout_bottom_nav_resto.xml" value="0.2" />
         <entry key="..\:/Users/Henry Augusta/Desktop/#PA/Android-App-Halalkan/app/src/main/res/layout/layout_bottom_nav_translator.xml" value="0.22" />
         <entry key="..\:/Users/Henry Augusta/Desktop/#PA/Android-App-Halalkan/app/src/main/res/layout/layout_bottom_sheet.xml" value="0.14" />
+        <entry key="..\:/Users/Henry Augusta/Desktop/#PA/Android-App-Halalkan/app/src/main/res/layout/layout_bottomsheet_change_food_availability.xml" value="0.15" />
         <entry key="..\:/Users/Henry Augusta/Desktop/#PA/Android-App-Halalkan/app/src/main/res/layout/layout_bottomsheet_choose_driver.xml" value="0.1" />
         <entry key="..\:/Users/Henry Augusta/Desktop/#PA/Android-App-Halalkan/app/src/main/res/layout/layout_bottomsheet_edit.xml" value="0.17" />
-        <entry key="..\:/Users/Henry Augusta/Desktop/#PA/Android-App-Halalkan/app/src/main/res/layout/layout_bottomsheet_edit_operating_hour.xml" value="0.1" />
+        <entry key="..\:/Users/Henry Augusta/Desktop/#PA/Android-App-Halalkan/app/src/main/res/layout/layout_bottomsheet_edit_food_category.xml" value="0.22" />
+        <entry key="..\:/Users/Henry Augusta/Desktop/#PA/Android-App-Halalkan/app/src/main/res/layout/layout_bottomsheet_edit_operating_hour.xml" value="0.14" />
+        <entry key="..\:/Users/Henry Augusta/Desktop/#PA/Android-App-Halalkan/app/src/main/res/layout/layout_bottomsheet_food_action.xml" value="0.12" />
         <entry key="..\:/Users/Henry Augusta/Desktop/#PA/Android-App-Halalkan/app/src/main/res/layout/layout_bottomsheet_general.xml" value="0.12" />
         <entry key="..\:/Users/Henry Augusta/Desktop/#PA/Android-App-Halalkan/app/src/main/res/layout/layout_bottomsheet_order_notes.xml" value="0.1" />
         <entry key="..\:/Users/Henry Augusta/Desktop/#PA/Android-App-Halalkan/app/src/main/res/layout/layout_bottomsheet_reject_order.xml" value="0.18" />

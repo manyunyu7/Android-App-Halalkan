@@ -53,6 +53,12 @@
         <item value="7">Sunday</item>
     </string-array>
 
+    <string-array name="array_avails">
+        <item value="0">Choose Availability</item>
+        <item value="1">Available</item>
+        <item value="2">Empty</item>
+    </string-array>
+
     <string-array name="spinner_default">
         <item value="-99">Choose Item</item>
     </string-array>
@@ -206,5 +212,17 @@
     <string name="message_please_check_input">Please check your input</string>
     <string name="form_hint_input_new_password">Input New Password</string>
     <string name="message_password_min_6">Password minimum length is 6</string>
+    <string name="title_change_category">Change Category</string>
+    <string name="form_hint_category_name">Fill new category name</string>
+    <string name="message_delete_food_category">All Food on this category should be empty before deleting category, continue ?</string>
+    <string name="title_food_category_name">Food Category Name</string>
+    <string name="form_hint_restaurant_category">Example : Drink, Noodle</string>
+    <string name="message_add_food_category">This category will be used for food grouping</string>
+    <string name="title_edit_stock">Edit Stock</string>
+    <string name="title_detail">Detail</string>
+    <string name="title_choose_action">Choose Action</string>
+    <string name="title_status">Status</string>
+    <string name="title_change_food_availability">Change Food Availability</string>
+    <string name="message_please_choose_avail_status_first">Please choose availability status first</string>
 
 </resources>

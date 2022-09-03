@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.feylabs.halalkan.R
@@ -18,8 +19,8 @@ import com.feylabs.halalkan.utils.resto.OrderLocalModel
 import com.feylabs.halalkan.utils.resto.OrderUtility
 import com.tangxiaolv.telegramgallery.Utils.AndroidUtilities.showToast
 
-enum class FoodAdapterType{
-    ADMIN,USER_ORDER,USER_REVIEW
+enum class FoodAdapterType {
+    ADMIN, USER_ORDER, USER_REVIEW
 }
 
 class RestoFoodAdapter(
@@ -64,7 +65,7 @@ class RestoFoodAdapter(
             }
 
             binding.btnNotes.setOnClickListener {
-                noteInterface.onclick(model,adapterPosition)
+                noteInterface.onclick(model, adapterPosition)
             }
 
             // check if menu is already inserted
@@ -116,7 +117,7 @@ class RestoFoodAdapter(
                             setToOrdered(false)
                             orderUtility.removeItem(model.id.toString())
 
-                            if(foodAdapterType == FoodAdapterType.USER_REVIEW){
+                            if (foodAdapterType == FoodAdapterType.USER_REVIEW) {
                                 data.removeAt(adapterPosition)
                                 notifyItemRemoved(adapterPosition)
                             }
@@ -146,17 +147,34 @@ class RestoFoodAdapter(
 
             val existing = orderUtility.getItem(model.id.toString())
             existing?.let {
-                if (it.notes.isNotEmpty()){
+                if (it.notes.isNotEmpty()) {
                     binding.containerNotes.makeVisible()
-                    binding.tvNotes.text=it.notes
-                }else{
+                    binding.tvNotes.text = it.notes
+                } else {
                     binding.containerNotes.makeGone()
                 }
             }
 
+            if (model.isVisible == 1) {
+                binding.tvAvailability.text = mContext.getString(R.string.title_available)
+                binding.tvAvailability.setTextColor(
+                    ContextCompat.getColor(
+                        mContext,
+                        R.color.uikit_green_light
+                    )
+                )
+            } else {
+                binding.tvAvailability.text = mContext.getString(R.string.title_unavailable)
+                binding.tvAvailability.setTextColor(
+                    ContextCompat.getColor(
+                        mContext,
+                        R.color.uikit_red_light
+                    )
+                )
+            }
 
             val userRole = (MyPreference(mContext).getUserRole()?.toIntOrNull() ?: -99)
-            if ( userRole==1 || userRole ==3){
+            if (userRole == 1 || userRole == 3) {
                 binding.btnOrder.makeGone()
                 binding.labelNotes.makeGone()
                 binding.tvNotes.text = model.categoryName.toString() + " - " + model.typeFoodName

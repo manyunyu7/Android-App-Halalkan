@@ -138,12 +138,30 @@ interface RestoService {
         @Path("restoId") restoId: String,
     ): Response<RestoOperatingHourResponse>
 
+    @GET("fe/foods/{foodId}/update-availability")
+    suspend fun updateFoodAvailability(
+        @Path("foodId") foodId: String,
+        @Query("is_visible") isAvailable: Int,
+    ): Response<GeneralApiResponse>
+
 
     @POST("foods/category/createCategory/{id}")
     suspend fun createRestoFoodCategory(
         @Body file: RequestBody?,
         @Path("id") restoId: String,
     ): Response<ResponseBody?>?
+
+    @PUT("foods/category/editCategory/{category_id}")
+    suspend fun editRestoFoodCategory(
+        @Path("category_id") categoryId: String,
+        @Query("resto_id") restoId: String,
+        @Query("name") categoryName: String,
+    ): Response<GeneralApiResponse>
+
+    @DELETE("foods/category/deleteCategory/{category_id}")
+    suspend fun deleteRestoFoodCategory(
+        @Path("category_id") categoryId: String,
+    ): Response<GeneralApiResponse>
 
     @Multipart
     @POST("foods/store")
@@ -155,6 +173,7 @@ interface RestoService {
         @Part("description") description: String?,
         @Part("name") name: String?,
         @Part("price") price: Int?,
+        @Part("is_visible") is_visible: Int = 1,
     ): Response<GeneralApiResponse?>?
 
     @Multipart
@@ -209,7 +228,7 @@ interface RestoService {
         @Path("orderId") orderId: String,
     ): Response<GeneralApiResponse>
 
-    @POST("orders/carts/approvedOrder/{orderId}")
+    @PUT("orders/carts/approvedOrder/{orderId}")
     suspend fun orderApprove(
         @Path("orderId") orderId: String,
     ): Response<GeneralApiResponse>
@@ -219,6 +238,7 @@ interface RestoService {
         @Path("orderId") orderId: String,
         @Query("driver_id") driverId: Int
     ): Response<GeneralApiResponse>
+
 
     @POST("orders/carts/finishOrder/{orderId}")
     suspend fun orderFinish(
@@ -249,7 +269,6 @@ interface RestoService {
     suspend fun deleteDriver(
         @Path("driverId") driverId: String,
     ): Response<GeneralApiResponse>
-
 
 
     @Multipart

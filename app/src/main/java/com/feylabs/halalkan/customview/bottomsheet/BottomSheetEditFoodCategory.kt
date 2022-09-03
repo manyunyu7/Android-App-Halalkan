@@ -1,4 +1,4 @@
-package com.feylabs.halalkan.view.resto.admin_resto.edit_info.operating_hours
+package com.feylabs.halalkan.customview.bottomsheet
 
 import android.content.DialogInterface
 import android.os.Bundle
@@ -7,25 +7,21 @@ import android.view.View
 import android.view.ViewGroup
 import com.feylabs.halalkan.R
 import com.feylabs.halalkan.data.remote.QumparanResource
+import com.feylabs.halalkan.databinding.LayoutBottomsheetEditFoodCategoryBinding  as MainBinding
 import com.feylabs.halalkan.utils.DialogUtils
-import com.feylabs.halalkan.utils.StringUtil.checkHourFormat
 import com.feylabs.halalkan.utils.base.BaseDialogFragment
-import com.feylabs.halalkan.utils.snackbar.SnackbarType
-import com.feylabs.halalkan.databinding.LayoutBottomsheetEditOperatingHourBinding as MainBinding
 import com.feylabs.halalkan.view.resto.admin_resto.AdminRestoViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 import java.text.SimpleDateFormat
 import java.util.*
 
-class EditOperatingHourBottomSheet : BaseDialogFragment() {
+class BottomSheetEditFoodCategory : BaseDialogFragment() {
 
-    private lateinit var selectedAction: (notes: String) -> Unit
 
-    private var currentStart = ""
-    private var currentEnd = ""
+    private var objectId = ""
     private var restoId = ""
-    private var dayCode = -99
-    private var hourId = -99
+    private var currentName = ""
+    private var onDismiss : (() -> Unit)? = null
 
     val viewModel by viewModel<AdminRestoViewModel>()
 
@@ -33,20 +29,16 @@ class EditOperatingHourBottomSheet : BaseDialogFragment() {
     companion object {
         private val TAG = "BOTTOM_SHEET_NOTES_ACTION"
         fun instance(
-            hourId: Int,
+            objectId: String,
             restoId: String,
-            currentStart: String,
-            currentEnd: String,
-            dayCode: Int,
-            selectedAction: (notes: String) -> Unit,
-        ): EditOperatingHourBottomSheet {
-            EditOperatingHourBottomSheet().apply {
-                this.hourId = hourId
-                this.currentStart = currentStart
-                this.currentEnd = currentEnd
-                this.selectedAction = selectedAction
-                this.dayCode = dayCode
+            currentName: String,
+            onDismiss: () -> Unit,
+        ): BottomSheetEditFoodCategory {
+            BottomSheetEditFoodCategory().apply {
+                this.objectId = objectId
+                this.currentName = currentName
                 this.restoId = restoId
+                this.onDismiss = onDismiss
                 return this
             }
         }
@@ -70,7 +62,7 @@ class EditOperatingHourBottomSheet : BaseDialogFragment() {
     }
 
     private fun initObserver() {
-        viewModel.createEditRestoOperatingHourLiveData.observe(viewLifecycleOwner) {
+        viewModel.editRestoFoodCategoryLiveData.observe(viewLifecycleOwner) {
             when (it) {
                 is QumparanResource.Default -> {}
                 is QumparanResource.Error -> {
@@ -104,8 +96,8 @@ class EditOperatingHourBottomSheet : BaseDialogFragment() {
                 }
             }
         }
-
     }
+
 
     private fun showLoading(b: Boolean) {
         if (b) {
@@ -117,64 +109,12 @@ class EditOperatingHourBottomSheet : BaseDialogFragment() {
 
     private fun initUI() {
         val rootView = binding.root
-        binding.etStart?.editText?.setText(this.currentStart)
-        binding.etEnd?.editText?.setText(this.currentEnd)
 
-        binding.btnDelete.setOnClickListener {
-            DialogUtils.showConfirmationDialog(
-                context = requireContext(),
-                title = getString(R.string.label_are_you_sure),
-                message = getString(R.string.message_data_will_deleted),
-                positiveAction = Pair("OK") {
-                    viewModel.deleteRestoOperatingHour(
-                        hourId = hourId.toString(),
-                        restoId = restoId,
-                    )
-                },
-                negativeAction = Pair(
-                    getString(R.string.title_no),
-                    { }),
-                autoDismiss = true,
-                buttonAllCaps = false
-            )
-        }
+        binding.etNotes?.editText?.setText(currentName)
 
         binding.btnSave.setOnClickListener {
             var isError = false
-            val startHour = binding.etStart.editText?.text.toString()
-            val endHour = binding.etEnd.editText?.text.toString()
-
-
-            if (startHour.checkHourFormat().not()) {
-                isError = true
-                binding.etStart.error = getString(R.string.message_error_time_format_24_hour)
-                showSnackbar(
-                    getString(R.string.message_error_time_format_24_hour),
-                    SnackbarType.ERROR
-                )
-            }
-
-            if (endHour.checkHourFormat().not()) {
-                isError = true
-                binding.etEnd.error = getString(R.string.message_error_time_format_24_hour)
-                showSnackbar(
-                    getString(R.string.message_error_time_format_24_hour),
-                    SnackbarType.ERROR
-                )
-            }
-
-
-            if (endHour.checkHourFormat() && startHour.checkHourFormat()) {
-                if (compareTime(startHour, endHour)) {
-                    isError = true
-                    showSnackbar(
-                        getString(R.string.message_time_close_must_greater_than_open),
-                        SnackbarType.ERROR
-                    )
-                }
-            } else {
-                isError = true
-            }
+            val name = binding.etNotes.editText?.text.toString()
 
             if (isError.not()) {
                 DialogUtils.showConfirmationDialog(
@@ -182,12 +122,10 @@ class EditOperatingHourBottomSheet : BaseDialogFragment() {
                     title = getString(R.string.label_are_you_sure),
                     message = getString(R.string.message_data_will_uploaded),
                     positiveAction = Pair("OK") {
-                        viewModel.updateRestoOperatingHour(
-                            hourId = hourId.toString(),
-                            restoId = restoId,
-                            start = startHour,
-                            end = endHour,
-                            dayCode = dayCode
+                        viewModel.editFoodCategoryForResto(
+                            name = name,
+                            categoryId = objectId,
+                            restoId = restoId
                         )
                     },
                     negativeAction = Pair(
@@ -204,7 +142,7 @@ class EditOperatingHourBottomSheet : BaseDialogFragment() {
 
     override fun onDismiss(dialog: DialogInterface) {
         super.onDismiss(dialog)
-        selectedAction.invoke("")
+        onDismiss?.invoke()
     }
 
     private fun compareTime(start: String, end: String): Boolean {

@@ -7,6 +7,9 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import com.feylabs.halalkan.R
+import com.feylabs.halalkan.customview.bottomsheet.BottomSheetChangeFoodAvailability
+import com.feylabs.halalkan.customview.bottomsheet.BottomSheetChooseFoodAction
+import com.feylabs.halalkan.customview.bottomsheet.MyBottomSheetAction
 import com.feylabs.halalkan.data.remote.QumparanResource.*
 import com.feylabs.halalkan.data.remote.reqres.resto.FoodCategoryResponse
 import com.feylabs.halalkan.data.remote.reqres.resto.food.FoodModelResponse
@@ -48,10 +51,7 @@ class ManageFoodFragment : BaseFragment() {
 
         foodAdapter.setupAdapterInterface(object : RestoFoodAdapter.ItemInterface {
             override fun onclick(model: FoodModelResponse) {
-                findNavController().navigate(
-                    R.id.navigation_addEditFoodFragment,
-                    bundleOf("food" to model, "foodId" to model.id.toString())
-                )
+                showBottomSheetAction(model)
             }
         })
 
@@ -197,6 +197,41 @@ class ManageFoodFragment : BaseFragment() {
         viewModel.getFoodCategoryOnResto(getRestoId())
         viewModel.getAllFoodByResto(getRestoId())
     }
+
+    private fun showBottomSheetAction(model: FoodModelResponse) {
+        val olz: (selectedId: String, action: MyBottomSheetAction) -> Unit = { selectedId, action ->
+            when (action) {
+                MyBottomSheetAction.EDIT -> {
+                    showBottomSheetChangeStock(model)
+                }
+                MyBottomSheetAction.SEE -> {
+                    findNavController().navigate(
+                        R.id.navigation_addEditFoodFragment,
+                        bundleOf("food" to model, "foodId" to model.id.toString())
+                    )
+                }
+                else -> {}
+            }
+        }
+        BottomSheetChooseFoodAction.instance(
+            description = "Choose Action",
+            title = "Choose Action",
+            selectedAction = olz,
+            objectId = model.id.toString(),
+            ownerId = getChoosenResto()
+        ).show(getMFragmentManager(), BottomSheetChooseFoodAction().tag)
+    }
+
+    private fun showBottomSheetChangeStock(model: FoodModelResponse) {
+        BottomSheetChangeFoodAvailability.instance(
+            onDismiss = {
+                viewModel.currentMenuTab.value = Pair(-99, "")
+            },
+            objectId = model.id.toString(),
+            oldStatus = model.isVisible
+        ).show(getMFragmentManager(), BottomSheetChangeFoodAvailability().tag)
+    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
