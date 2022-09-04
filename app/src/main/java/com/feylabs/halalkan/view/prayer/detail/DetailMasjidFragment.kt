@@ -21,7 +21,10 @@ import com.feylabs.halalkan.utils.base.BaseFragment
 import com.feylabs.halalkan.utils.location.LocationUtils
 import com.feylabs.halalkan.utils.location.MyLatLong
 import com.feylabs.halalkan.view.direction.TurnByTurnExperienceActivity
+import com.feylabs.halalkan.view.favorite.FavViewModel
 import com.feylabs.halalkan.view.prayer.PrayerRoomViewModel
+import com.like.LikeButton
+import com.like.OnLikeListener
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -35,13 +38,16 @@ class DetailMasjidFragment : BaseFragment() {
     private val binding get() = _binding!!
 
     val viewModel: PrayerRoomViewModel by viewModel()
-
-    val mainViewModel : MainViewModel by sharedViewModel()
+    val favViewModel: FavViewModel by viewModel()
+    val mainViewModel: MainViewModel by sharedViewModel()
 
     var initModel: MasjidModelResponse? = null
 
     override fun initUI() {
         setupInitialUi()
+        if (muskoPref().isLoggedIn().not()) {
+            binding.btnFavorite.makeInvisible()
+        }
     }
 
     private fun setupInitialUi(showError: Boolean = false, messageError: String = "") {
@@ -53,7 +59,8 @@ class DetailMasjidFragment : BaseFragment() {
                 binding.labelName.text = name
                 binding.etCategoryTop.text = categoryName
                 binding.etAddressTop.text = address
-                binding.etDistance.text = calculateMasjidDistance(lat.toDoubleOrNull(), long.toDoubleOrNull())
+                binding.etDistance.text =
+                    calculateMasjidDistance(lat.toDoubleOrNull(), long.toDoubleOrNull())
                 binding.etAddress.text = address
                 binding.etKategori.text = categoryName
                 binding.etPhone.text = phone
@@ -69,7 +76,7 @@ class DetailMasjidFragment : BaseFragment() {
 
     override fun initObserver() {
 
-        mainViewModel.liveLatLng.observe(viewLifecycleOwner){
+        mainViewModel.liveLatLng.observe(viewLifecycleOwner) {
 
         }
 
@@ -91,7 +98,6 @@ class DetailMasjidFragment : BaseFragment() {
                             setupMasjidDetailFromNetwork(firstData)
                         } else {
                             setupInitialUi(showError = true, messageError = "")
-                            // TODO() : handle empty masjid
                         }
                     }
                 }
@@ -124,20 +130,22 @@ class DetailMasjidFragment : BaseFragment() {
     private fun setupMasjidDetailFromNetwork(masjidDetailResponse: MasjidModelResponse) {
         binding.apply {
             masjidDetailResponse.apply {
+                binding.btnFavorite.isLiked = is_favorited
                 binding.labelPageTitleTopbar.text = name
                 binding.labelName.text = name
                 binding.etCategoryTop.text = categoryName
                 binding.etAddressTop.text = address
-                binding.etDistance.text = calculateMasjidDistance(lat.toDoubleOrNull(), long.toDoubleOrNull())
+                binding.etDistance.text =
+                    calculateMasjidDistance(lat.toDoubleOrNull(), long.toDoubleOrNull())
                 binding.etAddress.text = address
                 binding.etKategori.text = categoryName
                 binding.etPhone.text = phone
                 binding.etFacilities.text = facilities.extractStringFromStringArrayBE()
-                binding.etOperatingHours.text=getOperatingHours()
+                binding.etOperatingHours.text = getOperatingHours()
 
                 binding.includeRatingInfo.apply {
-                    reviewScore.text=masjidDetailResponse.review_avg
-                    tvReviewCount.text=masjidDetailResponse.review_count
+                    reviewScore.text = masjidDetailResponse.review_avg
+                    tvReviewCount.text = masjidDetailResponse.review_count
                 }
 
                 viewModel.targetLong.postValue(long.toDoubleOrNull())
@@ -164,6 +172,7 @@ class DetailMasjidFragment : BaseFragment() {
             findNavController().navigateUp()
         }
 
+
         binding.etActionCall.setOnClickListener {
             val number = binding.labelPhone.text.toString()
             val callIntent = Intent(Intent.ACTION_CALL)
@@ -171,24 +180,53 @@ class DetailMasjidFragment : BaseFragment() {
             startActivity(callIntent)
         }
 
-        binding.btnFavorite.setOnClickListener {
-            startActivity(Intent(requireActivity(),TurnByTurnExperienceActivity::class.java)
-                .putExtra(TurnByTurnExperienceActivity.DESTINATION_LONG,viewModel.targetLong.value)
-                .putExtra(TurnByTurnExperienceActivity.DESTINATION_LAT,viewModel.targetLat.value)
+        binding.labelAddress.setOnClickListener {
+            startActivity(
+                Intent(requireActivity(), TurnByTurnExperienceActivity::class.java)
+                    .putExtra(
+                        TurnByTurnExperienceActivity.DESTINATION_LONG,
+                        viewModel.targetLong.value
+                    )
+                    .putExtra(
+                        TurnByTurnExperienceActivity.DESTINATION_LAT,
+                        viewModel.targetLat.value
+                    )
             )
         }
 
+        binding.btnFavorite.setOnLikeListener(object : OnLikeListener {
+            override fun liked(likeButton: LikeButton) {
+                if (muskoPref().isLoggedIn())
+                    favViewModel.addFavMasjid(getMasjidId())
+                else
+                    showSnackbar(getString(R.string.u_shoud_logged_in))
+            }
+
+            override fun unLiked(likeButton: LikeButton) {
+                if (muskoPref().isLoggedIn())
+                    favViewModel.removeFavMasjid(getMasjidId())
+                else
+                    showSnackbar(getString(R.string.u_shoud_logged_in))
+            }
+        })
+
         binding.btnWriteReview.setOnClickListener {
-            findNavController().navigate(R.id.navigation_masjidReviewNewFragment, bundleOf(
-                "id" to initModel?.id.toString()
-            ))
+            findNavController().navigate(
+                R.id.navigation_masjidReviewNewFragment, bundleOf(
+                    "id" to initModel?.id.toString()
+                )
+            )
         }
     }
 
     override fun initData() {
         initModel = arguments?.getParcelable<MasjidModelResponse>("data")
-        viewModel.getMasjidPhoto(initModel?.id.toString())
-        viewModel.getDetailMasjid(initModel?.id.toString())
+        viewModel.getMasjidPhoto(getMasjidId())
+        viewModel.getDetailMasjid(getMasjidId())
+    }
+
+    fun getMasjidId(): String {
+        return initModel?.id.toString()
     }
 
     override fun onCreateView(

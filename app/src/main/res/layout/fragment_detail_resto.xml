@@ -54,25 +54,40 @@
                     android:visibility="gone" />
 
                 <ImageView
+                    android:id="@+id/btn_add_photo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_toStartOf="@id/btn_write_review"
+                    android:layout_centerInParent="true"
+                    android:layout_marginEnd="@dimen/dimen_10dp"
+                    android:src="@drawable/ic_baseline_add_a_photo_24" />
+
+                <ImageView
                     android:id="@+id/btn_write_review"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
-                    android:layout_alignParentEnd="true"
                     android:layout_centerInParent="true"
-                    android:layout_marginEnd="@dimen/dimen_20dp"
+                    android:layout_marginEnd="@dimen/dimen_3dp"
+                    android:layout_toStartOf="@id/btn_favorite"
                     android:src="@drawable/ic_write_review" />
 
-
-                <ImageView
+                <com.like.LikeButton
                     android:id="@+id/btn_favorite"
-                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    app:icon_type="heart"
+                    app:circle_start_color="@color/colorPrimary"
+                    app:like_drawable="@drawable/heart_on"
+                    app:unlike_drawable="@drawable/heart_off"
+                    app:icon_size="23dp"
+                    app:anim_scale_factor="2"
+                    android:layout_marginEnd="@dimen/dimen_20dp"
+                    android:layout_alignParentEnd="true"
                     android:layout_alignParentTop="true"
                     android:layout_centerInParent="true"
-                    android:layout_marginEnd="@dimen/dimen_20dp"
-                    android:layout_toStartOf="@id/btn_write_review"
-                    android:src="@drawable/ic_baseline_build_24" />
+                    />
 
 
             </RelativeLayout>

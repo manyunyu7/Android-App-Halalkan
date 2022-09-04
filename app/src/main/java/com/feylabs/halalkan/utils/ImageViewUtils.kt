@@ -61,11 +61,22 @@ object ImageViewUtils {
     ) {
         Glide.with(context)
             .load(url)
-            .placeholder(thumbnailsType.value)
+            .placeholder(loadThumbnails())
 //            .thumbnail(Glide.with(context).load(R.raw.ic_loading_google).fitCenter())
             .diskCacheStrategy(DiskCacheStrategy.NONE)
             .skipMemoryCache(true)
             .into(this)
+    }
+
+    private fun loadThumbnails(): Int {
+        val list = listOf(
+            R.drawable.bg_header_daylight,
+            R.drawable.bg_header_dawn,
+            R.drawable.bg_header_evening,
+            R.drawable.bg_header_night,
+//            R.drawable.bg_header_sunrise
+        )
+        return list.random()
     }
 
     fun ImageView.loadImage(
@@ -74,15 +85,15 @@ object ImageViewUtils {
         file: File? = null,
         thumbnailsType: ThumbnailsType = ThumbnailsType.LOADING_1
     ) {
-        if(file!=null){
+        if (file != null) {
             Glide.with(context)
                 .load(file)
                 .placeholder(thumbnailsType.value)
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .skipMemoryCache(true)
                 .into(this)
-        }else{
-            if(uri!=null){
+        } else {
+            if (uri != null) {
                 Glide.with(context)
                     .load(uri)
                     .placeholder(thumbnailsType.value)

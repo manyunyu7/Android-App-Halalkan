@@ -31,8 +31,11 @@ import com.feylabs.halalkan.utils.resto.OrderLocalModel
 import com.feylabs.halalkan.utils.resto.OrderUtility
 import com.feylabs.halalkan.view.auth.AuthViewModel
 import com.feylabs.halalkan.view.direction.TurnByTurnExperienceActivity
+import com.feylabs.halalkan.view.favorite.FavViewModel
 import com.feylabs.halalkan.view.resto.RestoViewModel
 import com.feylabs.halalkan.view.resto.main.RestoFoodAdapter
+import com.like.LikeButton
+import com.like.OnLikeListener
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -47,6 +50,7 @@ class DetailRestoFragment : BaseFragment() {
 
     val viewModel: RestoViewModel by viewModel()
     val authViewModel: AuthViewModel by viewModel()
+    val favViewModel: FavViewModel by viewModel()
 
     val mainViewModel: MainViewModel by sharedViewModel()
 
@@ -60,7 +64,6 @@ class DetailRestoFragment : BaseFragment() {
         setupFoodAdapter()
         setupOrderCard()
         saveChoosenResto(getRestoId())
-        showToast("restoId" + getChoosenResto().toString())
     }
 
     private fun setupFoodAdapter() {
@@ -109,6 +112,7 @@ class DetailRestoFragment : BaseFragment() {
     private fun setupInitialUi(showError: Boolean = false, messageError: String = "") {
         initModel?.apply {
             binding.apply {
+                binding.btnFavorite.isLiked=isFavorited
                 binding.labelPageTitleTopbar.text = name
                 binding.labelName.text = name
                 binding.etAddressTop.text = address
@@ -316,6 +320,26 @@ class DetailRestoFragment : BaseFragment() {
             findNavController().navigateUp()
         }
 
+        if (muskoPref().isLoggedIn().not()) {
+            binding.btnFavorite.makeInvisible()
+        }
+
+        binding.btnFavorite.setOnLikeListener(object : OnLikeListener {
+            override fun liked(likeButton: LikeButton) {
+                if (muskoPref().isLoggedIn())
+                    favViewModel.addFavResto(getRestoId())
+                else
+                    showSnackbar(getString(R.string.u_shoud_logged_in))
+            }
+
+            override fun unLiked(likeButton: LikeButton) {
+                if (muskoPref().isLoggedIn())
+                    favViewModel.removeFavResto(getRestoId())
+                else
+                    showSnackbar(getString(R.string.u_shoud_logged_in))
+            }
+        })
+
         binding.btnNext.setOnClickListener {
             findNavController().navigate(R.id.action_navigation_detailRestoFragment_to_navigation_orderPreviewFragment)
         }
@@ -327,7 +351,7 @@ class DetailRestoFragment : BaseFragment() {
             startActivity(callIntent)
         }
 
-        binding.btnFavorite.setOnClickListener {
+        binding.labelAddress.setOnClickListener {
             startActivity(
                 Intent(requireActivity(), TurnByTurnExperienceActivity::class.java)
                     .putExtra(

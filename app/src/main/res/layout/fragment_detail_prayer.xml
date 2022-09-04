@@ -57,10 +57,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:layout_toStartOf="@id/btn_favorite"
             android:layout_centerInParent="true"
-            android:layout_marginEnd="@dimen/dimen_10dp"
+            android:layout_marginEnd="@dimen/dimen_3dp"
+            android:layout_toStartOf="@id/btn_favorite"
             android:src="@drawable/ic_write_review" />
+
 
         <com.like.LikeButton
             android:id="@+id/btn_favorite"
@@ -70,16 +71,13 @@
             app:circle_start_color="@color/colorPrimary"
             app:like_drawable="@drawable/heart_on"
             app:unlike_drawable="@drawable/heart_off"
-            app:icon_size="25dp"
-            app:liked="true"
+            app:icon_size="23dp"
             app:anim_scale_factor="2"
-            app:is_enabled="false"
             android:layout_marginEnd="@dimen/dimen_20dp"
             android:layout_alignParentEnd="true"
             android:layout_alignParentTop="true"
             android:layout_centerInParent="true"
             />
-
 
 
 

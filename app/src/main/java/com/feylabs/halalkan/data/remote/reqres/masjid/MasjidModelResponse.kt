@@ -1,4 +1,5 @@
 package com.feylabs.halalkan.data.remote.reqres.masjid
+
 import android.os.Parcelable
 import androidx.annotation.Nullable
 import com.feylabs.halalkan.utils.PaginationPlaceholder
@@ -41,6 +42,8 @@ data class MasjidModelResponse(
     val review_avg: String,
     @SerializedName("review_count")
     val review_count: String,
+    @SerializedName("is_favorited")
+    val is_favorited: Boolean = false,
     var distanceKm: String? = null,
     var distanceKmDoubleRounded: Double? = null,
     var distanceKmDouble: Double? = null,

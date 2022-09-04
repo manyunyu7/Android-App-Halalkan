@@ -211,6 +211,7 @@
     <string name="title_delete">Delete</string>
     <string name="message_please_check_input">Please check your input</string>
     <string name="form_hint_input_new_password">Input New Password</string>
+    <string name="form_hint_input_password">Input Password</string>
     <string name="message_password_min_6">Password minimum length is 6</string>
     <string name="title_change_category">Change Category</string>
     <string name="form_hint_category_name">Fill new category name</string>
@@ -233,5 +234,12 @@
     <string name="title_ingredient_information">Ingredient Information</string>
     <string name="message_no_data_yet_please_come_back_later">No Data Yet, Please Come Back Later</string>
     <string name="title_search_product">Search Product</string>
+    <string name="title_login">Login</string>
+    <string name="message_please_enter_your_credential_to_continue">Please enter your credential to continue</string>
+    <string name="message_don_t_have_an_account_yet">Don\'t Have an Account Yet ?</string>
+    <string name="title_register_here">Register Here</string>
+    <string name="form_hint_login_email">Your Registered Email</string>
+    <string name="title_photos">Photos</string>
+    <string name="u_shoud_logged_in">You should logged in first to do this action</string>
 
 </resources>

@@ -2,13 +2,10 @@ package com.feylabs.halalkan.di
 
 import com.chuckerteam.chucker.api.ChuckerCollector
 import com.chuckerteam.chucker.api.ChuckerInterceptor
-import com.feylabs.halalkan.data.repository.MasjidRepository
-import com.feylabs.halalkan.data.repository.QumparanRepository
-import com.feylabs.halalkan.data.repository.TranslatorRepository
 import com.feylabs.halalkan.utils.Network
 import com.feylabs.halalkan.data.remote.RemoteDataSource
 import com.feylabs.halalkan.data.remote.service.*
-import com.feylabs.halalkan.data.repository.PrayerTimeRepository
+import com.feylabs.halalkan.data.repository.*
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -111,7 +108,7 @@ val networkModule = module {
 
     single<FavoriteService>(named("favService")) {
         val retrofit = Retrofit.Builder()
-            .baseUrl(Network.BASE_URL_ALADHAN_V1)
+            .baseUrl(Network.BASE_URL_V1)
             .addConverterFactory(ScalarsConverterFactory.create())
             .addConverterFactory(GsonConverterFactory.create())
             .client(get())
@@ -150,4 +147,5 @@ val repositoryModule = module {
     single { QumparanRepository(get()) }
     single { TranslatorRepository(get()) }
     single { PrayerTimeRepository(get()) }
+    single { FavoriteRepository(get()) }
 }

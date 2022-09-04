@@ -44,6 +44,8 @@ data class RestoModelResponse(
     var image_full_path: String = "",
     @SerializedName("user_id")
     var userId: Int = 0,
+    @SerializedName("is_favorited")
+    val isFavorited: Boolean = false,
     var distanceKm: String? = null,
     var distanceKmDoubleRounded: Double? = null,
     var distanceKmDouble: Double? = null,

@@ -35,16 +35,19 @@
                     android:background="@android:color/transparent"
                     app:tint="@color/blue_auth" />
 
+                <TextView
+                    android:id="@+id/label_page_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_toEndOf="@id/btn_back"
+                    android:fontFamily="@font/poppins_regular"
+                    android:text="@string/title_login"
+                    android:textColor="@color/black"
+                    android:textSize="17sp" />
+
             </RelativeLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/montserrat_bold"
-                android:text="Login"
-                android:textAlignment="textEnd"
-                android:textColor="@color/black"
-                android:textSize="25sp" />
 
             <TextView
                 android:id="@+id/label_back"
@@ -53,14 +56,14 @@
                 android:layout_centerInParent="true"
                 android:layout_toEndOf="@id/btn_back"
                 android:fontFamily="@font/poppins_regular"
-                android:text="Silakan masukkan email untuk melanjutkan"
+                android:text="@string/message_please_enter_your_credential_to_continue"
                 android:textColor="@color/black"
                 android:textSize="13sp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/montserrat_bold"
+                android:fontFamily="@font/open_sans_semi_bold"
                 android:text="Email"
                 android:layout_marginTop="@dimen/dimen_20dp"
                 android:textColor="@color/black"
@@ -73,8 +76,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress"
                 android:fontFamily="@font/poppins_regular"
-                android:hint="Masukkan Email"
-                android:text="firriezky@gmail.com"
+                android:hint="@string/form_hint_login_email"
                 android:textColor="@color/black"
                 />
 
@@ -82,9 +84,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/montserrat_bold"
-                android:text="Kata Sandi"
+                android:text="@string/form_title_password"
                 android:textColor="@color/black"
-
                 android:textSize="16sp" />
 
             <EditText
@@ -92,9 +93,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_regular"
-                android:hint="Masukkan Kata Sandi"
+                android:hint="@string/form_hint_input_password"
                 android:inputType="textPassword"
-                android:text="password"
                 android:textColor="@color/black"
                 />
 
@@ -115,7 +115,7 @@
                     android:layout_centerInParent="true"
                     android:layout_toEndOf="@id/btn_back"
                     android:fontFamily="@font/poppins_regular"
-                    android:text="Belum Punya Akun ? "
+                    android:text="@string/message_don_t_have_an_account_yet"
                     android:textColor="@color/black"
                     android:textSize="13sp" />
 
@@ -126,7 +126,7 @@
                     android:layout_centerInParent="true"
                     android:layout_toEndOf="@id/btn_back"
                     android:fontFamily="@font/poppins_regular"
-                    android:text="Daftar Disini "
+                    android:text="@string/title_register_here"
                     android:textColor="@color/menu_bottom_active"
                     android:textSize="13sp" />
             </LinearLayout>

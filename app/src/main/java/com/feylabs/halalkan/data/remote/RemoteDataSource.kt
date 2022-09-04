@@ -329,6 +329,9 @@ class RemoteDataSource(
         return favoriteService.addFavoriteMasjid(masjidId)
     }
 
+    suspend fun deleteFavMasjid(id:String) = favoriteService.deleteFavoriteMasjid(id)
+    suspend fun deleteFavResto(id:String) = favoriteService.deleteFavoriteResto(id)
+
     override suspend fun addFavoriteResto(restoId: String): Response<AddFavRestoResponse> {
         return favoriteService.addFavoriteResto(restoId)
     }

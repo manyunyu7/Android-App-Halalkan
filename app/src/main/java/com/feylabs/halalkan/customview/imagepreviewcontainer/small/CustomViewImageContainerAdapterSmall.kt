@@ -50,6 +50,8 @@ class CustomViewImageContainerAdapterSmall :
                 }
             }
 
+            binding.base
+
             when (model.type) {
                 TypePhotoModel.URL,null -> {
                     if (model.url.isNotEmpty())

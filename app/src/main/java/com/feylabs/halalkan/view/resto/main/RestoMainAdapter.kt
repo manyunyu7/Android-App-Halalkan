@@ -6,6 +6,8 @@ import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.RecyclerView
 import com.feylabs.halalkan.R
+import com.feylabs.halalkan.utils.CommonUtil.makeGone
+import com.feylabs.halalkan.utils.CommonUtil.makeVisible
 import com.feylabs.halalkan.utils.ImageViewUtils.loadImageFromURL
 import com.feylabs.halalkan.data.remote.reqres.resto.RestoModelResponse as AdapterModel
 import com.feylabs.halalkan.databinding.ItemCardRestoBinding as AdapterBinding
@@ -42,7 +44,12 @@ class RestoMainAdapter : RecyclerView.Adapter<RestoMainAdapter.RestaurantHomeVie
                     adapterInterface.onclick(model)
                 }
 
-            binding.tvDistance.text = model.distanceKm.toString() + " Km"
+            model.distanceKm?.let {
+                binding.tvDistance.makeVisible()
+                binding.tvDistance.text = model.distanceKm.toString() + " Km"
+            }?:run{
+                binding.tvDistance.makeGone()
+            }
 
             binding.tvTitle.text = model.name.toString()
             binding.tvAddress.text = model.address
