@@ -364,5 +364,10 @@
         android:name="com.feylabs.halalkan.view.products.ProductDetailFragment"
         android:label="ProductDetailFragment" />
 
+    <fragment
+        android:id="@+id/navigation_searchProductFragment"
+        android:name="com.feylabs.halalkan.view.products.SearchProductFragment"
+        android:label="SearchProductFragment" />
+
 
 </navigation>

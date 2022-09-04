@@ -84,6 +84,10 @@ class ProductCategoryListFragment : BaseFragment() {
         binding.btnBack.setOnClickListener {
             findNavController().popBackStack()
         }
+
+        binding.searchBox.root.setOnClickListener {
+            findNavController().navigate(R.id.navigation_searchProductFragment)
+        }
     }
 
     override fun initData() {

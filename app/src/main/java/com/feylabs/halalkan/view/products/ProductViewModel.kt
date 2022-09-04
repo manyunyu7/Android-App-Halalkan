@@ -15,6 +15,7 @@ import com.feylabs.halalkan.data.remote.reqres.order.resto.OrderByRestoPaginatio
 import com.feylabs.halalkan.data.remote.reqres.product.ProductCategoryResponse
 import com.feylabs.halalkan.data.remote.reqres.product.ProductDetailResponse
 import com.feylabs.halalkan.data.remote.reqres.product.ProductListPaginationResponse
+import com.feylabs.halalkan.data.remote.reqres.product.SearchProductResponse
 import com.feylabs.halalkan.data.remote.reqres.resto.*
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -28,6 +29,9 @@ class ProductViewModel(
     val ds: RemoteDataSource
 ) : ViewModel() {
 
+
+    private var currentFilterStatus = MutableLiveData("")
+
     private var _productCategoryLiveData =
         MutableLiveData<QumparanResource<ProductCategoryResponse?>>()
     val productCategoryLiveData get() = _productCategoryLiveData
@@ -35,6 +39,10 @@ class ProductViewModel(
     private var _productDetailLiveData =
         MutableLiveData<QumparanResource<ProductDetailResponse?>>()
     val productDetailLiveData get() = _productDetailLiveData
+
+    private var _searchProductLiveData =
+        MutableLiveData<QumparanResource<SearchProductResponse?>>()
+    val searchProductLiveData get() = _searchProductLiveData
 
     private var _productsLiveData =
         MutableLiveData<QumparanResource<ProductListPaginationResponse?>>()
@@ -60,6 +68,28 @@ class ProductViewModel(
             }
         }
     }
+
+    fun searchProduct(name: String, category: String? = null) {
+        viewModelScope.launch {
+            _searchProductLiveData.postValue(QumparanResource.Loading())
+            try {
+                val res = ds.searchProduct(categoryId = category?.toIntOrNull(), name)
+                if (res.isSuccessful) {
+                    _searchProductLiveData.postValue(QumparanResource.Success(res.body()))
+                } else {
+                    var message = res.message().toString()
+                    res.errorBody()?.let {
+                        val jsonObj = JSONObject(it.charStream().readText())
+                        message = jsonObj.getString("message")
+                    }
+                    _searchProductLiveData.postValue(QumparanResource.Error(message))
+                }
+            } catch (e: Exception) {
+                _searchProductLiveData.postValue(QumparanResource.Error(e.message.toString()))
+            }
+        }
+    }
+
 
     fun getProductDetail(productId: String) {
         viewModelScope.launch {
@@ -106,6 +136,10 @@ class ProductViewModel(
                 _productsLiveData.postValue(QumparanResource.Error(e.message.toString()))
             }
         }
+    }
+
+    fun getCurrentFilterStatus(): String {
+        return currentFilterStatus.value.orEmpty()
     }
 
 

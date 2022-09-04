@@ -232,5 +232,6 @@
     <string name="title_certif_info">Certification Information</string>
     <string name="title_ingredient_information">Ingredient Information</string>
     <string name="message_no_data_yet_please_come_back_later">No Data Yet, Please Come Back Later</string>
+    <string name="title_search_product">Search Product</string>
 
 </resources>
