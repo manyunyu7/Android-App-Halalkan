@@ -15,6 +15,8 @@ import com.feylabs.halalkan.data.remote.reqres.order.*
 import com.feylabs.halalkan.data.remote.reqres.order.history.OrderHistoryResponse
 import com.feylabs.halalkan.data.remote.reqres.order.resto.OrderByRestoPaginationResponse
 import com.feylabs.halalkan.data.remote.reqres.prayertime.PrayerTimeAladhanSingleDateResponse
+import com.feylabs.halalkan.data.remote.reqres.product.ProductCategoryResponse
+import com.feylabs.halalkan.data.remote.reqres.product.ProductListPaginationResponse
 import com.feylabs.halalkan.data.remote.reqres.resto.*
 import com.feylabs.halalkan.data.remote.reqres.resto.food.FoodModelResponse
 import com.feylabs.halalkan.data.remote.reqres.resto.operating_hour.RestoOperatingHourResponse
@@ -201,4 +203,6 @@ interface RemoteDataSourceInterface {
 
     suspend fun deleteRestoFoodCategory(id: String): Response<GeneralApiResponse>
     suspend fun updateFoodAvailability(id: String, isAvailable: Int): Response<GeneralApiResponse>
+
+    suspend fun getAllProductCategory(): Response<ProductCategoryResponse>
 }

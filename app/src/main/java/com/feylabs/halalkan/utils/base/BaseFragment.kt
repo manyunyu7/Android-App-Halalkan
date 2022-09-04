@@ -80,6 +80,14 @@ abstract class BaseFragment : Fragment() {
         view.visibility = View.GONE
     }
 
+    fun View.setVisible(value: Boolean) {
+        if (value) {
+            this.makeVisible()
+        } else {
+            this.makeGone()
+        }
+    }
+
     fun View.makeVisible() {
         viewVisible(this)
     }
@@ -138,7 +146,8 @@ abstract class BaseFragment : Fragment() {
     }
 
     fun getChoosenResto() = MyPreference(requireContext()).getPrefString("CHOSEN_RESTO").toString()
-    fun saveChoosenResto(restoId:String) = MyPreference(requireContext()).save("CHOSEN_RESTO",restoId).toString()
+    fun saveChoosenResto(restoId: String) =
+        MyPreference(requireContext()).save("CHOSEN_RESTO", restoId).toString()
 
     fun colorActive() = "#156DBE"
 

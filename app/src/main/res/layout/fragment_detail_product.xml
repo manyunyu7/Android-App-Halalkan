@@ -6,52 +6,80 @@
     android:layout_height="match_parent"
     android:background="#FCFCFC">
 
-    <RelativeLayout
-        android:id="@+id/cstToolbar"
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:background="@color/white"
+        android:minHeight="?attr/actionBarSize"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/btn_back"
-            android:layout_width="40dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_centerInParent="true"
-            android:layout_gravity="start"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="20dp"
-            android:src="@drawable/ic_baseline_arrow_back_24"
-            app:tint="@color/color_blue_purplish" />
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/label_page_title_topbar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_marginEnd="20dp"
-            android:layout_toEndOf="@id/btn_back"
-            android:ellipsize="none"
-            android:visibility="gone"
-            android:fontFamily="@font/montserrat_bold"
-            android:scrollHorizontally="false"
-            android:text="Reviews"
-            android:textColor="@color/color_blue_purplish"
-            android:textSize="17sp"
-            android:textStyle="bold" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
 
-    </RelativeLayout>
+                <ImageButton
+                    android:id="@+id/btn_back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerInParent="true"
+                    android:layout_marginEnd="20dp"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/ic_baseline_arrow_back_24"
+                    app:tint="@color/blue_auth" />
 
+                <TextView
+                    android:id="@+id/page_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@id/btn_back"
+                    android:fontFamily="@font/poppins_medium"
+                    android:text="@string/title_product_categories"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
 
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:visibility="gone"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <ImageButton
+                        android:id="@+id/img_notification"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerInParent="true"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/ic_baseline_notifications_none_24"
+                        app:tint="@color/blue_auth" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </RelativeLayout>
 
-    <ScrollView
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:fillViewport="true"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cstToolbar">
+        app:layout_constraintTop_toBottomOf="@id/toolbar">
 
 
         <LinearLayout
@@ -70,8 +98,9 @@
                 android:layout_gravity="center"/>
 
             <TextView
+                android:id="@+id/tv_title"
                 android:layout_marginTop="28dp"
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="44dp"
                 android:text="Title"
                 android:textStyle="bold"
@@ -90,47 +119,25 @@
             android:padding="12dp">
 
             <TextView
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Ingredient Information"
+                android:text="@string/title_ingredient_information"
                 android:textStyle="bold"
                 android:textColor="@color/colorBlack"
                 android:fontFamily="@font/poppins_medium"
                 android:textSize="14sp"/>
 
             <TextView
+                android:id="@+id/tv_ingredient_information"
                 android:layout_marginTop="12dp"
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Title"
                 android:textStyle="bold"
                 android:textColor="@color/color_sub_secondary_detail"
                 android:fontFamily="@font/poppins_regular"
                 android:textSize="12sp"/>
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="Title"
-                android:textStyle="bold"
-                android:textColor="@color/color_sub_secondary_detail"
-                android:fontFamily="@font/poppins_regular"
-                android:textSize="12sp"/>
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="Title"
-                android:textStyle="bold"
-                android:textColor="@color/color_sub_secondary_detail"
-                android:fontFamily="@font/poppins_regular"
-                android:textSize="12sp"/>
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="Title"
-                android:textStyle="bold"
-                android:textColor="@color/color_sub_secondary_detail"
-                android:fontFamily="@font/poppins_regular"
-                android:textSize="12sp"/>
+
         </LinearLayout>
 
             <LinearLayout
@@ -142,7 +149,37 @@
                 android:padding="12dp">
 
                 <TextView
-                    android:layout_width="fill_parent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/title_allergic_information"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorBlack"
+                    android:fontFamily="@font/poppins_medium"
+                    android:textSize="14sp"/>
+
+                <TextView
+                    android:id="@+id/tv_allergic_info"
+                    android:layout_marginTop="12dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Title"
+                    android:textStyle="bold"
+                    android:textColor="@color/color_sub_secondary_detail"
+                    android:fontFamily="@font/poppins_regular"
+                    android:textSize="12sp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/textview_border"
+                android:padding="12dp">
+
+                <TextView
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Summary"
                     android:textStyle="bold"
@@ -151,38 +188,16 @@
                     android:textSize="14sp"/>
 
                 <TextView
+                    android:id="@+id/tv_summary"
                     android:layout_marginTop="12dp"
-                    android:layout_width="fill_parent"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Title"
                     android:textStyle="bold"
                     android:textColor="@color/color_sub_secondary_detail"
                     android:fontFamily="@font/poppins_regular"
                     android:textSize="12sp"/>
-                <TextView
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Title"
-                    android:textStyle="bold"
-                    android:textColor="@color/color_sub_secondary_detail"
-                    android:fontFamily="@font/poppins_regular"
-                    android:textSize="12sp"/>
-                <TextView
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Title"
-                    android:textStyle="bold"
-                    android:textColor="@color/color_sub_secondary_detail"
-                    android:fontFamily="@font/poppins_regular"
-                    android:textSize="12sp"/>
-                <TextView
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Title"
-                    android:textStyle="bold"
-                    android:textColor="@color/color_sub_secondary_detail"
-                    android:fontFamily="@font/poppins_regular"
-                    android:textSize="12sp"/>
+
             </LinearLayout>
 
             <LinearLayout
@@ -190,20 +205,22 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
+                android:layout_marginBottom="100dp"
                 android:background="@drawable/textview_border"
                 android:padding="12dp">
 
                 <TextView
-                    android:layout_width="fill_parent"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Certification Information"
+                    android:text="@string/title_certif_info"
                     android:textStyle="bold"
                     android:textColor="@color/colorBlack"
                     android:fontFamily="@font/poppins_medium"
                     android:textSize="14sp"/>
                 <TextView
+                    android:id="@+id/tv_certification_information"
                     android:layout_marginTop="12dp"
-                    android:layout_width="fill_parent"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Title"
                     android:textStyle="bold"
@@ -214,16 +231,64 @@
 
         </LinearLayout>
 
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
-    <com.google.android.material.progressindicator.CircularProgressIndicator
-        android:id="@+id/loading_center_progress_bar"
-        android:layout_width="wrap_content"
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/state_no_data"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:visibility="gone"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        tools:visibility="visible"
+        android:layout_marginBottom="90dp"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        >
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            tools:layout_marginBottom="0dp"
+            android:padding="50dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:lottie_autoPlay="true"
+            app:lottie_fileName="food_questionable.json"
+            app:lottie_loop="true"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/dimen_20dp"
+            android:ellipsize="none"
+            android:textAlignment="center"
+            android:fontFamily="@font/poppins_regular"
+            android:scrollHorizontally="false"
+            android:text="@string/message_no_data_yet_please_come_back_later"
+            android:textColor="@color/color_blue_purplish"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/loading_anim"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:padding="50dp"
+        android:visibility="gone"
+        android:background="@android:color/transparent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:lottie_autoPlay="true"
+        app:lottie_fileName="loading_circle_rgb.json"
+        app:lottie_loop="true" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

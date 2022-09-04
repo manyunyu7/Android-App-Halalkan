@@ -104,8 +104,12 @@
 
     <fragment
         android:id="@+id/navigation_CategoryProductsFragment"
-        android:name="com.feylabs.halalkan.view.products.CategoryProductsFragment"
+        android:name="com.feylabs.halalkan.view.products.ProductCategoryListFragment"
         android:label="CategoryProductsFragment" />
+
+    <fragment
+        android:id="@+id/navigation_productListFragment"
+        android:name="com.feylabs.halalkan.view.products.ProductListFragment" />
 
     <fragment
         android:id="@+id/navigation_detailMasjidFragment"
@@ -129,13 +133,9 @@
         android:name="com.feylabs.halalkan.view.direction.ExampleMapBoxFragment"
         android:label="MapBoxFragment" />
     <fragment
-        android:id="@+id/categoryListFragment"
-        android:name="com.feylabs.halalkan.view.products.CategoryListFragment"
+        android:id="@+id/navigation_productCategoryListFragment"
+        android:name="com.feylabs.halalkan.view.products.ProductCategoryListFragment"
         android:label="CategoryListFragment" />
-    <fragment
-        android:id="@+id/categoryDetailsFragment"
-        android:name="com.feylabs.halalkan.view.products.CategoryDetailsFragment"
-        android:label="CategoryDetailsFragment" />
 
     <fragment
         android:id="@+id/navigation_masjidReviewNewFragment"
@@ -353,10 +353,16 @@
         android:id="@+id/navigation_editRestoAddressFragment"
         android:name="com.feylabs.halalkan.view.resto.admin_resto.edit_info.address.EditRestoAddressFragment"
         android:label="EditRestoAddressFragment" />
+
     <fragment
         android:id="@+id/navigation_editOperatingHoursFragment"
         android:name="com.feylabs.halalkan.view.resto.admin_resto.edit_info.operating_hours.EditOperatingHoursFragment"
         android:label="EditOperatingHoursFragment" />
+
+    <fragment
+        android:id="@+id/navigation_productDetailFragment"
+        android:name="com.feylabs.halalkan.view.products.ProductDetailFragment"
+        android:label="ProductDetailFragment" />
 
 
 </navigation>

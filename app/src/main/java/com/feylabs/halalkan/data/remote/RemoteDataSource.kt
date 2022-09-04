@@ -19,11 +19,14 @@ import com.feylabs.halalkan.data.remote.reqres.order.DriverOrderPaginationRespon
 import com.feylabs.halalkan.data.remote.reqres.order.history.OrderHistoryResponse
 import com.feylabs.halalkan.data.remote.reqres.order.resto.OrderByRestoPaginationResponse
 import com.feylabs.halalkan.data.remote.reqres.prayertime.PrayerTimeAladhanSingleDateResponse
+import com.feylabs.halalkan.data.remote.reqres.product.ProductCategoryResponse
+import com.feylabs.halalkan.data.remote.reqres.product.ProductListPaginationResponse
 import com.feylabs.halalkan.data.remote.reqres.resto.*
 import com.feylabs.halalkan.data.remote.reqres.resto.food.FoodModelResponse
 import com.feylabs.halalkan.data.remote.reqres.resto.update.UpdateRestoColumnResponse
 import com.feylabs.halalkan.data.remote.service.*
 import com.feylabs.halalkan.utils.Network
+import com.mapbox.maps.extension.style.expressions.dsl.generated.product
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
 import retrofit2.Response
@@ -38,6 +41,7 @@ class RemoteDataSource(
     private val favoriteService: FavoriteService,
     private val forumService: ForumService,
     private val driverService: DriverService,
+    private val productService: ProductService,
 ) : RemoteDataSourceInterface {
 
     /**
@@ -118,6 +122,21 @@ class RemoteDataSource(
     override suspend fun getMasjidDetail(id: String): Response<MasjidDetailResponse> {
         return masjidService.getMasjidDetail(id)
     }
+
+    //product
+    override suspend fun getAllProductCategory(): Response<ProductCategoryResponse> =
+        productService.getAllCategory()
+
+    suspend fun getProductDetail(
+        productId: String,
+    ) = productService.getProductDetail(productId)
+
+    suspend fun getProductOnCategory(
+        categoryId: String,
+        perPage: Int,
+        page: Int
+    ): Response<ProductListPaginationResponse> =
+        productService.getProductOnCategory(categoryId, perPage = perPage, page = page)
 
     override suspend fun getRestoCert(): Response<RestaurantCertificationResponse> {
         return restoService.getCert()

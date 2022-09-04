@@ -43,7 +43,7 @@ object StringUtil {
         return initialString
     }
 
-    fun String?.orMuskoEmpty(replacable: String): String {
+    fun String?.orMuskoEmpty(replacable: String = ""): String {
         return if (this.isNullOrEmpty()) {
             replacable
         } else {

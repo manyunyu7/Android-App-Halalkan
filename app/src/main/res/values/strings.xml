@@ -225,5 +225,12 @@
     <string name="title_change_food_availability">Change Food Availability</string>
     <string name="message_please_choose_avail_status_first">Please choose availability status first</string>
     <string name="title_customer_signature">Customer Signature</string>
+    <string name="title_product_categories">Product Categories</string>
+
+    <string name="title_there_is_no_product_yet">There is no product in this category</string>
+    <string name="title_allergic_information">Allergic Information</string>
+    <string name="title_certif_info">Certification Information</string>
+    <string name="title_ingredient_information">Ingredient Information</string>
+    <string name="message_no_data_yet_please_come_back_later">No Data Yet, Please Come Back Later</string>
 
 </resources>

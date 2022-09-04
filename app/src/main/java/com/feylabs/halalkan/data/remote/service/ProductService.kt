@@ -1,0 +1,31 @@
+package com.feylabs.halalkan.data.remote.service
+
+import com.feylabs.halalkan.data.remote.reqres.GeneralApiResponse
+import com.feylabs.halalkan.data.remote.reqres.forum.*
+import com.feylabs.halalkan.data.remote.reqres.product.ProductCategoryResponse
+import com.feylabs.halalkan.data.remote.reqres.product.ProductDetailResponse
+import com.feylabs.halalkan.data.remote.reqres.product.ProductListPaginationResponse
+import okhttp3.RequestBody
+import retrofit2.Response
+import retrofit2.http.*
+
+
+interface ProductService {
+
+    @GET("fe/products/category")
+    suspend fun getAllCategory(
+    ): Response<ProductCategoryResponse>
+
+    @GET("fe/products/category/{id}")
+    suspend fun getProductOnCategory(
+        @Path("id") categoryId: String,
+        @Query("perPage") perPage: Int = 5,
+        @Query("page") page: Int = 1
+    ): Response<ProductListPaginationResponse>
+
+    @GET("products/detail/{productId}")
+    suspend fun getProductDetail(
+        @Path("productId") productId: String
+    ): Response<ProductDetailResponse>
+
+}

@@ -119,6 +119,16 @@ val networkModule = module {
         retrofit.create(FavoriteService::class.java)
     }
 
+    single<ProductService>(named("productService")) {
+        val retrofit = Retrofit.Builder()
+            .baseUrl(Network.BASE_URL_V1)
+            .addConverterFactory(ScalarsConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(get())
+            .build()
+        retrofit.create(ProductService::class.java)
+    }
+
 
 }
 
@@ -133,6 +143,7 @@ val repositoryModule = module {
             get(named("favService")),
             get(named("forumService")),
             get(named("driverService")),
+            get(named("productService")),
         )
     }
     single { MasjidRepository(get()) }
