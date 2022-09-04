@@ -1,11 +1,13 @@
 package com.feylabs.halalkan.data.remote.reqres.order
 
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import androidx.annotation.Keep
 import com.feylabs.halalkan.data.remote.reqres.auth.UserModel
 import com.feylabs.halalkan.data.remote.reqres.driver.DriverObj
 import com.feylabs.halalkan.data.remote.reqres.resto.RestoModelResponse
+import kotlinx.parcelize.Parcelize
 import java.text.DecimalFormat
 import java.text.NumberFormat
 
@@ -23,13 +25,14 @@ data class DetailOrderResponse(
 
 
     @Keep
+    @Parcelize
     data class Data(
         @SerializedName("address")
         var address: String = "",
         @SerializedName("created_at")
         var createdAt: String = "",
         @SerializedName("driver_id")
-        var driverId: Any? = Any(),
+        var driverId: Int? = 0,
         @SerializedName("id")
         var id: Int = 0,
         @SerializedName("lat")
@@ -39,7 +42,7 @@ data class DetailOrderResponse(
         @SerializedName("orders")
         var orders: List<OrderDataModel>?= listOf(),
         @SerializedName("reject_reason")
-        var rejectReason: Any? = Any(),
+        var rejectReason: String? = "",
         @SerializedName("resto_id")
         var restoId: Int = 0,
         @SerializedName("resto_obj")
@@ -59,8 +62,10 @@ data class DetailOrderResponse(
         @SerializedName("driver_obj")
         var driverObj: DriverObj? = null,
         @SerializedName("user_sign")
-        var userSign: Any? = Any()
-    ) {
+        var userSign: String = "",
+        @SerializedName("img_signature_full_path")
+        var imgSignatureFullPath: String = ""
+    ) : Parcelable {
         fun getTotalItem() : Int{
             return orders?.size ?: 0
         }

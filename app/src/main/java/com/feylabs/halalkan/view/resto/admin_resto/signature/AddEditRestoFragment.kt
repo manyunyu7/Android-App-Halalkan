@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
+import androidx.navigation.fragment.findNavController
 import com.feylabs.halalkan.R
 import com.feylabs.halalkan.customview.RazkyGalleryActivity
 import com.feylabs.halalkan.customview.imagepreviewcontainer.CustomViewPhotoModel
@@ -20,6 +21,7 @@ import com.feylabs.halalkan.data.remote.reqres.resto.AllRestoNoPagination
 import com.feylabs.halalkan.data.remote.reqres.resto.RestoDetailResponse
 import com.feylabs.halalkan.data.remote.reqres.resto.SaveRestoPayload
 import com.feylabs.halalkan.databinding.FragmentAddEditRestoBinding
+import com.feylabs.halalkan.utils.DialogUtils
 import com.feylabs.halalkan.utils.ImageViewUtils.loadImage
 import com.feylabs.halalkan.utils.base.BaseFragment
 import com.feylabs.halalkan.utils.snackbar.SnackbarType
@@ -66,10 +68,36 @@ class AddEditRestoFragment : BaseFragment() {
             }
         }
 
+        viewModel.createRestoLiveData.observe(viewLifecycleOwner){
+            when(it){
+                is Default -> {}
+                is Error -> {
+                    showSnackbar(it.message.toString(),SnackbarType.ERROR)
+                }
+                is Loading -> {
+                    showLoading(true)
+                }
+                is Success -> {
+                    showLoading(false)
+                    DialogUtils.showSuccessDialog(
+                        context = requireContext(),
+                        title = getString(R.string.title_success),
+                        message = getString(R.string.message_data_created_succesfully),
+                        positiveAction = Pair("OK") {
+                            findNavController().navigateUp()
+                        },
+                        autoDismiss = true,
+                        buttonAllCaps = false
+                    )
+                }
+            }
+        }
+
         viewModel.foodTypeLiveData.observe(viewLifecycleOwner) {
             when (it) {
                 is Default -> {}
                 is Error -> {
+                    showLoading(false)
                     showSnackbar(it.message.toString(), SnackbarType.ERROR)
                 }
                 is Loading -> {
@@ -129,6 +157,14 @@ class AddEditRestoFragment : BaseFragment() {
                     }
                 }
             }
+        }
+    }
+
+    private fun showLoading(b: Boolean) {
+        if (b){
+            binding.loadingAnim.makeVisible()
+        }else{
+            binding.loadingAnim.makeGone()
         }
     }
 

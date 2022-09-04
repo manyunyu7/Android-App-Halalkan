@@ -88,48 +88,47 @@
                 android:textSize="12sp" />
 
             <LinearLayout
-                android:layout_marginHorizontal="@dimen/dimen_10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                >
+                android:layout_marginHorizontal="@dimen/dimen_10dp">
 
                 <ImageView
                     android:layout_width="15dp"
                     android:layout_height="15dp"
-                    android:scaleType="fitCenter"
                     android:layout_gravity="center"
-                    android:src="@drawable/ic_pin_source_location"/>
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_pin_source_location" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="10dp"
                     android:layout_gravity="center"
+                    android:layout_marginHorizontal="10dp"
                     android:fontFamily="@font/poppins_regular"
                     android:text="@string/title_your_location"
                     android:textColor="@color/black"
                     android:textSize="11sp" />
 
             </LinearLayout>
+
             <LinearLayout
-                android:layout_marginHorizontal="@dimen/dimen_10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                >
+                android:layout_marginHorizontal="@dimen/dimen_10dp">
 
                 <ImageView
                     android:layout_width="15dp"
                     android:layout_height="15dp"
-                    android:scaleType="fitCenter"
                     android:layout_gravity="top"
-                    android:src="@drawable/ic_pin_destination"/>
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_pin_destination" />
 
                 <TextView
                     android:id="@+id/tv_user_location"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="10dp"
                     android:layout_gravity="center"
+                    android:layout_marginHorizontal="10dp"
                     android:fontFamily="@font/poppins_regular"
                     android:text="@string/location_detail"
                     android:textColor="@color/black"
@@ -164,12 +163,45 @@
                 app:layout_constraintStart_toStartOf="parent" />
 
             <View
+                android:id="@+id/separator_finish_order"
+                android:layout_width="match_parent"
+                android:layout_height="9dp"
+                android:layout_marginTop="@dimen/dimen_20dp"
+                android:background="#EEEEEE"
+                tools:visibility="visible"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/label_signature"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginTop="@dimen/dimen_20dp"
+                android:visibility="gone"
+                tools:visibility="visible"
+                android:fontFamily="@font/poppins_regular"
+                android:text="@string/title_customer_signature"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
+            <ImageView
+                android:id="@+id/iv_signature"
+                android:layout_marginTop="@dimen/dimen_10dp"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:visibility="gone"
+                tools:visibility="visible"
+                tools:src="@drawable/ic_manyunyu" />
+
+
+            <View
                 android:id="@+id/separator_driver"
                 android:layout_width="match_parent"
                 android:layout_height="9dp"
                 android:layout_marginTop="@dimen/dimen_20dp"
                 android:background="#EEEEEE"
                 android:visibility="gone" />
+
 
             <TextView
                 android:id="@+id/title_driver"
@@ -448,7 +480,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="9dp"
                 android:layout_marginTop="@dimen/dimen_20dp"
-                android:background="#EEEEEE" />
+                android:background="#EEEEEE"
+                android:visibility="gone" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -460,7 +493,8 @@
                 android:text="Cash Only"
                 android:textAlignment="textEnd"
                 android:textColor="@color/black"
-                android:textSize="15sp" />
+                android:textSize="15sp"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/tv_ordered_items"
@@ -473,6 +507,7 @@
                 android:fontFamily="@font/poppins_light"
                 android:text="test a long mosque data that really really  long"
                 android:textSize="13sp"
+                android:visibility="gone"
                 app:drawableTint="@color/color_blue_purplish" />
 
             <View

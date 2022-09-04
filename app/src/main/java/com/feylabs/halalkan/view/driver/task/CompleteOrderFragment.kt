@@ -61,7 +61,7 @@ class CompleteOrderFragment : BaseFragment() {
                             positiveAction = Pair("OK") {
                                 findNavController().popBackStack(
                                     R.id.navigation_driverOrderFragment,
-                                    true
+                                    false
                                 )
                             },
                             autoDismiss = true,

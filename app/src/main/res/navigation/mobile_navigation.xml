@@ -177,6 +177,7 @@
         <action
             android:id="@+id/action_navigation_loginFragment_to_navigation_driverOrderFragment"
             app:destination="@id/navigation_driverOrderFragment"
+            app:popUpTo="@id/navigation_newHomeFragment"
             app:popUpToInclusive="true" />
     </fragment>
 

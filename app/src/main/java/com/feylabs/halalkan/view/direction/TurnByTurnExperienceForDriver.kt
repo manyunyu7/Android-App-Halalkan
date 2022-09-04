@@ -461,7 +461,6 @@ class TurnByTurnExperienceForDriver : BaseFragment() {
         mapboxMap = binding.mapView.getMapboxMap()
 
         val userData = arguments?.getParcelable<UserModel>("userData")
-
         userData?.let {
             binding.infoProfile.apply {
                 this.ivMainImage.loadImageFromURL(
@@ -471,6 +470,10 @@ class TurnByTurnExperienceForDriver : BaseFragment() {
                 this.labelInfoProfileContact.text = userData.phoneNumber
                 this.labelInfoProfileUserName.text = userData.name
             }
+        }
+
+        if (muskoPref().getUserRole()!="4"){
+            binding.btnCompleteDelivery.makeGone()
         }
 
         binding.btnCompleteDelivery.setOnClickListener {

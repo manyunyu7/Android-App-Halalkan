@@ -1,9 +1,12 @@
 package com.feylabs.halalkan.data.remote.reqres.driver
 
+import android.os.Parcelable
 import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
 @Keep
+@Parcelize
 data class DriverObj(
     @SerializedName("created_at")
     var createdAt: String = "",
@@ -25,8 +28,9 @@ data class DriverObj(
     var userDriver: UserDriver = UserDriver(),
     @SerializedName("user_id")
     var userId: Int = 0
-) {
+) : Parcelable {
     @Keep
+    @Parcelize
     data class UserDriver(
         @SerializedName("created_at")
         var createdAt: String = "",
@@ -43,10 +47,10 @@ data class DriverObj(
         @SerializedName("phone_number")
         var phoneNumber: String = "",
         @SerializedName("photo")
-        var photo: Any? = Any(),
+        var photo: String = "",
         @SerializedName("roles_id")
         var rolesId: Int = 0,
         @SerializedName("updated_at")
         var updatedAt: String = ""
-    )
+    ) : Parcelable
 }

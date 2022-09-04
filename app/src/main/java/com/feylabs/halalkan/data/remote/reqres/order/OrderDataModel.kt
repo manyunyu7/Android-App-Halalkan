@@ -1,9 +1,12 @@
 package com.feylabs.halalkan.data.remote.reqres.order
 
+import android.os.Parcelable
 import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
 @Keep
+@Parcelize
 data class OrderDataModel(
     @SerializedName("customer")
     var customer: String = "",
@@ -21,4 +24,4 @@ data class OrderDataModel(
     var notes: String? = "",
     @SerializedName("quantity")
     var quantity: Int = 0
-){}
+) : Parcelable {}

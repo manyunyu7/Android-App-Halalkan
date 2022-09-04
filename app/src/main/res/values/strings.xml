@@ -224,5 +224,6 @@
     <string name="title_status">Status</string>
     <string name="title_change_food_availability">Change Food Availability</string>
     <string name="message_please_choose_avail_status_first">Please choose availability status first</string>
+    <string name="title_customer_signature">Customer Signature</string>
 
 </resources>

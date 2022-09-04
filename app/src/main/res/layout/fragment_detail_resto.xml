@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:background="#FCFCFC">
 
-
     <androidx.core.widget.NestedScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"

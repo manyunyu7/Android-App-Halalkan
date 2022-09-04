@@ -78,6 +78,7 @@ class DetailOrderItemAdapter(
             binding.customPlusMinus.makeGone()
             binding.btnNotes.makeGone()
             binding.btnOrder.makeGone()
+            binding.tvAvailability.makeGone()
             binding.ivMainImage.loadImageFromURL(mContext, model.foodImage)
         }
 

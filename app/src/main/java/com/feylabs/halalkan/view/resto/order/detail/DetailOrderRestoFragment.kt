@@ -237,11 +237,14 @@ class DetailOrderRestoFragment : BaseFragment(), OnMapReadyCallback {
                     binding.btnNext.setOnClickListener {
                         showBottomSheetDriver()
                     }
+                    binding.btnNext.makeGone()
+                    binding.btnDirection.makeVisible()
 
                     if (muskoPref().getUserRole() == "4") {
+                        binding.btnNext.makeGone()
                         binding.btnNext.text = getString(R.string.title_deliver_order)
                         binding.btnNext.setOnClickListener {
-
+                            goToDelivery(rawData)
                         }
                     }
                 }
@@ -249,11 +252,32 @@ class DetailOrderRestoFragment : BaseFragment(), OnMapReadyCallback {
                 4 -> { //completed
                     binding.btnNext.text = getString(R.string.see_invoice)
                     binding.btnNext.setOnClickListener {
-                        showBottomSheetDriver()
+                        showBottomSheetInvoice(rawData)
                     }
+
+                    binding.labelSignature.makeVisible()
+                    binding.separatorFinishOrder.makeVisible()
+                    binding.ivSignature.makeVisible()
+
+                    binding.ivSignature.loadImageFromURL(
+                        requireContext(),
+                        rawData.imgSignatureFullPath
+                    )
+
+                    binding.btnNext.makeGone()
+
+                    binding.btnDirection.makeGone()
                 }
             }
         }
+    }
+
+    private fun showBottomSheetInvoice(rawData: DetailOrderResponse.Data) {
+        findNavController().navigate(
+            R.id.navigation_completeOrderFragment, bundleOf(
+                "data" to rawData
+            )
+        )
     }
 
     private fun goToDelivery(rawData: DetailOrderResponse.Data) {
