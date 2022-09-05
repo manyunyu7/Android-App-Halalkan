@@ -117,7 +117,9 @@
         <entry key="..\:/Users/Henry Augusta/Desktop/#PA/Android-App-Halalkan/app/src/main/res/drawable/ic_svgrepo_door_logout.xml" value="0.1475" />
         <entry key="..\:/Users/Henry Augusta/Desktop/#PA/Android-App-Halalkan/app/src/main/res/layout-land/layout_dialog_conf.xml" value="0.16" />
         <entry key="..\:/Users/Henry Augusta/Desktop/#PA/Android-App-Halalkan/app/src/main/res/layout-land/layout_dialog_single_button_image.xml" value="0.1781305114638448" />
+        <entry key="..\:/Users/Henry Augusta/Desktop/#PA/Android-App-Halalkan/app/src/main/res/layout-v23/fragment_translate_image.xml" value="0.1" />
         <entry key="..\:/Users/Henry Augusta/Desktop/#PA/Android-App-Halalkan/app/src/main/res/layout-v23/item_chat.xml" value="0.10572916666666667" />
+        <entry key="..\:/Users/Henry Augusta/Desktop/#PA/Android-App-Halalkan/app/src/main/res/layout-v23/translate_image_fragment.xml" value="0.1" />
         <entry key="..\:/Users/Henry Augusta/Desktop/#PA/Android-App-Halalkan/app/src/main/res/layout/activity_container.xml" value="0.15520833333333334" />
         <entry key="..\:/Users/Henry Augusta/Desktop/#PA/Android-App-Halalkan/app/src/main/res/layout/activity_turn_by_turn_experience.xml" value="0.1" />
         <entry key="..\:/Users/Henry Augusta/Desktop/#PA/Android-App-Halalkan/app/src/main/res/layout/activity_turn_by_turn_experience_driver.xml" value="0.2" />
@@ -170,6 +172,7 @@
         <entry key="..\:/Users/Henry Augusta/Desktop/#PA/Android-App-Halalkan/app/src/main/res/layout/fragment_search_product.xml" value="0.18" />
         <entry key="..\:/Users/Henry Augusta/Desktop/#PA/Android-App-Halalkan/app/src/main/res/layout/fragment_translate.xml" value="0.1" />
         <entry key="..\:/Users/Henry Augusta/Desktop/#PA/Android-App-Halalkan/app/src/main/res/layout/fragment_translate_convo.xml" value="0.16088947024198821" />
+        <entry key="..\:/Users/Henry Augusta/Desktop/#PA/Android-App-Halalkan/app/src/main/res/layout/fragment_translate_image.xml" value="0.1" />
         <entry key="..\:/Users/Henry Augusta/Desktop/#PA/Android-App-Halalkan/app/src/main/res/layout/fragment_user_profile.xml" value="0.1" />
         <entry key="..\:/Users/Henry Augusta/Desktop/#PA/Android-App-Halalkan/app/src/main/res/layout/fragment_xresto_add_category.xml" value="0.16" />
         <entry key="..\:/Users/Henry Augusta/Desktop/#PA/Android-App-Halalkan/app/src/main/res/layout/fragment_xresto_add_driver.xml" value="0.1" />

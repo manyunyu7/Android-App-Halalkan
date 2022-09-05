@@ -224,6 +224,14 @@
     </fragment>
 
     <fragment
+        android:id="@+id/navigation_translateImageFragment"
+        android:name="com.feylabs.halalkan.view.translate.image.TranslateImageFragment"
+        android:label="TranslateFragment"
+        tools:layout="@layout/fragment_translate_image">
+
+    </fragment>
+
+    <fragment
         android:id="@+id/navigation_detailRestoFragment"
         android:name="com.feylabs.halalkan.view.resto.detail.DetailRestoFragment"
         android:label="DetailRestoFragment"
