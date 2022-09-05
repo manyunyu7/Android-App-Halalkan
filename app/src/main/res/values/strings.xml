@@ -250,5 +250,7 @@
     <string name="title_form_name">Fullname</string>
     <string name="title_change_photo">Change Photo</string>
     <string name="error_message_min_is_9">Minimum length is 9 character</string>
+    <string name="please_allow_camera">Please allow app to access camera at your phone settings</string>
+    <string name="product_not_found_database">Product Not Found at Our Database</string>
 
 </resources>

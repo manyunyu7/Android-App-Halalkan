@@ -69,11 +69,11 @@ class ProductViewModel(
         }
     }
 
-    fun searchProduct(name: String, category: String? = null) {
+    fun searchProduct(name: String? = null, category: String? = null, code: String? = null) {
         viewModelScope.launch {
             _searchProductLiveData.postValue(QumparanResource.Loading())
             try {
-                val res = ds.searchProduct(categoryId = category?.toIntOrNull(), name)
+                val res = ds.searchProduct(categoryId = category?.toIntOrNull(), name, code)
                 if (res.isSuccessful) {
                     _searchProductLiveData.postValue(QumparanResource.Success(res.body()))
                 } else {

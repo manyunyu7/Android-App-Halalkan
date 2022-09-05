@@ -142,6 +142,8 @@ dependencies {
 
     implementation 'com.google.mlkit:text-recognition-korean:16.0.0-beta5'
 
+    implementation 'com.github.yuriy-budiyev:code-scanner:2.3.2'
+
     //location picker
     implementation ('com.adevinta.android:leku:9.1.4') {
         exclude group: 'com.google.android.gms'

@@ -27,7 +27,8 @@ interface ProductService {
     @GET("fe/products/search")
     suspend fun searchProduct(
         @Query("category") categoryId: Int? = null,
-        @Query("name") name: String = ""
+        @Query("name") name: String? = null,
+        @Query("code") code: String? = null,
     ): Response<SearchProductResponse>
 
     @GET("products/detail/{productId}")

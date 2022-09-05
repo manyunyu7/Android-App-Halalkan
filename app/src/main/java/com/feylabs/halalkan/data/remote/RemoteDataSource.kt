@@ -133,8 +133,9 @@ class RemoteDataSource(
 
     suspend fun searchProduct(
         categoryId: Int?,
-        productName : String
-    ) = productService.searchProduct(categoryId = categoryId,productName)
+        productName : String?,
+        code : String?,
+    ) = productService.searchProduct(categoryId = categoryId,productName,code)
 
     suspend fun getProductOnCategory(
         categoryId: String,

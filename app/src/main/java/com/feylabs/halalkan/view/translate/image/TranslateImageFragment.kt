@@ -135,10 +135,8 @@ class TranslateImageFragment : Fragment() {
 
         viewModel.cameraState.observe(viewLifecycleOwner) {
             if (it) {
-                binding.overlay.makeVisible()
                 binding.btnController.setImageResource(R.drawable.ic_baseline_motion_photos_paused_24)
             } else {
-                binding.overlay.makeGone()
                 binding.btnController.setImageResource(R.drawable.ic_baseline_play_arrow_24)
             }
         }
