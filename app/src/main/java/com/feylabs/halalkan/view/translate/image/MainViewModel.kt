@@ -24,6 +24,8 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
+import com.feylabs.halalkan.view.translate.image.TranslateImageFragment.Companion.DESIRED_HEIGHT_CROP_PERCENT
+import com.feylabs.halalkan.view.translate.image.TranslateImageFragment.Companion.DESIRED_WIDTH_CROP_PERCENT
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
 import com.google.android.gms.tasks.Tasks
@@ -35,8 +37,6 @@ import com.google.mlkit.nl.translate.TranslateLanguage
 import com.google.mlkit.nl.translate.Translation
 import com.google.mlkit.nl.translate.Translator
 import com.google.mlkit.nl.translate.TranslatorOptions
-import com.feylabs.halalkan.view.translate.image.MainFragment.Companion.DESIRED_HEIGHT_CROP_PERCENT
-import com.feylabs.halalkan.view.translate.image.MainFragment.Companion.DESIRED_WIDTH_CROP_PERCENT
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -44,7 +44,10 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     val targetLang = MutableLiveData<Language>()
     val sourceText = SmoothedMutableLiveData<String>(SMOOTHING_DURATION)
 
+    val cameraState = MutableLiveData<Boolean>(false)
+
     private val languageIdentifier = LanguageIdentification.getClient()
+
     // We set desired crop percentages to avoid having to analyze the whole image from the live
     // camera feed. However, we are not guaranteed what aspect ratio we will get from the camera, so
     // we use the first frame we get back from the camera to update these crop percentages based on

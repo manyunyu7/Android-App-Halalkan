@@ -22,7 +22,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.google.mlkit.showcase.translate.main.MainFragment">
+    >
 
     <androidx.camera.view.PreviewView
         android:id="@+id/viewfinder"
@@ -32,6 +32,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toTopOf="@id/middle"
         app:layout_constraintTop_toTopOf="parent" />
+
     <SurfaceView
         android:id="@+id/overlay"
         android:layout_width="match_parent"
@@ -41,20 +42,35 @@
         app:layout_constraintBottom_toBottomOf="@id/viewfinder"
         app:layout_constraintTop_toTopOf="@id/viewfinder" />
 
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btn_controller"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        app:backgroundTint="@color/blue_auth"
+        android:src="@drawable/ic_baseline_motion_photos_paused_24"
+        app:fabSize="normal"
+        android:layout_marginEnd="@dimen/dimen_20dp"
+        android:layout_marginBottom="@dimen/dimen_20dp"
+        app:layout_constraintBottom_toTopOf="@id/middle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:tint="@color/white" />
+
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/middle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent=".5" />
+        app:layout_constraintGuide_percent=".6" />
 
     <TextView
         android:id="@+id/srcLang"
-        style="@style/SrcLangText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="8dp"
+        android:textColor="@color/halalkan_primary"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="4dp"
         app:layout_constraintBottom_toTopOf="@+id/srcTextScrollView"
@@ -77,7 +93,7 @@
 
         <TextView
             android:id="@+id/srcText"
-            style="@style/SrcText"
+            android:fontFamily="@font/open_sans_regular"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
@@ -112,7 +128,7 @@
         android:layout_marginBottom="4dp"
         android:fillViewport="true"
         android:scrollbars="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/divider2"
+        app:layout_constraintBottom_toBottomOf="@+id/divider2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/targetLangSelector">
@@ -120,6 +136,7 @@
         <TextView
             android:id="@+id/translatedText"
             style="@style/TranslatedText"
+            android:textSize="@dimen/dimen_15sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
@@ -137,26 +154,11 @@
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="4dp"
         android:background="?android:attr/listDivider"
-        app:layout_constraintBottom_toTopOf="@id/imageView"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/translatedTextScrollView" />
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="18dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="4dp"
-        android:layout_marginBottom="4dp"
-        android:contentDescription="@string/content_description_google_translate_attribution"
-        android:scaleType="fitCenter"
-        android:src="@drawable/greyscale_regular_3x"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/divider2" />
 
     <ProgressBar
         android:id="@+id/progressBar"

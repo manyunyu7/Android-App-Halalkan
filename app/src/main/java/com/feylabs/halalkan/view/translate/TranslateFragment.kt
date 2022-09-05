@@ -208,6 +208,10 @@ class TranslateFragment : BaseFragment() {
             findNavController().popBackStack()
         }
 
+        binding.containerSourceLanguage.imgCamera.setOnClickListener {
+            findNavController().navigate(R.id.navigation_translateImageFragment)
+        }
+
         handleMicrophoneClicked()
         handleLanguageSwitch()
         handleTranslate()

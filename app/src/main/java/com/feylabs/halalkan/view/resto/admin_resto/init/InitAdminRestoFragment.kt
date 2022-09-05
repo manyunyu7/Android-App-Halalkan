@@ -32,6 +32,21 @@ class InitAdminRestoFragment : BaseFragment() {
 
     val nearbyRestoAdapter by lazy { RestoAdminMainAdapter() }
 
+    override fun onPause() {
+        revokeViewModel()
+        super.onPause()
+    }
+
+    override fun onStop() {
+        revokeViewModel()
+        super.onStop()
+    }
+
+    private fun revokeViewModel() {
+        viewModel.createRestoLiveData.removeObserver { }
+        viewModel.myRestoLiveData.removeObserver { }
+    }
+
     override fun initUI() {
         binding.rvRestoNearby.apply {
             layoutManager = setLayoutManagerGridVertical(2)
@@ -75,6 +90,7 @@ class InitAdminRestoFragment : BaseFragment() {
                 title = getString(R.string.label_are_you_sure),
                 message = getString(R.string.message_logged_out),
                 positiveAction = Pair("OK") {
+                    revokeViewModel()
                     muskoPref().clearPreferences()
                     findNavController().navigate(R.id.navigation_newHomeFragment)
                 },
@@ -92,7 +108,7 @@ class InitAdminRestoFragment : BaseFragment() {
 
         binding.labelRestoAroundYou.setOnClickListener {
             muskoPref().clearPreferences()
-            findNavController().popBackStack(R.id.navigation_newHomeFragment,true)
+            findNavController().popBackStack(R.id.navigation_newHomeFragment, true)
         }
     }
 

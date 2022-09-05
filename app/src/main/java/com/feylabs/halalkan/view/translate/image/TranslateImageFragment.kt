@@ -35,6 +35,7 @@ import androidx.camera.core.Camera
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -51,6 +52,8 @@ import kotlin.math.min
 import com.feylabs.halalkan.R
 import com.feylabs.halalkan.view.translate.mlkit.TextAnalyzer
 import com.feylabs.halalkan.databinding.FragmentTranslateImageBinding
+import com.feylabs.halalkan.utils.CommonUtil.makeGone
+import com.feylabs.halalkan.utils.CommonUtil.makeVisible
 
 class TranslateImageFragment : Fragment() {
 
@@ -122,6 +125,24 @@ class TranslateImageFragment : Fragment() {
         cameraExecutor = Executors.newSingleThreadExecutor()
         scopedExecutor = ScopedExecutor(cameraExecutor)
 
+        binding.btnController.setOnClickListener {
+            if (viewModel.cameraState.value == true) {
+                viewModel.cameraState.postValue(false)
+            } else {
+                viewModel.cameraState.postValue(true)
+            }
+        }
+
+        viewModel.cameraState.observe(viewLifecycleOwner) {
+            if (it) {
+                binding.overlay.makeVisible()
+                binding.btnController.setImageResource(R.drawable.ic_baseline_motion_photos_paused_24)
+            } else {
+                binding.overlay.makeGone()
+                binding.btnController.setImageResource(R.drawable.ic_baseline_play_arrow_24)
+            }
+        }
+
         // Request camera permissions
         if (allPermissionsGranted()) {
             // Wait for the views to be properly laid out
@@ -133,7 +154,7 @@ class TranslateImageFragment : Fragment() {
                 setUpCamera()
             }
         } else {
-            requestPermissions(REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS)
+            askForPermission(Manifest.permission.CAMERA, REQUEST_CODE_PERMISSIONS);
         }
 
         // Get available language list and set up the target language spinner
@@ -145,27 +166,31 @@ class TranslateImageFragment : Fragment() {
 
         binding.targetLangSelector.adapter = adapter
         binding.targetLangSelector.setSelection(adapter.getPosition(Language("en")))
-        binding.targetLangSelector.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                viewModel.targetLang.value = adapter.getItem(position)
+        binding.targetLangSelector.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    viewModel.targetLang.value = adapter.getItem(position)
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>) {}
             }
 
-            override fun onNothingSelected(parent: AdapterView<*>) {}
-        }
-
-        viewModel.sourceLang.observe(viewLifecycleOwner, Observer { binding.srcLang.text = it.displayName })
+        viewModel.sourceLang.observe(
+            viewLifecycleOwner,
+            Observer { binding.srcLang.text = it.displayName })
         viewModel.translatedText.observe(viewLifecycleOwner, Observer { resultOrError ->
             resultOrError?.let {
-                if (it.error != null) {
-                    binding.translatedText.error = resultOrError.error?.localizedMessage
-                } else {
-                    binding.translatedText.text = resultOrError.result
-                }
+                if (viewModel.cameraState.value == true)
+                    if (it.error != null) {
+                        binding.translatedText.error = resultOrError.error?.localizedMessage
+                    } else {
+                        binding.translatedText.text = resultOrError.result
+                    }
             }
         })
         viewModel.modelDownloading.observe(viewLifecycleOwner, Observer { isDownloading ->
@@ -219,6 +244,8 @@ class TranslateImageFragment : Fragment() {
         val cameraProvider = cameraProvider
             ?: throw IllegalStateException("Camera initialization failed.")
 
+
+        viewModel.cameraState.postValue(true)
         // Get screen metrics used to setup camera for full screen resolution
         val metrics = DisplayMetrics().also { viewFinder.display.getRealMetrics(it) }
         Log.d(TAG, "Screen metrics: ${metrics.widthPixels} x ${metrics.heightPixels}")
@@ -250,7 +277,12 @@ class TranslateImageFragment : Fragment() {
                     )
                 )
             }
-        viewModel.sourceText.observe(viewLifecycleOwner, Observer { binding.srcText.text = it })
+
+        viewModel.sourceText.observe(viewLifecycleOwner, Observer {
+            if (viewModel.cameraState.value == true)
+                binding.srcText.text = it
+        })
+
         viewModel.imageCropPercentages.observe(viewLifecycleOwner,
             Observer { drawOverlay(binding.overlay.holder, it.first, it.second) })
 
@@ -268,7 +300,7 @@ class TranslateImageFragment : Fragment() {
             )
             preview.setSurfaceProvider(viewFinder.createSurfaceProvider())
         } catch (exc: IllegalStateException) {
-            Log.e(TAG, "Use case binding failed. This must be running on main thread.", exc)
+
         }
     }
 
@@ -357,11 +389,6 @@ class TranslateImageFragment : Fragment() {
                     setUpCamera()
                 }
             } else {
-                Toast.makeText(
-                    context,
-                    "Permissions not granted by the user.",
-                    Toast.LENGTH_SHORT
-                ).show()
             }
         }
     }
@@ -374,4 +401,36 @@ class TranslateImageFragment : Fragment() {
             requireContext(), it
         ) == PackageManager.PERMISSION_GRANTED
     }
+
+    private fun askForPermission(permission: String, requestCode: Int) {
+        if (ContextCompat.checkSelfPermission(
+                requireActivity(),
+                permission
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(
+                    requireActivity(),
+                    permission
+                )
+            ) {
+                //This is called if user has denied the permission before
+                //In this case I am just asking the permission again
+                ActivityCompat.requestPermissions(
+                    requireActivity(),
+                    arrayOf(permission),
+                    requestCode
+                )
+            } else {
+                ActivityCompat.requestPermissions(
+                    requireActivity(),
+                    arrayOf(permission),
+                    requestCode
+                )
+            }
+        } else {
+        }
+    }
+
 }

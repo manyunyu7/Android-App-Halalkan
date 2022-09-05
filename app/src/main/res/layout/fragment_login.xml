@@ -64,10 +64,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/open_sans_semi_bold"
-                android:text="Email"
+                android:text="@string/title_form_email"
                 android:layout_marginTop="@dimen/dimen_20dp"
                 android:textColor="@color/black"
-
                 android:textSize="16sp" />
 
             <EditText
