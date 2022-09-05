@@ -34,6 +34,7 @@ import com.feylabs.halalkan.view.resto.RestoViewModel
 import com.feylabs.halalkan.view.resto.main.RestoMainAdapter
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
+import java.util.*
 
 class NewHomeFragment : BaseFragment() {
 
@@ -127,6 +128,7 @@ class NewHomeFragment : BaseFragment() {
     }
 
     override fun initUI() {
+        imageGreet()
         checkRole()
         setupPermission()
         initRecyclerView()
@@ -319,6 +321,22 @@ class NewHomeFragment : BaseFragment() {
         }
     }
 
+    private fun imageGreet(){
+        val greeting_img = binding.greetingImg
+        val calendar = Calendar.getInstance()
+        val timeOfDay = calendar[Calendar.HOUR_OF_DAY]
+        if (timeOfDay in 0..5) {
+            greeting_img.setImageResource(R.drawable.bg_header_dawn)
+        } else if (timeOfDay in 6..11) {
+            greeting_img.setImageResource(R.drawable.bg_header_sunrise)
+        } else if (timeOfDay in 12..15) {
+            greeting_img.setImageResource(R.drawable.bg_header_daylight)
+        } else if (timeOfDay in 16..17) {
+            greeting_img.setImageResource(R.drawable.bg_header_evening)
+        } else if (timeOfDay in 18..23) {
+            greeting_img.setImageResource(R.drawable.bg_header_night)
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

@@ -113,9 +113,12 @@ dependencies {
                 exclude group: 'org.jetbrains', module: 'annotations'
             }
 
-    implementation 'com.github.markomilos:paginate:1.0.0'
 
     implementation 'com.github.jd-alexander:LikeButton:0.2.3'
+
+    //image cropper
+    implementation 'com.github.yalantis:ucrop:2.2.7'
+
 
     //rating bar
     implementation 'com.github.shallcheek:RatingBar:v1.0'
@@ -124,6 +127,20 @@ dependencies {
     implementation 'com.github.florent37:expansionpanel:1.2.4'
 
     implementation 'com.github.qandeelabbassi:Dropsy:1.1'
+
+    // Add CameraX dependencies
+    def camerax_version = "1.0.0-beta05"
+    implementation "androidx.camera:camera-core:${camerax_version}"
+    implementation "androidx.camera:camera-camera2:${camerax_version}"
+    implementation "androidx.camera:camera-lifecycle:${camerax_version}"
+    implementation "androidx.camera:camera-view:1.0.0-alpha12"
+
+    // Add ML Kit dependencies
+    implementation 'com.google.android.gms:play-services-mlkit-text-recognition:18.0.1'
+    implementation 'com.google.mlkit:language-id:17.0.4'
+    implementation 'com.google.mlkit:translate:17.0.1'
+
+    implementation 'com.google.mlkit:text-recognition-korean:16.0.0-beta5'
 
     //location picker
     implementation ('com.adevinta.android:leku:9.1.4') {
