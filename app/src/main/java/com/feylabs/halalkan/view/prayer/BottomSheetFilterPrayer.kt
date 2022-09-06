@@ -60,24 +60,18 @@ class BottomSheetFilterPrayer : BottomSheetDialogFragment() {
             chip.tag = statusOrder.id
             chip.isCheckable = true
 
-            if (statusOrder.id == getFilterRestoTypeFood()) {
+            if (statusOrder.id == getFilterMasjidTypeCert()) {
                 chip.isChecked = true
             }
 
             chip.setOnClickListener {
                 if (chip.tag==-99){
-                    saveFilterRestCert(null)
+                    saveFilterPrayerRoomType(null)
                 }else{
-                    saveFilterRestCert(chip.tag.toString().toIntOrNull())
+                    saveFilterPrayerRoomType(chip.tag.toString().toIntOrNull())
                 }
             }
-//            chip.setOnCheckedChangeListener { compoundButton, b ->
-//                if (chip.tag==-99){
-//                    saveFilterRestCert(null)
-//                }else{
-//                    saveFilterRestCert(chip.tag.toString().toIntOrNull())
-//                }
-//            }
+
 
             chip.setTextColor(Color.parseColor("#000000"))
             chip.chipStrokeColor =
@@ -169,36 +163,20 @@ class BottomSheetFilterPrayer : BottomSheetDialogFragment() {
         }
     }
 
-    private fun getFilterRestoTypeFood(): Int? {
-        return MyPreference(requireContext()).getNullableInt("filterRestoTypeFood")
+
+    private fun getFilterMasjidTypeCert(): Int? {
+        return MyPreference(requireContext()).getNullableInt("filterPrayerRoomType")
     }
 
-    private fun saveFilterRestoTypeFood(value: Int?) {
+    private fun saveFilterPrayerRoomType(value: Int?) {
         value?.let {
             if (value == -99) {
-                MyPreference(requireContext()).removeKey("filterRestoTypeFood")
+                MyPreference(requireContext()).removeKey("filterPrayerRoomType")
             } else {
-                MyPreference(requireContext()).save("filterRestoTypeFood", value)
+                MyPreference(requireContext()).save("filterPrayerRoomType", value)
             }
         } ?: run {
-            MyPreference(requireContext()).removeKey("filterRestoTypeFood")
-        }
-    }
-
-
-    private fun getFilterRestoCert(): Int? {
-        return MyPreference(requireContext()).getNullableInt("filterCertTypeFood")
-    }
-
-    private fun saveFilterRestCert(value: Int?) {
-        value?.let {
-            if (value == -99) {
-                MyPreference(requireContext()).removeKey("filterCertTypeFood")
-            } else {
-                MyPreference(requireContext()).save("filterCertTypeFood", value)
-            }
-        } ?: run {
-            MyPreference(requireContext()).removeKey("filterCertTypeFood")
+            MyPreference(requireContext()).removeKey("filterPrayerRoomType")
         }
     }
 

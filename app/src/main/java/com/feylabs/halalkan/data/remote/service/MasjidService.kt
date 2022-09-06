@@ -2,6 +2,7 @@ package com.feylabs.halalkan.data.remote.service
 
 import com.feylabs.halalkan.data.remote.reqres.masjid.*
 import com.feylabs.halalkan.data.remote.reqres.masjid.pagination.AllMasjidPaginationResponse
+import com.feylabs.halalkan.data.remote.reqres.resto.SearchRestoResponse
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
 import retrofit2.Response
@@ -28,6 +29,14 @@ interface MasjidService {
     @GET("fe/masjids/type")
     suspend fun getMasjidType(
     ): Response<MasjidTypeResponse>
+
+    @GET("fe/masjids/search")
+    suspend fun searchMasjid(
+        @Query("name") name: String? = null,
+        @Query("type_id") typeId: Int?,
+        @Query("perPage") perPage: Int? = 10,
+        @Query("page") page: Int? = 1
+    ): Response<MasjidSearchResponse>
 
 
     @GET("masjids/{id}")

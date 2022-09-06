@@ -161,15 +161,28 @@ class RemoteDataSource(
     }
 
     suspend fun searchResto(
-        name:String?=null,
+        name: String? = null,
         certificationId: Int?,
         typeFoodId: Int?,
         perPage: Int? = null,
         page: Int? = 1,
-        sortBy:String? = null
+        sortBy: String? = null
     ) = restoService.searchResto(
         name = name, sortBy = sortBy,
         certificationId = certificationId, typeFoodId = typeFoodId, perPage = perPage, page = page
+    )
+
+    suspend fun searchMasjid(
+        name: String? = null,
+        typeId: Int?,
+        perPage: Int? = null,
+        page: Int? = 1,
+        sortBy: String? = null
+    ) = masjidService.searchMasjid(
+        name = name,
+        typeId = typeId,
+        perPage = perPage,
+        page = page
     )
 
 

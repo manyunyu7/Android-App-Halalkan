@@ -280,5 +280,9 @@
     <string name="title_status_closed">Closed</string>
     <string name="title_favorite_restaurant">Favorite Restaurant</string>
     <string name="title_prayer_room_type">Prayer Room Type</string>
+    <string name="message_last_page">You are on the last page</string>
+    <string name="title_search_masjid">Search Masjid</string>
+    <string name="title_all_masjid">All Masjid</string>
+    <string name="title_fav_masjid">Favorite Masjid</string>
 
 </resources>

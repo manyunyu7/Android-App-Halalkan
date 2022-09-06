@@ -412,5 +412,10 @@
         android:name="com.feylabs.halalkan.view.resto.main.certification.RestoCertificationFragment"
         android:label="RestoCertificationFragment" />
 
+    <fragment
+        android:id="@+id/navigation_searchPrayerRoomFragment"
+        android:name="com.feylabs.halalkan.view.prayer.search.SearchPrayerRoomFragment"
+        android:label="SearchPrayerRoomFragment" />
+
 
 </navigation>

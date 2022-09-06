@@ -12,6 +12,7 @@ import com.feylabs.halalkan.data.remote.reqres.masjid.pagination.AllMasjidPagina
 import com.feylabs.halalkan.data.remote.reqres.prayertime.PrayerTimeAladhanSingleDateResponse
 import com.feylabs.halalkan.data.repository.PrayerTimeRepository
 import kotlinx.coroutines.launch
+import org.json.JSONObject
 
 class PrayerRoomViewModel(
     val repo: QumparanRepository,
@@ -26,6 +27,10 @@ class PrayerRoomViewModel(
     private var _masjidLiveData =
         MutableLiveData<QumparanResource<MasjidResponseWithoutPagination?>>()
     val masjidLiveData get() = _masjidLiveData
+
+    private var _searchMasjidLiveData =
+        MutableLiveData<QumparanResource<MasjidSearchResponse?>>()
+    val searchMasjidLiveData get() = _searchMasjidLiveData
 
     private var _masjidTypeLiveData =
         MutableLiveData<QumparanResource<MasjidTypeResponse?>>()
@@ -53,6 +58,39 @@ class PrayerRoomViewModel(
     private var _masjidPhotoLiveData =
         MutableLiveData<QumparanResource<MasjidPhotosResponse?>>()
     val masjidPhotoLiveData get() = _masjidPhotoLiveData
+
+    fun searchMasjid(
+        typeId: Int? = null,
+        name: String? = null,
+        page: Int = 1,
+        perPage: Int? = null,
+        sortBy:String? = null
+    ) {
+        _searchMasjidLiveData.postValue(QumparanResource.Loading())
+        viewModelScope.launch {
+            try {
+                val res = ds.searchMasjid(
+                    name = name,
+                    typeId = typeId,
+                    page = page,
+                    perPage = perPage,
+                    sortBy = sortBy
+                )
+                if (res.isSuccessful) {
+                    _searchMasjidLiveData.postValue(QumparanResource.Success(res.body()))
+                } else {
+                    var message = res.message().toString()
+                    res.errorBody()?.let {
+                        val jsonObj = JSONObject(it.charStream().readText())
+                        message = jsonObj.getString("message")
+                    }
+                    _searchMasjidLiveData.postValue(QumparanResource.Error(message))
+                }
+            } catch (e: Exception) {
+                _searchMasjidLiveData.postValue(QumparanResource.Error(e.message.toString()))
+            }
+        }
+    }
 
     fun getMasjidWithPagination(page: Int) {
         _masjidPaginateLiveData.postValue(QumparanResource.Loading())

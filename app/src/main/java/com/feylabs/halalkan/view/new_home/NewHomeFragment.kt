@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -53,7 +54,30 @@ class NewHomeFragment : BaseFragment() {
     private val binding get() = _binding!!
 
     override fun initAction() {
+        binding.greetingImg.setOnClickListener {
+            val list = listOf(
+                R.drawable.bg_header_daylight,
+                R.drawable.bg_header_dawn,
+                R.drawable.bg_header_evening,
+                R.drawable.bg_header_night,
+                R.drawable.bg_header_sunrise
+            )
+            binding.greetingImg.setImageDrawable(
+                ContextCompat.getDrawable(
+                    requireContext(),
+                    list.random()
+                )
+            )
+        }
         setupMenuClickListener()
+        hideStatusBar()
+    }
+
+    private fun hideStatusBar() {
+        val decorView = activity!!.window.decorView // Hide the status bar.
+
+        val uiOptions = View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+        decorView.systemUiVisibility = uiOptions
     }
 
     override fun onResume() {
@@ -142,8 +166,7 @@ class NewHomeFragment : BaseFragment() {
         showToast(user.toString())
         if (user.rolesId == 3) {
             findNavController().navigate(R.id.action_navigation_newHomeFragment_to_navigation_initAdminRestoFragment)
-        }
-        else if (user.rolesId == 4) {
+        } else if (user.rolesId == 4) {
             findNavController().navigate(R.id.action_navigation_newHomeFragment_to_navigation_driverOrderFragment)
         }
     }
@@ -323,7 +346,7 @@ class NewHomeFragment : BaseFragment() {
         }
     }
 
-    private fun imageGreet(){
+    private fun imageGreet() {
         val greeting_img = binding.greetingImg
         val calendar = Calendar.getInstance()
         val timeOfDay = calendar[Calendar.HOUR_OF_DAY]

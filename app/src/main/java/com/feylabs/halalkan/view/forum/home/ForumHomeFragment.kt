@@ -157,7 +157,7 @@ class ForumHomeFragment : BaseFragment() {
     private fun loadNextPage() {
         val currentPage = mAdapter.page
         if (currentPage >= totalReviewPage)
-            showSnackbar("You are on the last page")
+            showSnackbar(getString(R.string.message_last_page))
         else
             viewModel.getForumPagination(page = currentPage + 1)
     }

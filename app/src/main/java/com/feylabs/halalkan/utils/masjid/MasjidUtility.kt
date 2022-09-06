@@ -47,6 +47,8 @@ object MasjidUtility {
         return tempResult
     }
 
+
+
     private fun Double?.orZero(): Double {
         if(this==null){
             return 0.0
