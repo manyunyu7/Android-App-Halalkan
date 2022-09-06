@@ -50,7 +50,19 @@ class RestoMainFragment : BaseFragment() {
             adapter = nearbyRestoAdapter
         }
 
-        foodTypeAdapter.setupAdapterInterface(object :FoodTypeAdapter.ItemInterface{
+        binding.searchBox.root.setOnClickListener {
+            findNavController().navigate(R.id.navigation_allRestoFragment)
+        }
+
+        binding.seeAllCert.setOnClickListener {
+            findNavController().navigate(R.id.navigation_restoCertificationFragment)
+        }
+
+        binding.btnInfoCert.setOnClickListener {
+            findNavController().navigate(R.id.navigation_restoCertificationFragment)
+        }
+
+        foodTypeAdapter.setupAdapterInterface(object : FoodTypeAdapter.ItemInterface {
             override fun onclick(model: FoodTypeResponse.FoodTypeResponseItem) {
                 findNavController().navigate(
                     R.id.navigation_allRestoFragment,

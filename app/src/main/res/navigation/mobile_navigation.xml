@@ -407,5 +407,10 @@
         android:name="com.feylabs.halalkan.view.resto.all.AllRestoFragment"
         android:label="AllRestoFragment" />
 
+    <fragment
+        android:id="@+id/navigation_restoCertificationFragment"
+        android:name="com.feylabs.halalkan.view.resto.main.certification.RestoCertificationFragment"
+        android:label="RestoCertificationFragment" />
+
 
 </navigation>

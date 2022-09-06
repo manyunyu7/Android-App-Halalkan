@@ -9,7 +9,9 @@ class RestaurantCertificationResponse : ArrayList<RestaurantCertificationRespons
         @SerializedName("id")
         var id: Int = 0,
         @SerializedName("name")
-        var name: String = ""
+        var name: String = "",
+        @SerializedName("description")
+        var description: String = ""
     ){
         fun getImage():String{
             return FEYLABS_CDN+"resto_certif/$name.jpg"

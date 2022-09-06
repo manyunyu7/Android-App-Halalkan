@@ -42,7 +42,7 @@
                     android:layout_height="wrap_content"
                     android:layout_toEndOf="@id/btn_back"
                     android:fontFamily="@font/poppins_medium"
-                    android:text="@string/title_product_categories"
+                    android:text="@string/title_certif_info"
                     android:textAlignment="textEnd"
                     android:textColor="@color/black"
                     android:textSize="16sp" />

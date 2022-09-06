@@ -17,6 +17,42 @@
             android:gravity="top|center_horizontal"
             android:orientation="vertical">
 
+
+            <LinearLayout
+                android:layout_marginTop="@dimen/dimen_10dp"
+                android:paddingHorizontal="@dimen/dimen_10dp"
+                android:paddingVertical="1dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <include
+                    android:id="@+id/search_box"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/dimen_10dp"
+                    layout="@layout/layout_search_box"/>
+
+                <com.like.LikeButton
+                    android:id="@+id/btn_like"
+                    android:layout_width="@dimen/dimen_25dp"
+                    android:layout_height="@dimen/dimen_25dp"
+                    android:layout_gravity="center"
+                    app:icon_type="Heart"
+                    app:is_enabled="false"
+                    app:liked="true"
+                    app:circle_start_color="@color/colorPrimary"
+                    app:like_drawable="@drawable/heart_on"
+                    app:unlike_drawable="@drawable/heart_off"
+                    app:icon_size="19dp"
+                    app:anim_scale_factor="2"
+                    android:layout_marginEnd="@dimen/dimen_10dp"
+                    app:layout_constraintBottom_toTopOf="@id/container_bt"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    />
+            </LinearLayout>
+
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -34,7 +70,22 @@
                     android:textColor="@color/black"
                     android:textSize="@dimen/dimen_15sp" />
 
+                <TextView
+                    android:id="@+id/see_all_cert"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerInParent="true"
+                    android:layout_gravity="start"
+                    android:layout_marginEnd="@dimen/dimen_10dp"
+                    android:drawablePadding="@dimen/dimen_10dp"
+                    android:fontFamily="@font/poppins_regular"
+                    android:text="@string/title_see_all"
+                    android:textColor="@color/link_color"
+                    android:textSize="@dimen/dimen_11sp" />
+
                 <ImageView
+                    android:id="@+id/btn_info_cert"
                     android:layout_width="40dp"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
@@ -45,6 +96,7 @@
 
 
             </RelativeLayout>
+
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_certification"
