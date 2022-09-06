@@ -279,5 +279,6 @@
     <string name="title_status_open">OPEN</string>
     <string name="title_status_closed">Closed</string>
     <string name="title_favorite_restaurant">Favorite Restaurant</string>
+    <string name="title_prayer_room_type">Prayer Room Type</string>
 
 </resources>

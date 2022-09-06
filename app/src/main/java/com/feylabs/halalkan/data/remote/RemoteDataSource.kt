@@ -129,6 +129,8 @@ class RemoteDataSource(
         )
     }
 
+    suspend fun getMasjidType() = masjidService.getMasjidType()
+
     override suspend fun getMasjidDetail(id: String): Response<MasjidDetailResponse> {
         return masjidService.getMasjidDetail(id)
     }

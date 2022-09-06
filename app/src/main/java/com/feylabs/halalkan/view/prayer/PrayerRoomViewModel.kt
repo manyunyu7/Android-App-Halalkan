@@ -7,10 +7,7 @@ import com.feylabs.halalkan.data.repository.MasjidRepository
 import com.feylabs.halalkan.data.repository.QumparanRepository
 import com.feylabs.halalkan.data.remote.QumparanResource
 import com.feylabs.halalkan.data.remote.RemoteDataSource
-import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidDetailResponse
-import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidPhotosResponse
-import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidResponseWithoutPagination
-import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidReviewPaginationResponse
+import com.feylabs.halalkan.data.remote.reqres.masjid.*
 import com.feylabs.halalkan.data.remote.reqres.masjid.pagination.AllMasjidPaginationResponse
 import com.feylabs.halalkan.data.remote.reqres.prayertime.PrayerTimeAladhanSingleDateResponse
 import com.feylabs.halalkan.data.repository.PrayerTimeRepository
@@ -29,6 +26,10 @@ class PrayerRoomViewModel(
     private var _masjidLiveData =
         MutableLiveData<QumparanResource<MasjidResponseWithoutPagination?>>()
     val masjidLiveData get() = _masjidLiveData
+
+    private var _masjidTypeLiveData =
+        MutableLiveData<QumparanResource<MasjidTypeResponse?>>()
+    val masjidTypeLiveData get() = _masjidTypeLiveData
 
     private var _masjidPaginateLiveData =
         MutableLiveData<QumparanResource<AllMasjidPaginationResponse?>>()
@@ -69,6 +70,26 @@ class PrayerRoomViewModel(
                 }
             } catch (e: Exception) {
                 _masjidPaginateLiveData.postValue(QumparanResource.Error(e.message.toString()))
+            }
+        }
+    }
+
+    fun getMasjidType() {
+        _masjidTypeLiveData.postValue(QumparanResource.Loading())
+        viewModelScope.launch {
+            try {
+                val res = ds.getMasjidType()
+                if (res.isSuccessful) {
+                    _masjidTypeLiveData.postValue(QumparanResource.Success(res.body()))
+                } else {
+                    _masjidTypeLiveData.postValue(
+                        QumparanResource.Error(
+                            res.errorBody().toString()
+                        )
+                    )
+                }
+            } catch (e: Exception) {
+                _masjidTypeLiveData.postValue(QumparanResource.Error(e.message.toString()))
             }
         }
     }

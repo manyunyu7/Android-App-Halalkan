@@ -1,9 +1,6 @@
 package com.feylabs.halalkan.data.remote.service
 
-import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidDetailResponse
-import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidPhotosResponse
-import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidResponseWithoutPagination
-import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidReviewPaginationResponse
+import com.feylabs.halalkan.data.remote.reqres.masjid.*
 import com.feylabs.halalkan.data.remote.reqres.masjid.pagination.AllMasjidPaginationResponse
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
@@ -27,6 +24,11 @@ interface MasjidService {
     suspend fun getMasjidPhotos(
         @Path("id") masjidId: String,
     ): Response<MasjidPhotosResponse>
+
+    @GET("fe/masjids/type")
+    suspend fun getMasjidType(
+    ): Response<MasjidTypeResponse>
+
 
     @GET("masjids/{id}")
     suspend fun getMasjidDetail(
