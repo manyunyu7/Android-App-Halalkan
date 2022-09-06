@@ -5,9 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
+import androidx.core.os.bundleOf
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.feylabs.halalkan.MainViewModel
+import com.feylabs.halalkan.R
 import com.feylabs.halalkan.customview.bottomsheet.BottomSheetGeneralAction
 import com.feylabs.halalkan.data.local.MyPreference
 import com.feylabs.halalkan.data.remote.QumparanResource
@@ -15,7 +18,12 @@ import com.feylabs.halalkan.data.remote.reqres.forum.ForumModelResponse
 import com.feylabs.halalkan.data.remote.reqres.resto.RestoModelResponse
 import com.feylabs.halalkan.data.remote.reqres.resto.SearchRestoResponse
 import com.feylabs.halalkan.databinding.FragmentAllRestoBinding
+import com.feylabs.halalkan.utils.StringUtil.orMuskoEmpty
 import com.feylabs.halalkan.utils.base.BaseFragment
+import com.feylabs.halalkan.utils.location.LocationUtils
+import com.feylabs.halalkan.utils.location.MyLatLong
+import com.feylabs.halalkan.utils.resto.RestoUtility.renderWithDistanceModel
+import com.feylabs.halalkan.view.favorite.FavViewModel
 import com.feylabs.halalkan.view.resto.BottomSheetFilterResto
 import com.feylabs.halalkan.view.resto.RestoViewModel
 import org.koin.android.viewmodel.ext.android.sharedViewModel
@@ -32,6 +40,7 @@ class AllRestoFragment : BaseFragment() {
 
     private val viewModel: RestoViewModel by viewModel()
     private val mainViewModel: MainViewModel by sharedViewModel()
+    private val favViewModel: FavViewModel by viewModel()
 
     var totalReviewPage = 0
 
@@ -55,6 +64,20 @@ class AllRestoFragment : BaseFragment() {
             binding.labelPageTitleTopbar.text = it
         }
         setupAdapterRv()
+
+        if (isFromLike()) {
+            binding.containerXyz.makeGone()
+        }
+    }
+
+    private fun isFromNearest(): Boolean {
+        val obj = arguments?.getString("nearest").orMuskoEmpty("")
+        return obj.isNotEmpty()
+    }
+
+    private fun isFromLike(): Boolean {
+        val obj = arguments?.getString("like").orMuskoEmpty("")
+        return obj.isNotEmpty()
     }
 
     private fun setupAdapterRv() {
@@ -63,6 +86,10 @@ class AllRestoFragment : BaseFragment() {
             layoutManager = LinearLayoutManager(requireContext())
             setHasFixedSize(true)
             isSaveEnabled = true
+
+            if (isFromLike()) {
+                mAdapter.isFromLike = true
+            }
         }
 
         binding.rvList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
@@ -76,12 +103,18 @@ class AllRestoFragment : BaseFragment() {
 
         mAdapter.setupAdapterInterface(object : AllRestoAdapter.ItemInterface {
             override fun onLike(model: RestoModelResponse) {
+                favViewModel.addFavResto(model.id.toString())
             }
 
             override fun onUnLike(model: RestoModelResponse) {
+                favViewModel.removeFavResto(model.id.toString())
             }
 
             override fun onclick(model: RestoModelResponse) {
+                findNavController().navigate(
+                    R.id.navigation_detailRestoFragment,
+                    bundleOf("data" to model)
+                )
             }
 
             override fun loadMore(page: Int) {
@@ -143,9 +176,31 @@ class AllRestoFragment : BaseFragment() {
                     showLoading(false)
                     it.data?.let { response ->
                         setupDataFromNetwork(response)
+
+                        if (isFromNearest()) {
+                            setupDataForNearest(response.data)
+                        } else {
+
+                        }
                     }
                 }
             }
+        }
+    }
+
+    private fun setupDataForNearest(data: List<RestoModelResponse>) {
+        var initialData = data.toMutableList()
+
+        if (LocationUtils.checkIfLocationSet(mainViewModel.liveLatLng.value)) {
+            initialData = initialData.renderWithDistanceModel(
+                myLocation = mainViewModel.liveLatLng.value ?: MyLatLong(-99.0, -99.0),
+                sortByNearest = true, limit = 999
+            )
+        }
+
+        mAdapter.apply {
+            setWithNewData(initialData)
+            notifyDataSetChanged()
         }
     }
 
@@ -268,11 +323,19 @@ class AllRestoFragment : BaseFragment() {
 
     private fun fetchData(page: Int = 1) {
         showToast("name : ${getSearchName()} certification : ${getSearchCertificationId()} type: ${getSearchTypeFoodId()}")
+
+        var sortBy: String? = null
+
+        if (isFromNearest()) {
+            sortBy = "distance"
+        }
+
         viewModel.searchResto(
             page = page,
             certificationId = getSearchCertificationId(),
             name = getSearchName(),
             typeFoodId = getSearchTypeFoodId(),
+            sortBy = sortBy
         )
     }
 
@@ -281,10 +344,6 @@ class AllRestoFragment : BaseFragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentAllRestoBinding.inflate(inflater)
-
-        //clear filter
-        MyPreference(requireContext()).removeKey("filterCertTypeFood")
-        MyPreference(requireContext()).removeKey("filterRestoTypeFood")
         return binding.root
     }
 

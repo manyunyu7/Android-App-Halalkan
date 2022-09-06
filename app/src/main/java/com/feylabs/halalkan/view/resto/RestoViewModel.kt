@@ -201,7 +201,8 @@ class RestoViewModel(
         typeFoodId: Int? = null,
         name: String? = null,
         page: Int = 1,
-        perPage: Int? = null
+        perPage: Int? = null,
+        sortBy:String? = null
     ) {
         _searchRestoLiveData.postValue(QumparanResource.Loading())
         viewModelScope.launch {
@@ -211,7 +212,8 @@ class RestoViewModel(
                     certificationId = certificationId,
                     typeFoodId = typeFoodId,
                     page = page,
-                    perPage = perPage
+                    perPage = perPage,
+                    sortBy = sortBy
                 )
                 if (res.isSuccessful) {
                     _searchRestoLiveData.postValue(QumparanResource.Success(res.body()))

@@ -34,6 +34,8 @@ data class RestoModelResponse(
     var long: String = "",
     @SerializedName("name")
     var name: String = "",
+    @SerializedName("review_avg")
+    var review_avg: Double = 0.0,
     @SerializedName("phone_number")
     var phoneNumber: String = "",
     @SerializedName("type_food_id")
@@ -44,6 +46,8 @@ data class RestoModelResponse(
     var image_full_path: String = "",
     @SerializedName("user_id")
     var userId: Int = 0,
+    @SerializedName("is_resto_schedule_open")
+    var isRestoScheduleOpen: Boolean = false,
     @SerializedName("is_favorited")
     val isFavorited: Boolean = false,
     var distanceKm: String? = null,
@@ -55,6 +59,6 @@ data class RestoModelResponse(
 ) : Parcelable {
 
 
-    fun getOperatingHours() : String = "-"
+    fun getOperatingHours(): String = "-"
 
 }

@@ -7,15 +7,9 @@ import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.RecyclerView
 import com.feylabs.halalkan.R
 import com.feylabs.halalkan.data.local.MyPreference
-import com.feylabs.halalkan.data.remote.reqres.resto.RestoReviewPaginationResponse
-import com.feylabs.halalkan.databinding.ItemRvLoadMoreBinding
 import com.feylabs.halalkan.utils.CommonUtil
-import com.feylabs.halalkan.utils.CommonUtil.showSnackbar
 import com.feylabs.halalkan.utils.ImageViewUtils.loadImageFromURL
 import com.feylabs.halalkan.utils.PaginationPlaceholder
-import com.feylabs.halalkan.utils.PaginationPlaceholder.Companion.VFooter
-import com.feylabs.halalkan.utils.PaginationPlaceholder.Companion.VNormal
-import com.feylabs.halalkan.utils.PaginationPlaceholder.Companion.getForumPlaceholder
 import com.like.LikeButton
 import com.like.OnLikeListener
 import com.feylabs.halalkan.data.remote.reqres.forum.ForumModelResponse as Data

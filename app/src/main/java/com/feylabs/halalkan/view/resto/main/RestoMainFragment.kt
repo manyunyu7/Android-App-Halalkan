@@ -8,6 +8,7 @@ import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import com.feylabs.halalkan.MainViewModel
 import com.feylabs.halalkan.R
+import com.feylabs.halalkan.data.local.MyPreference
 import com.feylabs.halalkan.data.remote.QumparanResource
 import com.feylabs.halalkan.data.remote.QumparanResource.*
 import com.feylabs.halalkan.data.remote.reqres.resto.AllRestoNoPagination
@@ -15,11 +16,14 @@ import com.feylabs.halalkan.data.remote.reqres.resto.FoodTypeResponse
 import com.feylabs.halalkan.data.remote.reqres.resto.RestaurantCertificationResponse
 import com.feylabs.halalkan.data.remote.reqres.resto.RestoModelResponse
 import com.feylabs.halalkan.databinding.FragmentRestoMainBinding
+import com.feylabs.halalkan.utils.DialogUtils
 import com.feylabs.halalkan.utils.base.BaseFragment
 import com.feylabs.halalkan.utils.location.LocationUtils
 import com.feylabs.halalkan.utils.location.MyLatLong
 import com.feylabs.halalkan.utils.resto.RestoUtility.renderWithDistanceModel
 import com.feylabs.halalkan.view.resto.RestoViewModel
+import com.like.LikeButton
+import com.like.OnLikeListener
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -40,6 +44,10 @@ class RestoMainFragment : BaseFragment() {
     val viewModel by viewModel<RestoViewModel>()
 
     override fun initUI() {
+        //clear filter
+        MyPreference(requireContext()).removeKey("filterCertTypeFood")
+        MyPreference(requireContext()).removeKey("filterRestoTypeFood")
+        
         binding.rvCertification.adapter = certificationAdapter
         binding.rvCertification.apply {
             layoutManager = setLayoutManagerHorizontal()
@@ -50,8 +58,69 @@ class RestoMainFragment : BaseFragment() {
             adapter = nearbyRestoAdapter
         }
 
+        binding.labelNearestRestaurant.setOnClickListener {
+            findNavController().navigate(
+                R.id.navigation_allRestoFragment,
+                bundleOf(
+                    "nearest" to "yeay",
+                )
+            )
+        }
+
+
+        certificationAdapter.setupAdapterInterface(object : CertificationAdapter.ItemInterface {
+            override fun onclick(model: RestaurantCertificationResponse.RestaurantCertificationItem) {
+                findNavController().navigate(
+                    R.id.navigation_allRestoFragment,
+                    bundleOf(
+                        "certification_id" to model.id.toString(),
+                        "title" to model.name,
+                    )
+                )
+            }
+
+        })
+
         binding.searchBox.root.setOnClickListener {
             findNavController().navigate(R.id.navigation_allRestoFragment)
+        }
+
+        binding.btnLike.setOnLikeListener(object : OnLikeListener {
+            override fun liked(likeButton: LikeButton?) {
+                binding.btnLike.isLiked = true
+                findNavController().navigate(
+                    R.id.navigation_allRestoFragment,
+                    bundleOf(
+                        "like" to "1",
+                        "title" to getString(R.string.title_favorite_restaurant)
+                    )
+                )
+            }
+
+            override fun unLiked(likeButton: LikeButton?) {
+                binding.btnLike.isLiked = true
+                findNavController().navigate(
+                    R.id.navigation_allRestoFragment,
+                    bundleOf("like" to "1")
+                )
+            }
+
+        })
+        binding.btnLike.setOnClickListener {
+            if (muskoPref().isLoggedIn())
+                findNavController().navigate(
+                    R.id.navigation_allRestoFragment,
+                    bundleOf("like" to "1")
+                )
+            else
+                DialogUtils.showErrorDialog(
+                    context = requireContext(),
+                    title = getString(R.string.title_attention_logged_in),
+                    message = getString(R.string.attention_logged_in),
+                    positiveAction = Pair("OK") {},
+                    autoDismiss = true,
+                    buttonAllCaps = false
+                )
         }
 
         binding.seeAllCert.setOnClickListener {
@@ -156,7 +225,6 @@ class RestoMainFragment : BaseFragment() {
                 notifyDataSetChanged()
             }
         }
-
     }
 
     private fun setupFoodTypeData(data: FoodTypeResponse?) {

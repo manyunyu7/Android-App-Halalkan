@@ -274,4 +274,10 @@
     <string name="title_filter">Filter</string>
     <string name="title_apply_filter">Apply Filter</string>
 
+    <string name="title_attention_logged_in">Information</string>
+    <string name="attention_logged_in">Authentication needed to access this feature</string>
+    <string name="title_status_open">OPEN</string>
+    <string name="title_status_closed">Closed</string>
+    <string name="title_favorite_restaurant">Favorite Restaurant</string>
+
 </resources>

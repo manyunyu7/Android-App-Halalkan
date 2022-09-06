@@ -41,7 +41,8 @@ interface RestoService {
         @Query("name") name: String? = null,
         @Query("certification_id") certificationId: Int? = null,
         @Query("type_food_id") typeFoodId: Int?,
-        @Query("perPage") perPage: Int? = 5,
+        @Query("perPage") perPage: Int? = 10,
+        @Query("sortBy") sortBy: String? = null,
         @Query("page") page: Int? = 1
     ): Response<SearchRestoResponse>
 

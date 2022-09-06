@@ -191,6 +191,32 @@
                 app:drawableTint="@color/color_blue_purplish" />
 
 
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/guidelineCenter"
+                app:layout_constraintTop_toBottomOf="@id/tv_is_open"
+                >
+                <TextView
+                    android:id="@+id/tv_is_distance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginHorizontal="5dp"
+                    android:drawablePadding="10dp"
+                    android:maxLines="3"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/open_sans_light"
+                    android:text="OPEN"
+                    android:textSize="14sp"
+                    app:drawableTint="@color/color_blue_purplish" />
+
+
+
+            </LinearLayout>
+
+
             <androidx.cardview.widget.CardView
                 android:id="@+id/container_rating"
                 android:layout_width="wrap_content"
@@ -203,7 +229,7 @@
                 app:layout_constraintStart_toStartOf="@id/container_image">
 
                 <LinearLayout
-                    android:visibility="gone"
+                    android:visibility="visible"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"

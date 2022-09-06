@@ -163,9 +163,10 @@ class RemoteDataSource(
         certificationId: Int?,
         typeFoodId: Int?,
         perPage: Int? = null,
-        page: Int? = 1
+        page: Int? = 1,
+        sortBy:String? = null
     ) = restoService.searchResto(
-        name = name,
+        name = name, sortBy = sortBy,
         certificationId = certificationId, typeFoodId = typeFoodId, perPage = perPage, page = page
     )
 
