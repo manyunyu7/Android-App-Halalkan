@@ -377,5 +377,14 @@
         android:name="com.feylabs.halalkan.view.products.SearchProductFragment"
         android:label="SearchProductFragment" />
 
+    <fragment
+        android:id="@+id/navigation_scanProductFragment"
+        android:name="com.feylabs.halalkan.view.scanner.ScanProductFragment"
+        android:label="ScanProductFragment" />
+    <fragment
+        android:id="@+id/navigation_editProfileFragment"
+        android:name="com.feylabs.halalkan.view.auth.EditProfileFragment"
+        android:label="EditProfileFragment" />
+
 
 </navigation>

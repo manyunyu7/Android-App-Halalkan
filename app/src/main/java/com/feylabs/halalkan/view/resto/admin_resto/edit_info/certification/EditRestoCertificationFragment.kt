@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.navigation.fragment.findNavController
+import com.feylabs.halalkan.R
 import com.feylabs.halalkan.data.remote.QumparanResource.*
 import com.feylabs.halalkan.data.remote.reqres.resto.RestoDetailResponse
 import com.feylabs.halalkan.databinding.FragmentXrestoEditCertificationBinding
@@ -75,8 +76,8 @@ class EditRestoCertificationFragment : BaseFragment() {
                     showLoading(false)
                     DialogUtils.showSuccessDialog(
                         context = requireContext(),
-                        title = "Success",
-                        message = "Certification Data Updated Successfully",
+                        title = getString(R.string.title_success),
+                        message = getString(R.string.message_data_updated_succesfully),
                         positiveAction = Pair("OK") {
                           findNavController().popBackStack()
                         },

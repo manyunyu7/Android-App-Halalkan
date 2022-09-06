@@ -119,6 +119,15 @@ class MyPreference(context: Context) {
         return sharedPref.getString("USER_PHONE", "")
     }
 
+    fun saveUserData(userModel: UserModel){
+        saveUserPhone(userModel.phoneNumber)
+        saveUserRole(userModel.rolesId.toString())
+        saveUserName(userModel.name.toString())
+        saveUserEmail(userModel.email.toString())
+        saveUserPhoto(userModel.imgFullPath.toString())
+        saveUserID(userModel.id.toString())
+    }
+
     fun saveUserPhone(phone: String) {
         editor.putString("USER_PHONE", phone)
         editor.commit()

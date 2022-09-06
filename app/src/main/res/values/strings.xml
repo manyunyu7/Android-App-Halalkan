@@ -253,4 +253,12 @@
     <string name="please_allow_camera">Please allow app to access camera at your phone settings</string>
     <string name="product_not_found_database">Product Not Found at Our Database</string>
 
+    <string name="title_profile_about_us">About Us</string>
+    <string name="title_profile_privacy_policy">Privacy Policy</string>
+    <string name="title_profile_change_password">Change Password</string>
+    <string name="title_profile_transaction_history">Transaction History</string>
+    <string name="title_profile_my_review">My Review</string>
+    <string name="title_profile_forum_thread">Forum Thread</string>
+    <string name="title_order_status">Order Status</string>
+
 </resources>

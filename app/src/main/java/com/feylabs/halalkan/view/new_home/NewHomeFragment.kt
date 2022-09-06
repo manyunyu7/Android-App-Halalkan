@@ -95,7 +95,9 @@ class NewHomeFragment : BaseFragment() {
             findNavController().navigate(R.id.action_navigation_newHomeFragment_to_forumHomeFragment)
         }
 
-        binding.menuScan.setOnClickListener {}
+        binding.menuScan.setOnClickListener {
+            findNavController().navigate(R.id.navigation_scanProductFragment)
+        }
 
         binding.menuProduct.setOnClickListener {
             findNavController().navigate(R.id.navigation_productCategoryListFragment)
@@ -328,7 +330,7 @@ class NewHomeFragment : BaseFragment() {
         if (timeOfDay in 0..5) {
             greeting_img.setImageResource(R.drawable.bg_header_dawn)
         } else if (timeOfDay in 6..11) {
-            greeting_img.setImageResource(R.drawable.bg_header_sunrise)
+            greeting_img.setImageResource(R.drawable.bg_header_evening)
         } else if (timeOfDay in 12..15) {
             greeting_img.setImageResource(R.drawable.bg_header_daylight)
         } else if (timeOfDay in 16..17) {

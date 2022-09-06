@@ -41,7 +41,6 @@
                     android:layout_height="wrap_content"
                     android:layout_toEndOf="@id/btn_back"
                     android:fontFamily="@font/poppins_medium"
-                    android:text="@string/title_product_categories"
                     android:textAlignment="textEnd"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
@@ -199,6 +198,23 @@
 
 
     </ScrollView>
+
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/loading_anim"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:padding="50dp"
+        android:visibility="visible"
+        android:background="@android:color/transparent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:lottie_autoPlay="true"
+        app:lottie_fileName="loading_circle_rgb.json"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:lottie_loop="true" />
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

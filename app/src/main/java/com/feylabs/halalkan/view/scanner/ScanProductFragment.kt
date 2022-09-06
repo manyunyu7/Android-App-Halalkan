@@ -120,7 +120,7 @@ class ScanProductFragment : BaseFragment() {
         // Callbacks
         codeScanner.decodeCallback = DecodeCallback {
             requireActivity().runOnUiThread {
-                viewModel.searchProduct(it.text.toString())
+                viewModel.searchProduct(code = it.text.toString())
             }
         }
         codeScanner.errorCallback = ErrorCallback { // or ErrorCallback.SUPPRESS

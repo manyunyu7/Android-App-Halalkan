@@ -55,6 +55,11 @@ class RemoteDataSource(
         userId = id, newPassword = newPassword
     )
 
+    suspend fun updateProfile(
+        body: RequestBody
+    ) = commonService.editProfile(body)
+
+
     suspend fun getPosts() = commonService.getPosts()
 
     suspend fun getPostDetail(postId: String) = commonService.getPostDetail(postId)
@@ -133,9 +138,9 @@ class RemoteDataSource(
 
     suspend fun searchProduct(
         categoryId: Int?,
-        productName : String?,
-        code : String?,
-    ) = productService.searchProduct(categoryId = categoryId,productName,code)
+        productName: String?,
+        code: String?,
+    ) = productService.searchProduct(categoryId = categoryId, productName, code)
 
     suspend fun getProductOnCategory(
         categoryId: String,
@@ -330,8 +335,8 @@ class RemoteDataSource(
         return favoriteService.addFavoriteMasjid(masjidId)
     }
 
-    suspend fun deleteFavMasjid(id:String) = favoriteService.deleteFavoriteMasjid(id)
-    suspend fun deleteFavResto(id:String) = favoriteService.deleteFavoriteResto(id)
+    suspend fun deleteFavMasjid(id: String) = favoriteService.deleteFavoriteMasjid(id)
+    suspend fun deleteFavResto(id: String) = favoriteService.deleteFavoriteResto(id)
 
     override suspend fun addFavoriteResto(restoId: String): Response<AddFavRestoResponse> {
         return favoriteService.addFavoriteResto(restoId)

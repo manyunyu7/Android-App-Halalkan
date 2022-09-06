@@ -21,6 +21,8 @@ import com.feylabs.halalkan.utils.PermissionUtil.Companion.isGranted
 import com.feylabs.halalkan.utils.base.BaseActivity
 import com.feylabs.halalkan.utils.location.MyLatLong
 import com.google.android.gms.location.*
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import org.koin.android.viewmodel.ext.android.viewModel
 import java.io.IOException
 import java.util.*
@@ -83,7 +85,7 @@ class ContainerActivity : BaseActivity(), LocationListener {
         binding.btnDebug.setOnClickListener {
             binding.bottomContainer.makeVisible()
             binding.bottomContainer.animation = AnimationUtils.loadAnimation(
-                this,R.anim.nav_default_enter_anim
+                this, R.anim.nav_default_enter_anim
             )
         }
     }
@@ -119,26 +121,28 @@ class ContainerActivity : BaseActivity(), LocationListener {
     private fun extractGeoCoder(loc: Location) {
         /*------- To get city name from coordinates -------- */
         val gcd = Geocoder(baseContext, Locale.getDefault())
-        val addresses: List<Address>
+
         mainViewModel.liveLatitude.postValue(loc.latitude)
         mainViewModel.liveLongitude.postValue(loc.longitude)
-        mainViewModel.liveLatLng.postValue(MyLatLong(loc.latitude,loc.longitude))
-        try {
-            addresses = gcd.getFromLocation(
-                loc.latitude,
-                loc.longitude, 1
-            )
-            if (addresses.isNotEmpty()) {
-                val address = addresses[0].getAddressLine(0)
-                val kecamatan = addresses[0].locality ?: ""
-                val state = addresses[0].adminArea ?: ""
-                val country = addresses[0].countryName ?: ""
-                val postalCode = addresses[0].postalCode ?: ""
-                mainViewModel.liveKecamatan.postValue(kecamatan)
-                mainViewModel.liveAddress.postValue("$address - $postalCode - $kecamatan - $state, $country")
+        mainViewModel.liveLatLng.postValue(MyLatLong(loc.latitude, loc.longitude))
+        GlobalScope.launch {
+            try {
+                val addresses: List<Address> = gcd.getFromLocation(
+                    loc.latitude,
+                    loc.longitude, 1
+                )
+                if (addresses.isNotEmpty()) {
+                    val address = addresses[0].getAddressLine(0)
+                    val kecamatan = addresses[0].locality ?: ""
+                    val state = addresses[0].adminArea ?: ""
+                    val country = addresses[0].countryName ?: ""
+                    val postalCode = addresses[0].postalCode ?: ""
+                    mainViewModel.liveKecamatan.postValue(kecamatan)
+                    mainViewModel.liveAddress.postValue("$address - $postalCode - $kecamatan - $state, $country")
+                }
+            } catch (e: IOException) {
+                e.printStackTrace()
             }
-        } catch (e: IOException) {
-            e.printStackTrace()
         }
     }
 

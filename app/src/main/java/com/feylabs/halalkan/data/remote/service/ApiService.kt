@@ -2,6 +2,7 @@ package com.feylabs.halalkan.data.remote.service
 
 import com.feylabs.halalkan.data.remote.reqres.*
 import com.feylabs.halalkan.data.remote.reqres.auth.*
+import com.feylabs.halalkan.data.remote.reqres.forum.CreateForumResponse
 import com.feylabs.halalkan.data.remote.reqres.masjid.MasjidResponseWithoutPagination
 import okhttp3.RequestBody
 import retrofit2.Response
@@ -92,6 +93,11 @@ interface ApiService {
     suspend fun getMasjids(
         @Query("isPaginate") isPaginate: Boolean = false
     ): Response<MasjidResponseWithoutPagination>
+
+    @POST("users/me/editProfile")
+    suspend fun editProfile(
+        @Body file: RequestBody?,
+    ): Response<EditProfileResponse?>?
 
 
 }

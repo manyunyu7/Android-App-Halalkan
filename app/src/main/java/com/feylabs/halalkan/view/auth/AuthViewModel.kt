@@ -9,10 +9,14 @@ import com.feylabs.halalkan.data.remote.RemoteDataSource
 import com.feylabs.halalkan.data.remote.reqres.GeneralApiResponse
 import com.feylabs.halalkan.data.remote.reqres.auth.*
 import kotlinx.coroutines.launch
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import org.json.JSONObject
 import timber.log.Timber
+import java.io.File
 
-class AuthViewModel(val repo: QumparanRepository,val ds: RemoteDataSource) : ViewModel() {
+class AuthViewModel(val repo: QumparanRepository, val ds: RemoteDataSource) : ViewModel() {
 
     private var _loginLiveData = MutableLiveData<QumparanResource<LoginResponse?>>()
     val loginLiveData get() = _loginLiveData
@@ -22,6 +26,9 @@ class AuthViewModel(val repo: QumparanRepository,val ds: RemoteDataSource) : Vie
 
     private var _registerLiveData = MutableLiveData<QumparanResource<RegisterResponse?>>()
     val registerLiveData get() = _registerLiveData
+
+    private var _editProfileLiveData = MutableLiveData<QumparanResource<EditProfileResponse?>>()
+    val editProfileLiveData get() = _editProfileLiveData
 
     private var _resetPassLiveData = MutableLiveData<QumparanResource<GeneralApiResponse?>>()
     val resetPassLiveData get() = _resetPassLiveData
@@ -40,9 +47,14 @@ class AuthViewModel(val repo: QumparanRepository,val ds: RemoteDataSource) : Vie
                     val body = res.body()
                     body?.let { loginResponse ->
                         if (loginResponse.mCode > 299 || loginResponse.mCode < 200) {
-                            _loginLiveData.postValue(QumparanResource.Error(message =  loginResponse.mMessage.orEmpty() + " (Musko)"))
+                            _loginLiveData.postValue(QumparanResource.Error(message = loginResponse.mMessage.orEmpty() + " (Musko)"))
                         } else {
-                            _loginLiveData.postValue(QumparanResource.Success(data = loginResponse, message = loginResponse.mMessage.toString()))
+                            _loginLiveData.postValue(
+                                QumparanResource.Success(
+                                    data = loginResponse,
+                                    message = loginResponse.mMessage.toString()
+                                )
+                            )
                         }
                     }
                 } else {
@@ -65,9 +77,14 @@ class AuthViewModel(val repo: QumparanRepository,val ds: RemoteDataSource) : Vie
                     val body = res.body()
                     body?.let { loginResponse ->
                         if (loginResponse.code > 299 || loginResponse.code < 200) {
-                            _userLiveData.postValue(QumparanResource.Error(message =  loginResponse.message.orEmpty() + " (Musko)"))
+                            _userLiveData.postValue(QumparanResource.Error(message = loginResponse.message.orEmpty() + " (Musko)"))
                         } else {
-                            _userLiveData.postValue(QumparanResource.Success(data = loginResponse, message = loginResponse.message))
+                            _userLiveData.postValue(
+                                QumparanResource.Success(
+                                    data = loginResponse,
+                                    message = loginResponse.message
+                                )
+                            )
                         }
                     }
                 } else {
@@ -92,9 +109,14 @@ class AuthViewModel(val repo: QumparanRepository,val ds: RemoteDataSource) : Vie
                         if (registerResponse.code > 299 || registerResponse.code < 200) {
                             _registerLiveData.postValue(QumparanResource.Error(registerResponse.message))
                         } else {
-                            _registerLiveData.postValue(QumparanResource.Success(registerResponse,registerResponse.code.toString()))
+                            _registerLiveData.postValue(
+                                QumparanResource.Success(
+                                    registerResponse,
+                                    registerResponse.code.toString()
+                                )
+                            )
                         }
-                    } ?: run{
+                    } ?: run {
                         _registerLiveData.postValue(QumparanResource.Error("Terjadi Kesalahan"))
                     }
                 } else {
@@ -106,7 +128,7 @@ class AuthViewModel(val repo: QumparanRepository,val ds: RemoteDataSource) : Vie
         }
     }
 
-    fun getUserProfile(id:String) {
+    fun getUserProfile(id: String) {
         _userProfileLiveData.postValue(QumparanResource.Loading())
         viewModelScope.launch {
             try {
@@ -124,11 +146,11 @@ class AuthViewModel(val repo: QumparanRepository,val ds: RemoteDataSource) : Vie
         }
     }
 
-    fun resetUserPassword(id:String,new_password:String) {
+    fun resetUserPassword(id: String, new_password: String) {
         _resetPassLiveData.postValue(QumparanResource.Loading())
         viewModelScope.launch {
             try {
-                val res = ds.resetUserPassword(id,new_password)
+                val res = ds.resetUserPassword(id, new_password)
                 Timber.d("users response $")
                 if (res.isSuccessful) {
                     val body = res.body()
@@ -143,6 +165,53 @@ class AuthViewModel(val repo: QumparanRepository,val ds: RemoteDataSource) : Vie
                 }
             } catch (e: Exception) {
                 _resetPassLiveData.postValue(QumparanResource.Error(e.message.toString()))
+            }
+        }
+    }
+
+    fun updateProfile(
+        name: String,
+        phone: String,
+        email: String,
+        file: File?
+    ) {
+        viewModelScope.launch {
+            _editProfileLiveData.postValue(QumparanResource.Loading())
+
+            val builder = MultipartBody.Builder()
+            builder.setType(MultipartBody.FORM)
+            builder.addFormDataPart("name", name)
+            builder.addFormDataPart("email", email)
+            builder.addFormDataPart("phone_number", phone)
+
+            file?.let {
+                builder.addFormDataPart(
+                    "img",
+                    file.name,
+                    RequestBody.create(("multipart/form-data").toMediaTypeOrNull(), file)
+                )
+            }
+
+            val requestBody: MultipartBody = builder.build()
+
+            try {
+                val req = ds.updateProfile(requestBody)
+                req?.let {
+                    if (req.isSuccessful) {
+                        _editProfileLiveData.postValue(QumparanResource.Success(req.body()))
+                    } else {
+                        var message = req.message().toString()
+                        req.errorBody()?.let {
+                            val jsonObj = JSONObject(it.charStream().readText())
+                            message = jsonObj.getString("message")
+                        }
+                        _editProfileLiveData.postValue(QumparanResource.Error(message))
+                    }
+                } ?: run {
+                    _editProfileLiveData.postValue(QumparanResource.Error("Unknown Error"))
+                }
+            } catch (e: Exception) {
+                _editProfileLiveData.postValue(QumparanResource.Error(e.message.toString()))
             }
         }
     }
