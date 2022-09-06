@@ -3,6 +3,7 @@ package com.feylabs.halalkan.data.remote.reqres.resto
 
 import com.google.gson.annotations.SerializedName
 import androidx.annotation.Keep
+import kotlinx.android.parcel.Parcelize
 
 @Keep
 data class RestoDetailResponse(

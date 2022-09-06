@@ -112,7 +112,7 @@ class DetailRestoFragment : BaseFragment() {
     private fun setupInitialUi(showError: Boolean = false, messageError: String = "") {
         initModel?.apply {
             binding.apply {
-                binding.btnFavorite.isLiked=isFavorited
+                binding.btnFavorite.isLiked = isFavorited
                 binding.labelPageTitleTopbar.text = name
                 binding.labelName.text = name
                 binding.etAddressTop.text = address
@@ -308,6 +308,13 @@ class DetailRestoFragment : BaseFragment() {
             tempList.add(
                 CustomViewPhotoModel(
                     url = photo
+                )
+            )
+        }
+        binding.btnSeeAllPhotos.setOnClickListener {
+            findNavController().navigate(
+                R.id.navigation_photoListFragment, bundleOf(
+                    "photos" to photos
                 )
             )
         }

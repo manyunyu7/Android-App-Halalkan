@@ -43,6 +43,8 @@ class DetailMasjidFragment : BaseFragment() {
 
     var initModel: MasjidModelResponse? = null
 
+    private var photos: MasjidPhotosResponse? = null
+
     override fun initUI() {
         setupInitialUi()
         if (muskoPref().isLoggedIn().not()) {
@@ -162,6 +164,12 @@ class DetailMasjidFragment : BaseFragment() {
                     url = photo
                 )
             )
+        }
+
+        binding.btnAddPhoto.setOnClickListener {
+            findNavController().navigate(R.id.navigation_photoListFragment, bundleOf(
+                "photos" to masjidPhotos
+            ))
         }
         binding.ipImagePreviewSlider.replaceAllImage(tempList)
     }

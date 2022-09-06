@@ -1,9 +1,12 @@
 package com.feylabs.halalkan.customview.imagepreviewcontainer
 
 import android.net.Uri
+import android.os.Parcelable
 import com.feylabs.halalkan.R
+import kotlinx.android.parcel.Parcelize
 import java.io.File
 
+@Parcelize
 data class CustomViewPhotoModel(
     var name: String = "",
     var url: String = "",
@@ -16,7 +19,7 @@ data class CustomViewPhotoModel(
     var isDeletable:Boolean=false,
     var type: TypePhotoModel? = TypePhotoModel.URL,
     var onclicklistener: (()->Unit)? = null
-)
+) : Parcelable
 
 enum class TypePhotoModel{
     URL,TELEGRAM_PHOTO_PICKER

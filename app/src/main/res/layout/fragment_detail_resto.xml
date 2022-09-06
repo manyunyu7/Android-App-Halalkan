@@ -53,41 +53,54 @@
                     android:textStyle="bold"
                     android:visibility="gone" />
 
-                <ImageView
-                    android:id="@+id/btn_add_photo"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_toStartOf="@id/btn_write_review"
-                    android:layout_centerInParent="true"
-                    android:layout_marginEnd="@dimen/dimen_10dp"
-                    android:src="@drawable/ic_baseline_add_a_photo_24" />
-
-                <ImageView
-                    android:id="@+id/btn_write_review"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_centerInParent="true"
-                    android:layout_marginEnd="@dimen/dimen_3dp"
-                    android:layout_toStartOf="@id/btn_favorite"
-                    android:src="@drawable/ic_write_review" />
-
-                <com.like.LikeButton
-                    android:id="@+id/btn_favorite"
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    app:icon_type="heart"
-                    app:circle_start_color="@color/colorPrimary"
-                    app:like_drawable="@drawable/heart_on"
-                    app:unlike_drawable="@drawable/heart_off"
-                    app:icon_size="23dp"
-                    app:anim_scale_factor="2"
+                    android:gravity="center"
+                    android:layout_marginTop="@dimen/dimen_10dp"
                     android:layout_marginEnd="@dimen/dimen_20dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_centerInParent="true"
-                    />
+                    android:layout_alignParentEnd="true">
+
+                    <ImageView
+                        android:id="@+id/btn_add_photo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="@dimen/dimen_10dp"
+                        android:layout_toStartOf="@id/btn_write_review"
+                        android:src="@drawable/ic_baseline_add_a_photo_24" />
+
+
+                    <ImageView
+                        android:id="@+id/btn_write_review"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerInParent="true"
+                        android:layout_marginEnd="@dimen/dimen_3dp"
+                        android:layout_toStartOf="@id/btn_favorite"
+                        android:src="@drawable/ic_write_review" />
+
+
+                    <com.like.LikeButton
+                        android:id="@+id/btn_favorite"
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        app:icon_type="heart"
+                        app:circle_start_color="@color/colorPrimary"
+                        app:like_drawable="@drawable/heart_on"
+                        app:unlike_drawable="@drawable/heart_off"
+                        app:icon_size="23dp"
+                        app:anim_scale_factor="2"
+                        android:layout_marginEnd="@dimen/dimen_20dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerInParent="true"
+                        />
+
+                </LinearLayout>
 
 
             </RelativeLayout>
@@ -196,29 +209,38 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <TextView
+            <RelativeLayout
+                android:layout_marginTop="@dimen/dimen_10dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/dimen_20dp"
-                android:ellipsize="none"
-                android:fontFamily="@font/poppins_regular"
-                android:scrollHorizontally="false"
-                android:text="Tentang Restoran"
-                android:textColor="@color/color_blue_purplish"
-                android:textSize="15sp"
-                android:textStyle="bold" />
+                android:layout_height="wrap_content">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/dimen_20dp"
-                android:ellipsize="none"
-                android:fontFamily="@font/poppins_regular"
-                android:scrollHorizontally="false"
-                android:text="@string/photos"
-                android:textColor="@color/color_blue_purplish"
-                android:textSize="15sp"
-                android:textStyle="bold" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginHorizontal="@dimen/dimen_20dp"
+                    android:ellipsize="none"
+                    android:fontFamily="@font/poppins_regular"
+                    android:scrollHorizontally="false"
+                    android:text="@string/photos"
+                    android:textColor="@color/color_blue_purplish"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/btn_see_all_photos"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="@dimen/dimen_10dp"
+                    android:fontFamily="@font/poppins_regular"
+                    android:scrollHorizontally="false"
+                    android:text="@string/title_see_all_photos"
+                    android:textColor="@color/color_blue_purplish"
+                    android:textSize="11sp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
 
             <com.feylabs.halalkan.customview.imagepreviewcontainer.CustomViewImageContainerPreview
                 android:id="@+id/ip_image_preview_slider"
@@ -525,7 +547,7 @@
                 android:ellipsize="none"
                 android:fontFamily="@font/poppins_regular"
                 android:scrollHorizontally="false"
-                android:text="Pesan Makanan"
+                android:text="@string/title_food_list"
                 android:textColor="@color/color_blue_purplish"
                 android:textSize="15sp"
                 android:textStyle="bold" />

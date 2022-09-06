@@ -381,10 +381,16 @@
         android:id="@+id/navigation_scanProductFragment"
         android:name="com.feylabs.halalkan.view.scanner.ScanProductFragment"
         android:label="ScanProductFragment" />
+
     <fragment
         android:id="@+id/navigation_editProfileFragment"
         android:name="com.feylabs.halalkan.view.auth.EditProfileFragment"
         android:label="EditProfileFragment" />
+
+    <fragment
+        android:id="@+id/navigation_photoListFragment"
+        android:name="com.feylabs.halalkan.view.photo.PhotoListFragment"
+        android:label="PhotoListFragment" />
 
 
 </navigation>
