@@ -396,5 +396,10 @@
         android:name="com.feylabs.halalkan.view.auth.ChangePasswordFragment"
         android:label="ChangePasswordFragment" />
 
+    <fragment
+        android:id="@+id/navigation_typeFoodFragment"
+        android:name="com.feylabs.halalkan.view.resto.main.type_food.TypeFoodFragment"
+        android:label="TypeFoodFragment" />
+
 
 </navigation>

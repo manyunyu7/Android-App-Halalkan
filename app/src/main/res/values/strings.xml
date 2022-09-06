@@ -267,5 +267,8 @@
 
     <string name="title_current_password">Current Password</string>
     <string name="title_new_password">New Password</string>
+    <string name="title_see_all">See All</string>
+    <string name="title_based_on_certification">Based on Certification</string>
+    <string name="title_restaurant_around_you">Restaurant Around You</string>
 
 </resources>

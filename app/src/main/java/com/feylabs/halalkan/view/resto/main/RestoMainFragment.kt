@@ -154,6 +154,9 @@ class RestoMainFragment : BaseFragment() {
     }
 
     override fun initAction() {
+        binding.seeAllFoodType.setOnClickListener {
+            findNavController().navigate(R.id.navigation_typeFoodFragment)
+        }
     }
 
     override fun initData() {
