@@ -23,6 +23,10 @@ class RestoViewModel(
         MutableLiveData<QumparanResource<RestaurantCertificationResponse?>>()
     val certLiveData get() = _certLiveData
 
+    private var _searchRestoLiveData =
+        MutableLiveData<QumparanResource<SearchRestoResponse?>>()
+    val searchRestoLiveData get() = _searchRestoLiveData
+
     private var _foodCategoryLiveData =
         MutableLiveData<QumparanResource<FoodCategoryResponse?>>()
     val foodCategoryLiveData get() = _foodCategoryLiveData
@@ -152,7 +156,7 @@ class RestoViewModel(
         }
     }
 
-    fun getFoodCategoryOnResto(restoId:String){
+    fun getFoodCategoryOnResto(restoId: String) {
         _foodCategoryLiveData.postValue(QumparanResource.Loading())
         viewModelScope.launch {
             try {
@@ -172,7 +176,7 @@ class RestoViewModel(
         }
     }
 
-    fun getAllFoodByResto(restoId: String){
+    fun getAllFoodByResto(restoId: String) {
         viewModelScope.launch {
             try {
                 val res = ds.getAllFoodByResto(restoId)
@@ -188,6 +192,39 @@ class RestoViewModel(
                 }
             } catch (e: Exception) {
                 _allFoodLiveData.postValue(QumparanResource.Error(e.message.toString()))
+            }
+        }
+    }
+
+    fun searchResto(
+        certificationId: Int? = null,
+        typeFoodId: Int? = null,
+        name: String? = null,
+        page: Int = 1,
+        perPage: Int? = null
+    ) {
+        _searchRestoLiveData.postValue(QumparanResource.Loading())
+        viewModelScope.launch {
+            try {
+                val res = ds.searchResto(
+                    name = name,
+                    certificationId = certificationId,
+                    typeFoodId = typeFoodId,
+                    page = page,
+                    perPage = perPage
+                )
+                if (res.isSuccessful) {
+                    _searchRestoLiveData.postValue(QumparanResource.Success(res.body()))
+                } else {
+                    var message = res.message().toString()
+                    res.errorBody()?.let {
+                        val jsonObj = JSONObject(it.charStream().readText())
+                        message = jsonObj.getString("message")
+                    }
+                    _searchRestoLiveData.postValue(QumparanResource.Error(message))
+                }
+            } catch (e: Exception) {
+                _searchRestoLiveData.postValue(QumparanResource.Error(e.message.toString()))
             }
         }
     }

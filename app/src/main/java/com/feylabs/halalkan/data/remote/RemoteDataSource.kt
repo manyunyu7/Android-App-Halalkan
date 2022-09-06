@@ -54,9 +54,11 @@ class RemoteDataSource(
     suspend fun resetUserPassword(id: String, newPassword: String) = commonService.resetPassword(
         userId = id, newPassword = newPassword
     )
-    suspend fun changePassword(oldPassword:String, newPassword: String) = commonService.updatePassword(
-        oldPassword = oldPassword, newPassword = newPassword, confirmPassword = newPassword
-    )
+
+    suspend fun changePassword(oldPassword: String, newPassword: String) =
+        commonService.updatePassword(
+            oldPassword = oldPassword, newPassword = newPassword, confirmPassword = newPassword
+        )
 
     suspend fun updateProfile(
         body: RequestBody
@@ -155,6 +157,18 @@ class RemoteDataSource(
     override suspend fun getRestoCert(): Response<RestaurantCertificationResponse> {
         return restoService.getCert()
     }
+
+    suspend fun searchResto(
+        name:String?=null,
+        certificationId: Int?,
+        typeFoodId: Int?,
+        perPage: Int? = null,
+        page: Int? = 1
+    ) = restoService.searchResto(
+        name = name,
+        certificationId = certificationId, typeFoodId = typeFoodId, perPage = perPage, page = page
+    )
+
 
     override suspend fun getRestoAll(): Response<AllRestoNoPagination> {
         return restoService.getAllRaw()

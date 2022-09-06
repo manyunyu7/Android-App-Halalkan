@@ -11,6 +11,7 @@ import com.feylabs.halalkan.data.remote.reqres.order.DetailOrderResponse
 import com.feylabs.halalkan.data.remote.reqres.order.OrderStatusResponse
 import com.feylabs.halalkan.data.remote.reqres.order.history.OrderHistoryResponse
 import com.feylabs.halalkan.data.remote.reqres.order.resto.OrderByRestoPaginationResponse
+import com.feylabs.halalkan.data.remote.reqres.product.SearchProductResponse
 import com.feylabs.halalkan.data.remote.reqres.resto.*
 import com.feylabs.halalkan.data.remote.reqres.resto.food.FoodModelResponse
 import com.feylabs.halalkan.data.remote.reqres.resto.operating_hour.RestoOperatingHourResponse
@@ -33,6 +34,17 @@ interface RestoService {
 
     @GET("fe/restoran/food-type")
     suspend fun getFoodType(): Response<FoodTypeResponse>
+
+
+    @GET("fe/restoran/search")
+    suspend fun searchResto(
+        @Query("name") name: String? = null,
+        @Query("certification_id") certificationId: Int? = null,
+        @Query("type_food_id") typeFoodId: Int?,
+        @Query("perPage") perPage: Int? = 5,
+        @Query("page") page: Int? = 1
+    ): Response<SearchRestoResponse>
+
 
     //get food per resto category
     @GET("fe/restoran/food/category/{categoryId}")

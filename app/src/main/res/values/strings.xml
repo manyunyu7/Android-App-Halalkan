@@ -270,5 +270,8 @@
     <string name="title_see_all">See All</string>
     <string name="title_based_on_certification">Based on Certification</string>
     <string name="title_restaurant_around_you">Restaurant Around You</string>
+    <string name="title_certification_type">Certification Type</string>
+    <string name="title_filter">Filter</string>
+    <string name="title_apply_filter">Apply Filter</string>
 
 </resources>

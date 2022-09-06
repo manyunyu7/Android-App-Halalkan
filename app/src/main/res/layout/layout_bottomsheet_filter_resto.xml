@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tool="http://schemas.android.com/tools"
+    android:layout_marginBottom="@dimen/dimen_20dp"
+    android:layout_marginTop="@dimen/dimen_50dp"
+    android:background="@drawable/bg_bottom_sheet"
+    android:paddingBottom="@dimen/dimen_14dp">
+
+    <ImageView
+        android:id="@+id/btn_handler"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="7dp"
+        android:src="@drawable/ic_bottom_sheet_handler"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_title_filter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_medium"
+        android:text="@string/title_filter"
+        android:textSize="18sp"
+        android:layout_marginHorizontal="30dp"
+        android:layout_marginTop="33dp"
+        android:gravity="start"
+        android:textAlignment="textStart"
+        android:textColor="@color/uikit_black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_handler"
+        />
+
+
+    <View
+        android:id="@+id/separator"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#EEEEEE"
+        android:layout_marginTop="11dp"
+        android:layout_marginHorizontal="@dimen/dimen_20dp"
+        app:layout_constraintTop_toBottomOf="@id/tv_title_filter"
+        />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        android:fillViewport="true"
+        app:layout_constraintTop_toBottomOf="@id/separator">
+
+        <LinearLayout
+            android:id="@+id/containerOpenWith"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="16dp"
+            android:layout_marginHorizontal="@dimen/dimen_20dp"
+            android:orientation="vertical"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvOpenWith">
+
+
+            <TextView
+                android:id="@+id/label_food_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/open_sans_regular"
+                android:text="@string/title_food_type"
+                android:textSize="18sp"
+                android:gravity="start"
+                android:textAlignment="textStart"
+                android:textColor="@color/uikit_black"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/btn_handler"
+                />
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chip_group_category"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:selectionRequired="true"
+                app:singleSelection="true"
+                tool:background="@color/blue_auth"
+                tool:layout_height="@dimen/dimen_20dp" />
+
+
+            <TextView
+                android:id="@+id/label_food_certification"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/open_sans_regular"
+                android:text="@string/title_certification_type"
+                android:textSize="18sp"
+                android:layout_marginTop="@dimen/dimen_20dp"
+                android:gravity="start"
+                android:textAlignment="textStart"
+                android:textColor="@color/uikit_black"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/btn_handler"
+                />
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chip_group_certification"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:selectionRequired="true"
+                app:singleSelection="true"
+                tool:background="@color/blue_auth"
+                tool:layout_height="@dimen/dimen_20dp" />
+
+
+            <LinearLayout
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_clear"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:strokeColor="@color/gray7575"
+                    android:layout_marginTop="@dimen/dimen_10dp"
+                    app:iconTint="@color/gray7575"
+                    android:textColor="@color/gray7575"
+                    android:text="@string/clear"
+                    app:icon="@drawable/ic_cross_exit"
+                    app:iconPadding="@dimen/dimen_10dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:cornerRadius="@dimen/dimen_20dp"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_save"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:strokeColor="@color/halalkan_primary"
+                    android:layout_marginStart="@dimen/dimen_10dp"
+                    android:layout_marginTop="@dimen/dimen_10dp"
+                    app:iconTint="@color/halalkan_primary"
+                    android:textColor="@color/halalkan_primary"
+                    android:layout_marginBottom="@dimen/dimen_50dp"
+                    android:text="@string/save_change"
+                    app:icon="@drawable/ic_order_notes"
+                    app:iconPadding="@dimen/dimen_10dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:cornerRadius="@dimen/dimen_20dp"/>
+            </LinearLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_apply_filter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cornerRadius="@dimen/dimen_20dp"
+                app:backgroundTint="@color/halalkan_primary"
+                android:textColor="@color/white"
+                android:layout_marginTop="@dimen/dimen_10dp"
+                android:text="@string/title_apply_filter"/>
+
+        </LinearLayout>
+
+
+
+    </androidx.core.widget.NestedScrollView>
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/loading_anim"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:padding="50dp"
+        app:layout_constraintTop_toBottomOf="@id/separator"
+        android:background="@android:color/transparent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:lottie_autoPlay="true"
+        app:lottie_fileName="loading_circle_rgb.json"
+        app:lottie_loop="true" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

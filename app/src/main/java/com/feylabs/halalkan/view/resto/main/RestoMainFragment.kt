@@ -50,6 +50,18 @@ class RestoMainFragment : BaseFragment() {
             adapter = nearbyRestoAdapter
         }
 
+        foodTypeAdapter.setupAdapterInterface(object :FoodTypeAdapter.ItemInterface{
+            override fun onclick(model: FoodTypeResponse.FoodTypeResponseItem) {
+                findNavController().navigate(
+                    R.id.navigation_allRestoFragment,
+                    bundleOf(
+                        "type_food_id" to model.id.toString(),
+                        "title" to model.name,
+                    )
+                )
+            }
+
+        })
         nearbyRestoAdapter.setupAdapterInterface(object : RestoMainAdapter.ItemInterface {
             override fun onclick(model: RestoModelResponse) {
                 findNavController().navigate(

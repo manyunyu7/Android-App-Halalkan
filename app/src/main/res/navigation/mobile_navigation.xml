@@ -391,6 +391,7 @@
         android:id="@+id/navigation_photoListFragment"
         android:name="com.feylabs.halalkan.view.photo.PhotoListFragment"
         android:label="PhotoListFragment" />
+
     <fragment
         android:id="@+id/navigation_userChangePasswordFragment"
         android:name="com.feylabs.halalkan.view.auth.ChangePasswordFragment"
@@ -400,6 +401,11 @@
         android:id="@+id/navigation_typeFoodFragment"
         android:name="com.feylabs.halalkan.view.resto.main.type_food.TypeFoodFragment"
         android:label="TypeFoodFragment" />
+
+    <fragment
+        android:id="@+id/navigation_allRestoFragment"
+        android:name="com.feylabs.halalkan.view.resto.all.AllRestoFragment"
+        android:label="AllRestoFragment" />
 
 
 </navigation>

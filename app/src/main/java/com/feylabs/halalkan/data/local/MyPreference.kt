@@ -195,6 +195,15 @@ class MyPreference(context: Context) {
         return sharedPref.getInt(KEY_NAME, 0)
     }
 
+    fun getNullableInt(KEY_NAME: String): Int? {
+        val obj  = sharedPref.getInt(KEY_NAME,0)
+        if (obj==0){
+            return null
+        }else{
+            return obj
+        }
+    }
+
     fun clearPreferences() {
         editor.clear()
         editor.commit()

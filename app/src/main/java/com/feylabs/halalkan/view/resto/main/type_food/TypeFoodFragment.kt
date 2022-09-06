@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import com.feylabs.halalkan.R
 import com.feylabs.halalkan.data.remote.QumparanResource
@@ -30,6 +31,13 @@ class TypeFoodFragment : BaseFragment() {
     private fun initRecyclerView() {
         mAdapter.setupAdapterInterface(object : TypeFoodAdapter.ItemInterface {
             override fun onclick(model: FoodTypeResponse.FoodTypeResponseItem) {
+                findNavController().navigate(
+                    R.id.navigation_allRestoFragment,
+                    bundleOf(
+                        "type_food_id" to model.id.toString(),
+                        "title" to model.name,
+                    )
+                )
             }
         })
         binding.rv.let {

@@ -62,11 +62,29 @@
                 android:fontFamily="@font/poppins_regular"
                 android:singleLine="true"
                 android:text="UNIVERSITY"
+                app:layout_constraintEnd_toStartOf="@id/btn_like"
                 android:textColor="@color/color_blue_purplish"
                 android:textSize="12sp"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@id/guidelineCenter"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <com.like.LikeButton
+                android:id="@+id/btn_like"
+                android:layout_width="@dimen/dimen_25dp"
+                android:layout_height="@dimen/dimen_25dp"                            app:icon_type="Star"
+                app:circle_start_color="@color/colorPrimary"
+                app:like_drawable="@drawable/thumb_on"
+                app:unlike_drawable="@drawable/thumb_off"
+                app:dots_primary_color="@color/halalkan_primary"
+                app:dots_secondary_color="@color/colorPrimary"
+                app:circle_end_color="@color/halalkan_primary"
+                app:icon_size="19dp"
+                app:anim_scale_factor="2"
+                android:layout_marginEnd="@dimen/dimen_10dp"
+                app:layout_constraintBottom_toTopOf="@id/container_bt"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
 
             <TextView
                 android:id="@+id/tv_title"
@@ -80,12 +98,13 @@
                 android:text="Seoul Central Masjid"
                 android:textColor="@color/color_blue_purplish"
                 android:textSize="16sp"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/btn_like"
                 app:layout_constraintStart_toStartOf="@id/guidelineCenter"
                 app:layout_constraintTop_toBottomOf="@id/tv_category" />
 
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/container_bt"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/dimen_5dp"
@@ -98,11 +117,10 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginHorizontal="5dp"
-                    android:drawablePadding="10dp"
                     android:maxLines="3"
                     android:ellipsize="end"
-                    android:fontFamily="@font/poppins_regular"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:fontFamily="@font/open_sans_regular"
                     android:text="test a long mosque data that really really  long"
                     android:textSize="14sp"
                     app:layout_constraintStart_toStartOf="parent"
@@ -153,6 +171,25 @@
                     app:layout_constraintGuide_percent="0.75" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <TextView
+                android:id="@+id/tv_is_open"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginHorizontal="5dp"
+                android:drawablePadding="10dp"
+                android:maxLines="3"
+                android:ellipsize="end"
+                android:fontFamily="@font/open_sans_semi_bold"
+                android:text="OPEN"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/guidelineCenter"
+                app:layout_constraintTop_toBottomOf="@id/container_bt"
+                app:drawableTint="@color/color_blue_purplish" />
+
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/container_rating"
