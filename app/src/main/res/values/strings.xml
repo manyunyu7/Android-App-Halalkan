@@ -263,5 +263,9 @@
 
     <string name="title_food_list">Food List</string>
     <string name="title_see_all_photos">See All Photos</string>
+    <string name="title_change_password">Change Password</string>
+
+    <string name="title_current_password">Current Password</string>
+    <string name="title_new_password">New Password</string>
 
 </resources>

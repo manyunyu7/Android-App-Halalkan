@@ -21,6 +21,9 @@ class AuthViewModel(val repo: QumparanRepository, val ds: RemoteDataSource) : Vi
     private var _loginLiveData = MutableLiveData<QumparanResource<LoginResponse?>>()
     val loginLiveData get() = _loginLiveData
 
+    private var _changePasswordLiveData = MutableLiveData<QumparanResource<GeneralApiResponse?>>()
+    val changePasswordLiveData get() = _changePasswordLiveData
+
     private var _userLiveData = MutableLiveData<QumparanResource<MyProfileResponse?>>()
     val userLiveData get() = _userLiveData
 
@@ -165,6 +168,29 @@ class AuthViewModel(val repo: QumparanRepository, val ds: RemoteDataSource) : Vi
                 }
             } catch (e: Exception) {
                 _resetPassLiveData.postValue(QumparanResource.Error(e.message.toString()))
+            }
+        }
+    }
+
+    fun changePassword(oldPassword:String,newPassword:String) {
+        _changePasswordLiveData.postValue(QumparanResource.Loading())
+        viewModelScope.launch {
+            try {
+                val res = ds.changePassword(oldPassword, newPassword)
+                Timber.d("users response $")
+                if (res.isSuccessful) {
+                    val body = res.body()
+                    _changePasswordLiveData.postValue(QumparanResource.Success(body))
+                } else {
+                    var message = res.message().toString()
+                    res.errorBody()?.let {
+                        val jsonObj = JSONObject(it.charStream().readText())
+                        message = jsonObj.getString("message")
+                    }
+                    _changePasswordLiveData.postValue(QumparanResource.Error(message))
+                }
+            } catch (e: Exception) {
+                _changePasswordLiveData.postValue(QumparanResource.Error(e.message.toString()))
             }
         }
     }

@@ -123,6 +123,10 @@ class UserProfileFragment : BaseFragment() {
                 getString(R.string.title_profile_forum_thread),
                 getMuskoDrawable(R.drawable.ic_menu_profile_thread_forum)
             )
+
+            menuChangePassword.setOnClickListener {
+                findNavController().navigate(R.id.navigation_userChangePasswordFragment)
+            }
         }
     }
 

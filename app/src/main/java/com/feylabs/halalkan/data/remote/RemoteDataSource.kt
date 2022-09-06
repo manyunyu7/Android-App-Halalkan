@@ -54,6 +54,9 @@ class RemoteDataSource(
     suspend fun resetUserPassword(id: String, newPassword: String) = commonService.resetPassword(
         userId = id, newPassword = newPassword
     )
+    suspend fun changePassword(oldPassword:String, newPassword: String) = commonService.updatePassword(
+        oldPassword = oldPassword, newPassword = newPassword, confirmPassword = newPassword
+    )
 
     suspend fun updateProfile(
         body: RequestBody

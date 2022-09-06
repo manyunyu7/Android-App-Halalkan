@@ -44,6 +44,14 @@ interface ApiService {
         @Field("new_password") newPassword:String
     ): Response<GeneralApiResponse>
 
+    @FormUrlEncoded
+    @POST("users/me/updateUserPassword")
+    suspend fun updatePassword(
+        @Field("new_password") newPassword:String,
+        @Field("old_password") oldPassword:String,
+        @Field("confirm_password") confirmPassword:String,
+    ): Response<GeneralApiResponse>
+
 
     @Multipart
     @POST("driver/editDriver/{driverId}")

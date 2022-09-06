@@ -391,6 +391,10 @@
         android:id="@+id/navigation_photoListFragment"
         android:name="com.feylabs.halalkan.view.photo.PhotoListFragment"
         android:label="PhotoListFragment" />
+    <fragment
+        android:id="@+id/navigation_userChangePasswordFragment"
+        android:name="com.feylabs.halalkan.view.auth.ChangePasswordFragment"
+        android:label="ChangePasswordFragment" />
 
 
 </navigation>
