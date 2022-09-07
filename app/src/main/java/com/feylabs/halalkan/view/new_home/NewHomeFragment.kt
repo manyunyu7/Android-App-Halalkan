@@ -54,6 +54,8 @@ class NewHomeFragment : BaseFragment() {
     private val binding get() = _binding!!
 
     override fun initAction() {
+        hideStatusBar()
+
         binding.greetingImg.setOnClickListener {
             val list = listOf(
                 R.drawable.bg_header_daylight,
@@ -70,11 +72,10 @@ class NewHomeFragment : BaseFragment() {
             )
         }
         setupMenuClickListener()
-        hideStatusBar()
     }
 
     private fun hideStatusBar() {
-        val decorView = activity!!.window.decorView // Hide the status bar.
+        val decorView = requireActivity().window.decorView // Hide the status bar.
 
         val uiOptions = View.SYSTEM_UI_FLAG_LAYOUT_STABLE
         decorView.systemUiVisibility = uiOptions

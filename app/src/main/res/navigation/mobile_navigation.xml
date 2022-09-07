@@ -417,5 +417,10 @@
         android:name="com.feylabs.halalkan.view.prayer.search.SearchPrayerRoomFragment"
         android:label="SearchPrayerRoomFragment" />
 
+    <fragment
+        android:id="@+id/navigation_prayerTimeFragment"
+        android:name="com.feylabs.halalkan.view.prayer.prayer_time.PrayerTimeFragment"
+        android:label="PrayerTimeFragment" />
+
 
 </navigation>

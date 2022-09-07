@@ -284,5 +284,13 @@
     <string name="title_search_masjid">Search Masjid</string>
     <string name="title_all_masjid">All Masjid</string>
     <string name="title_fav_masjid">Favorite Masjid</string>
+    <string name="title_musko_motto">Your Halal Travel Companion</string>
+
+    <string name="time_shubuh">Fajr</string>
+    <string name="time_zuhr">Zuhr</string>
+    <string name="time_asr">Ashar</string>
+    <string name="time_maghrib">Maghrib</string>
+    <string name="time_isya">Isya</string>
+    <string name="title_prayer_time">Prayer Time</string>
 
 </resources>

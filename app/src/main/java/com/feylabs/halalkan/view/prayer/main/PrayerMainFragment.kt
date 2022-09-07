@@ -48,7 +48,7 @@ class PrayerMainFragment : BaseFragment() {
         binding.btnFavorite.setOnClickListener {
             if (muskoPref().isLoggedIn()){
                 findNavController().navigate(R.id.navigation_searchPrayerRoomFragment, bundleOf(
-                    "title" to getString(R.string.title_fav_masjid), "like" to "yayaya"
+                    "title" to getString(R.string.title_fav_masjid), "favorite" to "yayaya"
                 ))
             }
 
@@ -72,7 +72,7 @@ class PrayerMainFragment : BaseFragment() {
         }
 
         binding.menuPrayerTime.setOnClickListener {
-            findNavController().navigate(R.id.navigation_qiblaFragment)
+            findNavController().navigate(R.id.navigation_prayerTimeFragment)
         }
     }
 

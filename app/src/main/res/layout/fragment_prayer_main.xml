@@ -121,6 +121,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_regular"
                     android:text="Asr"
+                    android:visibility="invisible"
                     android:textColor="@color/white"
                     android:textSize="28sp" />
 
@@ -130,6 +131,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_medium"
                     android:text="15:33"
+                    android:visibility="invisible"
                     android:textColor="@color/white"
                     android:textSize="52sp"
                     android:textStyle="bold" />
@@ -140,6 +142,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_regular"
                     android:text="15:33"
+                    android:visibility="invisible"
                     android:textColor="@color/white"
                     android:textSize="14sp" />
 
