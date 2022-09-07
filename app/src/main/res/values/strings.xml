@@ -292,5 +292,13 @@
     <string name="time_maghrib">Maghrib</string>
     <string name="time_isya">Isya</string>
     <string name="title_prayer_time">Prayer Time</string>
+    <string name="title_cancel_order">Cancel Order</string>
+    <string name="title_canceled_by_user">Canceled By User</string>
+    <string name="title_status_waiting">Waiting</string>
+    <string name="title_status_on_cooking">On Cooking</string>
+    <string name="title_status_otw">On The Way</string>
+    <string name="title_status_complete">Complete</string>
+    <string name="title_status_canceled">Canceled</string>
+    <string name="title_direction_maps">Direction/Maps</string>
 
 </resources>

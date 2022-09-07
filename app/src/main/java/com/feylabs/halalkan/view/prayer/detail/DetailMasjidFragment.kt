@@ -152,6 +152,9 @@ class DetailMasjidFragment : BaseFragment() {
 
                 viewModel.targetLong.postValue(long.toDoubleOrNull())
                 viewModel.targetLat.postValue(lat.toDoubleOrNull())
+
+
+
             }
         }
     }
@@ -164,6 +167,12 @@ class DetailMasjidFragment : BaseFragment() {
                     url = photo
                 )
             )
+        }
+
+        binding.btnSeeAllPhotos.setOnClickListener {
+            findNavController().navigate(R.id.navigation_photoListFragment, bundleOf(
+                "photos" to masjidPhotos
+            ))
         }
 
         binding.btnAddPhoto.setOnClickListener {
@@ -180,6 +189,20 @@ class DetailMasjidFragment : BaseFragment() {
             findNavController().navigateUp()
         }
 
+
+        binding.btnMaps.setOnClickListener {
+            startActivity(
+                Intent(requireActivity(), TurnByTurnExperienceActivity::class.java)
+                    .putExtra(
+                        TurnByTurnExperienceActivity.DESTINATION_LONG,
+                        viewModel.targetLong.value
+                    )
+                    .putExtra(
+                        TurnByTurnExperienceActivity.DESTINATION_LAT,
+                        viewModel.targetLat.value
+                    )
+            )
+        }
 
         binding.etActionCall.setOnClickListener {
             val number = binding.labelPhone.text.toString()

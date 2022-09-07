@@ -56,10 +56,10 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
+                    android:layout_alignParentEnd="true"
                     android:layout_marginTop="@dimen/dimen_10dp"
                     android:layout_marginEnd="@dimen/dimen_20dp"
-                    android:layout_alignParentEnd="true">
+                    android:gravity="center">
 
                     <ImageView
                         android:id="@+id/btn_add_photo"
@@ -86,19 +86,14 @@
 
                     <com.like.LikeButton
                         android:id="@+id/btn_favorite"
-                        android:layout_height="wrap_content"
                         android:layout_width="wrap_content"
-                        app:icon_type="heart"
-                        app:circle_start_color="@color/colorPrimary"
-                        app:like_drawable="@drawable/heart_on"
-                        app:unlike_drawable="@drawable/heart_off"
-                        app:icon_size="23dp"
+                        android:layout_height="wrap_content"
                         app:anim_scale_factor="2"
-                        android:layout_marginEnd="@dimen/dimen_20dp"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentTop="true"
-                        android:layout_centerInParent="true"
-                        />
+                        app:circle_start_color="@color/colorPrimary"
+                        app:icon_size="23dp"
+                        app:icon_type="heart"
+                        app:like_drawable="@drawable/heart_on"
+                        app:unlike_drawable="@drawable/heart_off" />
 
                 </LinearLayout>
 
@@ -191,6 +186,7 @@
 
                 </androidx.cardview.widget.CardView>
 
+
                 <include
                     android:id="@+id/include_rating_info"
                     layout="@layout/layout_masjid_card_review_information"
@@ -208,6 +204,19 @@
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_maps"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_10dp"
+                android:layout_marginTop="@dimen/dimen_10dp"
+                android:text="@string/title_direction_maps"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:cornerRadius="@dimen/dimen_20dp"/>
 
             <RelativeLayout
                 android:layout_marginTop="@dimen/dimen_10dp"

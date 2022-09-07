@@ -327,6 +327,20 @@ class DetailRestoFragment : BaseFragment() {
             findNavController().navigateUp()
         }
 
+        binding.btnMaps.setOnClickListener {
+            startActivity(
+                Intent(requireActivity(), TurnByTurnExperienceActivity::class.java)
+                    .putExtra(
+                        TurnByTurnExperienceActivity.DESTINATION_LONG,
+                        viewModel.targetLong.value
+                    )
+                    .putExtra(
+                        TurnByTurnExperienceActivity.DESTINATION_LAT,
+                        viewModel.targetLat.value
+                    )
+            )
+        }
+
         if (muskoPref().isLoggedIn().not()) {
             binding.btnFavorite.makeInvisible()
         }

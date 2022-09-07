@@ -36,6 +36,7 @@
                     android:gravity="bottom"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:visibility="invisible"
                     android:text="Jadwal Sholat Kab Bandung "
                     android:textColor="#fff4c934"
                     android:textSize="13sp"

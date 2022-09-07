@@ -351,16 +351,22 @@ class NewHomeFragment : BaseFragment() {
         val greeting_img = binding.greetingImg
         val calendar = Calendar.getInstance()
         val timeOfDay = calendar[Calendar.HOUR_OF_DAY]
-        if (timeOfDay in 0..5) {
-            greeting_img.setImageResource(R.drawable.bg_header_dawn)
-        } else if (timeOfDay in 6..11) {
-            greeting_img.setImageResource(R.drawable.bg_header_evening)
-        } else if (timeOfDay in 12..15) {
-            greeting_img.setImageResource(R.drawable.bg_header_daylight)
-        } else if (timeOfDay in 16..17) {
-            greeting_img.setImageResource(R.drawable.bg_header_evening)
-        } else if (timeOfDay in 18..23) {
-            greeting_img.setImageResource(R.drawable.bg_header_night)
+        when (timeOfDay) {
+            in 0..5 -> {
+                greeting_img.setImageResource(R.drawable.bg_header_dawn)
+            }
+            in 6..11 -> {
+                greeting_img.setImageResource(R.drawable.bg_header_evening)
+            }
+            in 12..15 -> {
+                greeting_img.setImageResource(R.drawable.bg_header_daylight)
+            }
+            in 16..17 -> {
+                greeting_img.setImageResource(R.drawable.bg_header_evening)
+            }
+            in 18..23 -> {
+                greeting_img.setImageResource(R.drawable.bg_header_night)
+            }
         }
     }
 

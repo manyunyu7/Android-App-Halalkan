@@ -6,17 +6,20 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import com.adevinta.leku.*
 import com.feylabs.halalkan.MainViewModel
 import com.feylabs.halalkan.R
 import com.feylabs.halalkan.customview.bottomsheet.BottomSheetOrderNotes
+import com.feylabs.halalkan.customview.bottomsheet.BottomSheetOrderRejection
 import com.feylabs.halalkan.data.local.MyPreference
 import com.feylabs.halalkan.data.remote.QumparanResource
 import com.feylabs.halalkan.data.remote.reqres.auth.UserModel
 import com.feylabs.halalkan.data.remote.reqres.driver.DriverObj
 import com.feylabs.halalkan.data.remote.reqres.order.DetailOrderResponse
+import com.feylabs.halalkan.data.remote.reqres.order.history.OrderHistoryModel
 import com.feylabs.halalkan.data.remote.reqres.resto.food.FoodModelResponse
 import com.feylabs.halalkan.databinding.FragmentOrderDetailRestoBinding
 import com.feylabs.halalkan.utils.DialogUtils
@@ -226,11 +229,37 @@ class DetailOrderRestoFragment : BaseFragment(), OnMapReadyCallback {
         //if order is not canceled
         if (rawData.statusId != 5) {
             when (rawData.statusId) {
+
+                1 -> {
+                    binding.btnNext.text = getString(R.string.title_cancel_order)
+                    binding.btnNext.setOnClickListener {
+                        showBottomSheetRejectOrder()
+                    }
+                    binding.imgStatus.setImageDrawable(
+                        ContextCompat.getDrawable(
+                            requireContext(),
+                            R.drawable.ic_musko_status_waiting
+                        )
+                    )
+                    binding.tvMainStatus.text = getString(R.string.title_status_waiting)
+                }
                 2 -> { // on cooking
                     binding.btnNext.text = getString(R.string.title_change_driver)
                     binding.btnNext.setOnClickListener {
                         showBottomSheetDriver()
                     }
+
+                    if (muskoPref().getUserRole() == "2") {
+                        binding.btnNext.makeGone()
+                    }
+
+                    binding.imgStatus.setImageDrawable(
+                        ContextCompat.getDrawable(
+                            requireContext(),
+                            R.drawable.ic_musko_status_cooking
+                        )
+                    )
+                    binding.tvMainStatus.text = getString(R.string.title_status_on_cooking)
                 }
                 3 -> { //on the way
                     binding.btnNext.text = getString(R.string.track_driver_position)
@@ -247,6 +276,18 @@ class DetailOrderRestoFragment : BaseFragment(), OnMapReadyCallback {
                             goToDelivery(rawData)
                         }
                     }
+
+                    if (muskoPref().getUserRole() == "2") {
+                        binding.btnNext.makeGone()
+                    }
+
+                    binding.imgStatus.setImageDrawable(
+                        ContextCompat.getDrawable(
+                            requireContext(),
+                            R.drawable.ic_musko_status_deliv
+                        )
+                    )
+                    binding.tvMainStatus.text = getString(R.string.title_status_otw)
                 }
 
                 4 -> { //completed
@@ -265,11 +306,45 @@ class DetailOrderRestoFragment : BaseFragment(), OnMapReadyCallback {
                     )
 
                     binding.btnNext.makeGone()
-
                     binding.btnDirection.makeGone()
+                    binding.imgStatus.setImageDrawable(
+                        ContextCompat.getDrawable(
+                            requireContext(),
+                            R.drawable.ic_musko_status_complete
+                        )
+                    )
+                    binding.tvMainStatus.text = getString(R.string.title_status_complete)
                 }
             }
+        } else {
+            binding.imgStatus.setImageDrawable(
+                ContextCompat.getDrawable(
+                    requireContext(),
+                    R.drawable.ic_musko_status_reject
+                )
+            )
+            binding.tvMainStatus.text = getString(R.string.title_status_canceled)
+            rawData.rejectReason?.let {
+                binding.labelStatus.text = rawData.rejectReason.toString()
+            }
+
+            binding.btnNext.makeGone()
         }
+    }
+
+    private fun showBottomSheetRejectOrder() {
+        val olz: (notes: String) -> Unit = { note ->
+            viewModel.rejectOrder(
+                orderId = getOrderId(),
+                reason = getString(R.string.title_canceled_by_user) + note
+            )
+        }
+
+        BottomSheetOrderRejection.instance(
+            selectedAction = olz,
+            objectId = getOrderId().toString(),
+            existingNotes = ""
+        ).show(getMFragmentManager(), BottomSheetOrderRejection().tag)
     }
 
     private fun showBottomSheetInvoice(rawData: DetailOrderResponse.Data) {

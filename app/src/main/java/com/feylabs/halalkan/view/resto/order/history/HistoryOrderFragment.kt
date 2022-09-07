@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import com.feylabs.halalkan.R
 import com.feylabs.halalkan.data.remote.QumparanResource
@@ -43,9 +44,16 @@ class HistoryOrderFragment : BaseFragment() {
             layoutManager = setLayoutManagerLinear()
         }
 
+        binding.btnLoadMore.setOnClickListener {
+            loadNextPage()
+        }
+
         mAdapter.setupAdapterInterface(object : HistoryOrderAdapter.ItemInterface {
             override fun onclick(model: OrderHistoryModel) {
-                loadNextPage()
+                findNavController().navigate(
+                    R.id.navigation_detailOrderRestoFragment,
+                    bundleOf("orderId" to model.id)
+                )
             }
         })
 
@@ -92,10 +100,24 @@ class HistoryOrderFragment : BaseFragment() {
                         mAdapter.setWithNewData(it.toMutableList())
                         mAdapter.notifyDataSetChanged()
                     }
+
+                    if (mAdapter.itemCount < 0) {
+                        showEmptyState(true)
+                    } else {
+                        showEmptyState(false)
+                    }
                 }
             }
         }
 
+    }
+
+    private fun showEmptyState(b: Boolean) {
+        if (b) {
+            binding.stateEmpty.makeVisible()
+        } else {
+            binding.stateEmpty.makeGone()
+        }
     }
 
     private fun showLoading(b: Boolean) {

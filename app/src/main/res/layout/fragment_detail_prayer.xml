@@ -80,7 +80,6 @@
                 app:unlike_drawable="@drawable/heart_off"
                 app:icon_size="23dp"
                 app:anim_scale_factor="2"
-                android:layout_marginEnd="@dimen/dimen_20dp"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentTop="true"
                 android:layout_centerInParent="true"
@@ -207,6 +206,18 @@
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_maps"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_10dp"
+                android:layout_marginTop="@dimen/dimen_10dp"
+                android:text="@string/title_direction_maps"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:cornerRadius="@dimen/dimen_20dp"/>
 
 
             <RelativeLayout

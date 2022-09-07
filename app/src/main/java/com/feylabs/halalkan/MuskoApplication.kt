@@ -1,6 +1,7 @@
 package com.feylabs.halalkan
 
 import android.app.Application
+import androidx.appcompat.app.AppCompatDelegate
 import com.androidnetworking.AndroidNetworking
 import com.feylabs.halalkan.di.networkModule
 import com.feylabs.halalkan.di.repositoryModule
@@ -15,6 +16,7 @@ class MuskoApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         AndroidNetworking.initialize(applicationContext)
         Timber.plant(Timber.DebugTree())
 

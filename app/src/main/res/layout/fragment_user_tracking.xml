@@ -85,7 +85,6 @@
                 android:textColor="@color/halalkan_primary"
                 android:textSize="16sp" />
 
-
             <include
                 android:id="@+id/include_order_status"
                 layout="@layout/layout_order_status"
@@ -110,47 +109,48 @@
                 android:textSize="12sp" />
 
             <LinearLayout
+                android:layout_marginHorizontal="@dimen/dimen_10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/dimen_10dp">
+                >
 
                 <ImageView
                     android:layout_width="15dp"
                     android:layout_height="15dp"
-                    android:layout_gravity="center"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/ic_pin_source_location" />
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_pin_source_location"/>
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
                     android:layout_marginHorizontal="10dp"
+                    android:layout_gravity="center"
                     android:fontFamily="@font/poppins_regular"
                     android:text="@string/title_your_location"
                     android:textColor="@color/black"
                     android:textSize="11sp" />
 
             </LinearLayout>
-
             <LinearLayout
+                android:layout_marginHorizontal="@dimen/dimen_10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/dimen_10dp">
+                >
 
                 <ImageView
                     android:layout_width="15dp"
                     android:layout_height="15dp"
-                    android:layout_gravity="top"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/ic_pin_destination" />
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_pin_destination"/>
 
                 <TextView
                     android:id="@+id/tv_user_location"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
                     android:layout_marginHorizontal="10dp"
+                    android:layout_gravity="center"
                     android:fontFamily="@font/poppins_regular"
                     android:text="@string/location_detail"
                     android:textColor="@color/black"
@@ -185,45 +185,12 @@
                 app:layout_constraintStart_toStartOf="parent" />
 
             <View
-                android:id="@+id/separator_finish_order"
-                android:layout_width="match_parent"
-                android:layout_height="9dp"
-                android:layout_marginTop="@dimen/dimen_20dp"
-                android:background="#EEEEEE"
-                tools:visibility="visible"
-                android:visibility="gone" />
-
-            <TextView
-                android:id="@+id/label_signature"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="10dp"
-                android:layout_marginTop="@dimen/dimen_20dp"
-                android:visibility="gone"
-                tools:visibility="visible"
-                android:fontFamily="@font/poppins_regular"
-                android:text="@string/title_customer_signature"
-                android:textColor="@color/black"
-                android:textSize="18sp" />
-
-            <ImageView
-                android:id="@+id/iv_signature"
-                android:layout_marginTop="@dimen/dimen_10dp"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:visibility="gone"
-                tools:visibility="visible"
-                tools:src="@drawable/ic_manyunyu" />
-
-
-            <View
                 android:id="@+id/separator_driver"
                 android:layout_width="match_parent"
                 android:layout_height="9dp"
                 android:layout_marginTop="@dimen/dimen_20dp"
                 android:background="#EEEEEE"
                 android:visibility="gone" />
-
 
             <TextView
                 android:id="@+id/title_driver"
@@ -290,7 +257,7 @@
 
 
                     <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btn_direction"
+                        android:id="@+id/btn_pick_location"
                         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -417,6 +384,7 @@
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
+
             <View
                 android:id="@+id/separator"
                 android:layout_width="match_parent"
@@ -502,8 +470,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="9dp"
                 android:layout_marginTop="@dimen/dimen_20dp"
-                android:background="#EEEEEE"
-                android:visibility="gone" />
+                android:background="#EEEEEE" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -515,8 +482,7 @@
                 android:text="Cash Only"
                 android:textAlignment="textEnd"
                 android:textColor="@color/black"
-                android:textSize="15sp"
-                android:visibility="gone" />
+                android:textSize="15sp" />
 
             <TextView
                 android:id="@+id/tv_ordered_items"
@@ -529,14 +495,13 @@
                 android:fontFamily="@font/poppins_light"
                 android:text="test a long mosque data that really really  long"
                 android:textSize="13sp"
-                android:visibility="gone"
                 app:drawableTint="@color/color_blue_purplish" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="9dp"
                 android:layout_marginTop="@dimen/dimen_10dp"
-                android:layout_marginBottom="200dp"
+                android:layout_marginBottom="@dimen/dimen_10dp"
                 android:background="#EEEEEE" />
 
 
@@ -627,11 +592,12 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_next"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dimen_10dp"
                 android:layout_marginTop="@dimen/dimen_10dp"
                 android:layout_marginEnd="@dimen/dimen_5dp"
+                android:minWidth="@dimen/dimen_50dp"
                 app:cornerRadius="@dimen/dimen_20dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/guideline5"

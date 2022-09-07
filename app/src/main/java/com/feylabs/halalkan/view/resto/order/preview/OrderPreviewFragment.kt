@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
+import androidx.navigation.fragment.findNavController
 import com.adevinta.leku.*
 import com.feylabs.halalkan.MainViewModel
 import com.feylabs.halalkan.R
@@ -143,6 +144,19 @@ class OrderPreviewFragment : BaseFragment(), OnMapReadyCallback {
                 }
                 is QumparanResource.Success -> {
                     showLoading(false)
+                    DialogUtils.showSuccessDialog(
+                        context = requireContext(),
+                        title = getString(R.string.title_success),
+                        message = getString(R.string.order_submitted_to_restaurant),
+                        positiveAction = Pair("OK") {
+                            findNavController().popBackStack(
+                                R.id.navigation_restoMainFragment,
+                                false
+                            )
+                        },
+                        autoDismiss = true,
+                        buttonAllCaps = false
+                    )
                     showSnackbar(getString(R.string.order_submitted_to_restaurant))
                 }
             }
