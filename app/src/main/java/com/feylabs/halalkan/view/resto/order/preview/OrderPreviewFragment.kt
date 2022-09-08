@@ -188,7 +188,7 @@ class OrderPreviewFragment : BaseFragment(), OnMapReadyCallback {
     }
 
     override fun initAction() {
-        binding.btnOrder.setOnClickListener {
+        binding.btnOrderCk.setOnClickListener {
             val address = binding.etAddress?.editText?.text.toString()
             val additionalAddress = binding.etAdditionalAddress?.editText?.text.toString()
 

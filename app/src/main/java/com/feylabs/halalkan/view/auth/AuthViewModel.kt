@@ -61,7 +61,13 @@ class AuthViewModel(val repo: QumparanRepository, val ds: RemoteDataSource) : Vi
                         }
                     }
                 } else {
-                    _loginLiveData.postValue(QumparanResource.Error("Terjadi Kesalahan"))
+                    var message = res.message().toString()
+                    res.errorBody()?.let {
+                        val jsonObj = JSONObject(it.charStream().readText())
+                        message = jsonObj.getString("message")
+                        _loginLiveData.postValue(QumparanResource.Error(message))
+                    }
+
                 }
             } catch (e: Exception) {
                 _loginLiveData.postValue(QumparanResource.Error(e.message.toString()))

@@ -231,8 +231,8 @@ class DetailOrderRestoFragment : BaseFragment(), OnMapReadyCallback {
             when (rawData.statusId) {
 
                 1 -> {
-                    binding.btnNext.text = getString(R.string.title_cancel_order)
-                    binding.btnNext.setOnClickListener {
+                    binding.btnNextDet.text = getString(R.string.title_cancel_order)
+                    binding.btnNextDet.setOnClickListener {
                         showBottomSheetRejectOrder()
                     }
                     binding.imgStatus.setImageDrawable(
@@ -244,13 +244,13 @@ class DetailOrderRestoFragment : BaseFragment(), OnMapReadyCallback {
                     binding.tvMainStatus.text = getString(R.string.title_status_waiting)
                 }
                 2 -> { // on cooking
-                    binding.btnNext.text = getString(R.string.title_change_driver)
-                    binding.btnNext.setOnClickListener {
+                    binding.btnNextDet.text = getString(R.string.title_change_driver)
+                    binding.btnNextDet.setOnClickListener {
                         showBottomSheetDriver()
                     }
 
                     if (muskoPref().getUserRole() == "2") {
-                        binding.btnNext.makeGone()
+                        binding.btnNextDet.makeGone()
                     }
 
                     binding.imgStatus.setImageDrawable(
@@ -262,23 +262,23 @@ class DetailOrderRestoFragment : BaseFragment(), OnMapReadyCallback {
                     binding.tvMainStatus.text = getString(R.string.title_status_on_cooking)
                 }
                 3 -> { //on the way
-                    binding.btnNext.text = getString(R.string.track_driver_position)
-                    binding.btnNext.setOnClickListener {
+                    binding.btnNextDet.text = getString(R.string.track_driver_position)
+                    binding.btnNextDet.setOnClickListener {
                         showBottomSheetDriver()
                     }
-                    binding.btnNext.makeGone()
+                    binding.btnNextDet.makeGone()
                     binding.btnDirection.makeVisible()
 
                     if (muskoPref().getUserRole() == "4") {
-                        binding.btnNext.makeGone()
-                        binding.btnNext.text = getString(R.string.title_deliver_order)
-                        binding.btnNext.setOnClickListener {
+                        binding.btnNextDet.makeGone()
+                        binding.btnNextDet.text = getString(R.string.title_deliver_order)
+                        binding.btnNextDet.setOnClickListener {
                             goToDelivery(rawData)
                         }
                     }
 
                     if (muskoPref().getUserRole() == "2") {
-                        binding.btnNext.makeGone()
+                        binding.btnNextDet.makeGone()
                     }
 
                     binding.imgStatus.setImageDrawable(
@@ -291,8 +291,8 @@ class DetailOrderRestoFragment : BaseFragment(), OnMapReadyCallback {
                 }
 
                 4 -> { //completed
-                    binding.btnNext.text = getString(R.string.see_invoice)
-                    binding.btnNext.setOnClickListener {
+                    binding.btnNextDet.text = getString(R.string.see_invoice)
+                    binding.btnNextDet.setOnClickListener {
                         showBottomSheetInvoice(rawData)
                     }
 
@@ -305,7 +305,7 @@ class DetailOrderRestoFragment : BaseFragment(), OnMapReadyCallback {
                         rawData.imgSignatureFullPath
                     )
 
-                    binding.btnNext.makeGone()
+                    binding.btnNextDet.makeGone()
                     binding.btnDirection.makeGone()
                     binding.imgStatus.setImageDrawable(
                         ContextCompat.getDrawable(
@@ -328,7 +328,7 @@ class DetailOrderRestoFragment : BaseFragment(), OnMapReadyCallback {
                 binding.labelStatus.text = rawData.rejectReason.toString()
             }
 
-            binding.btnNext.makeGone()
+            binding.btnNextDet.makeGone()
         }
     }
 

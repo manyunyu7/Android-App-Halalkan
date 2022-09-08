@@ -54,7 +54,6 @@ class AddEditRestoFragment : BaseFragment() {
     }
 
     override fun initObserver() {
-        viewModel.getDetailResto(getRestoId())
         viewModel.myRestoLiveData.observe(viewLifecycleOwner) {
             when (it) {
                 is Default -> {}
@@ -101,8 +100,10 @@ class AddEditRestoFragment : BaseFragment() {
                     showSnackbar(it.message.toString(), SnackbarType.ERROR)
                 }
                 is Loading -> {
+                    showLoading(true)
                 }
                 is Success -> {
+                    showLoading(false)
                     val spinnerArray: MutableList<String> = mutableListOf()
                     it.data?.forEachIndexed { index, data ->
                         spinnerArray.add(data.name)
@@ -121,11 +122,14 @@ class AddEditRestoFragment : BaseFragment() {
             when (it) {
                 is Default -> {}
                 is Error -> {
+                    showLoading(false)
                     showSnackbar(it.message.toString(), SnackbarType.ERROR)
                 }
                 is Loading -> {
+                    showLoading(true)
                 }
                 is Success -> {
+                    showLoading(false)
                     val spinnerArray: MutableList<String> = mutableListOf()
                     it.data?.forEachIndexed { index, restaurantCertificationItem ->
                         spinnerArray.add(restaurantCertificationItem.name)
@@ -265,6 +269,7 @@ class AddEditRestoFragment : BaseFragment() {
     }
 
     override fun initData() {
+//        viewModel.getDetailResto(getRestoId())
         viewModel.getRestoCert()
         viewModel.getFoodType()
     }

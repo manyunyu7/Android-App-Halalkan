@@ -22,14 +22,14 @@ val networkModule = module {
     single {
         OkHttpClient.Builder()
             .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
-//            .addInterceptor(
-//                ChuckerInterceptor.Builder(androidContext())
-//                    .collector(ChuckerCollector(androidContext()))
-//                    .maxContentLength(250000L)
-//                    .redactHeaders(emptySet())
-//                    .alwaysReadResponseBody(true)
-//                    .build()
-//            )
+            .addInterceptor(
+                ChuckerInterceptor.Builder(androidContext())
+                    .collector(ChuckerCollector(androidContext()))
+                    .maxContentLength(250000L)
+                    .redactHeaders(emptySet())
+                    .alwaysReadResponseBody(true)
+                    .build()
+            )
             .addInterceptor(ServiceInterceptor(androidContext()))
             .connectTimeout(120, TimeUnit.SECONDS)
             .readTimeout(120, TimeUnit.SECONDS)

@@ -130,9 +130,12 @@ class NewHomeFragment : BaseFragment() {
     }
 
     override fun initData() {
-        fetchPrayerTime()
-        fetchAllMasjid()
-        fetchAllResto()
+        val user = MyPreference(requireContext()).getUserData()
+        if (user.rolesId != 3 && user.rolesId != 1) {
+            fetchPrayerTime()
+            fetchAllMasjid()
+            fetchAllResto()
+        }
     }
 
     private fun fetchAllResto() {
@@ -164,7 +167,6 @@ class NewHomeFragment : BaseFragment() {
 
     private fun checkRole() {
         val user = MyPreference(requireContext()).getUserData()
-        showToast(user.toString())
         if (user.rolesId == 3) {
             findNavController().navigate(R.id.action_navigation_newHomeFragment_to_navigation_initAdminRestoFragment)
         } else if (user.rolesId == 4) {

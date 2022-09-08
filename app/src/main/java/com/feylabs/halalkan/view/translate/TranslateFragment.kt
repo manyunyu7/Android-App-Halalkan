@@ -127,7 +127,7 @@ class TranslateFragment : BaseFragment() {
                         }
 
                         // fetch new translation
-                        viewmodel.getTranslation(sourceContainer.etTranslate.text.toString())
+                        viewmodel.getTranslation(sourceContainer.etTranslateSource.text.toString())
 
                         searchLangDialog.dismiss()
                     }
@@ -259,7 +259,7 @@ class TranslateFragment : BaseFragment() {
     private fun handleTranslate() {
         var timer = Timer()
         val DELAY: Long = 3000 // Milliseconds
-        binding.containerSourceLanguage.etTranslate.doAfterTextChanged {
+        binding.containerSourceLanguage.etTranslateSource.doAfterTextChanged {
             binding.containerTargetLanguage.etTranslate.setText(".....")
             if (it.toString().isNotEmpty()) {
                 val text = it.toString()
@@ -284,8 +284,8 @@ class TranslateFragment : BaseFragment() {
     private fun handleLanguageSwitch() {
         binding.layoutDropdownTranslator.logoSwitch.setOnClickListener {
             val currentTextOnTarget = binding.containerTargetLanguage.etTranslate.text
-            binding.containerSourceLanguage.etTranslate.text = currentTextOnTarget
-            val currentTextOnSource = binding.containerSourceLanguage.etTranslate.text
+            binding.containerSourceLanguage.etTranslateSource.text = currentTextOnTarget
+            val currentTextOnSource = binding.containerSourceLanguage.etTranslateSource.text
             viewmodel.apply {
                 val currentSource = sourceLanguage.value.toString()
                 val currentTarget = targetLanguage.value.toString()
@@ -312,7 +312,7 @@ class TranslateFragment : BaseFragment() {
     private fun setupLanguageTTS() {
         binding.containerSourceLanguage.apply {
             imgSpeaker.setOnClickListener {
-                val text = this.etTranslate.text.toString()
+                val text = this.etTranslateSource.text.toString()
                 if (text.isNotEmpty()) {
                     viewmodel.getTextToSpeech(text, isSource = true)
                 }
@@ -379,7 +379,7 @@ class TranslateFragment : BaseFragment() {
             10 -> if (resultCode == RESULT_OK &&
                 data != null
             ) {
-                val textView = binding.containerSourceLanguage.etTranslate
+                val textView = binding.containerSourceLanguage.etTranslateSource
                 val result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
                 result?.let {
                     if (it.isNotEmpty()) {

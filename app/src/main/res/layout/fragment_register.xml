@@ -91,7 +91,6 @@
                 android:inputType="textEmailAddress"
                 android:fontFamily="@font/poppins_regular"
                 android:hint="Masukkan Email"
-                android:text="firriezky@gmail.com"
                 android:textColor="@color/black"
                 />
 
@@ -128,7 +127,6 @@
                 android:fontFamily="@font/poppins_regular"
                 android:hint="Masukkan Kata Sandi"
                 android:inputType="textPassword"
-                android:text="password"
                 android:textColor="@color/black"
                 />
 

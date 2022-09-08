@@ -92,7 +92,7 @@ class InitAdminRestoFragment : BaseFragment() {
                 positiveAction = Pair("OK") {
                     revokeViewModel()
                     muskoPref().clearPreferences()
-                    findNavController().navigate(R.id.navigation_newHomeFragment)
+                    findNavController().popBackStack(R.id.navigation_newHomeFragment,true)
                 },
                 negativeAction = Pair(
                     getString(R.string.title_no),
