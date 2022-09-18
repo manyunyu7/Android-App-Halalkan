@@ -178,9 +178,6 @@ class NewHomeFragment : BaseFragment() {
     private fun initAdapter() {
         restoAdapter.setupAdapterInterface(object : RestoMainAdapter.ItemInterface {
             override fun onclick(model: RestoModelResponse) {
-                if (OrderUtility(requireContext()).checkResto(model.id).not()) {
-                    OrderUtility(requireContext()).clearOrder()
-                }
                 findNavController().navigate(
                     R.id.navigation_detailRestoFragment, bundleOf(
                         "data" to model

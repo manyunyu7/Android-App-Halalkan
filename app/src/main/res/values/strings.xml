@@ -304,4 +304,8 @@
     <string name="sorry_no_available">Some of your order has been removed because the menu is not available</string>
     <string name="removed_items_are">", removed items are "</string>
 
+    <string name="status_open">Open</string>
+    <string name="status_closed">Closed</string>
+    <string name="title_certification">Certification</string>
+
 </resources>

@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.feylabs.halalkan.R
@@ -31,8 +30,6 @@ class RestoFoodAdapter(
     lateinit var adapterInterface: ItemInterface
     lateinit var orderInterface: OrderInterface
     lateinit var noteInterface: NoteInterface
-
-    var isRestoClosed  = false
 
     fun setWithNewData(data: MutableList<AdapterModel>) {
         this.data.clear()
@@ -102,12 +99,16 @@ class RestoFoodAdapter(
                         model.orderedQuantity = quantity
                         binding.customPlusMinus.setQuantity(quantity)
 
+                        var notes = ""
+                        model.notes?.let {
+                            notes = it
+                        } ?: run { notes = "" }
                         if (quantity > 0) {
                             orderUtility.addItem(
                                 OrderLocalModel(
                                     menuId = model.id.toString(),
                                     quantity = quantity,
-                                    notes = model.notes.toString(),
+                                    notes = notes,
                                     price = model.price.toDouble(),
                                     restoId = model.restoranId,
                                     food = model
@@ -156,34 +157,6 @@ class RestoFoodAdapter(
                     binding.containerNotes.makeGone()
                 }
             }
-
-            if (model.isVisible == 1) {
-                binding.tvAvailability.text = mContext.getString(R.string.title_available)
-                binding.tvAvailability.setTextColor(
-                    ContextCompat.getColor(
-                        mContext,
-                        R.color.uikit_green_light
-                    )
-                )
-                binding.btnOrder.makeVisible()
-                OrderUtility(mContext).removeItem(model.id.toString())
-            } else {
-                binding.tvAvailability.text = mContext.getString(R.string.title_unavailable)
-                binding.tvAvailability.setTextColor(
-                    ContextCompat.getColor(
-                        mContext,
-                        R.color.uikit_red_light
-                    )
-                )
-                binding.btnOrder.makeGone()
-            }
-
-            val userRole = (MyPreference(mContext).getUserRole()?.toIntOrNull() ?: -99)
-            if (userRole == 1 || userRole == 3) {
-                binding.btnOrder.makeGone()
-                binding.labelNotes.makeGone()
-                binding.tvNotes.text = model.categoryName.toString() + " - " + model.typeFoodName
-            }
         }
 
         private fun setToOrdered(b: Boolean) {
@@ -193,30 +166,12 @@ class RestoFoodAdapter(
                 binding.btnNotes.makeVisible()
                 binding.btnOrder.makeGone()
 
-//                binding.btnNotes.animation = AnimationUtils.loadAnimation(
-//                    mContext,
-//                    R.anim.fade_transition_animation
-//                )
-//
-//                binding.customPlusMinus.animation = AnimationUtils.loadAnimation(
-//                    mContext,
-//                    R.anim.fade_transition_animation
-//                )
 
             } else {
                 binding.customPlusMinus.makeGone()
                 binding.btnNotes.makeGone()
                 binding.btnOrder.makeVisible()
 
-//                binding.btnNotes.animation = AnimationUtils.loadAnimation(
-//                    mContext,
-//                    R.anim.translate_right
-//                )
-//
-//                binding.customPlusMinus.animation = AnimationUtils.loadAnimation(
-//                    mContext,
-//                    R.anim.translate_right
-//                )
             }
         }
     }

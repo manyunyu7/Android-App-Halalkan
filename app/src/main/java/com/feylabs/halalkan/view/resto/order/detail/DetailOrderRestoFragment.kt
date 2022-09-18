@@ -401,7 +401,7 @@ class DetailOrderRestoFragment : BaseFragment(), OnMapReadyCallback {
         BottomSheetOrderNotes.instance(
             selectedAction = olz,
             objectId = model.id.toString(),
-            existingNotes = model.notes
+            existingNotes = model?.notes.orEmpty()
         ).show(getMFragmentManager(), BottomSheetOrderNotes().tag)
     }
 

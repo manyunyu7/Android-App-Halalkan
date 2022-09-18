@@ -10,11 +10,11 @@ class OrderUtility(private val mContext: Context) {
 
 
     companion object {
-        const val PREF_ORDER_KEY = "YzzzzUHUU"
+        const val PREF_ORDER_KEY = "YzzzzUHUUzzz"
     }
 
     fun clearOrder(){
-        MyPreference(mContext).removeKey(PREF_ORDER_KEY)
+//        MyPreference(mContext).removeKey(PREF_ORDER_KEY)
     }
 
     fun checkResto(restoId: Int): Boolean {

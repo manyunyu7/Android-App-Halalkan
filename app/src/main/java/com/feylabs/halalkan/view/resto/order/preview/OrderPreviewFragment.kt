@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AnimationUtils
 import androidx.navigation.fragment.findNavController
 import com.adevinta.leku.*
 import com.feylabs.halalkan.MainViewModel
@@ -144,20 +143,22 @@ class OrderPreviewFragment : BaseFragment(), OnMapReadyCallback {
                 }
                 is QumparanResource.Success -> {
                     showLoading(false)
-                    OrderUtility(requireContext()).clearOrder()
                     DialogUtils.showSuccessDialog(
                         context = requireContext(),
                         title = getString(R.string.title_success),
                         message = getString(R.string.order_submitted_to_restaurant),
                         positiveAction = Pair("OK") {
-                            findNavController().popBackStack(
-                                R.id.navigation_restoMainFragment,
-                                false
-                            )
+
                         },
                         autoDismiss = true,
                         buttonAllCaps = false
                     )
+
+                    findNavController().popBackStack(
+                        R.id.navigation_restoMainFragment,
+                        false
+                    )
+
                     showSnackbar(getString(R.string.order_submitted_to_restaurant))
                 }
             }
@@ -197,16 +198,17 @@ class OrderPreviewFragment : BaseFragment(), OnMapReadyCallback {
 
             val orders = mutableListOf<CreateCartPayload.Order>()
 
-            OrderUtility(requireContext()).getListOrder().forEachIndexed { index, orderLocalModel ->
+
+            foodAdapter.data.forEachIndexed { index, data ->
                 orders.add(
                     CreateCartPayload.Order(
-                        foodId = orderLocalModel.food.id,
-                        notes = orderLocalModel.notes.toString(),
-                        quantity = orderLocalModel.quantity
+                        foodId = data.id,
+                        notes = data.notes.toString(),
+                        quantity = data.orderedQuantity
                     )
                 )
             }
-            showToast("restoId" + getChoosenResto().toString())
+
 
             DialogUtils.showConfirmationDialog(
                 context = requireContext(),

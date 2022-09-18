@@ -110,9 +110,6 @@ class AllRestoFragment : BaseFragment() {
             }
 
             override fun onclick(model: RestoModelResponse) {
-                if (OrderUtility(requireContext()).checkResto(model.id).not()) {
-                    OrderUtility(requireContext()).clearOrder()
-                }
                 findNavController().navigate(
                     R.id.navigation_detailRestoFragment,
                     bundleOf("data" to model)

@@ -44,6 +44,8 @@ data class MasjidModelResponse(
     val review_count: String,
     @SerializedName("is_favorited")
     val is_favorited: Boolean = false,
+    @SerializedName("is_schedule_open")
+    val is_schedule_open: Boolean = false,
     var distanceKm: String? = null,
     var distanceKmDoubleRounded: Double? = null,
     var distanceKmDouble: Double? = null,

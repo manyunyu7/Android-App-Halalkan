@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import com.feylabs.halalkan.MainViewModel
@@ -145,6 +146,25 @@ class DetailMasjidFragment : BaseFragment() {
                 binding.etFacilities.text = facilities.extractStringFromStringArrayBE()
                 binding.etOperatingHours.text = getOperatingHours()
 
+
+                if (is_schedule_open) {
+                    binding.statusOpenCloseCard.setBackgroundColor(
+                        ContextCompat.getColor(
+                            requireContext(),
+                            R.color.green50
+                        )
+                    )
+                    binding.statusSchedule.text = getString(R.string.status_open)
+                } else {
+                    binding.statusSchedule.text = getString(R.string.status_closed)
+                    binding.statusOpenCloseCard.setBackgroundColor(
+                        ContextCompat.getColor(
+                            requireContext(),
+                            R.color.uikit_red
+                        )
+                    )
+                }
+
                 binding.includeRatingInfo.apply {
                     reviewScore.text = masjidDetailResponse.review_avg
                     tvReviewCount.text = masjidDetailResponse.review_count
@@ -152,7 +172,6 @@ class DetailMasjidFragment : BaseFragment() {
 
                 viewModel.targetLong.postValue(long.toDoubleOrNull())
                 viewModel.targetLat.postValue(lat.toDoubleOrNull())
-
 
 
             }
@@ -170,15 +189,19 @@ class DetailMasjidFragment : BaseFragment() {
         }
 
         binding.btnSeeAllPhotos.setOnClickListener {
-            findNavController().navigate(R.id.navigation_photoListFragment, bundleOf(
-                "photos" to masjidPhotos
-            ))
+            findNavController().navigate(
+                R.id.navigation_photoListFragment, bundleOf(
+                    "photos" to masjidPhotos
+                )
+            )
         }
 
         binding.btnAddPhoto.setOnClickListener {
-            findNavController().navigate(R.id.navigation_photoListFragment, bundleOf(
-                "photos" to masjidPhotos
-            ))
+            findNavController().navigate(
+                R.id.navigation_photoListFragment, bundleOf(
+                    "photos" to masjidPhotos
+                )
+            )
         }
         binding.ipImagePreviewSlider.replaceAllImage(tempList)
     }

@@ -48,6 +48,8 @@ data class RestoModelResponse(
     var userId: Int = 0,
     @SerializedName("is_resto_schedule_open")
     var isRestoScheduleOpen: Boolean = false,
+    @SerializedName("is_claimed")
+    var isClaimed: Boolean = false,
     @SerializedName("is_favorited")
     val isFavorited: Boolean = false,
     var distanceKm: String? = null,

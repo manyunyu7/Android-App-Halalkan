@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
+import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import com.feylabs.halalkan.MainViewModel
@@ -309,7 +310,9 @@ class DetailRestoFragment : BaseFragment() {
         binding.apply {
             restoDetailResponse.data.detailResto.apply {
                 val resto = this
-                foodAdapter.isRestoClosed = this.isRestoScheduleOpen.not()
+//                foodAdapter.isRestoClosed = this.isRestoScheduleOpen.not()
+//                foodAdapter.isClaimed = this.isClaimed
+
                 binding.labelPageTitleTopbar.text = name
                 binding.labelName.text = name
                 binding.etCategoryTop.text = "-"
@@ -317,12 +320,29 @@ class DetailRestoFragment : BaseFragment() {
                 binding.etDistance.text =
                     calculateDistance(lat.toDoubleOrNull(), long.toDoubleOrNull())
                 binding.etAddress.text = address
-                binding.etKategori.text = "-"
+                binding.etKategori.text = foodTypeName
                 binding.etPhone.text = phoneNumber
-                binding.etFacilities.text = "-"
                 binding.etOperatingHours.text = getOperatingHours()
 
                 setupRestoPhotoData(restoDetailResponse.data.photos)
+
+                if (isRestoScheduleOpen) {
+                    binding.statusOpenCloseCard.setBackgroundColor(
+                        ContextCompat.getColor(
+                            requireContext(),
+                            R.color.green50
+                        )
+                    )
+                    binding.statusSchedule.text = getString(R.string.status_open)
+                } else {
+                    binding.statusSchedule.text = getString(R.string.status_closed)
+                    binding.statusOpenCloseCard.setBackgroundColor(
+                        ContextCompat.getColor(
+                            requireContext(),
+                            R.color.uikit_red
+                        )
+                    )
+                }
 
                 binding.includeRatingInfo.apply {
                     reviewScore.text =
@@ -489,7 +509,7 @@ class DetailRestoFragment : BaseFragment() {
             title = getString(R.string.add_note_to_dish),
             selectedAction = olz,
             objectId = model.id.toString(),
-            existingNotes = model.notes
+            existingNotes = model?.notes.orEmpty()
         ).show(getMFragmentManager(), BottomSheetOrderNotes().tag)
     }
 

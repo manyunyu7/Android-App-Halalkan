@@ -31,7 +31,7 @@ data class FoodModelResponse(
     @SerializedName("price")
     var price: Double = 0.0,
     @SerializedName("quantity")
-    var quantity: Int = 0,
+    var quantity: Int,
     @SerializedName("restoran_id")
     var restoranId: Int = 0,
     @SerializedName("type_food_id")

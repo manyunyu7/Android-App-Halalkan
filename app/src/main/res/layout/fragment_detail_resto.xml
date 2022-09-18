@@ -176,6 +176,7 @@
                     app:layout_constraintTop_toBottomOf="@id/et_distance">
 
                     <TextView
+                        android:id="@+id/status_schedule"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins_regular"
@@ -289,7 +290,7 @@
                     android:ellipsize="none"
                     android:fontFamily="@font/poppins_regular"
                     android:scrollHorizontally="false"
-                    android:text="@string/detail_masjid_kategori"
+                    android:text="@string/title_certification"
                     android:textColor="@color/color_blue_purplish"
                     android:textSize="15sp"
                     android:textStyle="bold"
@@ -318,7 +319,58 @@
                     android:id="@+id/img_type"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_masjid_detail_type"
+                    android:src="@drawable/ic_order_notes"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/dimen_20dp"
+                android:layout_marginTop="@dimen/dimen_10dp">
+
+                <TextView
+                    android:id="@+id/label_info_food_type"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/dimen_20dp"
+                    android:layout_marginStart="@dimen/dimen_10dp"
+                    android:ellipsize="none"
+                    android:fontFamily="@font/poppins_regular"
+                    android:scrollHorizontally="false"
+                    android:text="@string/title_food_type"
+                    android:textColor="@color/color_blue_purplish"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/img_food_type"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/et_food_type"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/dimen_20dp"
+                    android:layout_marginStart="@dimen/dimen_10dp"
+                    android:ellipsize="none"
+                    android:fontFamily="@font/poppins_light"
+                    android:scrollHorizontally="false"
+                    android:text="@string/general_memuat_data"
+                    android:textColor="@color/text_secondary_detail"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/img_food_type"
+                    app:layout_constraintTop_toBottomOf="@id/label_info_food_type" />
+
+                <ImageView
+                    android:id="@+id/img_food_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_food_type"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -486,56 +538,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_masjid_detail_phone_number"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/dimen_20dp"
-                android:layout_marginTop="@dimen/dimen_10dp">
-
-                <TextView
-                    android:id="@+id/label_facilities"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/dimen_20dp"
-                    android:layout_marginStart="@dimen/dimen_10dp"
-                    android:ellipsize="none"
-                    android:fontFamily="@font/poppins_regular"
-                    android:scrollHorizontally="false"
-                    android:text="@string/detail_masjid_fasilitas"
-                    android:textColor="@color/color_blue_purplish"
-                    android:textSize="15sp"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/img_facilities"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/et_facilities"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/dimen_20dp"
-                    android:layout_marginStart="@dimen/dimen_10dp"
-                    android:ellipsize="none"
-                    android:fontFamily="@font/poppins_light"
-                    android:scrollHorizontally="false"
-                    android:text="@string/general_memuat_data"
-                    android:textColor="@color/text_secondary_detail"
-                    android:textSize="15sp"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/img_facilities"
-                    app:layout_constraintTop_toBottomOf="@id/label_facilities" />
-
-                <ImageView
-                    android:id="@+id/img_facilities"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_masjid_detail_facility"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
