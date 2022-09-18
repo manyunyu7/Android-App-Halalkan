@@ -32,6 +32,8 @@ class RestoFoodAdapter(
     lateinit var orderInterface: OrderInterface
     lateinit var noteInterface: NoteInterface
 
+    var isRestoClosed  = false
+
     fun setWithNewData(data: MutableList<AdapterModel>) {
         this.data.clear()
         this.data.addAll(data)
@@ -163,6 +165,8 @@ class RestoFoodAdapter(
                         R.color.uikit_green_light
                     )
                 )
+                binding.btnOrder.makeVisible()
+                OrderUtility(mContext).removeItem(model.id.toString())
             } else {
                 binding.tvAvailability.text = mContext.getString(R.string.title_unavailable)
                 binding.tvAvailability.setTextColor(
@@ -171,6 +175,7 @@ class RestoFoodAdapter(
                         R.color.uikit_red_light
                     )
                 )
+                binding.btnOrder.makeGone()
             }
 
             val userRole = (MyPreference(mContext).getUserRole()?.toIntOrNull() ?: -99)

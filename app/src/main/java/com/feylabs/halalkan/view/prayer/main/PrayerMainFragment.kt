@@ -40,16 +40,20 @@ class PrayerMainFragment : BaseFragment() {
     override fun initAction() {
 
         binding.searchBox.root.setOnClickListener {
-            findNavController().navigate(R.id.navigation_searchPrayerRoomFragment, bundleOf(
-                "title" to getString(R.string.title_search_masjid)
-            ))
+            findNavController().navigate(
+                R.id.navigation_searchPrayerRoomFragment, bundleOf(
+                    "title" to getString(R.string.title_search_masjid)
+                )
+            )
         }
 
         binding.btnFavorite.setOnClickListener {
-            if (muskoPref().isLoggedIn()){
-                findNavController().navigate(R.id.navigation_searchPrayerRoomFragment, bundleOf(
-                    "title" to getString(R.string.title_fav_masjid), "favorite" to "yayaya"
-                ))
+            if (muskoPref().isLoggedIn()) {
+                findNavController().navigate(
+                    R.id.navigation_searchPrayerRoomFragment, bundleOf(
+                        "title" to getString(R.string.title_fav_masjid), "like" to "1"
+                    )
+                )
             }
 
         }
@@ -66,9 +70,11 @@ class PrayerMainFragment : BaseFragment() {
         }
 
         binding.menuPrayerRoom.setOnClickListener {
-            findNavController().navigate(R.id.navigation_searchPrayerRoomFragment, bundleOf(
-                "title" to getString(R.string.title_all_masjid)
-            ))
+            findNavController().navigate(
+                R.id.navigation_searchPrayerRoomFragment, bundleOf(
+                    "title" to getString(R.string.title_all_masjid)
+                )
+            )
         }
 
         binding.menuPrayerTime.setOnClickListener {

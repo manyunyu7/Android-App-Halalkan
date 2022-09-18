@@ -8,6 +8,7 @@ import androidx.navigation.fragment.findNavController
 import com.feylabs.halalkan.data.remote.QumparanResource
 import com.feylabs.halalkan.data.remote.reqres.product.ProductDetailResponse
 import com.feylabs.halalkan.databinding.*
+import com.feylabs.halalkan.utils.ImageViewUtils.loadImageFromURL
 import com.feylabs.halalkan.utils.StringUtil.orMuskoEmpty
 import com.feylabs.halalkan.utils.base.BaseFragment
 import com.mapbox.maps.extension.style.expressions.dsl.generated.all
@@ -57,6 +58,8 @@ class ProductDetailFragment : BaseFragment() {
         binding.apply {
             tvTitle.text = product.name
             binding.tvCertificationInformation.text = product.certificationName
+
+            binding.img.loadImageFromURL(requireContext(),product.imgFullPath)
 
             product.productInformation?.let {
                 var summary = ""

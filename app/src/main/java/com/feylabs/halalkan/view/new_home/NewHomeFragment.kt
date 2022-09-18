@@ -28,6 +28,7 @@ import com.feylabs.halalkan.utils.base.BaseFragment
 import com.feylabs.halalkan.utils.location.LocationUtils
 import com.feylabs.halalkan.utils.location.MyLatLong
 import com.feylabs.halalkan.utils.masjid.MasjidUtility.renderWithDistanceModel
+import com.feylabs.halalkan.utils.resto.OrderUtility
 import com.feylabs.halalkan.utils.resto.RestoUtility.renderWithDistanceModel
 import com.feylabs.halalkan.utils.snackbar.UtilSnackbar
 import com.feylabs.halalkan.view.home.HomeViewModel
@@ -177,6 +178,9 @@ class NewHomeFragment : BaseFragment() {
     private fun initAdapter() {
         restoAdapter.setupAdapterInterface(object : RestoMainAdapter.ItemInterface {
             override fun onclick(model: RestoModelResponse) {
+                if (OrderUtility(requireContext()).checkResto(model.id).not()) {
+                    OrderUtility(requireContext()).clearOrder()
+                }
                 findNavController().navigate(
                     R.id.navigation_detailRestoFragment, bundleOf(
                         "data" to model
@@ -230,6 +234,7 @@ class NewHomeFragment : BaseFragment() {
                 }
             }
         }
+
         viewModel.allMasjidLiveData.observe(viewLifecycleOwner) {
             when (it) {
                 is QumparanResource.Default -> {

@@ -208,7 +208,7 @@
                     android:maxLines="3"
                     android:ellipsize="end"
                     android:fontFamily="@font/open_sans_light"
-                    android:text="OPEN"
+                    android:text=""
                     android:textSize="14sp"
                     app:drawableTint="@color/color_blue_purplish" />
 

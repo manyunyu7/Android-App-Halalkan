@@ -13,6 +13,10 @@ class OrderUtility(private val mContext: Context) {
         const val PREF_ORDER_KEY = "YzzzzUHUU"
     }
 
+    fun clearOrder(){
+        MyPreference(mContext).removeKey(PREF_ORDER_KEY)
+    }
+
     fun checkResto(restoId: Int): Boolean {
         var isError=false
         getListOrder().forEachIndexed { index, orderLocalModel ->

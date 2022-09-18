@@ -138,7 +138,6 @@ class TranslateFragment : BaseFragment() {
 
     override fun initObserver() {
         viewmodel.translateLiveData.observe(viewLifecycleOwner) {
-            showToast(it.data.toString() + it.message.toString())
             when (it) {
                 is QumparanResource.Success -> {
                     it.data?.let { translateResponse ->
@@ -196,13 +195,10 @@ class TranslateFragment : BaseFragment() {
     }
 
     private fun playMediaSource(response: TiktokTextToSpeechResponse) {
-        if (response.message == "success") {
-            val audioBase64 = response.data.vStr
-            val duration = response.data.duration
-            playBase64Media(audioBase64)
-        }
+        val audioBase64 = response.data
+        playBase64Media(audioBase64)
+        showToast(audioBase64)
     }
-
     override fun initAction() {
         binding.btnBack.setOnClickListener {
             findNavController().popBackStack()
@@ -250,7 +246,6 @@ class TranslateFragment : BaseFragment() {
             RecognizerIntent.LANGUAGE_MODEL_FREE_FORM
         )
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, chooseLocale)
-        showToast(chooseLocale)
         if (intent.resolveActivity(requireActivity().packageManager) != null) {
             startActivityForResult(intent, 10)
         }

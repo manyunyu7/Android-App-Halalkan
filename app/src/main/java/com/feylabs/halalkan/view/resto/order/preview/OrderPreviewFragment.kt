@@ -144,6 +144,7 @@ class OrderPreviewFragment : BaseFragment(), OnMapReadyCallback {
                 }
                 is QumparanResource.Success -> {
                     showLoading(false)
+                    OrderUtility(requireContext()).clearOrder()
                     DialogUtils.showSuccessDialog(
                         context = requireContext(),
                         title = getString(R.string.title_success),

@@ -20,6 +20,7 @@ import com.feylabs.halalkan.utils.DialogUtils
 import com.feylabs.halalkan.utils.base.BaseFragment
 import com.feylabs.halalkan.utils.location.LocationUtils
 import com.feylabs.halalkan.utils.location.MyLatLong
+import com.feylabs.halalkan.utils.resto.OrderUtility
 import com.feylabs.halalkan.utils.resto.RestoUtility.renderWithDistanceModel
 import com.feylabs.halalkan.view.resto.RestoViewModel
 import com.like.LikeButton
@@ -145,6 +146,9 @@ class RestoMainFragment : BaseFragment() {
         })
         nearbyRestoAdapter.setupAdapterInterface(object : RestoMainAdapter.ItemInterface {
             override fun onclick(model: RestoModelResponse) {
+                if (OrderUtility(requireContext()).checkResto(model.id).not()) {
+                    OrderUtility(requireContext()).clearOrder()
+                }
                 findNavController().navigate(
                     R.id.navigation_detailRestoFragment,
                     bundleOf("data" to model)

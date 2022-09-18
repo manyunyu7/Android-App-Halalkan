@@ -300,5 +300,8 @@
     <string name="title_status_complete">Complete</string>
     <string name="title_status_canceled">Canceled</string>
     <string name="title_direction_maps">Direction/Maps</string>
+    <string name="title_sorry">Sorry</string>
+    <string name="sorry_no_available">Some of your order has been removed because the menu is not available</string>
+    <string name="removed_items_are">", removed items are "</string>
 
 </resources>

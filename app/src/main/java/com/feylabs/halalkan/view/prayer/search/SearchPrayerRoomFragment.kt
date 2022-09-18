@@ -58,8 +58,6 @@ class SearchPrayerRoomFragment : BaseFragment() {
 
     override fun onResume() {
         super.onResume()
-        val index = MyPreference(requireContext()).getPrefInt(SCROLLED_POSITION) ?: 0
-        binding.rvList.smoothScrollBy(0, index)
     }
 
     override fun initUI() {
@@ -94,6 +92,7 @@ class SearchPrayerRoomFragment : BaseFragment() {
             layoutManager = LinearLayoutManager(requireContext())
             setHasFixedSize(true)
             isSaveEnabled = true
+           itemAnimator = null
         }
 
         binding.rvList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
@@ -128,18 +127,10 @@ class SearchPrayerRoomFragment : BaseFragment() {
         })
     }
 
-    private fun isFromType(): Boolean {
-        val fromIntent = arguments?.getString("type_food_id")?.toIntOrNull()
-        return fromIntent != null
-    }
-
-    private fun isFromFav(): Boolean {
-        val fromIntent = arguments?.getString("favorite").orMuskoEmpty("")
-        return fromIntent.isNotEmpty()
-    }
-
     private fun getSearchTypeId(): Int? {
-        return MyPreference(requireContext()).getNullableInt("filterPrayerRoomType")
+        val value =   MyPreference(requireContext()).getNullableInt("filterPrayerRoomType")
+        showToast(value.toString() + " type_id")
+        return value
     }
 
     private fun getSearchName(): String? {
@@ -306,11 +297,18 @@ class SearchPrayerRoomFragment : BaseFragment() {
         if (isFromNearest()) {
             sortBy = "distance"
         }
+
+        var perPage = 10
+        if (isFromLike()){
+            perPage = 9999
+        }
+
         viewModel.searchMasjid(
             page = page,
             name = getSearchName(),
             typeId = getSearchTypeId(),
-            sortBy = sortBy
+            sortBy = sortBy,
+            perPage = perPage
         )
     }
 

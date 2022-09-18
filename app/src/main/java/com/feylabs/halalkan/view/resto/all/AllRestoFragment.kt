@@ -22,6 +22,7 @@ import com.feylabs.halalkan.utils.StringUtil.orMuskoEmpty
 import com.feylabs.halalkan.utils.base.BaseFragment
 import com.feylabs.halalkan.utils.location.LocationUtils
 import com.feylabs.halalkan.utils.location.MyLatLong
+import com.feylabs.halalkan.utils.resto.OrderUtility
 import com.feylabs.halalkan.utils.resto.RestoUtility.renderWithDistanceModel
 import com.feylabs.halalkan.view.favorite.FavViewModel
 import com.feylabs.halalkan.view.resto.BottomSheetFilterResto
@@ -55,8 +56,6 @@ class AllRestoFragment : BaseFragment() {
 
     override fun onResume() {
         super.onResume()
-        val index = MyPreference(requireContext()).getPrefInt(SCROLLED_POSITION) ?: 0
-        binding.rvList.smoothScrollBy(0, index)
     }
 
     override fun initUI() {
@@ -111,6 +110,9 @@ class AllRestoFragment : BaseFragment() {
             }
 
             override fun onclick(model: RestoModelResponse) {
+                if (OrderUtility(requireContext()).checkResto(model.id).not()) {
+                    OrderUtility(requireContext()).clearOrder()
+                }
                 findNavController().navigate(
                     R.id.navigation_detailRestoFragment,
                     bundleOf("data" to model)
@@ -322,8 +324,6 @@ class AllRestoFragment : BaseFragment() {
     }
 
     private fun fetchData(page: Int = 1) {
-        showToast("name : ${getSearchName()} certification : ${getSearchCertificationId()} type: ${getSearchTypeFoodId()}")
-
         var sortBy: String? = null
 
         if (isFromNearest()) {

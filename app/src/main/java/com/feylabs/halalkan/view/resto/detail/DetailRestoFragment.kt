@@ -16,6 +16,7 @@ import com.feylabs.halalkan.customview.bottomsheet.BottomSheetOrderNotes
 import com.feylabs.halalkan.customview.imagepreviewcontainer.CustomViewPhotoModel
 import com.feylabs.halalkan.data.remote.QumparanResource.*
 import com.feylabs.halalkan.data.remote.reqres.auth.UserModel
+import com.feylabs.halalkan.data.remote.reqres.resto.AllFoodByRestoResponse
 import com.feylabs.halalkan.data.remote.reqres.resto.FoodCategoryResponse
 import com.feylabs.halalkan.data.remote.reqres.resto.FoodCategoryResponse.FoodCategoryResponseItem
 import com.feylabs.halalkan.data.remote.reqres.resto.RestoDetailResponse
@@ -23,6 +24,7 @@ import com.feylabs.halalkan.data.remote.reqres.resto.RestoModelResponse
 import com.feylabs.halalkan.data.remote.reqres.resto.food.FoodModelResponse
 import com.feylabs.halalkan.databinding.FragmentDetailRestoBinding
 import com.feylabs.halalkan.utils.CommonUtil.makeGone
+import com.feylabs.halalkan.utils.DialogUtils
 import com.feylabs.halalkan.utils.NumberUtil.Companion.roundOffDecimal
 import com.feylabs.halalkan.utils.base.BaseFragment
 import com.feylabs.halalkan.utils.location.LocationUtils
@@ -146,6 +148,7 @@ class DetailRestoFragment : BaseFragment() {
                 is Success -> {
                     if (!isAllMenu().not()) {
                         it.data?.let {
+                            checkFoodSavedItem(it)
                             foodAdapter.setWithNewData(it)
                             foodAdapter.notifyDataSetChanged()
                             checkFoodAdapter()
@@ -250,6 +253,36 @@ class DetailRestoFragment : BaseFragment() {
 
     }
 
+    private fun checkFoodSavedItem(it: AllFoodByRestoResponse) {
+        var isSomethingRemoved = false
+        var removedItem = "\n"
+        it.forEachIndexed { index, foodModelResponse ->
+            if (foodModelResponse.isVisible == 0) {
+                if (OrderUtility(requireContext()).isItemAlreadyInserted(foodModelResponse.id.toString())) {
+                    OrderUtility(requireContext()).removeItem(foodModelResponse.id.toString())
+                    isSomethingRemoved = true
+                    removedItem = "${index + 1}. ${foodModelResponse.name}\n"
+                }
+            }
+        }
+
+        if (isSomethingRemoved) {
+            DialogUtils.showErrorDialog(
+                context = requireContext(),
+                title = getString(R.string.title_sorry),
+                message = getString(R.string.sorry_no_available)
+                        + "\n"
+                        + getString(R.string.removed_items_are)
+                        + "\n"
+                        + removedItem,
+                positiveAction = Pair("OK") {
+                },
+                autoDismiss = true,
+                buttonAllCaps = false
+            )
+        }
+    }
+
 
     private fun checkFoodAdapter() {
         if (foodAdapter.itemCount == 0) {
@@ -276,6 +309,7 @@ class DetailRestoFragment : BaseFragment() {
         binding.apply {
             restoDetailResponse.data.detailResto.apply {
                 val resto = this
+                foodAdapter.isRestoClosed = this.isRestoScheduleOpen.not()
                 binding.labelPageTitleTopbar.text = name
                 binding.labelName.text = name
                 binding.etCategoryTop.text = "-"

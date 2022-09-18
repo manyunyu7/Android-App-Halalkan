@@ -210,11 +210,8 @@ class TranslateConvoFragment : BaseFragment() {
     }
 
     private fun playMediaSource(response: TiktokTextToSpeechResponse) {
-        if (response.message == "success") {
-            val audioBase64 = response.data.vStr
-            val duration = response.data.duration
-            playBase64Media(audioBase64)
-        }
+        val audioBase64 = response.data
+        playBase64Media(audioBase64)
     }
 
     override fun initAction() {

@@ -75,6 +75,8 @@ class AllRestoAdapter :
                     R.anim.fade_transition_animation
                 )
 
+                binding.tvDistance
+
                 binding.root.setOnClickListener {
                     adapterInterface.onclick(model)
                 }
@@ -117,12 +119,13 @@ class AllRestoAdapter :
                 } else binding.btnLike.isEnabled = false
 
                 binding.tvRatingCount.text = model.review_avg.toString()
-
+                binding.tvAddress.text=model.address
                 model.distanceKm?.let {
-                    binding.tvIsDistance.text=model.distanceKm.toString()
+                    binding.tvIsDistance.text=model?.distanceKm.toString() +" Km"
                     binding.tvDistance.text = model?.distanceKm.toString() +" Km"
                 } ?: run {
                     binding.tvDistance.makeGone()
+                    binding.tvIsDistance.makeGone()
                 }
 
                 binding.tvTitle.text = model.name.toString()
