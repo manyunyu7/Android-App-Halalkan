@@ -13,7 +13,6 @@ import com.feylabs.halalkan.R
 import com.feylabs.halalkan.data.remote.QumparanResource.*
 import com.feylabs.halalkan.data.remote.reqres.resto.RestoDetailResponse
 import com.feylabs.halalkan.databinding.FragmentXrestoEditAddressBinding
-import com.feylabs.halalkan.databinding.FragmentXrestoEditPhoneBinding
 import com.feylabs.halalkan.utils.DialogUtils
 import com.feylabs.halalkan.utils.base.BaseFragment
 import com.feylabs.halalkan.utils.snackbar.SnackbarType
@@ -47,7 +46,7 @@ class EditRestoAddressFragment : BaseFragment(), OnMapReadyCallback {
     var targetLong = 0.0
 
     override fun initObserver() {
-        viewModel.updateAddressLiveData.observe(viewLifecycleOwner) {
+        viewModel.updateCommonLiveData.observe(viewLifecycleOwner) {
             when (it) {
                 is Default -> {}
                 is Error -> {

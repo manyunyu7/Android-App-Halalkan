@@ -141,9 +141,11 @@ class CurrentRestaurantFragment : BaseFragment() {
                     showLoading(false)
                     showSnackbar(it.message.toString(), SnackbarType.ERROR)
                 }
+
                 is Loading -> {
                     showLoading(true)
                 }
+
                 is Success -> {
                     showLoading(false)
                     setupRestoData(it.data)
@@ -158,9 +160,11 @@ class CurrentRestaurantFragment : BaseFragment() {
                     showLoading(false)
                     showSnackbar(it.message.toString(), SnackbarType.ERROR)
                 }
+
                 is Loading -> {
                     showLoading(true)
                 }
+
                 is Success -> {
                     showLoading(false)
                     it.data?.let {
@@ -178,9 +182,11 @@ class CurrentRestaurantFragment : BaseFragment() {
                     showLoading(false)
                     showSnackbar(it.message.toString(), SnackbarType.ERROR)
                 }
+
                 is Loading -> {
                     showLoading(true)
                 }
+
                 is Success -> {
                     orderViewModel.resetAcceptOrderState()
                     DialogUtils.showSuccessDialog(
@@ -205,9 +211,11 @@ class CurrentRestaurantFragment : BaseFragment() {
                     showLoading(false)
                     showSnackbar(it.message.toString(), SnackbarType.ERROR)
                 }
+
                 is Loading -> {
                     showLoading(true)
                 }
+
                 is Success -> {
                     orderViewModel.resetRejectOrderState()
                     DialogUtils.showSuccessDialog(
@@ -233,9 +241,11 @@ class CurrentRestaurantFragment : BaseFragment() {
                     showLoading(false)
                     showSnackbar(it.message.toString(), SnackbarType.ERROR)
                 }
+
                 is Loading -> {
                     showLoading(true)
                 }
+
                 is Success -> {
                     showLoading(false)
                     setupOrderData(it.data)
@@ -396,13 +406,33 @@ class CurrentRestaurantFragment : BaseFragment() {
                 "Type of Restaurant",
                 getMuskoDrawable(R.drawable.ic_menu_resto_type)
             )
-            menuCertification.build(
-                "Certification",
-                getMuskoDrawable(R.drawable.ic_menu_resto_certified)
+
+            menuInfoBangunan.build(
+                "Luas Tanah & Bangunan",
+                getMuskoDrawable(R.drawable.ic_168_building)
             )
 
-            menuCertification.setOnClickListener {
-                findNavController().navigate(R.id.navigation_editRestoCertificationFragment)
+            menuInfoParkir.build(
+                "Parkir & Jalan Umum",
+                getMuskoDrawable(R.drawable.ic_taxi_icon)
+            )
+
+            menuInfoAirListrik.build(
+                "Listrik, Air ",
+                getMuskoDrawable(R.drawable.ic_168_flash)
+            )
+
+            menuKeramaianKendaraan.build(
+                "Keramaian Lalu Lintas",
+                getMuskoDrawable(R.drawable.ic_168_truck_delivery)
+            )
+
+            menuInfoBangunan.setOnClickListener {
+                findNavController().navigate(R.id.navigation_editRestoLtlBFragment)
+            }
+
+            menuInfoParkir.setOnClickListener {
+                findNavController().navigate(R.id.navigation_editRestoLtlBFragment)
             }
 
             menuTypeResto.setOnClickListener {
@@ -416,7 +446,7 @@ class CurrentRestaurantFragment : BaseFragment() {
     }
 
     override fun initData() {
-        orderViewModel.getAllOrderStatusLiveData()
+//        orderViewModel.getAllOrderStatusLiveData()
         viewModel.getDetailResto(getRestoId())
         viewModel.getRestoCert()
         viewModel.getFoodType()

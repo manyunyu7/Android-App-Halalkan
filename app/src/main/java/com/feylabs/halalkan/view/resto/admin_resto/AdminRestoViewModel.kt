@@ -3,6 +3,9 @@ package com.feylabs.halalkan.view.resto.admin_resto
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.androidnetworking.AndroidNetworking
+import com.androidnetworking.error.ANError
+import com.androidnetworking.interfaces.JSONObjectRequestListener
 import com.feylabs.halalkan.data.remote.QumparanResource
 import com.feylabs.halalkan.data.remote.RemoteDataSource
 import com.feylabs.halalkan.data.remote.reqres.GeneralApiResponse
@@ -10,6 +13,8 @@ import com.feylabs.halalkan.data.remote.reqres.resto.*
 import com.feylabs.halalkan.data.remote.reqres.resto.food.FoodModelResponse
 import com.feylabs.halalkan.data.remote.reqres.resto.operating_hour.RestoOperatingHourResponse
 import com.feylabs.halalkan.data.remote.reqres.resto.update.UpdateRestoColumnResponse
+import com.feylabs.halalkan.utils.Network.BASE_URL
+import com.feylabs.halalkan.utils.Network.BASE_URL_V1
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -91,9 +96,9 @@ class AdminRestoViewModel(
         MutableLiveData<QumparanResource<GeneralApiResponse?>>()
     val createUpdateFoodLiveData get() = _createUpdateFoodLiveData
 
-    private var _updateAddressLiveData =
+    private var _updateCommonLiveData =
         MutableLiveData<QumparanResource<GeneralApiResponse?>>()
-    val updateAddressLiveData get() = _updateAddressLiveData
+    val updateCommonLiveData get() = _updateCommonLiveData
 
     private var _foodDetailLiveData =
         MutableLiveData<QumparanResource<FoodModelResponse?>>()
@@ -376,22 +381,54 @@ class AdminRestoViewModel(
         }
     }
 
+    fun updateRestoLuasTanahBangunan(
+        idResto:String,
+        lt:String,
+        lb:String,
+        pt:String,
+        pb:String,
+        jumlahLantai:String,
+        bisaDimajukan:String,
+    ){
+        AndroidNetworking.post(BASE_URL_V1+"fe/restoran/$idResto/update/lt-lb")
+            .addBodyParameter("idResto",idResto)
+            .addBodyParameter("lebar_tanah",lt)
+            .addBodyParameter("panjang_tanah",pt)
+            .addBodyParameter("lebar_bangunan",lb)
+            .addBodyParameter("panjang_bangunan",pb)
+            .addBodyParameter("jumlah_lantai",jumlahLantai)
+            .build()
+            .getAsJSONObject(object :JSONObjectRequestListener{
+                override fun onResponse(response: JSONObject?) {
+                    if (response?.getBoolean("status")==true){
+                        _updateCommonLiveData.postValue(QumparanResource.Success(GeneralApiResponse(message = "")))
+                    }else{
+                        _updateCommonLiveData.postValue(QumparanResource.Error(response.toString()))
+                    }
+                }
+
+                override fun onError(anError: ANError?) {
+                    _updateCommonLiveData.postValue(QumparanResource.Error(message = anError.toString()))
+                }
+            })
+    }
+
     fun updateRestoAddress(restoId: String, lat: Double, long: Double, address: String,kelurahan:String,kecamatan:String) {
-        _updateAddressLiveData.postValue(QumparanResource.Loading())
+        _updateCommonLiveData.postValue(QumparanResource.Loading())
         viewModelScope.launch {
             try {
                 val res = ds.updateRestoAddress(restoId, lat = lat, long = long, address = address, kecamatan = kecamatan, kelurahan = kelurahan)
                 if (res.isSuccessful) {
-                    _updateAddressLiveData.postValue(QumparanResource.Success(res.body()))
+                    _updateCommonLiveData.postValue(QumparanResource.Success(res.body()))
                 } else {
-                    _updateAddressLiveData.postValue(
+                    _updateCommonLiveData.postValue(
                         QumparanResource.Error(
                             res.errorBody().toString()
                         )
                     )
                 }
             } catch (e: Exception) {
-                _updateAddressLiveData.postValue(QumparanResource.Error(e.message.toString()))
+                _updateCommonLiveData.postValue(QumparanResource.Error(e.message.toString()))
             }
         }
     }
