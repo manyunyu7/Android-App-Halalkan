@@ -114,6 +114,8 @@ interface RestoService {
         @Field("long") longitude: Double,
         @Field("address") address: String,
         @Path("restoId") restoId: String,
+        @Field("kecamatan") kecamatan: String,
+        @Field("kelurahan") kelurahan: String,
     ): Response<GeneralApiResponse>
 
 

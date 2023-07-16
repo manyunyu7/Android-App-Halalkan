@@ -17,6 +17,7 @@ import com.feylabs.halalkan.utils.base.BaseFragment
 import com.feylabs.halalkan.utils.snackbar.SnackbarType
 import com.feylabs.halalkan.view.resto.admin_resto.AdminRestoViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
+import java.util.Calendar
 
 
 class InitAdminRestoFragment : BaseFragment() {
@@ -51,6 +52,21 @@ class InitAdminRestoFragment : BaseFragment() {
         binding.rvRestoNearby.apply {
             layoutManager = setLayoutManagerGridVertical(2)
             adapter = nearbyRestoAdapter
+
+            val calendar = Calendar.getInstance()
+            val currentHour = calendar.get(Calendar.HOUR_OF_DAY)
+
+            val greeting: String = when (currentHour) {
+                in 0..5 -> "Selamat Pagi" // Good morning
+                in 6..11 -> "Selamat Siang" // Good day
+                in 12..16 -> "Selamat Sore" // Good afternoon
+                in 17..19 -> "Selamat Petang" // Good evening
+                in 20..23-> "Selamat Malam" // Good night
+                else -> "Selamat Pagi" // Default greeting
+            }
+
+            binding.tvGreeting.text = greeting
+            binding.tvUserName.text = MyPreference(requireContext()).getUserName();
         }
 
         nearbyRestoAdapter.setupAdapterInterface(object : RestoAdminMainAdapter.ItemInterface {
@@ -91,8 +107,8 @@ class InitAdminRestoFragment : BaseFragment() {
                 message = getString(R.string.message_logged_out),
                 positiveAction = Pair("OK") {
                     revokeViewModel()
+                    findNavController().popBackStack(R.id.navigation_loginFragment,false)
                     muskoPref().clearPreferences()
-                    findNavController().popBackStack(R.id.navigation_newHomeFragment,true)
                 },
                 negativeAction = Pair(
                     getString(R.string.title_no),

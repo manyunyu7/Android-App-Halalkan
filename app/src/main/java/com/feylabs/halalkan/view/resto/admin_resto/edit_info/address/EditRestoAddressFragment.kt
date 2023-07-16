@@ -102,6 +102,8 @@ class EditRestoAddressFragment : BaseFragment(), OnMapReadyCallback {
 
     private fun setupUiFromNetwork(data: RestoDetailResponse) {
         binding.etAddress.editText?.setText(data.data.detailResto.address)
+        binding.etKecamatan.editText?.setText(data.data.detailResto.kecamatan)
+        binding.etKelurahan.editText?.setText(data.data.detailResto.kelurahan)
     }
 
     override fun initAction() {
@@ -121,6 +123,8 @@ class EditRestoAddressFragment : BaseFragment(), OnMapReadyCallback {
 
         binding.btnSave.setOnClickListener {
             val address = binding.etAddress.editText?.text.toString()
+            val kecamatan = binding.etKecamatan.editText?.text?:""
+            val kelurahan = binding.etKelurahan.editText?.text?:""
             if (address.isEmpty()) {
                 showSnackbar(getString(R.string.message_please_check_your_input))
             } else
@@ -133,7 +137,9 @@ class EditRestoAddressFragment : BaseFragment(), OnMapReadyCallback {
                             getChoosenResto(),
                             lat = targetLat,
                             long = targetLong,
-                            address = address
+                            address = address,
+                            kecamatan = kecamatan.toString(),
+                            kelurahan = kelurahan.toString()
                         )
                     },
                     negativeAction = Pair(

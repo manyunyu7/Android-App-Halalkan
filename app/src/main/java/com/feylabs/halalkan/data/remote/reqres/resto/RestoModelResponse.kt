@@ -12,6 +12,10 @@ import kotlinx.parcelize.Parcelize
 data class RestoModelResponse(
     @SerializedName("address")
     var address: String = "",
+    @SerializedName("kecamatan")
+    var kecamatan: String? = "",
+    @SerializedName("kelurahan")
+    var kelurahan: String? = "",
     @SerializedName("certification_id")
     var certificationId: Int = 0,
     @SerializedName("certification_name")

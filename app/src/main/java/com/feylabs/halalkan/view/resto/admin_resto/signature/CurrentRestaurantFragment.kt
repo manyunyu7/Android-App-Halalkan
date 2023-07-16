@@ -59,6 +59,10 @@ class CurrentRestaurantFragment : BaseFragment() {
             binding.pageTitle.text = it
         }
 
+        binding.btnBack.setOnClickListener {
+            findNavController().popBackStack();
+        }
+
         binding.rv.apply {
             adapter = mAdapter
             layoutManager = setLayoutManagerLinear()

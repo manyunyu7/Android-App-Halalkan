@@ -74,11 +74,11 @@ class RemoteDataSource(
     suspend fun getUserAlbum(userId: String) = commonService.getUserAlbum(userId)
     suspend fun getAlbumPhoto(albumId: String) = commonService.getPhotoByAlbum(albumId)
 
-    override suspend fun getMasjids() = commonService.getMasjids()
-    override suspend fun getMasjidsPagination(page: Int): Response<AllMasjidPaginationResponse> =
+     suspend fun getMasjids() = commonService.getMasjids()
+     suspend fun getMasjidsPagination(page: Int): Response<AllMasjidPaginationResponse> =
         masjidService.showAllMasjidPaginate(page = page)
 
-    override suspend fun getMasjidReviews(
+     suspend fun getMasjidReviews(
         masjidId: String,
         perPage: Int,
         page: Int,
@@ -86,7 +86,7 @@ class RemoteDataSource(
         return masjidService.getMasjidReviews(masjidId, page = page, perPage = perPage)
     }
 
-    override suspend fun createMasjidReview(
+     suspend fun createMasjidReview(
         masjidId: String,
         body: RequestBody
     ): Response<ResponseBody?>? {
@@ -94,27 +94,27 @@ class RemoteDataSource(
     }
 
 
-    override suspend fun login(loginBodyRequest: LoginBodyRequest) =
+     suspend fun login(loginBodyRequest: LoginBodyRequest) =
         commonService.login(loginBodyRequest)
 
-    override suspend fun register(bodyRequest: RegisterBodyRequest) =
+     suspend fun register(bodyRequest: RegisterBodyRequest) =
         commonService.register(bodyRequest)
 
-    override suspend fun getTranslation(
+     suspend fun getTranslation(
         langSource: String, target: String, text: String
     ) = translationService.translate(langSource = langSource, target = target, text = text)
 
-    override suspend fun getTextToSpeech(
+     suspend fun getTextToSpeech(
         langSource: String, text: String
     ) = translationService.getTTS(lang = langSource, text = text)
 
-    override suspend fun getAllMasjid() = masjidService.showAllMasjid()
+     suspend fun getAllMasjid() = masjidService.showAllMasjid()
 
-    override suspend fun getMasjidPhotos(id: String): Response<MasjidPhotosResponse> =
+     suspend fun getMasjidPhotos(id: String): Response<MasjidPhotosResponse> =
         masjidService.getMasjidPhotos(id)
 
 
-    override suspend fun getPrayerTimeSingleDate(
+     suspend fun getPrayerTimeSingleDate(
         time: String,
         lat: String,
         long: String,
@@ -131,12 +131,12 @@ class RemoteDataSource(
 
     suspend fun getMasjidType() = masjidService.getMasjidType()
 
-    override suspend fun getMasjidDetail(id: String): Response<MasjidDetailResponse> {
+     suspend fun getMasjidDetail(id: String): Response<MasjidDetailResponse> {
         return masjidService.getMasjidDetail(id)
     }
 
     //product
-    override suspend fun getAllProductCategory(): Response<ProductCategoryResponse> =
+     suspend fun getAllProductCategory(): Response<ProductCategoryResponse> =
         productService.getAllCategory()
 
     suspend fun getProductDetail(
@@ -156,7 +156,7 @@ class RemoteDataSource(
     ): Response<ProductListPaginationResponse> =
         productService.getProductOnCategory(categoryId, perPage = perPage, page = page)
 
-    override suspend fun getRestoCert(): Response<RestaurantCertificationResponse> {
+     suspend fun getRestoCert(): Response<RestaurantCertificationResponse> {
         return restoService.getCert()
     }
 
@@ -186,46 +186,46 @@ class RemoteDataSource(
     )
 
 
-    override suspend fun getRestoAll(): Response<AllRestoNoPagination> {
+     suspend fun getRestoAll(): Response<AllRestoNoPagination> {
         return restoService.getAllRaw()
     }
 
-    override suspend fun getFoodType(): Response<FoodTypeResponse> {
+     suspend fun getFoodType(): Response<FoodTypeResponse> {
         return restoService.getFoodType()
     }
 
-    override suspend fun getRestoDetail(id: String): Response<RestoDetailResponse> {
+     suspend fun getRestoDetail(id: String): Response<RestoDetailResponse> {
         return restoService.getDetail(id)
     }
 
-    override suspend fun getRestoFoodByCommonCategory(
+     suspend fun getRestoFoodByCommonCategory(
         restoId: String,
         categoryId: String
     ) = restoService.getFoodByResto(categoryId)
 
-    override suspend fun createRestoReview(
+     suspend fun createRestoReview(
         restoId: String,
         body: RequestBody
     ): Response<ResponseBody?>? = restoService.createReview(body, restoId)
 
-    override suspend fun getRestoReviews(
+     suspend fun getRestoReviews(
         restoId: String,
         perPage: Int,
         page: Int
     ): Response<RestoReviewPaginationResponse> =
         restoService.getReviews(restoId, page = page, perPage = perPage)
 
-    override suspend fun createResto(body: RequestBody): Response<ResponseBody?>? =
+     suspend fun createResto(body: RequestBody): Response<ResponseBody?>? =
         restoService.createResto(body)
 
-    override suspend fun createRestoFoodCategory(
+     suspend fun createRestoFoodCategory(
         id: String,
         body: RequestBody
     ): Response<ResponseBody?>? {
         return restoService.createRestoFoodCategory(body, id)
     }
 
-    override suspend fun editRestoFoodCategory(
+     suspend fun editRestoFoodCategory(
         id: String,
         restoid: String,
         category_name: String
@@ -235,13 +235,13 @@ class RemoteDataSource(
         categoryId = id
     )
 
-    override suspend fun deleteRestoFoodCategory(
+     suspend fun deleteRestoFoodCategory(
         id: String,
     ) = restoService.deleteRestoFoodCategory(
         categoryId = id
     )
 
-    override suspend fun updateFoodAvailability(
+     suspend fun updateFoodAvailability(
         id: String,
         isAvailable: Int
     ) = restoService.updateFoodAvailability(
@@ -249,13 +249,13 @@ class RemoteDataSource(
     )
 
 
-    override suspend fun deleteFood(foodId: String): Response<GeneralApiResponse> =
+     suspend fun deleteFood(foodId: String): Response<GeneralApiResponse> =
         restoService.deleteFood(foodId)
 
-    override suspend fun getFoodDetail(foodId: String): Response<FoodModelResponse> =
+     suspend fun getFoodDetail(foodId: String): Response<FoodModelResponse> =
         restoService.getFoodDetail(foodId)
 
-    override suspend fun editRestoFood(
+     suspend fun editRestoFood(
         foodId: String,
         typeFoodId: Int?,
         categoryId: Int?,
@@ -272,7 +272,7 @@ class RemoteDataSource(
         )
     }
 
-    override suspend fun createRestoFood(
+     suspend fun createRestoFood(
         typeFoodId: Int?,
         categoryId: Int?,
         restoran_id: Int?,
@@ -287,7 +287,7 @@ class RemoteDataSource(
         )
     }
 
-    override suspend fun createRestoOperatingHour(
+     suspend fun createRestoOperatingHour(
         restoId: String,
         dayCode: Int,
         startHour: String,
@@ -299,7 +299,7 @@ class RemoteDataSource(
         restoId = restoId
     )
 
-    override suspend fun updateRestoOperatingHour(
+     suspend fun updateRestoOperatingHour(
         hourId: String,
         restoId: String,
         dayCode: Int,
@@ -313,7 +313,7 @@ class RemoteDataSource(
         restoId = restoId
     )
 
-    override suspend fun deleteRestoOperatingHour(
+     suspend fun deleteRestoOperatingHour(
         hourId: String,
         restoId: String,
     ) = restoService.deleteOperatingHour(
@@ -321,11 +321,11 @@ class RemoteDataSource(
         restoId = restoId
     )
 
-    override suspend fun getRestoOperatingHour(
+     suspend fun getRestoOperatingHour(
         restoId: String,
     ) = restoService.getRestoOperatingHour(restoId)
 
-    override suspend fun updateRestoColumn(
+     suspend fun updateRestoColumn(
         id: String,
         pathupdate: String,
         body: RequestBody
@@ -333,53 +333,57 @@ class RemoteDataSource(
         return restoService.updateRestoColumn(restoId = id, urlupdate = pathupdate, file = body)
     }
 
-    override suspend fun updateRestoAddress(
+    suspend fun updateRestoAddress(
         id: String,
         lat: Double,
         long: Double,
+        kelurahan: String,
+        kecamatan :String,
         address: String
     ): Response<GeneralApiResponse> {
         return restoService.updateRestoAddress(
             latitude = lat,
             longitude = long,
             address = address,
-            restoId = id
+            restoId = id,
+            kecamatan = kecamatan,
+            kelurahan = kelurahan
         )
     }
 
 
-    override suspend fun getFoodCategoryOnResto(id: String): Response<FoodCategoryResponse> {
+     suspend fun getFoodCategoryOnResto(id: String): Response<FoodCategoryResponse> {
         return restoService.getFoodCategoryOnResto(id)
     }
 
-    override suspend fun getFoodByCategory(id: String): Response<AllFoodByRestoResponse> {
+     suspend fun getFoodByCategory(id: String): Response<AllFoodByRestoResponse> {
         return restoService.getFoodByCategory(id)
     }
 
-    override suspend fun getAllFoodByResto(id: String): Response<AllFoodByRestoResponse> {
+     suspend fun getAllFoodByResto(id: String): Response<AllFoodByRestoResponse> {
         return restoService.getAllFoodOnResto(id)
     }
 
-    override suspend fun getMyResto(): Response<AllRestoNoPagination> {
+     suspend fun getMyResto(): Response<AllRestoNoPagination> {
         return restoService.getMyRestaurant()
     }
 
-    override suspend fun addFavoriteMasjid(masjidId: String): Response<AddFavMasjidResponse> {
+     suspend fun addFavoriteMasjid(masjidId: String): Response<AddFavMasjidResponse> {
         return favoriteService.addFavoriteMasjid(masjidId)
     }
 
     suspend fun deleteFavMasjid(id: String) = favoriteService.deleteFavoriteMasjid(id)
     suspend fun deleteFavResto(id: String) = favoriteService.deleteFavoriteResto(id)
 
-    override suspend fun addFavoriteResto(restoId: String): Response<AddFavRestoResponse> {
+     suspend fun addFavoriteResto(restoId: String): Response<AddFavRestoResponse> {
         return favoriteService.addFavoriteResto(restoId)
     }
 
-    override suspend fun createForum(body: RequestBody): Response<CreateForumResponse?>? {
+     suspend fun createForum(body: RequestBody): Response<CreateForumResponse?>? {
         return forumService.createForum(body)
     }
 
-    override suspend fun updateForum(
+     suspend fun updateForum(
         forumId: String,
         body: RequestBody,
         isDeletingImage: Boolean
@@ -391,88 +395,88 @@ class RemoteDataSource(
         )
     }
 
-    override suspend fun getForumCategory(): Response<ForumCategoryResponse> {
+     suspend fun getForumCategory(): Response<ForumCategoryResponse> {
         return forumService.getForumsCategory()
     }
 
-    override suspend fun getAllForumPaginate(
+     suspend fun getAllForumPaginate(
         page: Int,
         perPage: Int
     ): Response<AllForumPaginationResponse> {
         return forumService.getAllForum(perPage = perPage, page = page)
     }
 
-    override suspend fun likeForum(forumId: Int): Response<GeneralApiResponse> {
+     suspend fun likeForum(forumId: Int): Response<GeneralApiResponse> {
         return forumService.likeForum(forumId)
     }
 
-    override suspend fun unlikeForum(forumId: Int): Response<GeneralApiResponse> {
+     suspend fun unlikeForum(forumId: Int): Response<GeneralApiResponse> {
         return forumService.unlikeForum(forumId)
     }
 
-    override suspend fun likeComment(forumId: Int): Response<GeneralApiResponse> {
+     suspend fun likeComment(forumId: Int): Response<GeneralApiResponse> {
         return forumService.likeCommentForum(forumId)
     }
 
-    override suspend fun unlikeComment(forumId: Int): Response<GeneralApiResponse> {
+     suspend fun unlikeComment(forumId: Int): Response<GeneralApiResponse> {
         return forumService.unlikeComment(forumId)
     }
 
-    override suspend fun deleteForum(forumId: Int): Response<GeneralApiResponse> {
+     suspend fun deleteForum(forumId: Int): Response<GeneralApiResponse> {
         return forumService.deleteForum(forumId)
     }
 
-    override suspend fun deleteComment(commentId: Int): Response<GeneralApiResponse> {
+     suspend fun deleteComment(commentId: Int): Response<GeneralApiResponse> {
         return forumService.deleteComment(commentId)
     }
 
-    override suspend fun createComment(body: CreateCommentPayload): Response<AddCommentResponse> {
+     suspend fun createComment(body: CreateCommentPayload): Response<AddCommentResponse> {
         return forumService.createComment(body)
     }
 
-    override suspend fun getDetailForum(forumId: Int): Response<ForumDetailResponse> {
+     suspend fun getDetailForum(forumId: Int): Response<ForumDetailResponse> {
         return forumService.detailForum(forumId)
     }
 
-    override suspend fun getCommentForum(forumId: Int): Response<ForumCommentResponse> {
+     suspend fun getCommentForum(forumId: Int): Response<ForumCommentResponse> {
         return forumService.commentOnForum(forumId)
     }
 
 
     //    ORDER
-    override suspend fun checkout(body: CreateCartPayload): Response<CreateCartResponse> {
+     suspend fun checkout(body: CreateCartPayload): Response<CreateCartResponse> {
         return restoService.createCart(body = body, restoId = body.restoId)
     }
 
-    override suspend fun orderReject(orderId: Int, reason: String): Response<GeneralApiResponse> {
+     suspend fun orderReject(orderId: Int, reason: String): Response<GeneralApiResponse> {
         return restoService.orderReject(orderId = orderId.toString(), reason = reason)
     }
 
-    override suspend fun orderApprove(orderId: Int): Response<GeneralApiResponse> {
+     suspend fun orderApprove(orderId: Int): Response<GeneralApiResponse> {
         return restoService.orderApprove(orderId = orderId.toString())
     }
 
-    override suspend fun orderDelivered(orderId: Int, driverId: Int): Response<GeneralApiResponse> {
+     suspend fun orderDelivered(orderId: Int, driverId: Int): Response<GeneralApiResponse> {
         return restoService.orderDelivered(orderId = orderId.toString(), driverId)
     }
 
-    override suspend fun orderFinished(
+     suspend fun orderFinished(
         orderId: String,
         body: RequestBody
     ): Response<DetailOrderResponse?>? {
         return restoService.orderFinish(body = body, orderId)
     }
 
-    override suspend fun orderDetail(orderId: Int): Response<DetailOrderResponse> {
+     suspend fun orderDetail(orderId: Int): Response<DetailOrderResponse> {
         return restoService.getOrderDetail(orderId = orderId.toString())
     }
 
-    override suspend fun getHistoryOrder(): Response<OrderHistoryResponse> {
+     suspend fun getHistoryOrder(): Response<OrderHistoryResponse> {
         return restoService.getUserOrderHistory()
     }
 
-    override suspend fun getOrderStatus() = restoService.getAllOrderStatus()
-    override suspend fun getRestoHistoryOrder(
+     suspend fun getOrderStatus() = restoService.getAllOrderStatus()
+     suspend fun getRestoHistoryOrder(
         restoId: String,
         page: Int, perPage: Int,
         mStatus: String?
@@ -495,15 +499,15 @@ class RemoteDataSource(
 
     }
 
-    override suspend fun geDriverOnResto(restoId: String): Response<GetAllDriverResponse> {
+     suspend fun geDriverOnResto(restoId: String): Response<GetAllDriverResponse> {
         return restoService.getAllDriverOnResto(restoId)
     }
 
-    override suspend fun deleteDriver(driverId: String): Response<GeneralApiResponse> {
+     suspend fun deleteDriver(driverId: String): Response<GeneralApiResponse> {
         return restoService.deleteDriver(driverId)
     }
 
-    override suspend fun addNewDriverByResto(
+     suspend fun addNewDriverByResto(
         image: RequestBody?,
         phoneNumber: String,
         email: String,
@@ -516,7 +520,7 @@ class RemoteDataSource(
         file = image
     )
 
-    override suspend fun editDriver(
+     suspend fun editDriver(
         image: RequestBody?,
         driverId: String,
         phoneNumber: String,
@@ -529,7 +533,7 @@ class RemoteDataSource(
 
 
     //driver section
-    override suspend fun getDriverOrder(
+     suspend fun getDriverOrder(
         page: Int,
         perPage: Int,
     ): Response<DriverOrderPaginationResponse> {

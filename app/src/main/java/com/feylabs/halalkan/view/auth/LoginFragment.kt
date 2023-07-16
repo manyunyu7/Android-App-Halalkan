@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.core.widget.doOnTextChanged
 import androidx.navigation.fragment.findNavController
 import com.feylabs.halalkan.R
+import com.feylabs.halalkan.data.local.MyPreference
 import com.feylabs.halalkan.data.remote.QumparanResource
 import com.feylabs.halalkan.data.remote.reqres.auth.LoginBodyRequest
 import com.feylabs.halalkan.data.remote.reqres.auth.LoginResponse
@@ -29,6 +30,21 @@ class LoginFragment : BaseFragment() {
     private val viewModel: AuthViewModel by viewModel()
 
     override fun initUI() {
+
+        val role = MyPreference(requireContext()).getUserRole();
+        if(role?.isNotEmpty() == true){
+            when (role) {
+                "3" -> {
+                    findNavController().navigate(R.id.action_navigation_loginFragment_to_navigation_initAdminRestoFragment)
+                }
+                "4"-> {
+                    findNavController().navigate(R.id.action_navigation_loginFragment_to_navigation_driverOrderFragment)
+                }
+                else -> {
+                    findNavController().navigate(R.id.action_navigation_loginFragment_to_navigation_newHomeFragment)
+                }
+            }
+        }
     }
 
     override fun initObserver() {

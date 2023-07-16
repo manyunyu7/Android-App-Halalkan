@@ -376,11 +376,11 @@ class AdminRestoViewModel(
         }
     }
 
-    fun updateRestoAddress(restoId: String, lat: Double, long: Double, address: String) {
+    fun updateRestoAddress(restoId: String, lat: Double, long: Double, address: String,kelurahan:String,kecamatan:String) {
         _updateAddressLiveData.postValue(QumparanResource.Loading())
         viewModelScope.launch {
             try {
-                val res = ds.updateRestoAddress(restoId, lat = lat, long = long, address)
+                val res = ds.updateRestoAddress(restoId, lat = lat, long = long, address = address, kecamatan = kecamatan, kelurahan = kelurahan)
                 if (res.isSuccessful) {
                     _updateAddressLiveData.postValue(QumparanResource.Success(res.body()))
                 } else {

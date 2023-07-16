@@ -32,10 +32,10 @@ class RestoAdminMainAdapter :
         fun onBInd(model: AdapterModel) {
             val mContext = binding.root.context
 
-            binding.base.animation = AnimationUtils.loadAnimation(
-                mContext,
-                R.anim.fade_transition_animation
-            )
+//            binding.base.animation = AnimationUtils.loadAnimation(
+//                mContext,
+//                R.anim.fade_transition_animation
+//            )
 
             if (::adapterInterface.isInitialized)
                 binding.root.setOnClickListener {

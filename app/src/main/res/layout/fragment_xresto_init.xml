@@ -3,12 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
         android:fillViewport="true">
 
         <LinearLayout
@@ -17,35 +17,97 @@
             android:gravity="top|center_horizontal"
             android:orientation="vertical">
 
-            <RelativeLayout
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/dimen_10dp"
+                android:layout_marginHorizontal="@dimen/dimen_10dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp">
-
-                <TextView
-                    android:id="@+id/label_based_on_certif"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="start"
-                    android:layout_marginStart="@dimen/dimen_20dp"
-                    android:drawablePadding="@dimen/dimen_10dp"
-                    android:fontFamily="@font/poppins_regular"
-                    android:text="Daftar Restoran Kelolaan"
-                    android:textColor="@color/black"
-                    android:textSize="22sp" />
+                android:layout_height="wrap_content">
 
                 <ImageView
-                    android:layout_width="40dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:layout_gravity="start"
-                    android:layout_toEndOf="@id/label_based_on_certif"
-                    android:src="@drawable/ic_baseline_info_17"
-                    app:tint="@color/color_blue_purplish" />
+                    android:src="@drawable/icon_profile_yellow"/>
 
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-            </RelativeLayout>
+                    <TextView
+                        android:id="@+id/tv_greeting"
+                        android:layout_marginStart="@dimen/dimen_10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/lato_black"
+                        android:scrollbarSize="22sp"
+                        android:text="Hallo"/>
 
+                    <TextView
+                        android:id="@+id/tv_user_name"
+                        android:layout_marginStart="@dimen/dimen_10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/lato_regular"
+                        android:scrollbarSize="22sp"
+                        tools:text="Yossy Gheasanta"
+                        android:text=""/>
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+            </LinearLayout>
+
+            <androidx.cardview.widget.CardView
+                android:layout_marginHorizontal="@dimen/dimen_15dp"
+                android:layout_marginTop="@dimen/dimen_20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="@dimen/dimen_20dp"
+                android:elevation="@dimen/dimen_2dp"
+                >
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:padding="@dimen/dimen_10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:layout_marginTop="@dimen/dimen_10dp"
+                        android:layout_width="@dimen/dimen_50dp"
+                        android:layout_height="@dimen/dimen_50dp"
+                        android:src="@drawable/logo_survey"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="center"
+                        android:fontFamily="@font/lato_black"
+                        android:textSize="20sp"
+                        android:textColor="@color/black"
+                        android:text="Survey Restoran"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="center"
+                        android:fontFamily="@font/lato_regular"
+                        android:textSize="12sp"
+                        android:textColor="@color/black"
+                        android:text="Assess new warteg to unlock business possibilites"/>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:layout_marginTop="@dimen/dimen_10dp"
+                        app:cornerRadius="@dimen/dimen_15dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/dimen_15dp"
+                        android:text="Add New Warteg"/>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
 
 
             <RelativeLayout
@@ -63,7 +125,7 @@
                     android:layout_marginStart="@dimen/dimen_20dp"
                     android:drawablePadding="@dimen/dimen_10dp"
                     android:fontFamily="@font/poppins_regular"
-                    android:text="Restoran di Sekitar Anda"
+                    android:text="Restoran Yang Ditambahkan"
                     android:textColor="@color/black"
                     android:textSize="@dimen/dimen_15sp" />
 
@@ -119,14 +181,14 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:backgroundTint="@color/blue_auth"
-        android:contentDescription="Button Add Report"
         android:src="@drawable/ic_baseline_add_24"
         app:fabSize="normal"
         android:layout_marginEnd="@dimen/dimen_20dp"
         android:layout_marginBottom="@dimen/dimen_20dp"
         app:layout_constraintBottom_toTopOf="@id/btn_logout"
         app:layout_constraintEnd_toEndOf="parent"
-        app:tint="@color/white" />
+        app:tint="@color/white"
+        android:importantForAccessibility="no" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btn_logout"
@@ -134,7 +196,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:backgroundTint="@color/bootstrapRed"
-        android:contentDescription="Button Add Report"
+        android:contentDescription="Button Logout"
         android:src="@drawable/ic_svgrepo_door_logout"
         app:fabSize="normal"
         android:layout_marginEnd="@dimen/dimen_20dp"
