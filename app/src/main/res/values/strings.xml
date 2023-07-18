@@ -65,6 +65,26 @@
         <item value="2">Non-Aspal</item>
     </string-array>
 
+    <string-array name="array_ijin_domisili">
+        <item value="0">Ada</item>
+        <item value="1">Pernah Ada</item>
+        <item value="2">Belum Ada</item>
+        <item value="3">Diurus Tidak Keluar</item>
+    </string-array>
+
+    <string-array name="array_peruntukan_bangunan">
+        <item value="0">Pemukiman</item>
+        <item value="1">Industri</item>
+        <item value="2">Jasa</item>
+        <item value="3">Perdagangan</item>
+    </string-array>
+
+
+    <string-array name="array_bisa_tidak">
+        <item value="0">Bisa</item>
+        <item value="1">Tidak Bisa</item>
+    </string-array>
+
 
     <string-array name="spinner_default">
         <item value="-99">Choose Item</item>

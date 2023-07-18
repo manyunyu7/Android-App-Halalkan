@@ -13,7 +13,6 @@ import com.feylabs.halalkan.data.remote.reqres.resto.*
 import com.feylabs.halalkan.data.remote.reqres.resto.food.FoodModelResponse
 import com.feylabs.halalkan.data.remote.reqres.resto.operating_hour.RestoOperatingHourResponse
 import com.feylabs.halalkan.data.remote.reqres.resto.update.UpdateRestoColumnResponse
-import com.feylabs.halalkan.utils.Network.BASE_URL
 import com.feylabs.halalkan.utils.Network.BASE_URL_V1
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -389,6 +388,7 @@ class AdminRestoViewModel(
         pb:String,
         jumlahLantai:String,
         bisaDimajukan:String,
+        ijinDomisiliAda:String,
     ){
         AndroidNetworking.post(BASE_URL_V1+"fe/restoran/$idResto/update/lt-lb")
             .addBodyParameter("idResto",idResto)
@@ -396,6 +396,8 @@ class AdminRestoViewModel(
             .addBodyParameter("panjang_tanah",pt)
             .addBodyParameter("lebar_bangunan",lb)
             .addBodyParameter("panjang_bangunan",pb)
+            .addBodyParameter("ijin_domisili",ijinDomisiliAda)
+            .addBodyParameter("bisa_dimajukan",bisaDimajukan)
             .addBodyParameter("jumlah_lantai",jumlahLantai)
             .build()
             .getAsJSONObject(object :JSONObjectRequestListener{
