@@ -412,18 +412,13 @@ class CurrentRestaurantFragment : BaseFragment() {
                 getMuskoDrawable(R.drawable.ic_168_building)
             )
 
-            menuInfoParkir.build(
-                "Parkir & Jalan Umum",
-                getMuskoDrawable(R.drawable.ic_taxi_icon)
-            )
-
             menuInfoAirListrik.build(
                 "Listrik, Air ",
                 getMuskoDrawable(R.drawable.ic_168_flash)
             )
 
             menuKeramaianKendaraan.build(
-                "Keramaian Lalu Lintas",
+                "Lalu Lintas, Parkir & Jalan Umum",
                 getMuskoDrawable(R.drawable.ic_168_truck_delivery)
             )
 
@@ -431,9 +426,10 @@ class CurrentRestaurantFragment : BaseFragment() {
                 findNavController().navigate(R.id.navigation_editRestoLtlBFragment)
             }
 
-            menuInfoParkir.setOnClickListener {
-                findNavController().navigate(R.id.navigation_editRestoLtlBFragment)
+            menuKeramaianKendaraan.setOnClickListener {
+                findNavController().navigate(R.id.navigation_editKeramaianLalinFragment)
             }
+
 
             menuTypeResto.setOnClickListener {
                 findNavController().navigate(R.id.navigation_editRestoTypeFragment)

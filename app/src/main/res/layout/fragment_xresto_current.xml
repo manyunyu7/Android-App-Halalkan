@@ -269,10 +269,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
-            <com.feylabs.halalkan.customview.MuskoProfileMenuItem
-                android:id="@+id/menu_info_parkir"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
 
             <com.feylabs.halalkan.customview.MuskoProfileMenuItem
                 android:id="@+id/menu_info_air_listrik"

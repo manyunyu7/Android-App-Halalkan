@@ -265,6 +265,7 @@
         android:name="com.feylabs.halalkan.view.resto.admin_resto.menu_category.AddEditCategoryFragment"
         android:label="AddEditCategoryFragment"
         tools:layout="@layout/fragment_add_edit_category" />
+
     <fragment
         android:id="@+id/navigation_currentRestaurantFragment"
         android:name="com.feylabs.halalkan.view.resto.admin_resto.signature.CurrentRestaurantFragment"
@@ -302,6 +303,12 @@
         android:name="com.feylabs.halalkan.view.resto.admin_resto.edit_info.phone.EditRestoPhoneFragment"
         android:label="EditRestoPhoneFragment"
         tools:layout="@layout/fragment_xresto_edit_phone" />
+
+    <fragment
+        android:id="@+id/navigation_editKeramaianLalinFragment"
+        android:name="com.feylabs.halalkan.view.resto.admin_resto.edit_info.keramaian_lalin.EditKeramaianLalinFragment"
+        android:label="EditRestoPhoneFragment"
+        tools:layout="@layout/fragment_xresto_edit_keramaian_lalin" />
 
     <fragment
         android:id="@+id/navigation_forumCreateThreadFragment"

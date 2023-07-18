@@ -20,5 +20,5 @@ dependencyResolutionManagement {
         jcenter() // Warning: this repository is going to shut down soon
     }
 }
-rootProject.name = "Qumparan"
+rootProject.name = "Modernland SF"
 include ':app'

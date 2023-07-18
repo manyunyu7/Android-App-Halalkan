@@ -59,6 +59,13 @@
         <item value="2">Empty</item>
     </string-array>
 
+    <string-array name="array_aspal">
+        <item value="0">Aspal 1 Jalur</item>
+        <item value="1">Aspal Lebih dari 1 Jalur</item>
+        <item value="2">Non-Aspal</item>
+    </string-array>
+
+
     <string-array name="spinner_default">
         <item value="-99">Choose Item</item>
     </string-array>

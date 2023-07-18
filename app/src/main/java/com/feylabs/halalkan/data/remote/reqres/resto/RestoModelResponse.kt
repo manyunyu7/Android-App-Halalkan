@@ -61,13 +61,16 @@ data class RestoModelResponse(
     var distanceKmDoubleRounded: Double? = null,
     var distanceKmDouble: Double? = null,
     @SerializedName("data_bangunan")
-    val data_bangunan: DataBangunan?=null,
+    val data_bangunan: DataBangunan? = null,
     val ViewType: Int = PaginationPlaceholder.VNormal,
     var isFooterVisible: Boolean = true,
 ) : Parcelable {
 
     @Parcelize
     data class DataBangunan(
+        @SerializedName("bisa_dimajukan")
+        @Expose
+        val bisaDimajukan: String? = null,
         @SerializedName("bukti_pbb_photo_path")
         @Expose
         val buktiPbbPhotoPath: String? = null,
@@ -86,6 +89,9 @@ data class RestoModelResponse(
         @SerializedName("fasilitas_telp")
         @Expose
         val fasilitasTelp: String? = null,
+        @SerializedName("harga_sewa")
+        @Expose
+        val hargaSewa: String? = null,
         @SerializedName("id")
         @Expose
         val id: Int? = null,
@@ -110,6 +116,9 @@ data class RestoModelResponse(
         @SerializedName("jenis_sertifikat")
         @Expose
         val jenisSertifikat: String? = null,
+        @SerializedName("jumlah_lantai")
+        @Expose
+        val jumlahLantai: String? = null,
         @SerializedName("kondisi_bangunan")
         @Expose
         val kondisiBangunan: String? = null,
@@ -122,6 +131,15 @@ data class RestoModelResponse(
         @SerializedName("masa_berlaku_sertifikat")
         @Expose
         val masaBerlakuSertifikat: String? = null,
+        @SerializedName("5_menit_mobil")
+        @Expose
+        val menitMobil: String? = null,
+        @SerializedName("5_menit_motor")
+        @Expose
+        val menitMotor: String? = null,
+        @SerializedName("5_menit_truk")
+        @Expose
+        val menitTruk: String? = null,
         @SerializedName("nama_pemilik_sertifikat")
         @Expose
         val namaPemilikSertifikat: String? = null,
@@ -131,9 +149,12 @@ data class RestoModelResponse(
         @SerializedName("panjang_tanah")
         @Expose
         val panjangTanah: String? = null,
-        @SerializedName("jumlah_lantai")
+        @SerializedName("parkir_mobil")
         @Expose
-        val jumlahLantai: String? = null,
+        val parkirMobil: String? = null,
+        @SerializedName("parkir_motor")
+        @Expose
+        val parkirMotor: String? = null,
         @SerializedName("penggantian_jenis_wilayah")
         @Expose
         val penggantianJenisWilayah: String? = null,
@@ -145,12 +166,14 @@ data class RestoModelResponse(
         val rencanaPelebaran: String? = null,
         @SerializedName("resto_id")
         @Expose
-        val restoId: Int? = null,
+        val restoId: String? = null,
+        @SerializedName("saluran_air")
+        @Expose
+        val saluranAir: String? = null,
         @SerializedName("updated_at")
         @Expose
         val updatedAt: String? = null
-    ):Parcelable
-
+    ) : Parcelable
 
 
     fun getOperatingHours(): String = "-"
