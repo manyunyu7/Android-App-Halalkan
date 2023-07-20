@@ -1,4 +1,4 @@
-package com.feylabs.halalkan.view.resto.admin_resto.signature
+package com.feylabs.halalkan.view.resto.admin_resto
 
 import android.app.Activity
 import android.content.Intent
@@ -29,13 +29,10 @@ import com.feylabs.halalkan.utils.ViewUtil.dpToPixels
 import com.feylabs.halalkan.utils.base.BaseFragment
 import com.feylabs.halalkan.utils.snackbar.SnackbarType
 import com.feylabs.halalkan.view.resto.OrderViewModel
-import com.feylabs.halalkan.view.resto.admin_resto.AdminRestoViewModel
-import com.feylabs.halalkan.view.resto.admin_resto.RestoHistoryOrderAdapter
 import com.google.android.material.chip.Chip
 import com.tangxiaolv.telegramgallery.GalleryConfig
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
-import java.io.File
 
 
 class CurrentRestaurantFragment : BaseFragment() {
@@ -141,9 +138,11 @@ class CurrentRestaurantFragment : BaseFragment() {
                     showLoading(false)
                     showSnackbar(it.message.toString(), SnackbarType.ERROR)
                 }
+
                 is Loading -> {
                     showLoading(true)
                 }
+
                 is Success -> {
                     showLoading(false)
                     setupRestoData(it.data)
@@ -158,9 +157,11 @@ class CurrentRestaurantFragment : BaseFragment() {
                     showLoading(false)
                     showSnackbar(it.message.toString(), SnackbarType.ERROR)
                 }
+
                 is Loading -> {
                     showLoading(true)
                 }
+
                 is Success -> {
                     showLoading(false)
                     it.data?.let {
@@ -178,9 +179,11 @@ class CurrentRestaurantFragment : BaseFragment() {
                     showLoading(false)
                     showSnackbar(it.message.toString(), SnackbarType.ERROR)
                 }
+
                 is Loading -> {
                     showLoading(true)
                 }
+
                 is Success -> {
                     orderViewModel.resetAcceptOrderState()
                     DialogUtils.showSuccessDialog(
@@ -205,9 +208,11 @@ class CurrentRestaurantFragment : BaseFragment() {
                     showLoading(false)
                     showSnackbar(it.message.toString(), SnackbarType.ERROR)
                 }
+
                 is Loading -> {
                     showLoading(true)
                 }
+
                 is Success -> {
                     orderViewModel.resetRejectOrderState()
                     DialogUtils.showSuccessDialog(
@@ -233,9 +238,11 @@ class CurrentRestaurantFragment : BaseFragment() {
                     showLoading(false)
                     showSnackbar(it.message.toString(), SnackbarType.ERROR)
                 }
+
                 is Loading -> {
                     showLoading(true)
                 }
+
                 is Success -> {
                     showLoading(false)
                     setupOrderData(it.data)
@@ -386,23 +393,58 @@ class CurrentRestaurantFragment : BaseFragment() {
 
     private fun setupMenuAction() {
         binding.apply {
-            menuAddress.build("Address", getMuskoDrawable(R.drawable.ic_menu_resto_address))
-            menuRestoPhone.build("Phone", getMuskoDrawable(R.drawable.ic_menu_resto_phone))
+            menuAddress.build("Address", getMuskoDrawable(R.drawable.ic_168_location_02))
+            menuRestoPhone.build("Phone", getMuskoDrawable(R.drawable.ic_168_call))
+
             menuOperatingHour.build(
                 "Operating Hour",
                 getMuskoDrawable(R.drawable.ic_menu_resto_operating_hours)
             )
+
             menuTypeResto.build(
                 "Type of Restaurant",
                 getMuskoDrawable(R.drawable.ic_menu_resto_type)
             )
-            menuCertification.build(
-                "Certification",
-                getMuskoDrawable(R.drawable.ic_menu_resto_certified)
+
+            menuInfoBangunan.build(
+                "Luas Tanah & Bangunan",
+                getMuskoDrawable(R.drawable.ic_168_building)
             )
 
-            menuCertification.setOnClickListener {
-                findNavController().navigate(R.id.navigation_editRestoCertificationFragment)
+            menuInfoAirListrik.build(
+                "Listrik, Air ",
+                getMuskoDrawable(R.drawable.ic_168_flash)
+            )
+
+            menuKeramaianKendaraan.build(
+                "Lalu Lintas, Parkir & Jalan Umum",
+                getMuskoDrawable(R.drawable.ic_168_truck_delivery)
+            )
+
+            menuLegal.build(
+                "Legal",
+                getMuskoDrawable(R.drawable.ic_168_task)
+            )
+
+            menuKeadaanLingkungan.build(
+                "Keadaan Lingkungan Sekitar",
+                getMuskoDrawable(R.drawable.ic_168_maps)
+            )
+
+            menuInfoBangunan.setOnClickListener {
+                findNavController().navigate(R.id.navigation_editRestoLtlBFragment)
+            }
+
+            menuKeramaianKendaraan.setOnClickListener {
+                findNavController().navigate(R.id.navigation_editKeramaianLalinFragment)
+            }
+
+            menuInfoAirListrik.setOnClickListener {
+                findNavController().navigate(R.id.navigation_editRestoListrikAir)
+            }
+
+            menuLegal.setOnClickListener {
+                findNavController().navigate(R.id.navigation_editRestoLegalFragment)
             }
 
             menuTypeResto.setOnClickListener {
@@ -416,7 +458,7 @@ class CurrentRestaurantFragment : BaseFragment() {
     }
 
     override fun initData() {
-        orderViewModel.getAllOrderStatusLiveData()
+//        orderViewModel.getAllOrderStatusLiveData()
         viewModel.getDetailResto(getRestoId())
         viewModel.getRestoCert()
         viewModel.getFoodType()

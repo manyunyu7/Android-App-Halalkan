@@ -259,17 +259,35 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:fontFamily="@font/poppins_medium"
-                android:text="Informasi Restoran"
+                android:text="Informasi"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
 
+
             <com.feylabs.halalkan.customview.MuskoProfileMenuItem
-                android:id="@+id/menu_certification"
+                android:id="@+id/menu_info_bangunan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+
+            <com.feylabs.halalkan.customview.MuskoProfileMenuItem
+                android:id="@+id/menu_info_air_listrik"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <com.feylabs.halalkan.customview.MuskoProfileMenuItem
+                android:id="@+id/menu_keramaian_kendaraan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <com.feylabs.halalkan.customview.MuskoProfileMenuItem
+                android:id="@+id/menu_legal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
             <com.feylabs.halalkan.customview.MuskoProfileMenuItem
                 android:id="@+id/menu_type_resto"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
@@ -280,6 +298,7 @@
 
             <com.feylabs.halalkan.customview.MuskoProfileMenuItem
                 android:id="@+id/menu_operating_hour"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
@@ -288,7 +307,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
+            <com.feylabs.halalkan.customview.MuskoProfileMenuItem
+                android:id="@+id/menu_keadaan_lingkungan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+
             <RelativeLayout
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp">
@@ -329,6 +355,7 @@
                 android:background="@color/color_separator" />
 
             <HorizontalScrollView
+                android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent">
                 <com.google.android.material.chip.ChipGroup
@@ -344,6 +371,7 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen_10dp"
@@ -356,13 +384,14 @@
                 android:layout_marginBottom="90dp"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:visibility="visible"
+                android:visibility="gone"
                 tools:visibility="visible">
 
                 <com.airbnb.lottie.LottieAnimationView
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
                     android:padding="50dp"
+                    android:visibility="gone"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -379,6 +408,7 @@
                     android:ellipsize="none"
                     android:fontFamily="@font/poppins_regular"
                     android:scrollHorizontally="false"
+                    android:visibility="gone"
                     android:text="Belum Ada Pesanan Makanan"
                     android:textAlignment="center"
                     android:textColor="@color/color_blue_purplish"

@@ -31,7 +31,7 @@
                 android:padding="50dp"
                 android:visibility="visible"
                 app:lottie_autoPlay="true"
-                app:lottie_fileName="loading_food.json"
+                app:lottie_fileName="loading_circle_rgb.json"
                 app:lottie_loop="true"
                 tools:visibility="visible" />
 

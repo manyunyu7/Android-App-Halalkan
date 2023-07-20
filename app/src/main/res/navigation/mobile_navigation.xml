@@ -265,9 +265,10 @@
         android:name="com.feylabs.halalkan.view.resto.admin_resto.menu_category.AddEditCategoryFragment"
         android:label="AddEditCategoryFragment"
         tools:layout="@layout/fragment_add_edit_category" />
+
     <fragment
         android:id="@+id/navigation_currentRestaurantFragment"
-        android:name="com.feylabs.halalkan.view.resto.admin_resto.signature.CurrentRestaurantFragment"
+        android:name="com.feylabs.halalkan.view.resto.admin_resto.CurrentRestaurantFragment"
         android:label="CurrentRestaurantFragment"
         tools:layout="@layout/fragment_xresto_current" />
 
@@ -302,6 +303,18 @@
         android:name="com.feylabs.halalkan.view.resto.admin_resto.edit_info.phone.EditRestoPhoneFragment"
         android:label="EditRestoPhoneFragment"
         tools:layout="@layout/fragment_xresto_edit_phone" />
+
+    <fragment
+        android:id="@+id/navigation_editRestoListrikAir"
+        android:name="com.feylabs.halalkan.view.resto.admin_resto.edit_info.listrik_air.EditListrikAirFragment"
+        android:label="EditRestoListrikAir"
+        tools:layout="@layout/fragment_xresto_edit_listrik_air" />
+
+    <fragment
+        android:id="@+id/navigation_editKeramaianLalinFragment"
+        android:name="com.feylabs.halalkan.view.resto.admin_resto.edit_info.keramaian_lalin.EditKeramaianLalinFragment"
+        android:label="EditRestoPhoneFragment"
+        tools:layout="@layout/fragment_xresto_edit_keramaian_lalin" />
 
     <fragment
         android:id="@+id/navigation_forumCreateThreadFragment"
@@ -363,9 +376,20 @@
         android:label="EditRestoAddressFragment" />
 
     <fragment
+        android:id="@+id/navigation_editRestoLtlBFragment"
+        android:name="com.feylabs.halalkan.view.resto.admin_resto.edit_info.luas_tanah_bangunan.EditLuasTanahBangunanFragment"
+        android:label="EditRestoAddressFragment" />
+
+    <fragment
         android:id="@+id/navigation_editOperatingHoursFragment"
         android:name="com.feylabs.halalkan.view.resto.admin_resto.edit_info.operating_hours.EditOperatingHoursFragment"
         android:label="EditOperatingHoursFragment" />
+
+    <fragment
+        android:id="@+id/navigation_editRestoLegalFragment"
+        tools:layout="@layout/fragment_xresto_edit_legal"
+        android:name="com.feylabs.halalkan.view.resto.admin_resto.edit_info.legal.EditLegalFragment"
+        android:label="EditLegalFragment" />
 
     <fragment
         android:id="@+id/navigation_productDetailFragment"

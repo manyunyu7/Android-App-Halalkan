@@ -2,6 +2,7 @@ package com.feylabs.halalkan.utils.base
 
 import android.Manifest
 import android.graphics.Color
+import android.graphics.PorterDuff
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.View
@@ -10,6 +11,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.annotation.ColorInt
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -116,8 +118,14 @@ abstract class BaseFragment : Fragment() {
             )
     }
 
-    fun getMuskoDrawable(source: Int): Drawable {
-        return ContextCompat.getDrawable(requireActivity(), source)!!
+    fun getMuskoDrawable(source: Int, @ColorInt tint: Int? = null): Drawable {
+        val drawable = ContextCompat.getDrawable(requireActivity(), source) ?: throw IllegalArgumentException("Invalid drawable resource")
+
+        tint?.let {
+            drawable.mutate().setColorFilter(it, PorterDuff.Mode.SRC_IN)
+        }
+
+        return drawable
     }
 
     fun setBottomMenuActive(view: View) {
