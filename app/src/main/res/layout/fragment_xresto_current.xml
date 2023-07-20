@@ -156,21 +156,21 @@
                         android:layout_width="45dp"
                         android:layout_height="45dp"
                         android:scaleType="fitXY"
-                        android:src="@drawable/menu_home_restaurant" />
+                        android:src="@drawable/ic_menu_change_cover" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dimen_10dp"
                         android:fontFamily="@font/poppins_regular"
-                        android:text="Kategori Menu"
+                        android:text="Foto\nUtama"
                         android:textAlignment="center"
                         android:textColor="@color/black" />
 
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/menu_food"
+                    android:id="@+id/menu_legal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -181,7 +181,32 @@
                         android:layout_width="45dp"
                         android:layout_height="45dp"
                         android:scaleType="fitXY"
-                        android:src="@drawable/menu_home_restaurant" />
+                        android:src="@drawable/ic_menu_legal" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/poppins_regular"
+                        android:text="Legal"
+                        android:textAlignment="center"
+                        android:textColor="@color/black" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/menu_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/ic_menu_address" />
 
 
                     <TextView
@@ -189,14 +214,14 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:fontFamily="@font/poppins_regular"
-                        android:text="Menu Makanan"
+                        android:text="Address"
                         android:textAlignment="center"
                         android:textColor="@color/black" />
 
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/menu_driver"
+                    android:id="@+id/menu_resto_phone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -207,40 +232,14 @@
                         android:layout_width="45dp"
                         android:layout_height="45dp"
                         android:scaleType="fitXY"
-                        android:src="@drawable/menu_home_restaurant" />
-
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:fontFamily="@font/poppins_regular"
-                        android:text="Driver"
-                        android:textAlignment="center"
-                        android:textColor="@color/black" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/menu_transaction"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:layout_width="45dp"
-                        android:layout_height="45dp"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/menu_home_restaurant" />
+                        android:src="@drawable/ic_menu_phone" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dimen_10dp"
                         android:fontFamily="@font/poppins_regular"
-                        android:text="Transaksi"
+                        android:text="Phone"
                         android:textAlignment="center"
                         android:textColor="@color/black" />
 
@@ -281,20 +280,11 @@
                 android:layout_height="wrap_content" />
 
             <com.feylabs.halalkan.customview.MuskoProfileMenuItem
-                android:id="@+id/menu_legal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <com.feylabs.halalkan.customview.MuskoProfileMenuItem
                 android:id="@+id/menu_type_resto"
                 android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
-            <com.feylabs.halalkan.customview.MuskoProfileMenuItem
-                android:id="@+id/menu_address"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
 
             <com.feylabs.halalkan.customview.MuskoProfileMenuItem
                 android:id="@+id/menu_operating_hour"
@@ -302,10 +292,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
-            <com.feylabs.halalkan.customview.MuskoProfileMenuItem
-                android:id="@+id/menu_resto_phone"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
 
             <com.feylabs.halalkan.customview.MuskoProfileMenuItem
                 android:id="@+id/menu_keadaan_lingkungan"
