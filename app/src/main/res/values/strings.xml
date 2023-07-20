@@ -71,6 +71,17 @@
         <item value="2">Mata Air</item>
     </string-array>
 
+    <string-array name="array_jenis_sertifikat_kepemilikan">
+        <item value="0">SHM</item>
+        <item value="1">HGB</item>
+        <item value="2">HGU</item>
+    </string-array>
+
+    <string-array name="array_kategori_pemilik_sertifikat">
+        <item value="0">Milik Sendiri</item>
+        <item value="1">Kerabat</item>
+        <item value="2">Orang Lain</item>
+    </string-array>
 
     <string-array name="array_ijin_domisili">
         <item value="0">Ada</item>
@@ -89,6 +100,12 @@
     <string-array name="array_ada_tidak">
         <item value="0">Ada</item>
         <item value="1">Tidak Ada</item>
+    </string-array>
+
+    <string-array name="array_sewaan">
+        <item value="0">Tidak</item>
+        <item value="1">Bulanan</item>
+        <item value="2">Tahunan</item>
     </string-array>
 
     <string-array name="array_bisa_tidak">

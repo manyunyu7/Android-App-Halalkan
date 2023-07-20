@@ -443,6 +443,32 @@ class AdminRestoViewModel(
             })
     }
 
+    fun updateLegal(
+        idResto:String,
+        namaPemilikSertifikat:String,
+        jenisPemilikSertifikat:String,
+        jenisSertifikat:String,
+    ){
+        AndroidNetworking.post(BASE_URL_V1+"fe/restoran/$idResto/update/legal")
+            .addBodyParameter("nama_pemilik_sertifikat",namaPemilikSertifikat)
+            .addBodyParameter("jenis_sertifikat",jenisSertifikat)
+            .addBodyParameter("jenis_pemilik_sertifikat",jenisPemilikSertifikat)
+            .build()
+            .getAsJSONObject(object :JSONObjectRequestListener{
+                override fun onResponse(response: JSONObject?) {
+                    if (response?.getBoolean("status")==true){
+                        _updateCommonLiveData.postValue(QumparanResource.Success(GeneralApiResponse(message = "")))
+                    }else{
+                        _updateCommonLiveData.postValue(QumparanResource.Error(response.toString()))
+                    }
+                }
+
+                override fun onError(anError: ANError?) {
+                    _updateCommonLiveData.postValue(QumparanResource.Error(message = anError.toString()))
+                }
+            })
+    }
+
 
     fun updateRestoLalinAndParkir(
         idResto:String,
