@@ -281,6 +281,11 @@
                 android:layout_height="wrap_content" />
 
             <com.feylabs.halalkan.customview.MuskoProfileMenuItem
+                android:id="@+id/menu_legal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <com.feylabs.halalkan.customview.MuskoProfileMenuItem
                 android:id="@+id/menu_type_resto"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />

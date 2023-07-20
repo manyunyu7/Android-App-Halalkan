@@ -1,4 +1,4 @@
-package com.feylabs.halalkan.view.resto.admin_resto.signature
+package com.feylabs.halalkan.view.resto.admin_resto
 
 import android.app.Activity
 import android.content.Intent
@@ -29,13 +29,10 @@ import com.feylabs.halalkan.utils.ViewUtil.dpToPixels
 import com.feylabs.halalkan.utils.base.BaseFragment
 import com.feylabs.halalkan.utils.snackbar.SnackbarType
 import com.feylabs.halalkan.view.resto.OrderViewModel
-import com.feylabs.halalkan.view.resto.admin_resto.AdminRestoViewModel
-import com.feylabs.halalkan.view.resto.admin_resto.RestoHistoryOrderAdapter
 import com.google.android.material.chip.Chip
 import com.tangxiaolv.telegramgallery.GalleryConfig
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
-import java.io.File
 
 
 class CurrentRestaurantFragment : BaseFragment() {
@@ -422,6 +419,11 @@ class CurrentRestaurantFragment : BaseFragment() {
                 getMuskoDrawable(R.drawable.ic_168_truck_delivery)
             )
 
+            menuLegal.build(
+                "Legal",
+                getMuskoDrawable(R.drawable.ic_168_task)
+            )
+
             menuInfoBangunan.setOnClickListener {
                 findNavController().navigate(R.id.navigation_editRestoLtlBFragment)
             }
@@ -432,6 +434,10 @@ class CurrentRestaurantFragment : BaseFragment() {
 
             menuInfoAirListrik.setOnClickListener {
                 findNavController().navigate(R.id.navigation_editRestoListrikAir)
+            }
+
+            menuLegal.setOnClickListener {
+                findNavController().navigate(R.id.navigation_editRestoLegalFragment)
             }
 
             menuTypeResto.setOnClickListener {

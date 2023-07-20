@@ -268,7 +268,7 @@
 
     <fragment
         android:id="@+id/navigation_currentRestaurantFragment"
-        android:name="com.feylabs.halalkan.view.resto.admin_resto.signature.CurrentRestaurantFragment"
+        android:name="com.feylabs.halalkan.view.resto.admin_resto.CurrentRestaurantFragment"
         android:label="CurrentRestaurantFragment"
         tools:layout="@layout/fragment_xresto_current" />
 
@@ -384,6 +384,12 @@
         android:id="@+id/navigation_editOperatingHoursFragment"
         android:name="com.feylabs.halalkan.view.resto.admin_resto.edit_info.operating_hours.EditOperatingHoursFragment"
         android:label="EditOperatingHoursFragment" />
+
+    <fragment
+        android:id="@+id/navigation_editRestoLegalFragment"
+        tools:layout="@layout/fragment_xresto_edit_legal"
+        android:name="com.feylabs.halalkan.view.resto.admin_resto.edit_info.legal.EditLegalFragment"
+        android:label="EditLegalFragment" />
 
     <fragment
         android:id="@+id/navigation_productDetailFragment"
