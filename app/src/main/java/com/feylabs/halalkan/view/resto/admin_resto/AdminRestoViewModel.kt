@@ -389,6 +389,7 @@ class AdminRestoViewModel(
         jumlahLantai:String,
         bisaDimajukan:String,
         ijinDomisiliAda:String,
+        peruntukanBangunan:String,
     ){
         AndroidNetworking.post(BASE_URL_V1+"fe/restoran/$idResto/update/lt-lb")
             .addBodyParameter("idResto",idResto)
@@ -399,6 +400,7 @@ class AdminRestoViewModel(
             .addBodyParameter("ijin_domisili",ijinDomisiliAda)
             .addBodyParameter("bisa_dimajukan",bisaDimajukan)
             .addBodyParameter("jumlah_lantai",jumlahLantai)
+            .addBodyParameter("peruntukan_bangunan",peruntukanBangunan)
             .build()
             .getAsJSONObject(object :JSONObjectRequestListener{
                 override fun onResponse(response: JSONObject?) {

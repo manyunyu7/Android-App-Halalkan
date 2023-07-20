@@ -120,6 +120,19 @@ class EditLuasTanahBangunanFragment : BaseFragment() {
                 binding.dropdownBisaDimajukan.setSelection(1)
             }
 
+            val peruntukanBangunan = it.peruntukanBangunan
+            if (peruntukanBangunan == "Pemukiman") {
+                binding.dropdownPeruntukanBangunan.setSelection(0)
+            }
+            if (peruntukanBangunan == "Industri") {
+                binding.dropdownPeruntukanBangunan.setSelection(1)
+            }
+            if (peruntukanBangunan == "Jasa") {
+                binding.dropdownPeruntukanBangunan.setSelection(2)
+            }
+            if (peruntukanBangunan == "Perdagangan") {
+                binding.dropdownPeruntukanBangunan.setSelection(3)
+            }
 
             binding.etLebarBangunan.editText?.setText(data.data.detailResto.data_bangunan?.lebarBangunan.orEmpty())
             binding.etPanjangBangunan.editText?.setText(data.data.detailResto.data_bangunan?.panjangBangunan.orEmpty())
@@ -139,6 +152,7 @@ class EditLuasTanahBangunanFragment : BaseFragment() {
             val jumlahLantai = binding.etJumlahLantai.editText?.text ?: ""
             val inputBisaDimajukan = binding.dropdownBisaDimajukan.selectedItem.toString()
             val inputApakahIzinDomisiliAda = binding.dropdownIzinDomisiliAvailable.selectedItem.toString()
+            val peruntukanBangunan = binding.dropdownPeruntukanBangunan.selectedItem.toString()
 
             DialogUtils.showConfirmationDialog(
                 context = requireContext(),
@@ -153,7 +167,8 @@ class EditLuasTanahBangunanFragment : BaseFragment() {
                         pt = pt.toString(),
                         jumlahLantai = jumlahLantai.toString(),
                         bisaDimajukan = inputBisaDimajukan,
-                        ijinDomisiliAda = inputApakahIzinDomisiliAda
+                        ijinDomisiliAda = inputApakahIzinDomisiliAda,
+                        peruntukanBangunan = peruntukanBangunan
                     )
                 },
                 negativeAction = Pair(
