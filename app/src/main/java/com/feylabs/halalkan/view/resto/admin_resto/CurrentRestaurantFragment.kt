@@ -431,6 +431,10 @@ class CurrentRestaurantFragment : BaseFragment() {
                 getMuskoDrawable(R.drawable.ic_168_maps)
             )
 
+            menuKeadaanLingkungan.setOnClickListener {
+                findNavController().navigate(R.id.navigation_editRestoInfoLingkunganFragment)
+            }
+
             menuInfoBangunan.setOnClickListener {
                 findNavController().navigate(R.id.navigation_editRestoLtlBFragment)
             }

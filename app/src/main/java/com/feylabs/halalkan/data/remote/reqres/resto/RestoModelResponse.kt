@@ -98,12 +98,39 @@ data class RestoModelResponse(
         @SerializedName("ijin_domisili")
         @Expose
         val ijinDomisili: String? = null,
+        @SerializedName("is_alfamart_100_exist")
+        @Expose
+        val isAlfamart100Exist: String? = null,
         @SerializedName("is_bukti_pbb_available")
         @Expose
         val isBuktiPbbAvailable: String? = null,
+        @SerializedName("is_counter_usaha_lain_100_exist")
+        @Expose
+        val isCounterUsahaLain100Exist: String? = null,
+        @SerializedName("is_sekolah_100_exist")
+        @Expose
+        val isSekolah100Exist: String? = null,
+        @SerializedName("is_bengkel_100_exist")
+        @Expose
+        val isBengkel100Exist: String? = null,
+        @SerializedName("is_gereja_100_exist")
+        @Expose
+        val isGereja100Exist: String? = null,
+        @SerializedName("is_indomaret_100_exist")
+        @Expose
+        val isIndomaret100Exist: String? = null,
+        @SerializedName("is_masjid_100_exist")
+        @Expose
+        val isMasjid100Exist: String? = null,
         @SerializedName("is_sewa")
         @Expose
         val isSewa: String? = null,
+        @SerializedName("is_spbu_100_exist")
+        @Expose
+        val isSpbu100Exist: String? = null,
+        @SerializedName("is_univ_100_exist")
+        @Expose
+        val isUniv100Exist: String? = null,
         @SerializedName("jangka_sewa")
         @Expose
         val jangkaSewa: String? = null,
@@ -166,7 +193,7 @@ data class RestoModelResponse(
         val rencanaPelebaran: String? = null,
         @SerializedName("resto_id")
         @Expose
-        val restoId: String? = null,
+        val restoId: Int? = null,
         @SerializedName("saluran_air")
         @Expose
         val saluranAir: String? = null,
