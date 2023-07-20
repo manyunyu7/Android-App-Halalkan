@@ -430,6 +430,9 @@ class CurrentRestaurantFragment : BaseFragment() {
                 findNavController().navigate(R.id.navigation_editKeramaianLalinFragment)
             }
 
+            menuInfoAirListrik.setOnClickListener {
+                findNavController().navigate(R.id.navigation_editRestoListrikAir)
+            }
 
             menuTypeResto.setOnClickListener {
                 findNavController().navigate(R.id.navigation_editRestoTypeFragment)

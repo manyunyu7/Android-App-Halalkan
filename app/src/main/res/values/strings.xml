@@ -65,6 +65,13 @@
         <item value="2">Non-Aspal</item>
     </string-array>
 
+    <string-array name="array_sumber_air">
+        <item value="0">PDAM/PAM</item>
+        <item value="1">Air Tanah/Pompa</item>
+        <item value="2">Mata Air</item>
+    </string-array>
+
+
     <string-array name="array_ijin_domisili">
         <item value="0">Ada</item>
         <item value="1">Pernah Ada</item>
@@ -79,6 +86,10 @@
         <item value="3">Perdagangan</item>
     </string-array>
 
+    <string-array name="array_ada_tidak">
+        <item value="0">Ada</item>
+        <item value="1">Tidak Ada</item>
+    </string-array>
 
     <string-array name="array_bisa_tidak">
         <item value="0">Bisa</item>

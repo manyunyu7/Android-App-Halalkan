@@ -417,6 +417,33 @@ class AdminRestoViewModel(
             })
     }
 
+    fun updateListrikAir(
+        idResto:String,
+        fasilitasListrikWatt:String,
+        fasilitasAir:String,
+        saluranAir:String,
+    ){
+        AndroidNetworking.post(BASE_URL_V1+"fe/restoran/$idResto/update/listrik-air")
+            .addBodyParameter("fasilitas_air",fasilitasAir)
+            .addBodyParameter("saluran_air",saluranAir)
+            .addBodyParameter("fasilitas_listrik_watt",fasilitasListrikWatt)
+            .build()
+            .getAsJSONObject(object :JSONObjectRequestListener{
+                override fun onResponse(response: JSONObject?) {
+                    if (response?.getBoolean("status")==true){
+                        _updateCommonLiveData.postValue(QumparanResource.Success(GeneralApiResponse(message = "")))
+                    }else{
+                        _updateCommonLiveData.postValue(QumparanResource.Error(response.toString()))
+                    }
+                }
+
+                override fun onError(anError: ANError?) {
+                    _updateCommonLiveData.postValue(QumparanResource.Error(message = anError.toString()))
+                }
+            })
+    }
+
+
     fun updateRestoLalinAndParkir(
         idResto:String,
         fiveMinuteBusTruk:String,
@@ -424,7 +451,8 @@ class AdminRestoViewModel(
         fiveMinuteMobil:String,
         parkirMotor:String,
         parkirMobil:String,
-        jenisJalan:String
+        jenisJalan:String,
+        rencanaPelebaranJalan:String,
     ){
         AndroidNetworking.post(BASE_URL_V1+"fe/restoran/$idResto/update/lalin-parkir")
             .addBodyParameter("parkir_mobil",parkirMobil)
@@ -432,6 +460,7 @@ class AdminRestoViewModel(
             .addBodyParameter("5_menit_motor",fiveMinuteMotor)
             .addBodyParameter("5_menit_mobil",fiveMinuteMobil)
             .addBodyParameter("5_menit_truk",fiveMinuteBusTruk)
+            .addBodyParameter("rencana_pelebaran",rencanaPelebaranJalan)
             .addBodyParameter("jenis_jalan",jenisJalan)
             .build()
             .getAsJSONObject(object :JSONObjectRequestListener{

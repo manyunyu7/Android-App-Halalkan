@@ -1,4 +1,4 @@
-package com.feylabs.halalkan.view.resto.admin_resto.edit_info.keramaian_lalin
+package com.feylabs.halalkan.view.resto.admin_resto.edit_info.listrik_air
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,7 +9,7 @@ import com.feylabs.halalkan.MainViewModel
 import com.feylabs.halalkan.R
 import com.feylabs.halalkan.data.remote.QumparanResource.*
 import com.feylabs.halalkan.data.remote.reqres.resto.RestoDetailResponse
-import com.feylabs.halalkan.databinding.FragmentXrestoEditKeramaianLalinBinding
+import com.feylabs.halalkan.databinding.FragmentXrestoEditListrikAirBinding
 import com.feylabs.halalkan.utils.DialogUtils
 import com.feylabs.halalkan.utils.base.BaseFragment
 import com.feylabs.halalkan.utils.snackbar.SnackbarType
@@ -19,11 +19,11 @@ import org.koin.android.viewmodel.ext.android.sharedViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
 
-class EditKeramaianLalinFragment : BaseFragment() {
+class EditListrikAirFragment : BaseFragment() {
 
     // This property is only valid between onCreateView and
     // onDestroyView.
-    private var _binding: FragmentXrestoEditKeramaianLalinBinding? = null
+    private var _binding: FragmentXrestoEditListrikAirBinding? = null
     private val binding get() = _binding!!
 
     val viewModel by viewModel<AdminRestoViewModel>()
@@ -98,59 +98,43 @@ class EditKeramaianLalinFragment : BaseFragment() {
     private fun setupUiFromNetwork(data: RestoDetailResponse) {
         val dataBangunan = data.data.detailResto.data_bangunan
         dataBangunan?.let {
-            val jenisJalanRaw = it.jenisJalan
-            if (jenisJalanRaw == "Aspal 1 Jalur") {
-                binding.dropdownJenisJalan.setSelection(0)
+            val jenisSumberAir = it.fasilitasAir
+            if (jenisSumberAir == "PDAM/PAM") {
+                binding.dropdownFasilitasAir.setSelection(0)
             }
-            if (jenisJalanRaw == "Aspal Lebih dari 1 Jalur") {
-                binding.dropdownJenisJalan.setSelection(1)
+            if (jenisSumberAir == "Air Tanah/Pompa") {
+                binding.dropdownFasilitasAir.setSelection(1)
             }
-            if (jenisJalanRaw == "Non-Aspal") {
-                binding.dropdownJenisJalan.setSelection(2)
+            if (jenisSumberAir == "Mata Air") {
+                binding.dropdownFasilitasAir.setSelection(2)
             }
-
-            val pelebaranJalan = it.rencanaPelebaran
-            if (pelebaranJalan == "Ada") {
-                binding.dropdownRencanaPelebaranJalan.setSelection(0)
+            val adaSaluranAir = it.saluranAir
+            if (adaSaluranAir == "Ada") {
+                binding.dropdownAdaSaluranAir.setSelection(0)
             }
-            if (pelebaranJalan == "Tidak Ada") {
-                binding.dropdownRencanaPelebaranJalan.setSelection(1)
+            if (adaSaluranAir == "Tidak Ada") {
+                binding.dropdownAdaSaluranAir.setSelection(1)
             }
-
-            binding.etLahanParkirMobil.editText?.setText(it.parkirMobil.orEmpty())
-            binding.etLahanParkirMotor.editText?.setText(it.parkirMotor.orEmpty())
-            binding.etMotor.editText?.setText(it.menitMotor.orEmpty())
-            binding.etBisTruk.editText?.setText(it.menitTruk.orEmpty())
-            binding.etMobil.editText?.setText(it.menitMobil.orEmpty())
+            binding.etListrik.editText?.setText(data.data.detailResto.data_bangunan?.fasilitasListrikWatt.orEmpty())
         }
-
     }
 
     override fun initAction() {
-        binding.btnSave.setOnClickListener {
-            val etLahanParkirMobil = binding.etLahanParkirMobil.editText?.text.toString()
-            val etLahanParkirMotor = binding.etLahanParkirMotor.editText?.text.toString()
-            val etJmlMotor5Menit = binding.etMotor.editText?.text.toString()
-            val etJmlMobil5Menit = binding.etMobil.editText?.text.toString()
-            val etJmlBusTruk5Menit = binding.etBisTruk.editText?.text.toString()
-            val inputJenisJalan = binding.dropdownJenisJalan.selectedItem.toString()
-            val rencanaPelebaranJalan =
-                binding.dropdownRencanaPelebaranJalan.selectedItem.toString()
 
+        binding.btnSave.setOnClickListener {
+            val adaSaluranAir = binding.dropdownAdaSaluranAir.selectedItem.toString();
+            val fasilitasAir = binding.dropdownFasilitasAir.selectedItem.toString()
+            val listrik = binding.etListrik.editText?.text.toString();
             DialogUtils.showConfirmationDialog(
                 context = requireContext(),
                 title = getString(R.string.label_are_you_sure),
                 message = getString(R.string.message_resto_update_address),
                 positiveAction = Pair("OK") {
-                    viewModel.updateRestoLalinAndParkir(
+                    viewModel.updateListrikAir(
                         idResto = getChoosenResto(),
-                        fiveMinuteBusTruk = etJmlBusTruk5Menit,
-                        fiveMinuteMobil = etJmlMobil5Menit,
-                        fiveMinuteMotor = etJmlMotor5Menit,
-                        parkirMobil = etLahanParkirMobil,
-                        parkirMotor = etLahanParkirMotor,
-                        jenisJalan = inputJenisJalan,
-                        rencanaPelebaranJalan = rencanaPelebaranJalan
+                        fasilitasAir = fasilitasAir,
+                        fasilitasListrikWatt = listrik,
+                        saluranAir = adaSaluranAir
                     )
                 },
                 negativeAction = Pair(
@@ -174,7 +158,7 @@ class EditKeramaianLalinFragment : BaseFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentXrestoEditKeramaianLalinBinding.inflate(inflater)
+        _binding = FragmentXrestoEditListrikAirBinding.inflate(inflater)
         return binding.root
     }
 
