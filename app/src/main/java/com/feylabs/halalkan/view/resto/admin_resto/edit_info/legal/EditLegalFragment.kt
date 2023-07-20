@@ -110,7 +110,9 @@ class EditLegalFragment : BaseFragment() {
                 binding.dropdownJenisSertifikat.setSelection(2)
             }
 
+            binding.etMasaBerlakuSertifikat.editText?.setText(it.masaBerlakuSertifikat)
             binding.etBiayaSewa.editText?.setText(it.hargaSewa.toString())
+
             val sewa = it.isSewa
             if(sewa=="Tidak"){
                 binding.dropdownSewa.setSelection(0)

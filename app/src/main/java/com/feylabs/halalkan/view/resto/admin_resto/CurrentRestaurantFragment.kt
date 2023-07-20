@@ -393,12 +393,14 @@ class CurrentRestaurantFragment : BaseFragment() {
 
     private fun setupMenuAction() {
         binding.apply {
-            menuAddress.build("Address", getMuskoDrawable(R.drawable.ic_menu_resto_address))
-            menuRestoPhone.build("Phone", getMuskoDrawable(R.drawable.ic_menu_resto_phone))
+            menuAddress.build("Address", getMuskoDrawable(R.drawable.ic_168_location_02))
+            menuRestoPhone.build("Phone", getMuskoDrawable(R.drawable.ic_168_call))
+
             menuOperatingHour.build(
                 "Operating Hour",
                 getMuskoDrawable(R.drawable.ic_menu_resto_operating_hours)
             )
+
             menuTypeResto.build(
                 "Type of Restaurant",
                 getMuskoDrawable(R.drawable.ic_menu_resto_type)
@@ -422,6 +424,11 @@ class CurrentRestaurantFragment : BaseFragment() {
             menuLegal.build(
                 "Legal",
                 getMuskoDrawable(R.drawable.ic_168_task)
+            )
+
+            menuKeadaanLingkungan.build(
+                "Keadaan Lingkungan Sekitar",
+                getMuskoDrawable(R.drawable.ic_168_maps)
             )
 
             menuInfoBangunan.setOnClickListener {

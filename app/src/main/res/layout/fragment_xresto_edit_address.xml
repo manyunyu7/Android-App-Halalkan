@@ -200,7 +200,6 @@
                 android:text="@string/save_changes"
                 app:cornerRadius="@dimen/dimen_20dp" />
 
-
         </LinearLayout>
 
     </ScrollView>

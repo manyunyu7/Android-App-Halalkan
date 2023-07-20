@@ -287,6 +287,7 @@
 
             <com.feylabs.halalkan.customview.MuskoProfileMenuItem
                 android:id="@+id/menu_type_resto"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
@@ -297,6 +298,7 @@
 
             <com.feylabs.halalkan.customview.MuskoProfileMenuItem
                 android:id="@+id/menu_operating_hour"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
@@ -304,6 +306,12 @@
                 android:id="@+id/menu_resto_phone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
+
+            <com.feylabs.halalkan.customview.MuskoProfileMenuItem
+                android:id="@+id/menu_keadaan_lingkungan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
 
             <RelativeLayout
                 android:visibility="gone"
