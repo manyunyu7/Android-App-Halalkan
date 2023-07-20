@@ -448,11 +448,17 @@ class AdminRestoViewModel(
         namaPemilikSertifikat:String,
         jenisPemilikSertifikat:String,
         jenisSertifikat:String,
+        jenisSewa:String,
+        hargaSewa:String,
+        masaBerlaku:String
     ){
         AndroidNetworking.post(BASE_URL_V1+"fe/restoran/$idResto/update/legal")
             .addBodyParameter("nama_pemilik_sertifikat",namaPemilikSertifikat)
             .addBodyParameter("jenis_sertifikat",jenisSertifikat)
             .addBodyParameter("jenis_pemilik_sertifikat",jenisPemilikSertifikat)
+            .addBodyParameter("is_sewa",jenisSewa)
+            .addBodyParameter("harga_sewa",hargaSewa)
+            .addBodyParameter("masa_berlaku_sertifikat",masaBerlaku)
             .build()
             .getAsJSONObject(object :JSONObjectRequestListener{
                 override fun onResponse(response: JSONObject?) {

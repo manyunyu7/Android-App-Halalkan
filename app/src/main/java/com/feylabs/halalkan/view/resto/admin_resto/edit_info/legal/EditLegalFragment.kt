@@ -110,6 +110,18 @@ class EditLegalFragment : BaseFragment() {
                 binding.dropdownJenisSertifikat.setSelection(2)
             }
 
+            binding.etBiayaSewa.editText?.setText(it.hargaSewa.toString())
+            val sewa = it.isSewa
+            if(sewa=="Tidak"){
+                binding.dropdownSewa.setSelection(0)
+            }
+            if(sewa=="Bulanan"){
+                binding.dropdownSewa.setSelection(1)
+            }
+            if(sewa=="Tahunan"){
+                binding.dropdownSewa.setSelection(2)
+            }
+
             val jenisKepemilikanSertifikat = it.jenisPemilikSertifikat
             if(jenisKepemilikanSertifikat=="Milik Sendiri"){
                 binding.dropdownJenisKepemilikan.setSelection(0)
@@ -131,7 +143,9 @@ class EditLegalFragment : BaseFragment() {
                 binding.etNamaPemilikSertifikat.editText?.text.toString()
             val jenisSertifikat = binding.dropdownJenisSertifikat.selectedItem.toString()
             val jenisPemilikSertifikat = binding.dropdownJenisKepemilikan.selectedItem.toString()
-
+            val jenisSewa = binding.dropdownSewa.selectedItem.toString()
+            val hargaSewa = binding.etBiayaSewa.editText?.text.toString()
+            val masaBerlakuSertifikat = binding.etMasaBerlakuSertifikat.editText?.text.toString()
             DialogUtils.showConfirmationDialog(
                 context = requireContext(),
                 title = getString(R.string.label_are_you_sure),
@@ -141,7 +155,10 @@ class EditLegalFragment : BaseFragment() {
                         idResto = getChoosenResto(),
                         jenisSertifikat = jenisSertifikat,
                         namaPemilikSertifikat = namaPemilikSertifikat,
-                        jenisPemilikSertifikat = jenisPemilikSertifikat
+                        jenisPemilikSertifikat = jenisPemilikSertifikat,
+                        jenisSewa = jenisSewa,
+                        hargaSewa = hargaSewa,
+                        masaBerlaku = masaBerlakuSertifikat
                     )
                 },
                 negativeAction = Pair(
