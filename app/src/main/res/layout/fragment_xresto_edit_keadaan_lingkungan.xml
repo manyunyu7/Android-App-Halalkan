@@ -80,7 +80,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/dimen_10dp"
                 android:layout_marginTop="@dimen/dimen_10dp"
-                android:entries="@array/array_ada_tidak" />
+                android:entries="@array/array_ada_tidak_lingkungan" />
 
             <TextView
                 android:layout_marginTop="@dimen/dimen_20dp"
@@ -97,7 +97,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/dimen_10dp"
                 android:layout_marginTop="@dimen/dimen_10dp"
-                android:entries="@array/array_ada_tidak" />
+                android:entries="@array/array_ada_tidak_lingkungan" />
 
             <TextView
                 android:layout_marginTop="@dimen/dimen_20dp"
@@ -114,7 +114,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/dimen_10dp"
                 android:layout_marginTop="@dimen/dimen_10dp"
-                android:entries="@array/array_ada_tidak" />
+                android:entries="@array/array_ada_tidak_lingkungan" />
 
             <TextView
                 android:layout_marginTop="@dimen/dimen_20dp"
@@ -131,7 +131,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/dimen_10dp"
                 android:layout_marginTop="@dimen/dimen_10dp"
-                android:entries="@array/array_ada_tidak" />
+                android:entries="@array/array_ada_tidak_lingkungan" />
 
             <TextView
                 android:layout_marginTop="@dimen/dimen_20dp"
@@ -148,7 +148,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/dimen_10dp"
                 android:layout_marginTop="@dimen/dimen_10dp"
-                android:entries="@array/array_ada_tidak" />
+                android:entries="@array/array_ada_tidak_lingkungan" />
 
             <TextView
                 android:layout_marginTop="@dimen/dimen_20dp"
@@ -165,7 +165,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/dimen_10dp"
                 android:layout_marginTop="@dimen/dimen_10dp"
-                android:entries="@array/array_ada_tidak" />
+                android:entries="@array/array_ada_tidak_lingkungan" />
 
             <TextView
                 android:layout_marginTop="@dimen/dimen_20dp"
@@ -182,7 +182,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/dimen_10dp"
                 android:layout_marginTop="@dimen/dimen_10dp"
-                android:entries="@array/array_ada_tidak" />
+                android:entries="@array/array_ada_tidak_lingkungan" />
 
             <TextView
                 android:layout_marginTop="@dimen/dimen_20dp"
@@ -199,7 +199,24 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/dimen_10dp"
                 android:layout_marginTop="@dimen/dimen_10dp"
-                android:entries="@array/array_ada_tidak" />
+                android:entries="@array/array_ada_tidak_lingkungan" />
+
+            <TextView
+                android:layout_marginTop="@dimen/dimen_20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/lato_regular"
+                android:text="Apakah Ada Usaha Lain di Sekitar ?"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/dropdown_usaha_lain"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/dimen_10dp"
+                android:layout_marginTop="@dimen/dimen_10dp"
+                android:entries="@array/array_ada_tidak_lingkungan" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_save"

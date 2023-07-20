@@ -367,14 +367,6 @@ class CurrentRestaurantFragment : BaseFragment() {
             findNavController().navigate(R.id.navigation_menuCategoryFragment)
         }
 
-        binding.menuDriver.setOnClickListener {
-            findNavController().navigate(R.id.navigation_manageDriverFragment)
-        }
-
-        binding.menuFood.setOnClickListener {
-            findNavController().navigate(R.id.navigation_manageFoodFragment)
-        }
-
         binding.menuOperatingHour.setOnClickListener {
             findNavController().navigate(R.id.navigation_editOperatingHoursFragment)
         }
@@ -393,9 +385,6 @@ class CurrentRestaurantFragment : BaseFragment() {
 
     private fun setupMenuAction() {
         binding.apply {
-            menuAddress.build("Address", getMuskoDrawable(R.drawable.ic_168_location_02))
-            menuRestoPhone.build("Phone", getMuskoDrawable(R.drawable.ic_168_call))
-
             menuOperatingHour.build(
                 "Operating Hour",
                 getMuskoDrawable(R.drawable.ic_menu_resto_operating_hours)
@@ -405,6 +394,10 @@ class CurrentRestaurantFragment : BaseFragment() {
                 "Type of Restaurant",
                 getMuskoDrawable(R.drawable.ic_menu_resto_type)
             )
+
+            menuLegal.setOnClickListener {
+                findNavController().navigate(R.id.navigation_editRestoLegalFragment)
+            }
 
             menuInfoBangunan.build(
                 "Luas Tanah & Bangunan",
@@ -421,15 +414,14 @@ class CurrentRestaurantFragment : BaseFragment() {
                 getMuskoDrawable(R.drawable.ic_168_truck_delivery)
             )
 
-            menuLegal.build(
-                "Legal",
-                getMuskoDrawable(R.drawable.ic_168_task)
-            )
-
             menuKeadaanLingkungan.build(
                 "Keadaan Lingkungan Sekitar",
                 getMuskoDrawable(R.drawable.ic_168_maps)
             )
+
+            menuKeadaanLingkungan.setOnClickListener {
+                findNavController().navigate(R.id.navigation_editRestoInfoLingkunganFragment)
+            }
 
             menuInfoBangunan.setOnClickListener {
                 findNavController().navigate(R.id.navigation_editRestoLtlBFragment)

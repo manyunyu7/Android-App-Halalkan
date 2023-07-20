@@ -305,6 +305,11 @@
         tools:layout="@layout/fragment_xresto_edit_phone" />
 
     <fragment
+        android:id="@+id/navigation_editRestoInfoLingkunganFragment"
+        android:name="com.feylabs.halalkan.view.resto.admin_resto.edit_info.lingkungan.EditInfoLingkunganFragment"
+        tools:layout="@layout/fragment_xresto_edit_keadaan_lingkungan" />
+
+    <fragment
         android:id="@+id/navigation_editRestoListrikAir"
         android:name="com.feylabs.halalkan.view.resto.admin_resto.edit_info.listrik_air.EditListrikAirFragment"
         android:label="EditRestoListrikAir"

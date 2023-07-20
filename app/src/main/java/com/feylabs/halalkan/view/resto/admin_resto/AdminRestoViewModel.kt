@@ -381,32 +381,38 @@ class AdminRestoViewModel(
     }
 
     fun updateRestoLuasTanahBangunan(
-        idResto:String,
-        lt:String,
-        lb:String,
-        pt:String,
-        pb:String,
-        jumlahLantai:String,
-        bisaDimajukan:String,
-        ijinDomisiliAda:String,
-        peruntukanBangunan:String,
-    ){
-        AndroidNetworking.post(BASE_URL_V1+"fe/restoran/$idResto/update/lt-lb")
-            .addBodyParameter("idResto",idResto)
-            .addBodyParameter("lebar_tanah",lt)
-            .addBodyParameter("panjang_tanah",pt)
-            .addBodyParameter("lebar_bangunan",lb)
-            .addBodyParameter("panjang_bangunan",pb)
-            .addBodyParameter("ijin_domisili",ijinDomisiliAda)
-            .addBodyParameter("bisa_dimajukan",bisaDimajukan)
-            .addBodyParameter("jumlah_lantai",jumlahLantai)
-            .addBodyParameter("peruntukan_bangunan",peruntukanBangunan)
+        idResto: String,
+        lt: String,
+        lb: String,
+        pt: String,
+        pb: String,
+        jumlahLantai: String,
+        bisaDimajukan: String,
+        ijinDomisiliAda: String,
+        peruntukanBangunan: String,
+    ) {
+        AndroidNetworking.post(BASE_URL_V1 + "fe/restoran/$idResto/update/lt-lb")
+            .addBodyParameter("idResto", idResto)
+            .addBodyParameter("lebar_tanah", lt)
+            .addBodyParameter("panjang_tanah", pt)
+            .addBodyParameter("lebar_bangunan", lb)
+            .addBodyParameter("panjang_bangunan", pb)
+            .addBodyParameter("ijin_domisili", ijinDomisiliAda)
+            .addBodyParameter("bisa_dimajukan", bisaDimajukan)
+            .addBodyParameter("jumlah_lantai", jumlahLantai)
+            .addBodyParameter("peruntukan_bangunan", peruntukanBangunan)
             .build()
-            .getAsJSONObject(object :JSONObjectRequestListener{
+            .getAsJSONObject(object : JSONObjectRequestListener {
                 override fun onResponse(response: JSONObject?) {
-                    if (response?.getBoolean("status")==true){
-                        _updateCommonLiveData.postValue(QumparanResource.Success(GeneralApiResponse(message = "")))
-                    }else{
+                    if (response?.getBoolean("status") == true) {
+                        _updateCommonLiveData.postValue(
+                            QumparanResource.Success(
+                                GeneralApiResponse(
+                                    message = ""
+                                )
+                            )
+                        )
+                    } else {
                         _updateCommonLiveData.postValue(QumparanResource.Error(response.toString()))
                     }
                 }
@@ -418,21 +424,71 @@ class AdminRestoViewModel(
     }
 
     fun updateListrikAir(
-        idResto:String,
-        fasilitasListrikWatt:String,
-        fasilitasAir:String,
-        saluranAir:String,
-    ){
-        AndroidNetworking.post(BASE_URL_V1+"fe/restoran/$idResto/update/listrik-air")
-            .addBodyParameter("fasilitas_air",fasilitasAir)
-            .addBodyParameter("saluran_air",saluranAir)
-            .addBodyParameter("fasilitas_listrik_watt",fasilitasListrikWatt)
+        idResto: String,
+        fasilitasListrikWatt: String,
+        fasilitasAir: String,
+        saluranAir: String,
+    ) {
+        AndroidNetworking.post(BASE_URL_V1 + "fe/restoran/$idResto/update/listrik-air")
+            .addBodyParameter("fasilitas_air", fasilitasAir)
+            .addBodyParameter("saluran_air", saluranAir)
+            .addBodyParameter("fasilitas_listrik_watt", fasilitasListrikWatt)
             .build()
-            .getAsJSONObject(object :JSONObjectRequestListener{
+            .getAsJSONObject(object : JSONObjectRequestListener {
                 override fun onResponse(response: JSONObject?) {
-                    if (response?.getBoolean("status")==true){
-                        _updateCommonLiveData.postValue(QumparanResource.Success(GeneralApiResponse(message = "")))
-                    }else{
+                    if (response?.getBoolean("status") == true) {
+                        _updateCommonLiveData.postValue(
+                            QumparanResource.Success(
+                                GeneralApiResponse(
+                                    message = ""
+                                )
+                            )
+                        )
+                    } else {
+                        _updateCommonLiveData.postValue(QumparanResource.Error(response.toString()))
+                    }
+                }
+
+                override fun onError(anError: ANError?) {
+                    _updateCommonLiveData.postValue(QumparanResource.Error(message = anError.toString()))
+                }
+            })
+    }
+
+    fun updateKeadaanLingkungan(
+        idResto: String,
+        alfamart: String,
+        indomart: String,
+        spbu: String,
+        univ: String,
+        counterUsahaLain: String,
+        masjid: String,
+        gereja: String,
+        sekolah: String,
+        bengkel: String,
+    ) {
+        AndroidNetworking.post(BASE_URL_V1 + "fe/restoran/$idResto/update/info-lingkungan")
+            .addBodyParameter("is_alfamart_100_exist", alfamart)
+            .addBodyParameter("is_indomaret_100_exist", indomart)
+            .addBodyParameter("is_spbu_100_exist",spbu)
+            .addBodyParameter("is_univ_100_exist", univ)
+            .addBodyParameter("is_counter_usaha_lain_100_exist", counterUsahaLain)
+            .addBodyParameter("is_masjid_100_exist", masjid)
+            .addBodyParameter("is_gereja_100_exist", gereja)
+            .addBodyParameter("is_sekolah_100_exist", sekolah)
+            .addBodyParameter("is_bengkel_100_exist", bengkel)
+            .build()
+            .getAsJSONObject(object : JSONObjectRequestListener {
+                override fun onResponse(response: JSONObject?) {
+                    if (response?.getBoolean("status") == true) {
+                        _updateCommonLiveData.postValue(
+                            QumparanResource.Success(
+                                GeneralApiResponse(
+                                    message = ""
+                                )
+                            )
+                        )
+                    } else {
                         _updateCommonLiveData.postValue(QumparanResource.Error(response.toString()))
                     }
                 }
@@ -444,27 +500,33 @@ class AdminRestoViewModel(
     }
 
     fun updateLegal(
-        idResto:String,
-        namaPemilikSertifikat:String,
-        jenisPemilikSertifikat:String,
-        jenisSertifikat:String,
-        jenisSewa:String,
-        hargaSewa:String,
-        masaBerlaku:String
-    ){
-        AndroidNetworking.post(BASE_URL_V1+"fe/restoran/$idResto/update/legal")
-            .addBodyParameter("nama_pemilik_sertifikat",namaPemilikSertifikat)
-            .addBodyParameter("jenis_sertifikat",jenisSertifikat)
-            .addBodyParameter("jenis_pemilik_sertifikat",jenisPemilikSertifikat)
-            .addBodyParameter("is_sewa",jenisSewa)
-            .addBodyParameter("harga_sewa",hargaSewa)
-            .addBodyParameter("masa_berlaku_sertifikat",masaBerlaku)
+        idResto: String,
+        namaPemilikSertifikat: String,
+        jenisPemilikSertifikat: String,
+        jenisSertifikat: String,
+        jenisSewa: String,
+        hargaSewa: String,
+        masaBerlaku: String
+    ) {
+        AndroidNetworking.post(BASE_URL_V1 + "fe/restoran/$idResto/update/legal")
+            .addBodyParameter("nama_pemilik_sertifikat", namaPemilikSertifikat)
+            .addBodyParameter("jenis_sertifikat", jenisSertifikat)
+            .addBodyParameter("jenis_pemilik_sertifikat", jenisPemilikSertifikat)
+            .addBodyParameter("is_sewa", jenisSewa)
+            .addBodyParameter("harga_sewa", hargaSewa)
+            .addBodyParameter("masa_berlaku_sertifikat", masaBerlaku)
             .build()
-            .getAsJSONObject(object :JSONObjectRequestListener{
+            .getAsJSONObject(object : JSONObjectRequestListener {
                 override fun onResponse(response: JSONObject?) {
-                    if (response?.getBoolean("status")==true){
-                        _updateCommonLiveData.postValue(QumparanResource.Success(GeneralApiResponse(message = "")))
-                    }else{
+                    if (response?.getBoolean("status") == true) {
+                        _updateCommonLiveData.postValue(
+                            QumparanResource.Success(
+                                GeneralApiResponse(
+                                    message = ""
+                                )
+                            )
+                        )
+                    } else {
                         _updateCommonLiveData.postValue(QumparanResource.Error(response.toString()))
                     }
                 }
@@ -477,29 +539,35 @@ class AdminRestoViewModel(
 
 
     fun updateRestoLalinAndParkir(
-        idResto:String,
-        fiveMinuteBusTruk:String,
-        fiveMinuteMotor:String,
-        fiveMinuteMobil:String,
-        parkirMotor:String,
-        parkirMobil:String,
-        jenisJalan:String,
-        rencanaPelebaranJalan:String,
-    ){
-        AndroidNetworking.post(BASE_URL_V1+"fe/restoran/$idResto/update/lalin-parkir")
-            .addBodyParameter("parkir_mobil",parkirMobil)
-            .addBodyParameter("parkir_motor",parkirMotor)
-            .addBodyParameter("5_menit_motor",fiveMinuteMotor)
-            .addBodyParameter("5_menit_mobil",fiveMinuteMobil)
-            .addBodyParameter("5_menit_truk",fiveMinuteBusTruk)
-            .addBodyParameter("rencana_pelebaran",rencanaPelebaranJalan)
-            .addBodyParameter("jenis_jalan",jenisJalan)
+        idResto: String,
+        fiveMinuteBusTruk: String,
+        fiveMinuteMotor: String,
+        fiveMinuteMobil: String,
+        parkirMotor: String,
+        parkirMobil: String,
+        jenisJalan: String,
+        rencanaPelebaranJalan: String,
+    ) {
+        AndroidNetworking.post(BASE_URL_V1 + "fe/restoran/$idResto/update/lalin-parkir")
+            .addBodyParameter("parkir_mobil", parkirMobil)
+            .addBodyParameter("parkir_motor", parkirMotor)
+            .addBodyParameter("5_menit_motor", fiveMinuteMotor)
+            .addBodyParameter("5_menit_mobil", fiveMinuteMobil)
+            .addBodyParameter("5_menit_truk", fiveMinuteBusTruk)
+            .addBodyParameter("rencana_pelebaran", rencanaPelebaranJalan)
+            .addBodyParameter("jenis_jalan", jenisJalan)
             .build()
-            .getAsJSONObject(object :JSONObjectRequestListener{
+            .getAsJSONObject(object : JSONObjectRequestListener {
                 override fun onResponse(response: JSONObject?) {
-                    if (response?.getBoolean("status")==true){
-                        _updateCommonLiveData.postValue(QumparanResource.Success(GeneralApiResponse(message = "")))
-                    }else{
+                    if (response?.getBoolean("status") == true) {
+                        _updateCommonLiveData.postValue(
+                            QumparanResource.Success(
+                                GeneralApiResponse(
+                                    message = ""
+                                )
+                            )
+                        )
+                    } else {
                         _updateCommonLiveData.postValue(QumparanResource.Error(response.toString()))
                     }
                 }
@@ -511,11 +579,25 @@ class AdminRestoViewModel(
     }
 
 
-    fun updateRestoAddress(restoId: String, lat: Double, long: Double, address: String,kelurahan:String,kecamatan:String) {
+    fun updateRestoAddress(
+        restoId: String,
+        lat: Double,
+        long: Double,
+        address: String,
+        kelurahan: String,
+        kecamatan: String
+    ) {
         _updateCommonLiveData.postValue(QumparanResource.Loading())
         viewModelScope.launch {
             try {
-                val res = ds.updateRestoAddress(restoId, lat = lat, long = long, address = address, kecamatan = kecamatan, kelurahan = kelurahan)
+                val res = ds.updateRestoAddress(
+                    restoId,
+                    lat = lat,
+                    long = long,
+                    address = address,
+                    kecamatan = kecamatan,
+                    kelurahan = kelurahan
+                )
                 if (res.isSuccessful) {
                     _updateCommonLiveData.postValue(QumparanResource.Success(res.body()))
                 } else {

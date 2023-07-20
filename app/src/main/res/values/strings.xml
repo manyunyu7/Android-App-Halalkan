@@ -102,6 +102,12 @@
         <item value="1">Tidak Ada</item>
     </string-array>
 
+    <string-array name="array_ada_tidak_lingkungan">
+        <item value="0">Pilih Jawaban</item>
+        <item value="1">Ada</item>
+        <item value="2">Tidak Ada</item>
+    </string-array>
+
     <string-array name="array_sewaan">
         <item value="0">Tidak</item>
         <item value="1">Bulanan</item>
