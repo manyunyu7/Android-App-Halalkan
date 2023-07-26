@@ -25,6 +25,7 @@
                 android:layout_height="wrap_content">
 
                 <ImageView
+                    android:id="@+id/profile"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/icon_profile_yellow"/>
@@ -157,6 +158,47 @@
                 tools:itemCount="4"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 tools:listitem="@layout/item_card_resto_admin" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/state_empty"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="90dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="gone"
+                tools:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                >
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:padding="50dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:lottie_autoPlay="true"
+                    app:lottie_fileName="food_questionable.json"
+                    app:lottie_loop="true"
+                    tools:layout_marginBottom="0dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/dimen_20dp"
+                    android:ellipsize="none"
+                    android:fontFamily="@font/poppins_regular"
+                    android:scrollHorizontally="false"
+                    android:text="Belum Ada Lokasi Yang Disurvey"
+                    android:textAlignment="center"
+                    android:textColor="@color/color_blue_purplish"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
 
         </LinearLayout>

@@ -38,6 +38,11 @@ class RestoReviewFragment : BaseFragment() {
 
     override fun initUI() {
         setupAdapterRv()
+
+        if(isRoleAssessor().not()){
+            binding.btnWriteReview.makeGone()
+            binding.btnNewReview.makeGone()
+        }
     }
 
     private fun setupAdapterRv() {

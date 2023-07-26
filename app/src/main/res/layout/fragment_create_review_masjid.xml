@@ -42,7 +42,7 @@
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@id/btn_back"
                     android:fontFamily="@font/poppins_medium"
-                    android:text="Tambah Review"
+                    android:text="Tambah Feedback"
                     android:textAlignment="textEnd"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
@@ -89,6 +89,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="3dp"
+                android:visibility="gone"
                 android:layout_marginVertical="@dimen/dimen_20dp"
                 android:background="@color/color_separator" />
 
@@ -100,6 +101,7 @@
                 android:fontFamily="@font/poppins_regular"
                 android:gravity="top"
                 android:hint="Skor"
+                android:visibility="gone"
                 android:textSize="15sp" />
 
             <RatingBar
@@ -110,11 +112,13 @@
                 android:layout_marginHorizontal="20dp"
                 android:layout_marginTop="@dimen/dimen_10dp"
                 android:numStars="5"
+                android:visibility="gone"
                 android:stepSize="1" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="3dp"
+                android:visibility="gone"
                 android:layout_marginVertical="@dimen/dimen_20dp"
                 android:background="@color/color_separator" />
 
@@ -122,6 +126,8 @@
                 android:id="@+id/et_translate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:visibility="gone"
                 android:layout_marginHorizontal="@dimen/dimen_20dp"
                 android:background="@android:color/transparent"
                 android:fontFamily="@font/poppins_regular"
@@ -130,6 +136,7 @@
                 android:textSize="15sp" />
 
             <LinearLayout
+                android:id="@+id/container_add_photo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/dimen_20dp"
@@ -177,6 +184,7 @@
 
 
             <TextView
+                android:id="@+id/label_deskripsi"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/dimen_20dp"
@@ -184,7 +192,7 @@
                 android:background="@android:color/transparent"
                 android:fontFamily="@font/poppins_regular"
                 android:gravity="top"
-                android:hint="Deskripsi"
+                android:hint="Feedback"
                 android:textSize="15sp" />
 
             <com.google.android.material.textfield.TextInputLayout
@@ -194,7 +202,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/dimen_20dp"
                 android:layout_marginTop="8dp"
-                android:hint="Tambahkan Deskripsi"
+                android:hint="Tambahkan Feedback"
                 android:minHeight="@dimen/dimen_50dp"
                 app:boxCornerRadiusBottomEnd="@dimen/dimen_10dp"
                 app:boxCornerRadiusBottomStart="@dimen/dimen_10dp"

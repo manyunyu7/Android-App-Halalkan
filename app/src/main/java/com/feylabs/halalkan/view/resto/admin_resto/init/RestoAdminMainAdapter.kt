@@ -3,7 +3,6 @@ package com.feylabs.halalkan.view.resto.admin_resto.init
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.RecyclerView
 import com.feylabs.halalkan.R
 import com.feylabs.halalkan.databinding.ItemCardRestoAdminBinding  as AdapterBinding
@@ -45,16 +44,16 @@ class RestoAdminMainAdapter :
             binding.tvDistance.text = model.distanceKm.toString()
 
             binding.tvTitle.text = model.name.toString()
-            binding.tvTopCategory.text = "Apayo"
+            binding.tvTopCategory.text = ""
             binding.tvAddress.text = model.address
-
+            binding.tvTopCategory.text=model.owmerName
             if (model.distanceKm.isNullOrEmpty()){
                 binding.containerDistance.visibility=View.GONE
             }
 
             binding.containerRating.visibility=View.GONE
 
-            binding.imgCover.loadImageFromURL(mContext,model.image_full_path)
+            binding.imgCover.loadImageFromURL(mContext,model.imageFullPath)
 
         }
     }

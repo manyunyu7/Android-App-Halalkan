@@ -100,6 +100,12 @@ interface RestoService {
         @Body file: RequestBody?,
     ): Response<ResponseBody?>?
 
+    @POST("restoran/editMain/{idResto}")
+    suspend fun editRestoMain(
+        @Body file: RequestBody?,
+        @Path("idResto") restoId: String,
+    ): Response<ResponseBody?>?
+
     @POST("fe/restoran/{idResto}/update/{urlupdate}")
     suspend fun updateRestoColumn(
         @Body file: RequestBody?,

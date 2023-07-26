@@ -44,11 +44,16 @@ class InitAdminRestoFragment : BaseFragment() {
     }
 
     private fun revokeViewModel() {
-        viewModel.createRestoLiveData.removeObserver { }
+        viewModel.createEditRestoLiveData.removeObserver { }
         viewModel.myRestoLiveData.removeObserver { }
     }
 
     override fun initUI() {
+
+        if(isRoleAssessor()){
+            binding.btnAddNewLocation.makeGone()
+            binding.btnAdd.makeGone()
+        }
         binding.rvRestoNearby.apply {
             layoutManager = setLayoutManagerGridVertical(2)
             adapter = nearbyRestoAdapter
@@ -100,6 +105,10 @@ class InitAdminRestoFragment : BaseFragment() {
     }
 
     override fun initAction() {
+        binding.profile.setOnClickListener {
+            findNavController().navigate(R.id.navigation_userProfileFragment)
+        }
+
         binding.btnLogout.setOnClickListener {
             DialogUtils.showConfirmationDialog(
                 context = requireContext(),
@@ -151,9 +160,13 @@ class InitAdminRestoFragment : BaseFragment() {
 
     private fun setupRestoData(data: AllRestoNoPagination?) {
         data?.let {
+            if(it.data.isEmpty().not())
             nearbyRestoAdapter.apply {
                 setWithNewData(data.data.toMutableList())
                 notifyDataSetChanged()
+                binding.stateEmpty.makeGone()
+            }else{
+                binding.stateEmpty.makeVisible()
             }
         }
     }

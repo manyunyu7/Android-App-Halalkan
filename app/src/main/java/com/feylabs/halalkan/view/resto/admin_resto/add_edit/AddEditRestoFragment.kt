@@ -1,4 +1,4 @@
-package com.feylabs.halalkan.view.resto.admin_resto.signature
+package com.feylabs.halalkan.view.resto.admin_resto.add_edit
 
 import android.Manifest
 import android.content.Intent
@@ -17,17 +17,18 @@ import com.feylabs.halalkan.R
 import com.feylabs.halalkan.customview.RazkyGalleryActivity
 import com.feylabs.halalkan.customview.imagepreviewcontainer.CustomViewPhotoModel
 import com.feylabs.halalkan.data.remote.QumparanResource.*
-import com.feylabs.halalkan.data.remote.reqres.resto.AllRestoNoPagination
 import com.feylabs.halalkan.data.remote.reqres.resto.RestoDetailResponse
 import com.feylabs.halalkan.data.remote.reqres.resto.SaveRestoPayload
 import com.feylabs.halalkan.databinding.FragmentAddEditRestoBinding
 import com.feylabs.halalkan.utils.DialogUtils
 import com.feylabs.halalkan.utils.ImageViewUtils.loadImage
+import com.feylabs.halalkan.utils.ImageViewUtils.loadImageFromURL
 import com.feylabs.halalkan.utils.base.BaseFragment
 import com.feylabs.halalkan.utils.snackbar.SnackbarType
 import com.feylabs.halalkan.view.resto.admin_resto.AdminRestoViewModel
 import com.tangxiaolv.telegramgallery.GalleryActivity
 import com.tangxiaolv.telegramgallery.GalleryConfig
+import org.koin.android.ext.android.get
 import org.koin.android.viewmodel.ext.android.viewModel
 import timber.log.Timber
 import java.io.File
@@ -51,31 +52,42 @@ class AddEditRestoFragment : BaseFragment() {
 
 
     override fun initUI() {
+        if (isEdit()) {
+            binding.pageTitle.text = "Edit Data"
+        }
     }
 
     override fun initObserver() {
-        viewModel.myRestoLiveData.observe(viewLifecycleOwner) {
+        viewModel.detailRestoLiveData.observe(viewLifecycleOwner) {
             when (it) {
                 is Default -> {}
                 is Error -> {
+                    showLoading(false)
                     showSnackbar(it.message.toString(), SnackbarType.ERROR)
                 }
-                is Loading -> {}
+
+                is Loading -> {
+                    showLoading(true)
+                }
+
                 is Success -> {
+                    showLoading(false)
                     setupRestoData(it.data)
                 }
             }
         }
 
-        viewModel.createRestoLiveData.observe(viewLifecycleOwner){
-            when(it){
+        viewModel.createEditRestoLiveData.observe(viewLifecycleOwner) {
+            when (it) {
                 is Default -> {}
                 is Error -> {
-                    showSnackbar(it.message.toString(),SnackbarType.ERROR)
+                    showSnackbar(it.message.toString(), SnackbarType.ERROR)
                 }
+
                 is Loading -> {
                     showLoading(true)
                 }
+
                 is Success -> {
                     showLoading(false)
                     DialogUtils.showSuccessDialog(
@@ -92,6 +104,35 @@ class AddEditRestoFragment : BaseFragment() {
             }
         }
 
+
+        viewModel.updateCommonLiveData.observe(viewLifecycleOwner) {
+            when (it) {
+                is Default -> {}
+                is Error -> {
+                    showSnackbar(it.message.toString(), SnackbarType.ERROR)
+                }
+
+                is Loading -> {
+                    showLoading(true)
+                }
+
+                is Success -> {
+                    showLoading(false)
+                    DialogUtils.showSuccessDialog(
+                        context = requireContext(),
+                        title = getString(R.string.title_success),
+                        message = getString(R.string.message_data_created_succesfully),
+                        positiveAction = Pair("OK") {
+                            findNavController().navigateUp()
+                        },
+                        autoDismiss = true,
+                        buttonAllCaps = false
+                    )
+                }
+            }
+        }
+
+
         viewModel.foodTypeLiveData.observe(viewLifecycleOwner) {
             when (it) {
                 is Default -> {}
@@ -99,9 +140,11 @@ class AddEditRestoFragment : BaseFragment() {
                     showLoading(false)
                     showSnackbar(it.message.toString(), SnackbarType.ERROR)
                 }
+
                 is Loading -> {
                     showLoading(true)
                 }
+
                 is Success -> {
                     showLoading(false)
                     val spinnerArray: MutableList<String> = mutableListOf()
@@ -125,9 +168,11 @@ class AddEditRestoFragment : BaseFragment() {
                     showLoading(false)
                     showSnackbar(it.message.toString(), SnackbarType.ERROR)
                 }
+
                 is Loading -> {
                     showLoading(true)
                 }
+
                 is Success -> {
                     showLoading(false)
                     val spinnerArray: MutableList<String> = mutableListOf()
@@ -154,6 +199,7 @@ class AddEditRestoFragment : BaseFragment() {
                 is Error -> {
                     showSnackbar(it.message.toString(), SnackbarType.ERROR)
                 }
+
                 is Loading -> {}
                 is Success -> {
                     it.data?.let {
@@ -165,9 +211,9 @@ class AddEditRestoFragment : BaseFragment() {
     }
 
     private fun showLoading(b: Boolean) {
-        if (b){
+        if (b) {
             binding.loadingAnim.makeVisible()
-        }else{
+        } else {
             binding.loadingAnim.makeGone()
         }
     }
@@ -188,15 +234,15 @@ class AddEditRestoFragment : BaseFragment() {
 
     override fun initAction() {
         binding.apply {
-            listOf(etAddress,etName,etDesc,etPhone).forEachIndexed { index, editText ->
+            listOf(etAddress, etName, etDesc, etPhone).forEachIndexed { index, editText ->
                 editText.addTextChangedListener {
-                    if(it.toString().isNotEmpty()){
-                        editText.error=null
+                    if (it.toString().isNotEmpty()) {
+                        editText.error = null
                     }
                 }
             }
         }
-        binding.btnRegister.setOnClickListener {
+        binding.btnSubmit.setOnClickListener {
             var message = ""
             var isError = false
 
@@ -207,43 +253,53 @@ class AddEditRestoFragment : BaseFragment() {
             val certification = mapCert[binding.spinnerCert.selectedItem]
             val foodType = mapFoodType[binding.spinnerTypeFood.selectedItem]
 
-            if (name.isEmpty()){
-                isError=true
-                binding.etName.error=getString(R.string.required_column)
+            if (name.isEmpty()) {
+                isError = true
+                binding.etName.error = getString(R.string.required_column)
             }
 
-            if (contact.isEmpty()){
-                isError=true
-                binding.etPhone.error=getString(R.string.required_column)
+//            if (contact.isEmpty()) {
+//                isError = true
+//                binding.etPhone.error = getString(R.string.required_column)
+//            }
+//
+//            if (address.isBlank()) {
+//                isError = true
+//                binding.etAddress.error = getString(R.string.required_column)
+//            }
+
+//            if (desc.isBlank()) {
+//                isError = true
+//                binding.etDesc.error = getString(R.string.required_column)
+//            }
+
+            if (coverPhoto == null && isEdit().not()) {
+                isError = true
+                showSnackbar("Foto Diperlukan", SnackbarType.ERROR)
             }
 
-            if (address.isBlank()){
-                isError=true
-                binding.etAddress.error=getString(R.string.required_column)
-            }
-            if (desc.isBlank()){
-                isError=true
-                binding.etDesc.error=getString(R.string.required_column)
-            }
-
-            if (coverPhoto==null){
-                isError=true
-                showSnackbar("Foto Diperlukan",SnackbarType.ERROR)
-            }
-
-            if (isError.not() && coverPhoto!=null){
-                viewModel.addRestaurant(
-                    SaveRestoPayload(
+            if (isError.not()) {
+                if (isEdit()) {
+                    viewModel.editMainInfo(
+                        idResto = getRestoId(),
                         name = name,
-                        phoneNumber = contact,
-                        description = desc,
-                        address = address,
-                        typeFoodId = foodType.toString(),
-                        certificationId = certification.toString(),
-                        lat = "-6.391130386883168",
-                        long = "106.82685640818521"
-                    ), coverPhoto!!
-                )
+                        file = coverPhoto
+                    )
+                } else {
+                    viewModel.addRestaurant(
+                        SaveRestoPayload(
+                            name = name,
+                            phoneNumber = contact,
+                            description = desc,
+                            address = address,
+                            typeFoodId = foodType.toString(),
+                            certificationId = certification.toString(),
+                            lat = "-6.391130386883168",
+                            long = "106.82685640818521"
+                        ), coverPhoto!!
+                    )
+                }
+
             }
 
         }
@@ -257,7 +313,7 @@ class AddEditRestoFragment : BaseFragment() {
             }
 
             btnDelete.setOnClickListener {
-                coverPhoto=null
+                coverPhoto = null
                 binding.includePhotoPreview.photo.loadImage(
                     requireContext(), R.drawable.bg_header_daylight
                 )
@@ -269,7 +325,9 @@ class AddEditRestoFragment : BaseFragment() {
     }
 
     override fun initData() {
-//        viewModel.getDetailResto(getRestoId())
+        if (isEdit()) {
+            viewModel.getDetailResto(getRestoId())
+        }
         viewModel.getRestoCert()
         viewModel.getFoodType()
     }
@@ -321,8 +379,22 @@ class AddEditRestoFragment : BaseFragment() {
         _binding = null
     }
 
-    private fun setupRestoData(data: AllRestoNoPagination?) {
+    private fun setupRestoData(data: RestoDetailResponse?) {
+        val detailResto = data?.data?.detailResto;
+        if (detailResto != null) {
+            binding.etName.setText(detailResto.name)
+            binding.includePhotoPreview.photo.loadImageFromURL(
+                requireContext(),
+                detailResto.imageFullPath
+            )
+            binding.etAddress.setText(detailResto.address)
+            binding.etPhone.setText(detailResto.phoneNumber)
+        }
+    }
 
+    private fun isEdit(): Boolean {
+        val mode = arguments?.getBoolean("is_edit", false)
+        return mode ?: false;
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

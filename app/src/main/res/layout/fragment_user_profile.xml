@@ -164,32 +164,29 @@
 
             <com.feylabs.halalkan.customview.MuskoProfileMenuItem
                 android:id="@+id/menu_thread_forum"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
             <com.feylabs.halalkan.customview.MuskoProfileMenuItem
                 android:id="@+id/menu_give_review"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
             <com.feylabs.halalkan.customview.MuskoProfileMenuItem
                 android:id="@+id/menu_history_transaction"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
-            <View
-                android:layout_marginTop="@dimen/dimen_20dp"
-                android:layout_width="match_parent"
-                android:layout_height="2.8dp"
-                android:background="#EEEEEE"/>
 
             <TextView
-                android:layout_marginTop="@dimen/dimen_20dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dimen_10dp"
                 android:fontFamily="@font/poppins_medium"
-                android:text="Tentang Musko"
+                android:text="Tentang Warteg Spotter"
                 android:textColor="@color/colorBlack"
                 android:textSize="16sp"
                 app:layout_constraintStart_toEndOf="@id/container_image"
@@ -248,6 +245,7 @@
 
     <include
         android:id="@+id/bottom_nav"
+        android:visibility="gone"
         layout="@layout/layout_user_bottom_nav"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

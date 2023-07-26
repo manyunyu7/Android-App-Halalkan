@@ -87,9 +87,9 @@ class AdminRestoViewModel(
         MutableLiveData<QumparanResource<RestoDetailResponse?>>()
     val detailRestoLiveData get() = _detailRestoLiveData
 
-    private var _createRestoLiveData =
+    private var _createEditRestoLiveData =
         MutableLiveData<QumparanResource<ResponseBody?>>()
-    val createRestoLiveData get() = _createRestoLiveData
+    val createEditRestoLiveData get() = _createEditRestoLiveData
 
     private var _createUpdateFoodLiveData =
         MutableLiveData<QumparanResource<GeneralApiResponse?>>()
@@ -228,12 +228,55 @@ class AdminRestoViewModel(
         }
     }
 
+    fun editMainInfo(
+        idResto: String,
+        name: String,
+        file: File?
+    ) {
+        viewModelScope.launch {
+            _createEditRestoLiveData.postValue(QumparanResource.Loading())
+            val builder = MultipartBody.Builder()
+            builder.setType(MultipartBody.FORM)
+            builder.addFormDataPart("name", name)
+
+            if(file!=null){
+                builder.addFormDataPart(
+                    "image",
+                    file.name,
+                    RequestBody.create(("multipart/form-data").toMediaTypeOrNull(), file)
+                )
+            }
+
+            val requestBody: MultipartBody = builder.build()
+            try {
+                val req = ds.editRestoMain(idResto = idResto,requestBody)
+                req?.let {
+                    if (req.isSuccessful) {
+                        _createEditRestoLiveData.postValue(QumparanResource.Success(req.body()))
+                    } else {
+                        var message = req.message().toString()
+                        req.errorBody()?.let {
+                            val jsonObj = JSONObject(it.charStream().readText())
+                            message = jsonObj.getString("message")
+                        }
+                        _createEditRestoLiveData.postValue(QumparanResource.Error(message))
+                    }
+                } ?: run {
+                    _createEditRestoLiveData.postValue(QumparanResource.Error("Null"))
+                }
+            } catch (e: Exception) {
+                _createEditRestoLiveData.postValue(QumparanResource.Error(e.message.toString()))
+            }
+        }
+    }
+
+
     fun addRestaurant(
         body: SaveRestoPayload,
         file: File
     ) {
         viewModelScope.launch {
-            _createRestoLiveData.postValue(QumparanResource.Loading())
+            _createEditRestoLiveData.postValue(QumparanResource.Loading())
             val builder = MultipartBody.Builder()
             builder.setType(MultipartBody.FORM)
             builder.addFormDataPart("name", body.name)
@@ -256,20 +299,20 @@ class AdminRestoViewModel(
                 val req = ds.createResto(requestBody)
                 req?.let {
                     if (req.isSuccessful) {
-                        _createRestoLiveData.postValue(QumparanResource.Success(req.body()))
+                        _createEditRestoLiveData.postValue(QumparanResource.Success(req.body()))
                     } else {
                         var message = req.message().toString()
                         req.errorBody()?.let {
                             val jsonObj = JSONObject(it.charStream().readText())
                             message = jsonObj.getString("message")
                         }
-                        _createRestoLiveData.postValue(QumparanResource.Error(message))
+                        _createEditRestoLiveData.postValue(QumparanResource.Error(message))
                     }
                 } ?: run {
-                    _createRestoLiveData.postValue(QumparanResource.Error("Null"))
+                    _createEditRestoLiveData.postValue(QumparanResource.Error("Null"))
                 }
             } catch (e: Exception) {
-                _createRestoLiveData.postValue(QumparanResource.Error(e.message.toString()))
+                _createEditRestoLiveData.postValue(QumparanResource.Error(e.message.toString()))
             }
         }
     }
@@ -611,6 +654,35 @@ class AdminRestoViewModel(
                 _updateCommonLiveData.postValue(QumparanResource.Error(e.message.toString()))
             }
         }
+    }
+
+    fun updateRestoVideo(
+        idResto: String,
+        videoLink: String
+    ) {
+        AndroidNetworking.post(BASE_URL_V1 + "fe/restoran/$idResto/update/video")
+            .addBodyParameter("idResto", idResto)
+            .addBodyParameter("video_link", videoLink)
+            .build()
+            .getAsJSONObject(object : JSONObjectRequestListener {
+                override fun onResponse(response: JSONObject?) {
+                    if (response?.getBoolean("status") == true) {
+                        _updateCommonLiveData.postValue(
+                            QumparanResource.Success(
+                                GeneralApiResponse(
+                                    message = ""
+                                )
+                            )
+                        )
+                    } else {
+                        _updateCommonLiveData.postValue(QumparanResource.Error(response.toString()))
+                    }
+                }
+
+                override fun onError(anError: ANError?) {
+                    _updateCommonLiveData.postValue(QumparanResource.Error(message = anError.toString()))
+                }
+            })
     }
 
     fun getAllRestoRaw() {

@@ -35,7 +35,7 @@
             android:ellipsize="none"
             android:fontFamily="@font/montserrat_bold"
             android:scrollHorizontally="false"
-            android:text="Reviews"
+            android:text="Feedback dari Asessor"
             android:textColor="@color/color_blue_purplish"
             android:textSize="17sp"
             android:textStyle="bold" />
@@ -68,6 +68,7 @@
                 android:id="@+id/start_stats"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -107,7 +108,7 @@
                     android:textColor="@color/colorBlack"
                     android:textSize="@dimen/dimen_12sp"
                     android:textAlignment="center"
-                    android:text="Belum review untuk masjid ini"
+                    android:text="Belum ada feedback dari asessor"
                     app:layout_constraintTop_toBottomOf="@id/star_indicator"/>
 
 
@@ -124,7 +125,6 @@
                     />
 
             </LinearLayout>
-
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv"

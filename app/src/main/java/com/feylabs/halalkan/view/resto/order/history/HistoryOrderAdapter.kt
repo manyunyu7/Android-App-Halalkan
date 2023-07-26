@@ -6,12 +6,9 @@ import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.RecyclerView
 import com.feylabs.halalkan.R
-import com.feylabs.halalkan.utils.CommonUtil.makeGone
-import com.feylabs.halalkan.utils.CommonUtil.makeVisible
 import com.feylabs.halalkan.data.remote.reqres.order.history.OrderHistoryModel  as AdapterModel
 import com.feylabs.halalkan.databinding.ItemHistoryOrderBinding as AdapterBinding
 import com.feylabs.halalkan.utils.ImageViewUtils.loadImageFromURL
-import com.feylabs.halalkan.utils.resto.RestoUtility
 import com.feylabs.halalkan.utils.resto.RestoUtility.getStatusColor
 
 class HistoryOrderAdapter : RecyclerView.Adapter<HistoryOrderAdapter.RestaurantHomeViewHolder>() {
@@ -50,7 +47,7 @@ class HistoryOrderAdapter : RecyclerView.Adapter<HistoryOrderAdapter.RestaurantH
 
             binding.tvMainName.text = model.restoObj.name
 
-            binding.photo.loadImageFromURL(mContext, model.restoObj.image_full_path)
+            binding.photo.loadImageFromURL(mContext, model.restoObj.imageFullPath)
             model.userObj?.let {
                 binding.tvMainName.text= it.name
                 binding.tvSecondaryName.text= it.phoneNumber

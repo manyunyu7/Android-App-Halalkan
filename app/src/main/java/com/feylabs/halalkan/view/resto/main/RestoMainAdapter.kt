@@ -55,7 +55,7 @@ class RestoMainAdapter : RecyclerView.Adapter<RestoMainAdapter.RestaurantHomeVie
             binding.tvAddress.text = model.address
 
             binding.tvTopCategory.text = model.certificationName.toString()
-            binding.imgCover.loadImageFromURL(mContext, model.image_full_path)
+            binding.imgCover.loadImageFromURL(mContext, model.imageFullPath)
 
         }
     }

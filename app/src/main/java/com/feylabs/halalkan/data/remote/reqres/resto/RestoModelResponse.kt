@@ -2,7 +2,6 @@ package com.feylabs.halalkan.data.remote.reqres.resto
 
 import android.os.Parcelable
 import androidx.annotation.Keep
-import androidx.annotation.Nullable
 import com.feylabs.halalkan.utils.PaginationPlaceholder
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
@@ -15,6 +14,8 @@ data class RestoModelResponse(
     var address: String = "",
     @SerializedName("kecamatan")
     var kecamatan: String? = "",
+    @SerializedName("owner_name")
+    var owmerName: String? = "",
     @SerializedName("kelurahan")
     var kelurahan: String? = "",
     @SerializedName("certification_id")
@@ -48,7 +49,9 @@ data class RestoModelResponse(
     @SerializedName("updated_at")
     var updatedAt: String = "",
     @SerializedName("img_full_path")
-    var image_full_path: String = "",
+    var imageFullPath: String = "",
+    @SerializedName("video_youtube_link")
+    var youtubeVideoLink: String? = "",
     @SerializedName("user_id")
     var userId: Int = 0,
     @SerializedName("is_resto_schedule_open")

@@ -17,6 +17,7 @@ import com.feylabs.halalkan.MainViewModel
 import com.feylabs.halalkan.R
 import com.feylabs.halalkan.customview.RazkyGalleryActivity
 import com.feylabs.halalkan.customview.bottomsheet.BottomSheetOrderRejection
+import com.feylabs.halalkan.customview.imagepreviewcontainer.CustomViewPhotoModel
 import com.feylabs.halalkan.data.remote.QumparanResource.*
 import com.feylabs.halalkan.data.remote.reqres.order.OrderStatusResponse
 import com.feylabs.halalkan.data.remote.reqres.order.history.OrderHistoryModel
@@ -50,6 +51,7 @@ class CurrentRestaurantFragment : BaseFragment() {
     private val PERMISSION_CODE_STORAGE = 1001
 
     private val mAdapter by lazy { RestoHistoryOrderAdapter() }
+    private val mAdapterPhoto by lazy { PhotoListAdapter() }
 
     override fun initUI() {
         arguments?.getString("name")?.let {
@@ -58,6 +60,11 @@ class CurrentRestaurantFragment : BaseFragment() {
 
         binding.btnBack.setOnClickListener {
             findNavController().popBackStack();
+        }
+
+        binding.rvPhoto.apply {
+            adapter = mAdapterPhoto
+            layoutManager = setLayoutManagerHorizontal()
         }
 
         binding.rv.apply {
@@ -73,6 +80,12 @@ class CurrentRestaurantFragment : BaseFragment() {
 //                } else {
 //                    binding.btnLoadMore.makeGone()
 //                }
+            }
+        })
+
+        mAdapterPhoto.setupAdapterInterface(object : PhotoListAdapter.ItemInterface{
+            override fun onclick(model: CustomViewPhotoModel) {
+
             }
         })
 
@@ -94,7 +107,6 @@ class CurrentRestaurantFragment : BaseFragment() {
                     bundleOf("orderId" to model.id)
                 )
             }
-
         })
     }
 
@@ -339,9 +351,20 @@ class CurrentRestaurantFragment : BaseFragment() {
             binding.labelInfoProfileUserName.text = resto.name
             binding.labelEmail.text = resto.address
             binding.labelPhone.text = resto.phoneNumber
-            binding.ivMainImage.loadImageFromURL(requireContext(), resto.image_full_path)
+            binding.ivMainImage.loadImageFromURL(requireContext(), resto.imageFullPath)
+
+            val tempList = mutableListOf<CustomViewPhotoModel>()
+
+            data.data.photos.forEachIndexed { index, s ->
+                tempList.add(CustomViewPhotoModel(
+                    name = "",
+                    url = s,
+                ))
+            }
+            mAdapterPhoto.setWithNewData(tempList)
         }
-    }
+
+        }
 
     private fun showLoading(b: Boolean) {
         if (b) {
@@ -363,13 +386,19 @@ class CurrentRestaurantFragment : BaseFragment() {
     }
 
     override fun initAction() {
-        binding.menuCategory.setOnClickListener {
-            findNavController().navigate(R.id.navigation_menuCategoryFragment)
+        binding.menuPhoto.setOnClickListener {
+            findNavController().navigate(
+                R.id.navigation_addEditRestoFragment, bundleOf(
+                    "is_edit" to true, "id" to getRestoId()
+                )
+            )
         }
 
         binding.menuOperatingHour.setOnClickListener {
             findNavController().navigate(R.id.navigation_editOperatingHoursFragment)
         }
+
+
 
         binding.menuAddress.setOnClickListener {
             findNavController().navigate(R.id.navigation_editRestoAddressFragment)
@@ -404,6 +433,11 @@ class CurrentRestaurantFragment : BaseFragment() {
                 getMuskoDrawable(R.drawable.ic_168_building)
             )
 
+            menuVideo.build(
+                "Video Jalan Depan",
+                getMuskoDrawable(R.drawable.ic_168_video_01)
+            )
+
             menuInfoAirListrik.build(
                 "Listrik, Air ",
                 getMuskoDrawable(R.drawable.ic_168_flash)
@@ -418,6 +452,49 @@ class CurrentRestaurantFragment : BaseFragment() {
                 "Keadaan Lingkungan Sekitar",
                 getMuskoDrawable(R.drawable.ic_168_maps)
             )
+
+            menuWriteReviewFromAssessor.build(
+                "Tambah Feedback/Catatan",
+                getMuskoDrawable(R.drawable.ic_168_edit)
+            )
+
+            menuAlbum.build(
+                "Foto Tambahan",
+                getMuskoDrawable(R.drawable.ic_168_album)
+            )
+
+            menuAlbum.setOnClickListener {
+                findNavController().navigate(
+                    R.id.navigation_restoCreateReviewFragment, bundleOf(
+                        "id" to getRestoId()
+                    )
+                )
+            }
+
+            menuWriteReviewFromAssessor.setOnClickListener {
+                findNavController().navigate(
+                    R.id.navigation_restoCreateReviewFragment, bundleOf(
+                        "id" to getRestoId()
+                    )
+                )
+            }
+
+            if (isRoleAssessor().not()) {
+                binding.menuWriteReviewFromAssessor.makeGone()
+            }
+
+            menuReviewFromAssessor.build(
+                "Feedback/Catatan Asessor",
+                getMuskoDrawable(R.drawable.ic_168_album)
+            )
+
+            menuReviewFromAssessor.setOnClickListener {
+                findNavController().navigate(
+                    R.id.navigation_restoReviewFragment, bundleOf(
+                        "id" to getRestoId()
+                    )
+                )
+            }
 
             menuKeadaanLingkungan.setOnClickListener {
                 findNavController().navigate(R.id.navigation_editRestoInfoLingkunganFragment)
@@ -446,19 +523,24 @@ class CurrentRestaurantFragment : BaseFragment() {
             menuRestoPhone.setOnClickListener {
                 findNavController().navigate(R.id.navigation_editRestoPhoneFragment)
             }
+
+            menuVideo.setOnClickListener {
+                findNavController().navigate(R.id.navigation_editRestoVideoFragment)
+            }
         }
     }
 
     override fun initData() {
 //        orderViewModel.getAllOrderStatusLiveData()
+//        orderViewModel.getRestoHistory(
+//            restoId = getRestoId(),
+//            page = 1,
+//            perPage = 10
+//        )
         viewModel.getDetailResto(getRestoId())
         viewModel.getRestoCert()
         viewModel.getFoodType()
-        orderViewModel.getRestoHistory(
-            restoId = getRestoId(),
-            page = 1,
-            perPage = 10
-        )
+
     }
 
 

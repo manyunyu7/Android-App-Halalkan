@@ -41,7 +41,25 @@ class RestoCreateReviewFragment : BaseFragment() {
     private val PERMISSION_CODE_STORAGE = 1001
 
     override fun initUI() {
-        binding.pageTitle.text="Review Restoran"
+        binding.btnBack.setOnClickListener {
+            findNavController().popBackStack()
+        }
+
+        binding.pageTitle.text = "Review Restoran"
+
+        if(isRoleAssessor()){
+            binding.containerAddPhoto.makeGone()
+            binding.pageTitle.text = "Tambah Feedback/Catatan"
+        }
+
+        if(isRoleRestaurant()){
+            binding.containerAddPhoto.makeVisible()
+            binding.labelDeskripsi.makeGone()
+            binding.etDeskripsi.makeGone()
+            binding.pageTitle.text = "Tambah Foto"
+        }
+
+
         binding.ratingBar.rating = 5f
         binding.photoContainer.registerChange(
             object : CustomViewImageContainerPreviewSmall.ListenPhotoChange {
@@ -60,7 +78,6 @@ class RestoCreateReviewFragment : BaseFragment() {
     private fun getRestoId(): String {
         return arguments?.getString("id") ?: ""
     }
-
     override fun initObserver() {
         viewModel.createReviewLiveData.observe(viewLifecycleOwner) {
             when (it) {
@@ -81,11 +98,10 @@ class RestoCreateReviewFragment : BaseFragment() {
             }
         }
     }
-
     private fun showLoading(b: Boolean) {
-        if (b){
+        if (b) {
             binding.loadingScreen.root.makeVisible()
-        }else{
+        } else {
             binding.loadingScreen.root.makeGone()
         }
     }
@@ -113,12 +129,24 @@ class RestoCreateReviewFragment : BaseFragment() {
                 }
             }
 
-            viewModel.addReview(
-                restoId = getRestoId(),
-                comment = comment,
-                ratingId = rating,
-                filePaths = files
-            )
+            var isError = false;
+
+            if (comment?.isEmpty() == true) {
+                if (isRoleAssessor()) {
+                    isError = true;
+                    showToast("Silakan mengisi feedback/notes terlebih dahulu")
+                }
+            }
+
+            if (isError.not()) {
+                viewModel.addReview(
+                    restoId = getRestoId(),
+                    comment = comment,
+                    ratingId = rating,
+                    filePaths = files
+                )
+            }
+
         }
     }
 

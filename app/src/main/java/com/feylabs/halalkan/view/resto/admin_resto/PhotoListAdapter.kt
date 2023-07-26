@@ -1,4 +1,4 @@
-package com.feylabs.halalkan.view.driver.task
+package com.feylabs.halalkan.view.resto.admin_resto
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,21 +6,25 @@ import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.RecyclerView
 import com.feylabs.halalkan.R
-import com.feylabs.halalkan.data.remote.reqres.order.history.OrderHistoryModel  as AdapterModel
-import com.feylabs.halalkan.databinding.ItemHistoryOrderBinding as AdapterBinding
+import com.feylabs.halalkan.databinding.CustomviewItemPhotoContainerPreviewSmallBinding as AdapterBinding
+import com.feylabs.halalkan.databinding.ItemPhotoBinding
+import com.feylabs.halalkan.customview.imagepreviewcontainer.CustomViewPhotoModel as AdapterModel
 import com.feylabs.halalkan.utils.ImageViewUtils.loadImageFromURL
-import com.feylabs.halalkan.utils.resto.RestoUtility.getStatusColor
 
-class DriverOrderAdapter : RecyclerView.Adapter<DriverOrderAdapter.AdapterViewHolder>() {
+class PhotoListAdapter : RecyclerView.Adapter<PhotoListAdapter.AdapterViewHolder>() {
 
     val data = mutableListOf<AdapterModel>()
     lateinit var adapterInterface: ItemInterface
-
     var page = 1
 
     fun setWithNewData(data: MutableList<AdapterModel>) {
         this.data.clear()
         this.data.addAll(data)
+        notifyDataSetChanged()
+    }
+
+    fun clearData() {
+        this.data.clear()
         notifyDataSetChanged()
     }
 
@@ -40,13 +44,13 @@ class DriverOrderAdapter : RecyclerView.Adapter<DriverOrderAdapter.AdapterViewHo
 
         var binding: AdapterBinding = AdapterBinding.bind(itemView)
 
-        fun onBInd(model: AdapterModel) {
+        fun onBind(model: AdapterModel) {
             val mContext = binding.root.context
 
-            binding.base.animation = AnimationUtils.loadAnimation(
-                mContext,
-                R.anim.fade_transition_animation
-            )
+//            binding.base.animation = AnimationUtils.loadAnimation(
+//                mContext,
+//                R.anim.fade_transition_animation
+//            )
 
             if (::adapterInterface.isInitialized) {
                 binding.root.setOnClickListener {
@@ -54,32 +58,18 @@ class DriverOrderAdapter : RecyclerView.Adapter<DriverOrderAdapter.AdapterViewHo
                 }
             }
 
-            binding.tvMainName.text = model.restoObj.name
-
-            binding.photo.loadImageFromURL(mContext, model.restoObj.imageFullPath)
-            model.userObj?.let {
-                binding.tvMainName.text= it.name
-                binding.tvSecondaryName.text= it.phoneNumber
-                binding.photo.loadImageFromURL(mContext,it.imgFullPath)
-            }
-
-            binding.orderDate.text=model.createdAt.toString()
-
-            binding.orderStatus.setTextColor(model.statusId.getStatusColor());
-            binding.orderedItems.text = model.getOrdersString()
-            binding.orderStatus.text = model.statusDesc
-            binding.totalPrice.text = model.getFormattedTotalPrice()
+            binding.photo.loadImageFromURL(mContext, model.url)
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AdapterViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_history_order, parent, false)
+            .inflate(R.layout.customview_item_photo_container_preview_small, parent, false)
         return AdapterViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: AdapterViewHolder, position: Int) {
-        holder.onBInd(data[position])
+        holder.onBind(data[position])
     }
 
     override fun getItemCount(): Int {

@@ -145,7 +145,7 @@
                 android:layout_marginTop="@dimen/dimen_20dp">
 
                 <LinearLayout
-                    android:id="@+id/menu_category"
+                    android:id="@+id/menu_photo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -253,21 +253,46 @@
                 android:background="@color/color_separator" />
 
             <TextView
+                android:id="@+id/label_info_photo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:fontFamily="@font/poppins_medium"
+                android:text="Photo"
+                android:layout_marginBottom="@dimen/dimen_10dp"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_photo"
+                android:visibility="visible"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_10dp"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/customview_item_photo_container_preview_small" />
+
+            <TextView
                 android:id="@+id/label_info_resto"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:fontFamily="@font/poppins_medium"
                 android:text="Informasi"
+                android:layout_marginBottom="@dimen/dimen_10dp"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
 
+            <com.feylabs.halalkan.customview.MuskoProfileMenuItem
+                android:id="@+id/menu_album"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
             <com.feylabs.halalkan.customview.MuskoProfileMenuItem
                 android:id="@+id/menu_info_bangunan"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
-
 
             <com.feylabs.halalkan.customview.MuskoProfileMenuItem
                 android:id="@+id/menu_info_air_listrik"
@@ -295,6 +320,11 @@
 
             <com.feylabs.halalkan.customview.MuskoProfileMenuItem
                 android:id="@+id/menu_keadaan_lingkungan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <com.feylabs.halalkan.customview.MuskoProfileMenuItem
+                android:id="@+id/menu_video"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
@@ -339,6 +369,25 @@
                 android:layout_height="3dp"
                 android:layout_marginVertical="@dimen/dimen_20dp"
                 android:background="@color/color_separator" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:fontFamily="@font/poppins_medium"
+                android:text="Feedback dari Asessor"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <com.feylabs.halalkan.customview.MuskoProfileMenuItem
+                android:id="@+id/menu_review_from_assessor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <com.feylabs.halalkan.customview.MuskoProfileMenuItem
+                android:id="@+id/menu_write_review_from_assessor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
             <HorizontalScrollView
                 android:visibility="gone"

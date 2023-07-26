@@ -70,10 +70,12 @@ object ImageViewUtils {
 
     private fun loadThumbnails(): Int {
         val list = listOf(
-            R.drawable.bg_header_daylight,
-            R.drawable.bg_header_dawn,
-            R.drawable.bg_header_evening,
-            R.drawable.bg_header_night,
+//            R.drawable.bg_header_daylight,
+//            R.drawable.bg_header_dawn,
+//            R.drawable.bg_header_evening,
+//            R.drawable.bg_header_night,
+            R.drawable.placeholder,
+            R.drawable.white_image_placeholder,
 //            R.drawable.bg_header_sunrise
         )
         return list.random()

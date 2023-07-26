@@ -51,6 +51,9 @@ class UserProfileFragment : BaseFragment() {
     var coverPhoto: File? = null
 
     override fun initAction() {
+        binding.btnBack.setOnClickListener {
+            findNavController().popBackStack()
+        }
         binding.btnEdit.setOnClickListener {
             findNavController().navigate(R.id.navigation_editProfileFragment)
         }

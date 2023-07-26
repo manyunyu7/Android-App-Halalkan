@@ -218,7 +218,11 @@ class RemoteDataSource(
      suspend fun createResto(body: RequestBody): Response<ResponseBody?>? =
         restoService.createResto(body)
 
-     suspend fun createRestoFoodCategory(
+    suspend fun editRestoMain(idResto:String,body: RequestBody): Response<ResponseBody?>? =
+        restoService.editRestoMain(body, restoId =idResto )
+
+
+    suspend fun createRestoFoodCategory(
         id: String,
         body: RequestBody
     ): Response<ResponseBody?>? {

@@ -258,7 +258,7 @@
         tools:layout="@layout/fragment_xresto_init" />
     <fragment
         android:id="@+id/navigation_addEditRestoFragment"
-        android:name="com.feylabs.halalkan.view.resto.admin_resto.signature.AddEditRestoFragment"
+        android:name="com.feylabs.halalkan.view.resto.admin_resto.add_edit.AddEditRestoFragment"
         android:label="AddEditRestoFragment" />
     <fragment
         android:id="@+id/navigation_addEditCategoryFragment"
@@ -303,6 +303,13 @@
         android:name="com.feylabs.halalkan.view.resto.admin_resto.edit_info.phone.EditRestoPhoneFragment"
         android:label="EditRestoPhoneFragment"
         tools:layout="@layout/fragment_xresto_edit_phone" />
+
+    <fragment
+        android:id="@+id/navigation_editRestoVideoFragment"
+        android:name="com.feylabs.halalkan.view.resto.admin_resto.edit_info.video.EditRestoVideoFragment"
+        android:label="EditRestoPhoneFragment"
+        tools:layout="@layout/fragment_xresto_edit_video" />
+
 
     <fragment
         android:id="@+id/navigation_editRestoInfoLingkunganFragment"

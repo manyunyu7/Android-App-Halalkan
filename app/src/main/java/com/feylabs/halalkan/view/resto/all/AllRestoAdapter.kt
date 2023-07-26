@@ -7,7 +7,6 @@ import android.view.animation.AnimationUtils
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.feylabs.halalkan.R
-import com.feylabs.halalkan.data.local.MyPreference
 import com.feylabs.halalkan.databinding.ItemRestoCompactBinding  as Binding
 import com.feylabs.halalkan.data.remote.reqres.resto.RestoModelResponse  as Data
 import com.feylabs.halalkan.utils.CommonUtil
@@ -130,7 +129,7 @@ class AllRestoAdapter :
 
                 binding.tvTitle.text = model.name.toString()
                 binding.tvCategory.text = model.certificationName.toString()
-                binding.ivMainImage.loadImageFromURL(mContext, model.image_full_path)
+                binding.ivMainImage.loadImageFromURL(mContext, model.imageFullPath)
 
             }
 

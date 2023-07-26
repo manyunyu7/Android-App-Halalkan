@@ -38,8 +38,8 @@
     <string name="label_hubungi">Hubungi</string>
 
     <string-array name="array_type_registrant">
-        <item value="2">Wisatawan</item>
-        <item value="3">Restaurant</item>
+        <item value="2">Asessor</item>
+        <item value="3">Surveyor</item>
     </string-array>
 
     <string-array name="array_days">

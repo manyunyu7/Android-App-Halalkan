@@ -159,6 +159,17 @@ abstract class BaseFragment : Fragment() {
 
     fun colorActive() = "#156DBE"
 
+
+    fun isRoleAssessor(): Boolean {
+        val user = MyPreference(requireContext()).getUserRole()
+        return user.equals("5")
+    }
+
+    fun isRoleRestaurant(): Boolean {
+        val user = MyPreference(requireContext()).getUserRole()
+        return user.equals("3")
+    }
+
     fun setLayoutManagerGridVertical(spanCount: Int = 2) = GridLayoutManager(
         requireContext(), spanCount,
         GridLayoutManager.VERTICAL, false

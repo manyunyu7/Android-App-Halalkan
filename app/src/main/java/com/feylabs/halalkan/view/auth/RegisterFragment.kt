@@ -128,11 +128,10 @@ class RegisterFragment : BaseFragment() {
             var roles = 2
             val spinnerValue = binding.spinnerJenisPemohon.selectedItemPosition
             if (spinnerValue==0)
-                roles = 2
+                roles = 4
             if (spinnerValue==1){
                 roles=3
             }
-
             if (isError.not()) {
                 viewModel.register(
                     RegisterBodyRequest(

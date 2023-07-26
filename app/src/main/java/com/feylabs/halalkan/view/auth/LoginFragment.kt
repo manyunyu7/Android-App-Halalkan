@@ -34,7 +34,7 @@ class LoginFragment : BaseFragment() {
         val role = MyPreference(requireContext()).getUserRole();
         if(role?.isNotEmpty() == true){
             when (role) {
-                "3" -> {
+                "3","5" -> {
                     findNavController().navigate(R.id.action_navigation_loginFragment_to_navigation_initAdminRestoFragment)
                 }
                 "4"-> {
@@ -91,6 +91,10 @@ class LoginFragment : BaseFragment() {
             3 -> {
                 findNavController().navigate(R.id.action_navigation_loginFragment_to_navigation_initAdminRestoFragment)
                 showSnackbar(getString(R.string.logged_in_message_resto),SnackbarType.SUCCESS)
+            }
+            5 -> {
+                findNavController().navigate(R.id.action_navigation_loginFragment_to_navigation_initAdminRestoFragment)
+                showSnackbar(getString(R.string.logged_in_message_driver),SnackbarType.SUCCESS)
             }
             4 -> {
                 findNavController().navigate(R.id.action_navigation_loginFragment_to_navigation_driverOrderFragment)
