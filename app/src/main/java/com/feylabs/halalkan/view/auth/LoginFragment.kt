@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.widget.doOnTextChanged
 import androidx.navigation.fragment.findNavController
 import com.feylabs.halalkan.R
@@ -35,9 +36,11 @@ class LoginFragment : BaseFragment() {
         if(role?.isNotEmpty() == true){
             when (role) {
                 "3" -> {
+                    showToast("Anda Login Sebagai Restoran")
                     findNavController().navigate(R.id.action_navigation_loginFragment_to_navigation_initAdminRestoFragment)
                 }
                 "4"-> {
+                    showToast("Anda Login Sebagai Driver")
                     findNavController().navigate(R.id.action_navigation_loginFragment_to_navigation_driverOrderFragment)
                 }
                 else -> {

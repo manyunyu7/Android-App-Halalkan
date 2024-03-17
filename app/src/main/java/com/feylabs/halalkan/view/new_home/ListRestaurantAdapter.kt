@@ -18,7 +18,7 @@ class ListRestaurantAdapter :
 
     fun setWithNewData(data: MutableList<RestaurantHomeUIModel>) {
         this.data.clear()
-        this.data.addAll(data)
+        this.data.addAll(data.reversed())
     }
 
     fun setupAdapterInterface(obj:ItemInterface) {

@@ -146,6 +146,10 @@ class DriverOrderFragment : BaseFragment() {
     }
 
     override fun initAction() {
+
+        binding.btnRefresh.setOnClickListener {
+            initData()
+        }
         binding.btnLogout.setOnClickListener {
             DialogUtils.showConfirmationDialog(
                 context = requireContext(),

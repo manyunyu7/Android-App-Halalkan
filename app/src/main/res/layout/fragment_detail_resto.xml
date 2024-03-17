@@ -86,11 +86,12 @@
 
                     <com.like.LikeButton
                         android:id="@+id/btn_favorite"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="23dp"
+                        android:layout_height="23dp"
                         app:anim_scale_factor="2"
                         app:circle_start_color="@color/colorPrimary"
-                        app:icon_size="23dp"
+                        app:icon_size="15dp"
+                        android:layout_marginLeft="5dp"
                         app:icon_type="heart"
                         app:like_drawable="@drawable/heart_on"
                         app:unlike_drawable="@drawable/heart_off" />
@@ -179,6 +180,7 @@
                         android:id="@+id/status_schedule"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:visibility="gone"
                         android:fontFamily="@font/poppins_regular"
                         android:paddingHorizontal="@dimen/dimen_10dp"
                         android:paddingVertical="@dimen/dimen_2dp"

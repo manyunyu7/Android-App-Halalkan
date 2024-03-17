@@ -72,18 +72,16 @@
 
             <com.like.LikeButton
                 android:id="@+id/btn_favorite"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                app:icon_type="heart"
-                app:circle_start_color="@color/colorPrimary"
-                app:like_drawable="@drawable/heart_on"
-                app:unlike_drawable="@drawable/heart_off"
-                app:icon_size="23dp"
+                android:layout_width="23dp"
+                android:layout_height="23dp"
                 app:anim_scale_factor="2"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentTop="true"
-                android:layout_centerInParent="true"
-                />
+                app:circle_start_color="@color/colorPrimary"
+                app:icon_size="15dp"
+                android:layout_marginLeft="5dp"
+                app:icon_type="heart"
+                app:like_drawable="@drawable/heart_on"
+                app:unlike_drawable="@drawable/heart_off" />
+
 
         </LinearLayout>
 

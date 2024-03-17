@@ -243,12 +243,12 @@ interface RestoService {
         @Path("orderId") orderId: String,
     ): Response<GeneralApiResponse>
 
-    @PUT("orders/carts/approvedOrder/{orderId}")
+    @POST("orders/carts/approvedOrder/{orderId}")
     suspend fun orderApprove(
         @Path("orderId") orderId: String,
     ): Response<GeneralApiResponse>
 
-    @PUT("orders/carts/approvedDeliv/{orderId}")
+    @POST("orders/carts/approvedDeliv/{orderId}")
     suspend fun orderDelivered(
         @Path("orderId") orderId: String,
         @Query("driver_id") driverId: Int

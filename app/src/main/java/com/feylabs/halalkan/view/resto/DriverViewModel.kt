@@ -59,7 +59,7 @@ class DriverViewModel(
         MutableLiveData<QumparanResource<DriverOrderPaginationResponse?>>()
     val driverOrderLiveData get() = _driverOrderLiveData
 
-    fun getDriverOrder(page: Int = 1, perPage: Int = 6) {
+    fun getDriverOrder(page: Int = 1, perPage: Int = 999999) {
         _driverOrderLiveData.postValue(QumparanResource.Loading())
         viewModelScope.launch {
             try {
